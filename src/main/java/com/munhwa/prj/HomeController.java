@@ -10,7 +10,7 @@ public class HomeController {
     public String home() {
         return "home/home";
     }
-
+    
     @GetMapping("/404")
     public String errorPage() {
         return "error/404";
@@ -23,6 +23,7 @@ public class HomeController {
 
     @GetMapping("/shop/cart")
     public String shopCartPage() {
-        return "shop/shop_cart.artist";
+        return "shop/shop_cart";
     }
+    
 }

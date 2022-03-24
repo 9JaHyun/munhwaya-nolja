@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.music.service.MusicMapper">
+	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
+		<id property="id" column="id" />
+		<result property="artName" column="#"/>
+		<result property="genre" column="#"/>
+		<result property="lyric" column="#"/>
+		<result property="like" column="#"/>
+		<result property="file" column="#"/>
+		<result property="title" column="#"/>
+		<result property="price" column="#"/>
+		<result property="albumId" column="#"/>
+		<result property="time" column="#"/>
+		<result property="writer" column="#"/>
+		<result property="composing" column="#"/>
+		<result property="arrangement" column="#"/>
+	</resultMap>
+	
+	<select id="musicSelectList" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+	</select>
+	
+	<select id="musicSelect" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE ID = #{id}
+	</select>
+	
+	<insert id="musicInsert" parameterType="com.munhwa.prj.music.vo.MusicVO">
+		INSERT INTO MUSIC
+		VALUES(MUSIC_SEQ.NEXTVAL, 
+			   #{artName}, 
+			   #{genre}, 
+			   #{lyric},
+			   #{like},
+			   #{file},
+			   #{title},
+			   #{price},
+			   #{albumId},
+			   #{time},
+			   #{writer},
+			   #{composing},
+			   #{arrangement}
+			   )
+	</insert>
+	
+	<update id="musicUpdate" parameterType="com.munhwa.prj.music.vo.MusicVO">
+		UPDATE MUSIC
+	</update>
+	
+	<delete id="musicDelete" parameterType="com.munhwa.prj.music.vo.MusicVO">
+		DELETE FROM MUSIC
+		WHERE ID = #{id}
+	</delete>
+	
+</mapper>
