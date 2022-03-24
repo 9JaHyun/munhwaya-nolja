@@ -5,7 +5,7 @@
 var myPlaylist = [
 	
 	{
-		mp3:'music/1.mp3',
+		mp3:'1.mp3',
 		title:'Track 1',
 		artist:'Alexandra',
 		rating:5,
@@ -15,7 +15,7 @@ var myPlaylist = [
 		cover:'music/1.jpg'	
 	},
 	{
-		mp3:'music/2.mp3',
+		mp3:'2.mp3',
 		title:'Track 2',
 		artist:'BlueFoxMusic',
 		rating:4,
@@ -25,7 +25,7 @@ var myPlaylist = [
 		cover:'music/2.jpg'	
 	},
 	{
-		mp3:'music/1.mp3',
+		mp3:'1.mp3',
 		title:'Track 3',
 		artist:'Alexandra',
 		rating:5,
@@ -35,7 +35,7 @@ var myPlaylist = [
 		cover:'music/1.jpg'	
 	},
 	{
-		mp3:'music/2.mp3',
+		mp3:'2.mp3',
 		title:'Track 4',
 		artist:'BlueFoxMusic',
 		rating:4,
@@ -45,7 +45,7 @@ var myPlaylist = [
 		cover:'music/2.jpg'	
 	},
 	{
-		mp3:'music/1.mp3',
+		mp3:'1.mp3',
 		title:'Track 5',
 		artist:'Alexandra',
 		rating:5,
@@ -55,7 +55,7 @@ var myPlaylist = [
 		cover:'music/1.jpg'	
 	},
 	{
-		mp3:'music/2.mp3',
+		mp3:'2.mp3',
 		title:'Track 6',
 		artist:'BlueFoxMusic',
 		rating:4,
@@ -65,7 +65,7 @@ var myPlaylist = [
 		cover:'music/2.jpg'	
 	},
 	{
-		mp3:'music/1.mp3',
+		mp3:'1.mp3',
 		title:'Track 7',
 		artist:'Alexandra',
 		rating:5,
@@ -75,7 +75,7 @@ var myPlaylist = [
 		cover:'music/1.jpg'	
 	},
 	{
-		mp3:'music/2.mp3',
+		mp3:'2.mp3',
 		title:'Track 8',
 		artist:'BlueFoxMusic',
 		rating:4,
