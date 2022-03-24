@@ -31,7 +31,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#">공연<span class="sub">Photo Gallery</span></a>
+                    <li><a href="performance">공연<span class="sub">Photo Gallery</span></a>
                         <ul>
                             <li><a href="gallery4.html">Gallery 4 Column</a></li>
                             <li><a href="gallery3.html">Gallery 3 Column</a></li>

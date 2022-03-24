@@ -23,70 +23,19 @@
 
                     <div class="products shop clearfix">
                         <div class="grid_12">
-                            <div class="product grid_6">
-                                <img class="product_img" src="images/assets/shop/1.jpg" alt=""><!-- featured thumbnail -->
-                                <img class="product_img_hover" src="images/assets/shop/2.jpg" alt=""><!-- featured thumbnail hover -->
-                                <div class="sale">Sale</div>
-                                <div class="product_inner">
-                                    <h3> <a href="shop_product.html"> Product Title Here </a> </h3>
-                                    <div class="clearfix">
-                                        <p class="price"> $789 </p>
-                                        <p class="rating"> <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i> </p>
-                                    </div>
-                                </div>
-                                <div class="product_meta clearfix">
-                                    <a href="shop_product.html" class="f_btn add_c"><span><i class="icon-shopping-cart"></i> Add to Cart</span></a>
-                                    <a href="shop_product.html" class="f_btn"><span><i class="icon-align-justify"></i> Details</span></a>
-                                </div>
-                            </div><!-- product -->
-
-                            <div class="product grid_6">
-                                <img class="product_img" src="images/assets/shop/3.jpg" alt=""><!-- featured thumbnail -->
-                                <img class="product_img_hover" src="images/assets/shop/4.jpg" alt=""><!-- featured thumbnail hover -->
-                                <div class="product_inner">
-                                    <h3> <a href="shop_product.html"> Product Title Here </a> </h3>
-                                    <div class="clearfix">
-                                        <p class="price"> $668 </p>
-                                        <p class="rating"> <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-empty"></i> </p>
-                                    </div>
-                                </div>
-                                <div class="product_meta clearfix">
-                                    <a href="shop_product.html" class="f_btn add_c"><span><i class="icon-shopping-cart"></i> Add to Cart</span></a>
-                                    <a href="shop_product.html" class="f_btn"><span><i class="icon-align-justify"></i> Details</span></a>
-                                </div>
-                            </div><!-- product -->
-
+                            <c:forEach items="${performances }" var="performances">
                             <div class="product grid_6">
                                 <img class="product_img" src="images/assets/shop/5.jpg" alt=""><!-- featured thumbnail -->
                                 <img class="product_img_hover" src="images/assets/shop/6.jpg" alt=""><!-- featured thumbnail hover -->
                                 <div class="product_inner">
-                                    <h3> <a href="shop_product.html"> Product Title Here </a> </h3>
+                                    <h3> <a href="shop_product.html"> ${performances.name } </a> </h3>
                                     <div class="clearfix">
-                                        <p class="price"> $557 </p>
+                                        <p class="price"> ${performances.price } </p>
                                         <p class="rating"> <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i> </p>
                                     </div>
                                 </div>
-                                <div class="product_meta clearfix">
-                                    <a href="shop_product.html" class="f_btn add_c"><span><i class="icon-shopping-cart"></i> Add to Cart</span></a>
-                                    <a href="shop_product.html" class="f_btn"><span><i class="icon-align-justify"></i> Details</span></a>
-                                </div>
                             </div><!-- product -->
-
-                            <div class="product grid_6">
-                                <img class="product_img" src="images/assets/shop/7.jpg" alt=""><!-- featured thumbnail -->
-                                <img class="product_img_hover" src="images/assets/shop/8.jpg" alt=""><!-- featured thumbnail hover -->
-                                <div class="product_inner">
-                                    <h3> <a href="shop_product.html"> Product Title Here </a> </h3>
-                                    <div class="clearfix">
-                                        <p class="price"> $458 </p>
-                                        <p class="rating"> <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-empty"></i> </p>
-                                    </div>
-                                </div>
-                                <div class="product_meta clearfix">
-                                    <a href="shop_product.html" class="f_btn add_c"><span><i class="icon-shopping-cart"></i> Add to Cart</span></a>
-                                    <a href="shop_product.html" class="f_btn"><span><i class="icon-align-justify"></i> Details</span></a>
-                                </div>
-                            </div><!-- product -->
+                            </c:forEach>
                         </div><!-- products -->
                     </div><!-- gridfull -->
 
