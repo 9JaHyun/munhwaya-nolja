@@ -31,11 +31,11 @@
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
   </definition>
 
-  <definition name="*.member" extends="infoTemplate">
+  <definition name="*-member" extends="memberTemplate">
     <put-attribute name="body" value="/WEB-INF/views/member/{1}.jsp"/>
   </definition>
 
-  <definition name="*.artist" extends="artistTemplate">
+  <definition name="*-artist" extends="artistTemplate">
     <put-attribute name="body" value="/WEB-INF/views/artist/{1}.jsp"/>
   </definition>
 
