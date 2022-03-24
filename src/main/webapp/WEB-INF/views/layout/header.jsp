@@ -3,7 +3,7 @@
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <header id="header" class="glue">
     <div class="headdown">
-        <div class="row clearfix">
+        <div class="row clearfix" >
             <div class="logo bottomtip" title="Best and Most Popular Musics">
                 <a href="/prj"><img src="${resources}/images/logo.png"
                                  alt="Best and Most Popular Musics"></a>
@@ -12,7 +12,7 @@
             <%-- 헤더 네비게이션 바 --%>
             <nav>
                 <ul class="sf-menu">
-                    <li class="current selectedLava"><a href="">Home<span class="sub">start here</span></a>
+                    <li class="current selectedLava"><a href="/prj">Home<span class="sub">start here</span></a>
                     </li>
                     <li><a href="musicMain">음악(음악 메인페이지로 이동)<span class="sub">Search And Streaming Music</span></a>
                         <%-- <ul> - <li>를 사용해서 메뉴 계층화 가능 --%>
