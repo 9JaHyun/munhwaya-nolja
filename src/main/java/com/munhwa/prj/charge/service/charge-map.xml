@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.charge.service.ChargeMapper">
+	<resultMap type="com.munhwa.prj.charge.vo.ChargeVO" id="chargeResultMap">
+		<id property="id" column="id"/>
+		<result property="chargeAt" column="charge_at"/>
+		<result property="mileage" column="mileage"/>
+		<result property="type" column="type"/>
+		<result property="memberId" column="member_id"/>
+	</resultMap>
+		
+	<select id="listCharge" resultMap="chargeResultMap">
+	 	SELECT ID, 
+	 		   TO_CHAR(CHARGE_AT, 'YYYY-MM-DD HH24:MI:SS'), 
+	 		   MILEAGE, 
+	 		   TYPE, 
+	 		   MEMBER_ID
+	 	FROM CHARGE_HISTORY
+	 	ORDER BY ID DESC
+	</select>
+	
+	<select id="selectCharge" resultMap="chargeResultMap">
+		SELECT ID, 
+			   TO_CHAR(CHARGE_AT, 'YYYY-MM-DD HH24:MI:SS'), 
+			   MILEAGE, 
+			   TYPE, 
+			   MEMBER_ID
+	 	FROM CHARGE_HISTORY
+	 	WHERE MEMBERID = #{memberId}
+	</select>
+	
+	<insert id="insertCharge" parameterType="com.munhwa.prj.charge.vo.ChargeVO">
+		INSERT INTO CHARGE_HISTORY(ID, 
+								   CHARGE_AT, 
+								   MILEAGE, 
+								   TYPE, 
+								   MEMBER_ID)
+		VALUES(charge_history_seq.nextval, 
+			   sysdate, 
+			   #{mileage}, 
+			   #{type}, 
+			   #{memberId})
+	</insert>
+</mapper>
