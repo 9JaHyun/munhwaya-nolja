@@ -11,7 +11,7 @@
 			<div id="Login_PopUp_Link" class="sign-btn tbutton small">
 				<span>로그인</span>
 			</div>
-		<a href="mypage.do" class="tbutton small"><span>마이페이지</span></a>
+		<a href="mypage.do" class="tbutton color2 small" style="background-color: #4c4c4c;"><span>마이페이지</span></a>
 		</div>
 		
 	</div>

@@ -1,65 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-center auth px-0">
-        <div class="row w-100 mx-0">
-          <div class="col-lg-4 mx-auto">
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-              <div class="brand-logo">
-                <img src="../../images/logo.svg" alt="logo">
-              </div>
-              <h4>New here?</h4>
-              <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-              <form class="pt-3">
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Username">
-                </div>
-                <div class="form-group">
-                  <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
-                </div>
-                <div class="form-group">
-                  <select class="form-control form-control-lg" id="exampleFormControlSelect2">
-                    <option>Country</option>
-                    <option>United States of America</option>
-                    <option>United Kingdom</option>
-                    <option>India</option>
-                    <option>Germany</option>
-                    <option>Argentina</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="mb-4">
-                  <div class="form-check">
-                    <label class="form-check-label text-muted">
-                      <input type="checkbox" class="form-check-input">
-                      I agree to all Terms &amp; Conditions
-                    <i class="input-helper"></i></label>
-                  </div>
-                </div>
-                <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN UP</a>
-                </div>
-                <div class="text-center mt-4 font-weight-light">
-                  Already have an account? <a href="login.html" class="text-primary">Login</a>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- content-wrapper ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-</body>
-</html>
+	pageEncoding="UTF-8"%>
+	
+<script>
+function fn_idChk(){
+	$.ajax({
+		url : "/member/idChk",
+		type : "post",
+		dataType : "json",
+		data : {"id" : $("#id").val()},
+		success : function(data){
+			if(data == 1){
+				alert("중복된 아이디입니다.");
+			}else if(data == 0){
+				$("#idChk").attr("value", "Y");
+				alert("사용가능한 아이디입니다.");
+			}
+		}
+	})
+}
+</script>
+	
+<div class="under_header">
+	<img src="resources/images/assets/breadcrumbs11.png" alt="#">
+</div>
+<div class="page-content back_to_up">
+	<div class="row row-fluid clearfix mbf">
+		<div class="def-block clearfix" style="margin-bottom: 200px;">
+			<h4>회원가입</h4>
+			<span class="liner"></span>
+			<div class="grid_6 mt">
+				<!-- form -->
+				<form method="post" id="contactForm" action="processForm.php">
+					<div class="clearfix">
+						<div>
+							<input style="width: 470px; margin-bottom: 10px;" 
+							type="email" name="id" id="id"
+								placeholder="ID (EMAIL)" class="requiredField" />
+						</div>
+						<button class="idChk" type="button" id="idChk" onclick="fn_idChk();" value="N">중복확인</button>
+						<div>
+							<input style="width: 470px; margin-bottom: 30px;"
+							type="password" name="password" id="password"
+								placeholder="PASSWORD" class="requiredField" />
+						</div>
+						<div>
+							<input style="width: 470px; margin-bottom: 30px;"
+							type="password" name="password" id="password"
+								placeholder="PASSWORD" class="requiredField" />
+						</div>
+						<div>
+							<input style="width: 470px; margin-bottom: 30px;"
+							type="text" name="nickname" id="nickname"
+								placeholder="NICKNAME" class="requiredField" />
+						</div>
+						<div>
+							<input style="width: 470px; margin-bottom: 30px;"
+							type="text" name="tel" id="tel"
+								placeholder="TEL" class="requiredField" />
+						</div>
+						<select>
+							<option>발라드</option>
+							<option>댄스</option>
+							<option>랩/힙합</option>
+							<option>R&B/Soul</option>
+						</select>
+
+					</div>
+					<input type="submit" id="sendMessage" name="sendMessage"
+						value="가입" /> <span> </span>
+				</form>
+				<!-- end form -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end page content -->

@@ -26,10 +26,7 @@
     <link rel="shortcut icon" href="${resources}/images/favicon.ico">
     <link rel="apple-touch-icon" href="${resources}/images/apple-touch-icon.png">
     
-<!--   <link rel="stylesheet" href="resources/vendors/typicons.font/font/typicons.css">
-  <link rel="stylesheet" href="resources/vendors/css/vendor.bundle.base.css">
-  <link rel="stylesheet" href="resources/css/vertical-layout-light/style.css">
-  <link rel="shortcut icon" href="resources/images/favicon.png"> -->
+
 
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=EmulateIE8; IE=EDGE"/>

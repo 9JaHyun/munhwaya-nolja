@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.member.service.MemberMapper">
+
+<!-- 	<resultMap type="co.micol.prj.member.vo.MemberVO" id="memberResultMap">
+		<id property="id" column="id" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="tel" column="tel" />
+		<result property="address" column="address" />
+		<result property="author" column="author" />
+	</resultMap>
+
+	<select id="memberList" resultMap="memberResultMap">
+		SELECT ID, PASSWORD, NAME, TEL, ADDRESS, AUTHOR
+		FROM MEMBER
+	</select>
+			
+	<select id="memberSelect" resultMap="memberResultMap" parameterType="co.micol.prj.member.vo.MemberVO">
+		SELECT ID, PASSWORD, NAME, TEL, ADDRESS, AUTHOR 
+		FROM MEMBER WHERE ID = #{id}
+	</select>
+	
+	<insert id="memberInsert" parameterType="co.micol.prj.member.vo.MemberVO">
+		INSERT INTO MEMBER (ID, PASSWORD, NAME, TEL, ADDRESS)
+		VALUES(#{id}, #{password}, #{name}, #{tel}, #{address})
+	</insert>
+	
+	<update id="memberUpdate" parameterType="co.micol.prj.member.vo.MemberVO">
+		UPDATE MEMBER
+		SET TEL = #{tel},
+			ADDRESS = #{address},
+			PASSWORD = #{password}
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="memberDelete" parameterType="co.micol.prj.member.vo.MemberVO">
+		DELETE FROM MEMBER
+		WHERE ID = #{id}
+	</delete> -->
+	
+
+</mapper>
