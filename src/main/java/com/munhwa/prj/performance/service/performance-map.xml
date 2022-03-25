@@ -32,9 +32,25 @@
 		ORDER BY ID DESC
 	</select>
 	
+	<select id="performanceSelect" parameterType="com.munhwa.prj.performance.vo.PerformanceVO" resultMap="performanceResultMap">
+				SELECT	ID
+		,		NAME
+		,		LOCATION
+		,		SDATE
+		,		EDATE
+		,		CONTENT
+		,		STATUS
+		,		IMAGE
+		,		ARTIST_ID
+		,		PRICE
+		,		PERSON
+		FROM	PERFORMANCE
+		WHERE    id = #{id}
+	</select>
+	
 	<insert id="performanceInsert" parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
-		INSERT INTO PERFORMANCE(ID, NAME, LOCATION, SDATE, EDATE, CONTENT, IMAGE, PRICE)
-		VALUES(#{id}, #{name}, #{location}, #{sdate}, #{edate}, #{content}, #{image}, #{price})
+		INSERT INTO PERFORMANCE(ID, NAME, LOCATION, SDATE, EDATE, CONTENT, IMAGE, PRICE, ARTIST_ID)
+		VALUES(PERFORMANCE_SEQ.nextval, #{name}, #{location}, #{sdate}, #{edate}, #{content}, #{image}, #{price}, #{artistId})
 	</insert>
 	
 </mapper>
