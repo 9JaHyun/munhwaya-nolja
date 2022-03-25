@@ -16,7 +16,7 @@ public class MusicController {
 	
 	 @GetMapping("/musicMain")
 	    public String music() {
-	        return "music/musicMain";
+	        return "music/musicMain2";
 	    }
 	
 	@RequestMapping("musicList.do")
