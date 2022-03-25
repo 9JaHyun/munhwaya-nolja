@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/font-awesome-ie7.min.css"/>
     <![endif]-->
 </head>
-<body>
+<body id="fluidGridSystem">
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="body"/>
 <tiles:insertAttribute name="footer"/>
