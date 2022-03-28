@@ -1,22 +1,34 @@
 package com.munhwa.prj.member.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-import com.munhwa.prj.member.service.MemberMapper;
+import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
 
-
-@Repository("memberDao")
+@Service
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper map;
 
 	@Override
-	public int idChk(MemberVO vo) {
-		return 0;
+	public int memberSignup(MemberVO vo) {
+		return map.memberSignup(vo);
 	}
+
+	@Override
+	public int idChk(String id) {
+		int result = map.idChk(id);
+		return result;
+	}
+
+	@Override
+	public int nickChk(String nickname) {
+		int result = map.nickChk(nickname);
+		return result;
+	}
+
 
 }

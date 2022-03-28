@@ -71,7 +71,7 @@
 						onfocus="if (this.value=='password') this.value = '';"
 						onblur="if (this.value=='') this.value = 'password';"
 						value="password" placeholder="비밀번호"> <a href="#"
-						class="tbutton small"><span>로그인</span></a> <a href="signup.do"
+						class="tbutton small"><span>로그인</span></a> <a href="signupForm.do"
 						class="tbutton color2 small"><span>회원가입</span></a>
 				</form>
 			</div>
