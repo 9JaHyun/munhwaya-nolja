@@ -21,8 +21,8 @@ public class HomeController {
         return "shop/shop";
     }
 
-    @GetMapping("/shop/cart")
-    public String shopCartPage() {
-        return "shop/shop_cart.artist";
-    }
+//    @GetMapping("/shop/cart")
+//    public String shopCartPage() {
+//        return "shop/shop_cart";
+//    }
 }

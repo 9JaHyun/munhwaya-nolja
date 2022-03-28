@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.cart.service.CartMapper">
+	<resultMap type="com.munhwa.prj.cart.vo.CartVO" id="cartResultMap">
+		<id property="id" column="id"/>
+		<result property="memberId" column="member_id"/>
+		<result property="musicId" column="music_id"/>
+		<collection property="musicvo" resultMap="musicResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.cart.vo.MusicVO" id="musicResultMap">
+		<id property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="price" column="price"/>
+	</resultMap>
+	
+	<select id="listCart" resultMap="cartResultMap">
+			SELECT C.ID,
+			   M.PRICE,
+			   M.Title,
+			   C.MEMBER_ID
+			FROM CART C, MUSIC M
+			WHERE C.MUSIC_ID = M.ID
+	</select>
+	
+	<select id="selectCart" resultMap="cartResultMap">
+		SELECT C.ID,
+			   M.PRICE,
+			   M.TITLE,
+			   C.MEMBER_ID
+		FROM CART C, MUSIC M
+		WHERE C.MUSIC_ID = M.MUSIC_ID
+		AND C.MEMBER_ID = #{memberId}
+	</select>
+	
+	<insert id="insertCart" parameterType="com.munhwa.prj.cart.vo.CartVO">
+		INSERT INTO CART(ID,
+						 MUSIC_ID,
+						 MEMBER_ID)
+		VALUES(cart_seq.nextval,
+			   #{musicId},
+			   #{memberId})
+	</insert>
+	
+	<delete id="deleteCart" parameterType="com.munhwa.prj.cart.vo.CartVO">
+		DELETE FROM CART
+		WHERE ID = #{id}
+	</delete>
+</mapper>

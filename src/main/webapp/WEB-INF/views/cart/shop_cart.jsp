@@ -136,7 +136,7 @@ function itemTotal() {
 function deleteCart(n) {
 	var del = false;
 	$.ajax({
-		url : "deleteCart",
+		url : "deleteCart.do",
 		type : "post",
 		data : {"id" : n},
 		async: false,
