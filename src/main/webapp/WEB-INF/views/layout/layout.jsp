@@ -13,9 +13,9 @@
     <meta name="keywords"
           content="remix, music, light, dark, themeforest, multi purpose, band, css3, html5">
 
-	<!-- jquery cdn -->
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap.min.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap-responsive.min.css"
@@ -28,7 +28,6 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="${resources}/images/favicon.ico">
     <link rel="apple-touch-icon" href="${resources}/images/apple-touch-icon.png">
-    
 
 
     <!--[if IE]>
@@ -37,12 +36,12 @@
     <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/font-awesome-ie7.min.css"/>
     <![endif]-->
 </head>
-<body>
-
-<tiles:insertAttribute name="header"/>
-<tiles:insertAttribute name="body"/>
-<tiles:insertAttribute name="footer"/>
-
+<body id="fluidGridSystem">
+<div id="layout" class="full">
+    <tiles:insertAttribute name="header"/>
+    <tiles:insertAttribute name="body"/>
+    <tiles:insertAttribute name="footer"/>
+</div>
 
 <script type="text/javascript" src="${resources}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${resources}/js/codevz.js"></script>

@@ -14,12 +14,15 @@
           content="remix, music, light, dark, themeforest, multi purpose, band, css3, html5">
 
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap.min.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap-responsive.min.css"
+    <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap.min.css"
           media="screen"/>
+    <link rel="stylesheet" type="text/css"
+          href="${resources}/bootstrap/css/bootstrap-responsive.min.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="${resources}/style.css" id="dark" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="${resources}/js/rs-plugin/css/settings.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/icons.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="${resources}/js/rs-plugin/css/settings.css"
+          media="screen"/>
+    <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/icons.css"
+          media="screen"/>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
     <!-- Favicon -->
@@ -33,13 +36,15 @@
     <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/font-awesome-ie7.min.css"/>
     <![endif]-->
 </head>
-<body>
-
-<tiles:insertAttribute name="header"/>
-<tiles:insertAttribute name="sidebar"/>
-<tiles:insertAttribute name="body"/>
-<tiles:insertAttribute name="footer"/>
-
+<body id="fluidGridSystem">
+<div id="layout" class="full">
+    <tiles:insertAttribute name="header"/>
+    <div class="row row-fluid clearfix mbf">
+        <tiles:insertAttribute name="sidebar"/>
+        <tiles:insertAttribute name="body"/>
+    </div>
+    <tiles:insertAttribute name="footer"/>
+</div>
 
 <script type="text/javascript" src="${resources}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${resources}/js/codevz.js"></script>
