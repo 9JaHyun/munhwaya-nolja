@@ -3,12 +3,13 @@ package com.munhwa.prj.charge.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
-import com.munhwa.prj.charge.service.ChargeMapper;
+import com.munhwa.prj.charge.mapper.ChargeMapper;
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
-@Repository("chargeDao")
+import org.springframework.stereotype.Service;
+
+@Service("chargeDao")
 public class ChargeServiceImpl implements ChargeService {
 	@Autowired
 	private ChargeMapper map;
