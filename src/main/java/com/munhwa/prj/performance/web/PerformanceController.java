@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,5 +51,12 @@ public class PerformanceController {
     		return "redirect:performance";
     	}
     	return "performance/performanceError";
+    }
+    
+    @RequestMapping("/performanceList.do")
+    public String performanceList(PerformanceVO vo, Model model) {
+    	vo = performanceDao.performanceSelect(vo);
+    	model.addAttribute("performance", vo);
+    	return "performance/performanceList";
     }
 }

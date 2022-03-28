@@ -23,15 +23,16 @@
 
                     <div class="products shop clearfix">
                         <div class="grid_12">
-                            <c:forEach items="${performances}" var="performances">
                             <div class="product grid_6" onclick="performanceSearch('${performances.id}')">
                                 <img class="product_img" src="${resources}/images/assets/shop/${performances.image}" alt=""><!-- featured thumbnail -->
-                                <img class="product_img_hover" src="${resources}/images/assets/shop/${performances.image}" alt=""><!-- featured thumbnail hover -->
+                                <img class="product_img_hover" src="/images/assets/shop/6.jpg" alt=""><!-- featured thumbnail hover -->
                                 <div class="product_inner">
                                     <h3> <a> ${performances.name } </a> </h3>
+                                    <div class="clearfix">
+                                        <p class="price"> ${performances.price } </p>
+                                    </div>
                                 </div>
                             </div><!-- product -->
-                            </c:forEach>
                         </div><!-- products -->
                     </div><!-- gridfull -->
                 </div><!-- def block -->
