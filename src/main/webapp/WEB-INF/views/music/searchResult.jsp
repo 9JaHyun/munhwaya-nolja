@@ -5,7 +5,7 @@
 <div id="layout" class="full">
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1200px;">
+		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
 	</div>
 		
 	<!-- content -->
@@ -46,31 +46,31 @@
 										<span><strong>Dean</strong>half moon</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Bob Stoo</strong>No Name No Number</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Justin Gomez</strong>Love You as Love Me</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Back</strong>I Like It (Radio Edit)</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Anna</strong>Bad Dog</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Armando</strong>On Time</span>
 									</a>
 								</div><!-- video grid -->
@@ -101,15 +101,15 @@
 										<span><strong>Avril Lopez</strong>Daredevil (video version)</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Bob Stoo</strong>No Name No Number</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 								</div><!-- video grid -->

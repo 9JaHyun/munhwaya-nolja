@@ -16,7 +16,7 @@ public class MusicController {
 	
 	@GetMapping("/musicMain")
 	    public String musicMain() {
-	        return "music/musicMain2";
+	        return "music/musicMain";
 	}
 	
 	@GetMapping("/searchResult")
@@ -42,6 +42,31 @@ public class MusicController {
 	@GetMapping("/releaseSoon")
 	public String releaseSoon() {
 		return "music/releaseSoon";
+	}
+	
+	@GetMapping("/albumInfo")
+	public String albumInfo() {
+		return "music/albumInfo";
+	}
+	
+	@GetMapping("/streaming")
+	public String streaming() {
+		return "music/streaming";
+	}
+	
+	@GetMapping("/personalResult")
+	public String personalResult() {
+		return "music/personalResult";
+	}
+	
+	@GetMapping("/genre")
+	public String genre() {
+		return "music/genre";
+	}
+	
+	@GetMapping("/purchase")
+	public String purchase() {
+		return "music/purchase";
 	}
 	
 	@RequestMapping("musicList.do")

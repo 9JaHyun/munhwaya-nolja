@@ -5,7 +5,7 @@
 <div id="layout" class="full">
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1200px;">
+		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
 	</div>
 		
 	<!-- content -->
@@ -32,60 +32,58 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
-						<a href="/prj">
-						<h4>앨범</h4>
+						<h4>발매임박 앨범</h4>
 						<i class="icon-angle-right" style="font-size:large; margin-left: 7px;"></i>
-						</a>
 						<span class="liner"></span>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-									<a href="video_single_wide.html" class="grid_3">
+									<a href="albumInfo" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Avril Lopez</strong>Daredevil (video version)</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Bob Stoo</strong>No Name No Number</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg"" alt="#">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>Dj Alex</strong>Divine</span>
 									</a>
 								</div><!-- video grid -->

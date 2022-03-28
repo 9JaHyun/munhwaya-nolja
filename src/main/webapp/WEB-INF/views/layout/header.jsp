@@ -14,20 +14,18 @@
                 <ul class="sf-menu">
                     <li class="current selectedLava"><a href="/prj">Home<span class="sub">start here</span></a>
                     </li>
-                    <li><a href="musicMain">음악(음악 메인페이지로 이동)<span class="sub">Search And Streaming Music</span></a>
+                    <li><a href="musicMain">음악<span class="sub">Search And Streaming Music</span></a>
                         <%-- <ul> - <li>를 사용해서 메뉴 계층화 가능 --%>
                         <ul>
-                            <li><a href="#">아직예정</a>
-                                <ul>
-                                    <li><a href="shortcode_buttons.html">Buttons</a></li>
-                                    <li><a href="#">Typography</a>
-                                        <ul>
-                                            <li><a href="shortcode_columns.html">Grid Columns</a>
-                                            </li>
-                                            <li><a href="shortcode_quote.html">Quote</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                            <li><a href="genre">장르별 음악추천</a>
+                            </li>
+                            <li><a href="chart">차트순위</a>
+                            </li>
+                            <li><a href="releaseSoon">발매임박 앨범</a>
+                            </li>
+                             <li><a href="personalResult">퍼스널 추천</a>
+                            </li>
+                            <li><a href="purchase">내가 구입한 음원</a>
                             </li>
                         </ul>
                     </li>

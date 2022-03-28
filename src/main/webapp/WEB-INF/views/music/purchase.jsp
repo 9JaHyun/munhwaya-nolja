@@ -10,7 +10,7 @@
 	margin-bottom: 100px;
 	}
 	
-  	.img1{
+  	.img1 {
   		width: 80px;
   		height: 80px;
   		object-fit: cover;
@@ -41,11 +41,10 @@
 			</div>
 		</div>
 		<!-- 검색바 끝-->
-		<!-- 음원 리스트 -->
-			<div class="row row-fluid clearfix mbf">
+		<div class="row row-fluid clearfix mbf">
 				<div class="posts">
 					<div class="def-block">
-						<h4> 차트순위 </h4><span class="liner"></span>
+						<h4> 내가 구입한 음원 </h4><span class="liner"></span>
 						<div class="products shop clearfix">
 							<div class="grid_12">
 								<form action="#" method="post">
@@ -53,7 +52,6 @@
 										<table class="shop_table footable tablet footable-loaded" style="width:100%;">
 											<tbody>
 												<tr class="cart_table_item" style="text-align: center;">
-													<td>1</td>
 													<td class="product-thumbnail" style="width:70px;">
 													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>
@@ -67,12 +65,11 @@
 														앨범
 													</td>
 													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
+														<button class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
 													</td>
 												</tr>
 			
 												<tr class="cart_table_item" style="text-align: center;">
-													<td>2</td>
 													<td class="product-thumbnail" style="width:70px;">
 													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>
@@ -86,12 +83,11 @@
 														앨범
 													</td>
 													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
+														<button class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
 													</td>
 												</tr>
 												
 												<tr class="cart_table_item" style="text-align: center;">
-													<td>3</td>
 													<td class="product-thumbnail" style="width:70px;">
 													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>
@@ -105,11 +101,10 @@
 														앨범
 													</td>
 													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
+														<button class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
 													</td>
 												</tr>
 												<tr class="cart_table_item" style="text-align: center;">
-													<td>4</td>
 													<td class="product-thumbnail" style="width:70px;">
 													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>
@@ -123,11 +118,10 @@
 														앨범
 													</td>
 													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
+														<button class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
 													</td>
 												</tr>
 												<tr class="cart_table_item" style="text-align: center;">
-													<td>5</td>
 													<td class="product-thumbnail" style="width:70px;">
 													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>
@@ -141,27 +135,10 @@
 														앨범
 													</td>
 													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
+														<button class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
 													</td>
 												</tr>
-												<tr class="cart_table_item" style="text-align: center;">
-													<td>6</td>
-													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
-													</td>
-													<td class="product-name">
-														음원제목
-													</td>
-													<td class="product-name">
-														가수
-													</td>
-													<td class="product-name">
-														앨범
-													</td>
-													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
-													</td>
-												</tr>
+												
 											</tbody>
 										</table>
 									</div><!-- bag table -->
@@ -172,6 +149,8 @@
 					</div><!-- def block -->
 				</div><!-- span8 posts -->
 			</div><!-- row clearfix -->
+			<!-- 크기지정  post 끝-->
+			<!-- 왼쪽 상단메인 끝 -->
 	</div>
 		<!-- content끝 -->
 </div>
