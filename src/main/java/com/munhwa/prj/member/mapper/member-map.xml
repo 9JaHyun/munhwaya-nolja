@@ -17,14 +17,14 @@
 	</insert>
 	
 	<!-- 아이디 중복체크 -->
-	<select id="idChk" parameterType="com.munhwa.prj.member.vo.MemberVO" resultType="int">
+	<select id="idChk" parameterType="string" resultType="int">
 		SELECT COUNT(*)
 		FROM member
 		WHERE id = #{id}
 	</select>
 	
 	<!-- 닉네임 중복체크 -->
-	<select id="nickChk" parameterType="com.munhwa.prj.member.vo.MemberVO" resultType="int">
+	<select id="nickChk" parameterType="string" resultType="int">
 		SELECT COUNT(*)
 		FROM member
 		WHERE nickname = #{nickname}

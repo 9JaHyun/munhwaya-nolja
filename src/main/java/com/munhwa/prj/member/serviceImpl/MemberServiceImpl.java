@@ -7,7 +7,7 @@ import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
 
-@Service
+@Service("memberDao")
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
@@ -20,15 +20,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int idChk(String id) {
-		int result = map.idChk(id);
-		return result;
+		return map.idChk(id);
 	}
 
 	@Override
 	public int nickChk(String nickname) {
-		int result = map.nickChk(nickname);
-		return result;
+		return map.nickChk(nickname);
 	}
-
-
 }

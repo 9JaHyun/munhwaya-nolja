@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-		
 <div class="under_header">
 	<img src="resources/images/assets/breadcrumbs11.png" alt="#">
 </div>
@@ -40,7 +39,7 @@
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"
 							type="text" name="nickname" id="nickname"
-								placeholder="NICKNAME" required="required" />
+								placeholder="NICKNAME(6자리 이상)" required="required" />
 						</div>
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"
@@ -68,9 +67,8 @@
 <!-- end page content -->
 
 <script>
-
 	function send() {
-		if(idChk.value == "Y" && nickChk.value == "Y") {
+		if(idChk.value === "Y" && nickChk.value === "Y") {
 			
 			var pw = $("#password").val();
 			var pw2 = $("#password2").val();
@@ -99,8 +97,6 @@
 			alert("아이디와 닉네임 중복확인 후 회원가입이 가능합니다.");
 			return false;
 		}
-		 
-
 	}
 	
 	function idChkFn() {
@@ -111,12 +107,12 @@
 			url : "idChk",
 			type : "POST",
 			dataType : "JSON",
-			data : {"id" : $("#id").val()},
+			data : {"id" : id},
 			success : function(data) {
-				if(data == 1) {
+				if(data === 1) {
 					$("#idChk").attr("value", "N");
 					alert("중복된 아이디입니다.");
-				} else if (data == 0) {
+				} else if (data === 0) {
 					$("#idChk").attr("value", "Y");
 					alert("사용 가능한 아이디입니다.")
 				}
@@ -125,25 +121,30 @@
 		} else {
 			alert('사용할 수 없는 아이디 양식입니다.');
 		}
-		
 	}
 	
 	function nickChkFn() {
-		$.ajax({
-			url : "nickChk",
-			type : "POST",
-			dataType : "JSON",
-			data : {"nickname" : $("#nickname").val()},
-			success : function(data) {
-				if(data == 1) {
-					$("#nickChk").attr("value", "N");
-					alert("중복된 닉네임입니다.");
-				} else if (data == 0) {
-					$("#nickChk").attr("value", "Y");
-					alert("사용 가능한 닉네임입니다.")
+		var nickname = $("#nickname").val();
+		var regExp = /\s/g;
+		if (nickname.length > 3 && !nickname.match(regExp)) {
+			$.ajax({
+				url : "nickChk",
+				type : "POST",
+				dataType : "JSON",
+				data : {"nickname" : nickname},
+				success : function(data) {
+					if(data == 1) {
+						$("#nickChk").attr("value", "N");
+						alert("중복된 닉네임입니다.");
+					} else if (data == 0) {
+						$("#nickChk").attr("value", "Y");
+						alert("사용 가능한 닉네임입니다.")
+					}
 				}
-			}
-		})
+			});
+		} else {
+			alert('적절하지 않은 닉네임 양식입니다.')
+		}
 	}
 	
 	$("#id").on("change keyup paste", function(){

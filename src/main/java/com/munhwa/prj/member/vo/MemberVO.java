@@ -15,6 +15,4 @@ public class MemberVO {
 	private String role;
 	private int mileage;
 	private String image;
-	
-
 }
