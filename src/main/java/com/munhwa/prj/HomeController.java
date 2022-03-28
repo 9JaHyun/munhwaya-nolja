@@ -10,6 +10,11 @@ public class HomeController {
     public String home() {
         return "home/home";
     }
+    
+    @GetMapping("/home.do")
+    public String homeDo() {
+        return "home/home";
+    }
 
     @GetMapping("/404")
     public String errorPage() {
