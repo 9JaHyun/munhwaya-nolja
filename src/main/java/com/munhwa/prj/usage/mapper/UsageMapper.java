@@ -1,4 +1,4 @@
-package com.munhwa.prj.usage.service;
+package com.munhwa.prj.usage.mapper;
 
 import java.util.List;
 

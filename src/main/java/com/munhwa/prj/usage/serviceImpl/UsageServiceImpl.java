@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.munhwa.prj.usage.service.UsageMapper;
+import com.munhwa.prj.usage.mapper.UsageMapper;
 import com.munhwa.prj.usage.service.UsageService;
 import com.munhwa.prj.usage.vo.UsageVO;
 @Repository("usageDao")

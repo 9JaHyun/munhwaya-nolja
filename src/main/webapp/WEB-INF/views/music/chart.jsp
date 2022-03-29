@@ -176,4 +176,26 @@
 		<!-- content끝 -->
 </div>
 	<!-- layout 끝 -->
+<script>
+$(document).ready(function(){
+	
+	addCart();
+
+	});
+	
+	function addCart() {
+		$.ajax ({
+			url : "cart/test/add",
+			type : "get",
+			data : {"id" : 2, "title" : "테스트2"},
+			dataType : "text",
+			success : function(data) {
+				alert("장바구니에 담았습니다.");
+			},
+			error: function(xhr, status, error){
+                alert(error);
+            }
+		})
+	}
+</script>
 	

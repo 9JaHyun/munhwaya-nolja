@@ -7,11 +7,17 @@
 	<%-- 로그인 버튼--%>
 	<div class="row clearfix">
 		<div class="little-head">
+			<div id="cart" style="float:right; margin-left:10px">
+					<a href="cart"><i class="icon-shopping-cart" style="font-size:25px"></i></a>
+				</div>
 			<div id="Login_PopUp_Link" class="sign-btn tbutton small">
 				<span>로그인</span>
 			</div>
 		<a href="mypage.do" class="tbutton color2 small" style="background-color: #4c4c4c;"><span>마이페이지</span></a>
 		</div>
+<!-- 				<div id="cart" style="float:right;"> -->
+<!-- 					<a href=""><i class="icon-shopping-cart"></i></a> -->
+<!-- 				</div> -->
 	</div>
 	<div class="headdown">
 		<div class="row clearfix">

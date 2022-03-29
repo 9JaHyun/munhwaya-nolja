@@ -49,17 +49,17 @@
                                             </td>
 
                                             <td class="product-name">
-                                                <a href="#">${cart.musicvo.title}</a>
+                                                <a href="#">${cart.value.title}</a>
                                                 <br><br>
                                             </td>
 
 
                                             <td class="product-subtotal">
-                                                <div class="price" id="price">${cart.musicvo.price}</div>
+                                                <div class="price" id="price">${cart.key}</div>
                                             </td>
 
                                             <td class="product-remove tac">
-                                                <a onclick="deleteCart(${cart.id})" class="remove toptip"
+                                                <a onclick="deleteCart(${cart.key})" class="remove toptip"
                                                    original-title="Remove this item">×</a>
                                             </td>
                                         </tr>
@@ -113,7 +113,7 @@
 <form id="frm" name="frm">
 	<input type="hidden" name="mileage" id="mileage">
 	<input type="hidden" name="memberId" id="memberId" value="test0@gmail.com">
-	<input type="hidden" name="pks" id="pks" value="1">
+	<input type="hidden" name="pks" id="pks" value=""> 
 	<input type="hidden" name="place" id="place" value="U01">
 </form>
 <script>
