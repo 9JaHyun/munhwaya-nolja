@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.music.mapper.PurchaseMapper">
+	<resultMap type="com.munhwa.prj.music.vo.PurchaseVO" id="purchaseResultMap">
+		<id property="musicId" column="MUSIC_ID" />
+		<result property="memberId" column="MEMBER_ID"/>
+	</resultMap>
+	
+	<select id="purchaseSelectList" resultMap="purchaseResultMap">
+		SELECT *
+		FROM PURCHASED_MUSIC
+	</select>
+	
+	<select id="purchaseSelect" resultMap="purchaseResultMap">
+		SELECT *
+		FROM PURCHASED_MUSIC
+		WHERE ID = #{id}
+	</select>
+	
+	<insert id="purchaseInsert" parameterType="com.munhwa.prj.music.vo.PurchaseVO">
+		INSERT INTO PURCHASED_MUSIC
+		VALUES(
+			   )
+	</insert>
+	
+	<update id="purchaseUpdate" parameterType="com.munhwa.prj.music.vo.PurchaseVO">
+		UPDATE PURCHASED_MUSIC
+	</update>
+	
+	<delete id="purchaseUpdate" parameterType="com.munhwa.prj.music.vo.PurchaseVO">
+		DELETE FROM PURCHASED_MUSIC
+		WHERE ID = #{id}
+	</delete>
+	
+</mapper>
