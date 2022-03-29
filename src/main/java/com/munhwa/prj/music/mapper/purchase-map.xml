@@ -27,7 +27,7 @@
 		UPDATE PURCHASED_MUSIC
 	</update>
 	
-	<delete id="purchaseUpdate" parameterType="com.munhwa.prj.music.vo.PurchaseVO">
+	<delete id="purchaseDelete" parameterType="com.munhwa.prj.music.vo.PurchaseVO">
 		DELETE FROM PURCHASED_MUSIC
 		WHERE ID = #{id}
 	</delete>
