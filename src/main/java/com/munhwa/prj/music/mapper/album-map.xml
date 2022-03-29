@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.munhwa.prj.music.service.AlbumMapper">
+<mapper namespace="com.munhwa.prj.music.mapper.AlbumMapper">
 	<resultMap type="com.munhwa.prj.music.vo.AlbumVO" id="albumResultMap">
-		<id property="id" column="id" />
-		<result property="albName" column="#"/>
-		<result property="artName" column="#"/>
-		<result property="date" column="#"/>
-		<result property="genre" column="#"/>
-		<result property="content" column="#"/>
-		<result property="picture" column="#"/>
-		<result property="artId" column="#"/>
-		<result property="score" column="#"/>
-		<result property="hit" column="#"/>
+		<id property="id" column="ID" />
+		<result property="albName" column="ALB_NAME"/>
+		<result property="artName" column="ALB_NAME"/>
+		<result property="releaseAt" column="RELEASE_AT"/>
+		<result property="genre" column="GENRE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="picture" column="PICTURE"/>
+		<result property="artistId" column="ARTIST_ID"/>
+		<result property="score" column="SCORE"/>
+		<result property="hit" column="HIT"/>
 	</resultMap>
 	
 	<select id="albumSelectList" resultMap="albumResultMap">
@@ -30,11 +30,11 @@
 		VALUES(ALBUM_SEQ.NEXTVAL, 
 			   #{albName}, 
 			   #{artName}, 
-			   #{date},
+			   #{releaseAt},
 			   #{genre},
 			   #{content},
 			   #{picture},
-			   #{artId},
+			   #{artistId},
 			   #{score},
 			   #{hit}
 			   )

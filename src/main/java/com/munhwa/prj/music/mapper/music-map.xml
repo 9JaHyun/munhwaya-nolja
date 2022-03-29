@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.munhwa.prj.music.service.MusicMapper">
+<mapper namespace="com.munhwa.prj.music.mapper.MusicMapper">
 	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
-		<id property="id" column="id" />
-		<result property="artName" column="#"/>
-		<result property="genre" column="#"/>
-		<result property="lyric" column="#"/>
-		<result property="like" column="#"/>
-		<result property="file" column="#"/>
-		<result property="title" column="#"/>
-		<result property="price" column="#"/>
-		<result property="albumId" column="#"/>
-		<result property="time" column="#"/>
-		<result property="writer" column="#"/>
-		<result property="composing" column="#"/>
-		<result property="arrangement" column="#"/>
+		<id property="id" column="ID" />
+		<result property="artName" column="ART_NAME"/>
+		<result property="genre" column="GENRE"/>
+		<result property="lyric" column="LYRIC"/>
+		<result property="likeIt" column="LIKE_IT"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="title" column="TITLE"/>
+		<result property="price" column="PRICE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="time" column="TIME"/>
+		<result property="writer" column="WRITER"/>
+		<result property="composing" column="COMPOSING"/>
+		<result property="arrangement" column="ARRANGEMENT"/>
 	</resultMap>
 	
 	<select id="musicSelectList" resultMap="musicResultMap">
@@ -34,8 +34,8 @@
 			   #{artName}, 
 			   #{genre}, 
 			   #{lyric},
-			   #{like},
-			   #{file},
+			   #{likeIt},
+			   #{fileName},
 			   #{title},
 			   #{price},
 			   #{albumId},

@@ -1,4 +1,4 @@
-package com.munhwa.prj.music.service;
+package com.munhwa.prj.music.mapper;
 
 import java.util.List;
 

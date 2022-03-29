@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.munhwa.prj.music.service.AlbumMapper;
+import com.munhwa.prj.music.mapper.AlbumMapper;
 import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.music.vo.AlbumVO;
 
