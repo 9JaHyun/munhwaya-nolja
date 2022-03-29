@@ -4,7 +4,7 @@
 	<resultMap type="com.munhwa.prj.music.vo.AlbumVO" id="albumResultMap">
 		<id property="id" column="ID" />
 		<result property="albName" column="ALB_NAME"/>
-		<result property="artName" column="ALB_NAME"/>
+		<result property="artName" column="ART_NAME"/>
 		<result property="releaseAt" column="RELEASE_AT"/>
 		<result property="genre" column="GENRE"/>
 		<result property="content" column="CONTENT"/>
@@ -17,6 +17,12 @@
 	<select id="albumSelectList" resultMap="albumResultMap">
 		SELECT *
 		FROM ALBUM
+	</select>
+	
+	<select id="albumSelectListByRelease" resultMap="albumResultMap">
+		SELECT *
+		FROM ALBUM
+		WHERE RELEASE_AT BETWEEN SYSDATE-365 AND SYSDATE
 	</select>
 	
 	<select id="albumSelect" resultMap="albumResultMap">

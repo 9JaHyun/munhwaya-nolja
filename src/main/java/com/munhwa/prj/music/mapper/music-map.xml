@@ -20,6 +20,23 @@
 	<select id="musicSelectList" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC
+		ORDER BY LIKE_IT DESC
+	</select>
+	
+	<select id="musicSelectListByGenre" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE GENRE = #{genre}
+		ORDER BY LIKE_IT DESC
+	</select>
+	
+	<select id="musicPersonalList" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE GENRE=(SELECT GENRE
+					FROM MEMBER
+					WHERE ID=#{id})
+		ORDER BY LIKE_IT DESC
 	</select>
 	
 	<select id="musicSelect" resultMap="musicResultMap">

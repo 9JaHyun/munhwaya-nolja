@@ -39,6 +39,16 @@ public class MusicServiceImpl implements MusicService{
 	public int musicDelete(MusicVO vo) {
 		return map.musicDelete(vo);
 	}
+
+	@Override
+	public List<MusicVO> musicSelectListByGenre(String genre) {
+		return map.musicSelectListByGenre(genre);
+	}
+
+	@Override
+	public List<MusicVO> musicPersonalList(String id) {
+		return map.musicPersonalList(id);
+	}
 	
 
 }

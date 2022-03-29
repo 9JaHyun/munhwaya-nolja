@@ -6,6 +6,7 @@ import com.munhwa.prj.music.vo.AlbumVO;
 
 public interface AlbumService {
 	List<AlbumVO> albumSelectList();
+	List<AlbumVO> albumSelectListByRelease();
 	AlbumVO albumSelect(AlbumVO vo);
 	int albumInsert(AlbumVO vo);
 	int albumUpdate(AlbumVO vo);

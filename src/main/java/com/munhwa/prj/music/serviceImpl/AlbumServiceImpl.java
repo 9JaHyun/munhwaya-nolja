@@ -38,6 +38,11 @@ public class AlbumServiceImpl implements AlbumService{
 	public int albumDelete(AlbumVO vo) {
 		return map.albumDelete(vo);
 	}
+
+	@Override
+	public List<AlbumVO> albumSelectListByRelease() {
+		return map.albumSelectListByRelease();
+	}
 	
 
 }
