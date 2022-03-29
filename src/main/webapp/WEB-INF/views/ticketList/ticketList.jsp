@@ -23,16 +23,18 @@
 
                     <div class="products shop clearfix">
                         <div class="grid_12">
-                            <div class="product grid_6" onclick="performanceSearch('${performances.id}')">
-                                <img class="product_img" src="${resources}/images/assets/shop/${performances.image}" alt=""><!-- featured thumbnail -->
-                                <img class="product_img_hover" src="/images/assets/shop/6.jpg" alt=""><!-- featured thumbnail hover -->
-                                <div class="product_inner">
-                                    <h3> <a> ${performances.name } </a> </h3>
-                                    <div class="clearfix">
-                                        <p class="price"> ${performances.price } </p>
-                                    </div>
-                                </div>
+                            <c:forEach items="${ticketLists}" var="ticketLists">
+                            <div class="product grid_6" onclick="ticketListSearch(${ticketLists.id})" style="border: 1px solid white; width: 930px; margin-bottom:30px; border-radius: 10px;">
+<%--                                 <img class="product_img" src="${resources}/images/assets/shop/${ticketList.performancevo.}" alt=""><!-- featured thumbnail --> --%>
+<%--                                 <img class="product_img_hover" src="${resources}/images/assets/shop/${ticketList.qrcode}" alt=""><!-- featured thumbnail hover --> --%>
+ 								<div class="product_inner"><br>
+                                    <h3> &nbsp;&nbsp;&nbsp;&nbsp;<a> ${ticketLists.performancevo.name } </a> </h3>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>${ticketLists.performancevo.sdate }</a><br>
+<%--                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>${ticketList.performancevo.edate }</a> --%>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>${ticketLists.performancevo.location }</a>
+                                </div><br>
                             </div><!-- product -->
+                            </c:forEach>
                         </div><!-- products -->
                     </div><!-- gridfull -->
                 </div><!-- def block -->
@@ -41,12 +43,13 @@
     </div><!-- end page content -->
 </div><!-- end layout -->
 <div>
-	<form id = "frm" action="performanceSelect.do" method="post">
+	<form id = "frm" action="ticketListSelect.do" method="post">
 		<input type="hidden" id="id" name="id">
 	</form>
 </div>
 <script type="text/javascript">
-	function performanceSearch(n) {
+	function ticketListSearch(n) {
+		console.log(n);
 		frm.id.value = n;
 		frm.submit();
 	}

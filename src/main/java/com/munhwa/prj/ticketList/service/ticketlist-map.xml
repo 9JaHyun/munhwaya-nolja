@@ -6,17 +6,34 @@
 		<result property="performanceId" column="performance_id"/>
 		<result property="memberId" column="member_id"/>
 		<result property="qrcode" column="qrcode"/>
+		<collection property="performancevo" resultMap="performanceResultMap"></collection>
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="location" column="location"/>
+		<result property="sdate" column="sdate"/>
+		<result property="edate" column="edate"/>
+		<result property="content" column="content"/>
+		<result property="status" column="status"/>
+		<result property="image" column="image"/>
+		<result property="artistId" column="artist_id"/>
+		<result property="price" column="price"/>
+		<result property="person" column="person"/>
 	</resultMap>
 	
 	<select id="ticketListSelectList" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
 	resultMap="ticketListResultMap">
-		SELECT P.NAME,
+		SELECT T.ID,
+		       P.NAME,
 			   P.SDATE,
 			   P.EDATE,
 			   P.LOCATION
 		FROM TICKET_LIST T,
+			 MEMBER M,
 			 PERFORMANCE P
-		WHERE T.MEMBER_ID = MEMBER_ID
+		WHERE T.MEMBER_ID = M.ID
 		AND T.PERFORMANCE_ID = P.ID
 		ORDER BY SDATE DESC
 	</select>
@@ -32,7 +49,8 @@
 		FROM TICKET_LIST T,
 			 MEMBER M,
 			 PERFORMANCE P
-		WHERE T.MEMBER_ID = M.ID
+		WHERE T.ID = #{id}
+		AND T.MEMBER_ID = M.ID
 		AND T.PERFORMANCE_ID = P.ID
 	</select>
 	

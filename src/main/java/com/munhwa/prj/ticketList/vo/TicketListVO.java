@@ -1,5 +1,7 @@
 package com.munhwa.prj.ticketList.vo;
 
+import com.munhwa.prj.performance.vo.PerformanceVO;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,4 +12,7 @@ public class TicketListVO {
 	private int performanceId;
 	private String memberId;
 	private String qrcode;
+	private PerformanceVO performancevo;
 }
+
+

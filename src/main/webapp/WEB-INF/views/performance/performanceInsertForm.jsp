@@ -26,8 +26,12 @@
 											<td width="300"><input style="width:500px" type="text" id="location" name="location" required="required"></td>
 										</tr>
 										<tr>
-											<th width="200"><strong>공연 일시</strong></th>
+											<th width="200"><strong>공연 시작 시간</strong></th>
 											<td width="300"><input style="width:500px" type="datetime-local" id="sdate" name="sdate" required="required"></td>
+										</tr>
+										<tr>
+											<th width="200"><strong>공연 종료 시간</strong></th>
+											<td width="300"><input style="width:500px" type="datetime-local" id="edate" name="edate" required="required"></td>
 										</tr>
 										<tr>
 											<th width="200"><strong>공연 제목</strong></th>
@@ -35,7 +39,7 @@
 										</tr>
 										<tr>
 											<th width="200"><strong>공연 내용</strong></th>
-											<td width="300"><input style="width:500px" type="text" id="content" name="content" required="required"></td>
+											<td width="300"><textarea rows="7" cols="30" id="content" name="content" required="required" style="width:500px;"></textarea></td>
 										</tr>
 										<tr>
 											<th width="200"><strong>공연 가격</strong></th>

@@ -34,6 +34,7 @@
                     <li><a href="performance">공연<span class="sub">Photo Gallery</span></a>
                         <ul>
                             <li><a href="performanceInsertForm.do">아티스트 공연 등록 신청</a></li>
+                            <li><a href="ticketList.do">구매리스트</a></li>
                         </ul>
                     </li>
                     <li><a href="#">게시판<span class="sub">more templates</span></a>

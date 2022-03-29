@@ -17,7 +17,9 @@ public class PerformanceVO {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime sdate;
-	private Date edate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime edate;
 	private String content;
 	private String status;
 	private String image;

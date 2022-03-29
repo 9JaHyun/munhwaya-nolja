@@ -25,8 +25,8 @@
                         <div class="grid_12">
                             <c:forEach items="${performances}" var="performances">
                             <div class="product grid_6" onclick="performanceSearch('${performances.id}')">
-                                <img class="product_img" src="${resources}/images/assets/shop/${performances.image}" alt=""><!-- featured thumbnail -->
-                                <img class="product_img_hover" src="${resources}/images/assets/shop/${performances.image}" alt=""><!-- featured thumbnail hover -->
+                                <img class="product_img" src="${resources}/images/assets/shop/${performances.image}" alt="">
+                                <img class="product_img_hover" src="${resources}/images/assets/shop/${performances.image}" alt="">
                                 <div class="product_inner">
                                     <h3> <a> ${performances.name } </a> </h3>
                                 </div>
