@@ -15,9 +15,8 @@ public class UsageController {
 	
 	@PostMapping("/payCart")
 	@ResponseBody
-	public String payCart(UsageVO vo) {
-		vo.setPlace("P01");
+	public void payCart(UsageVO vo) {
+		System.out.println("1");
 		usageDao.insertUsage(vo);
-		return "home/home";
 	}
 }

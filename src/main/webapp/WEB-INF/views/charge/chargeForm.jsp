@@ -42,7 +42,7 @@
     	        location.href ="chargeForm";
     	    }
     	    alert(msg);
-    
+    		location.href="";
     	});
    }
 </script>

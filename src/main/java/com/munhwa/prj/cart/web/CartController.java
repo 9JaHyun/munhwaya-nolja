@@ -28,7 +28,7 @@ public class CartController {
 	@RequestMapping("/cart")
 	public String listCart(Model model) {
 		model.addAttribute("carts", cartDao.listCart());
-		return "shop/shop_cart";
+		return "cart/shop_cart";
 	}
 	
 	@PostMapping("/deleteCart")
