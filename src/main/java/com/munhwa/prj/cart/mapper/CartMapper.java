@@ -1,4 +1,4 @@
-package com.munhwa.prj.cart.service;
+package com.munhwa.prj.cart.mapper;
 
 import java.util.List;
 

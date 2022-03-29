@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.munhwa.prj.cart.service.CartMapper;
+import com.munhwa.prj.cart.mapper.CartMapper;
 import com.munhwa.prj.cart.service.CartService;
 import com.munhwa.prj.cart.vo.CartVO;
 @Repository("cartDao")
