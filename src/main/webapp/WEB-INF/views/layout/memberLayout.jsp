@@ -13,16 +13,16 @@
     <meta name="keywords"
           content="remix, music, light, dark, themeforest, multi purpose, band, css3, html5">
 
-    <!-- jquery cdn -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap.min.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap-responsive.min.css"
+    <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap.min.css"
           media="screen"/>
+    <link rel="stylesheet" type="text/css"
+          href="${resources}/bootstrap/css/bootstrap-responsive.min.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="${resources}/style.css" id="dark" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="${resources}/js/rs-plugin/css/settings.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/icons.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="${resources}/js/rs-plugin/css/settings.css"
+          media="screen"/>
+    <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/icons.css"
+          media="screen"/>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
     <!-- Favicon -->
@@ -39,7 +39,10 @@
 <body id="fluidGridSystem">
 <div id="layout" class="full">
     <tiles:insertAttribute name="header"/>
-    <tiles:insertAttribute name="body"/>
+    <div class="row row-fluid clearfix mbf">
+        <tiles:insertAttribute name="sidebar"/>
+        <tiles:insertAttribute name="body"/>
+    </div>
     <tiles:insertAttribute name="footer"/>
 </div>
 

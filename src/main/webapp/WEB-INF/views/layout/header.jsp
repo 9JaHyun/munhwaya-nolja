@@ -1,16 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="resources"
+	value="${pageContext.request.contextPath}/resources" />
 <header id="header" class="glue">
-    <div class="headdown">
-        <div class="row clearfix" >
-            <div class="logo bottomtip" title="Best and Most Popular Musics">
-                <a href="/prj"><img src="${resources}/images/logo.png"
-                                 alt="Best and Most Popular Musics"></a>
-            </div>
-
-            <%-- 헤더 네비게이션 바 --%>
-            <nav>
+	<%-- 로그인 버튼--%>
+	<div class="row clearfix">
+		<div class="little-head">
+			<div id="Login_PopUp_Link" class="sign-btn tbutton small">
+				<span>로그인</span>
+			</div>
+		<a href="mypage.do" class="tbutton color2 small" style="background-color: #4c4c4c;"><span>마이페이지</span></a>
+		</div>
+	</div>
+	<div class="headdown">
+		<div class="row clearfix">
+			<div class="logo bottomtip" title="Best and Most Popular Musics">
+				<a href="home.do"><img src="${resources}/images/logo.png"
+					alt="Best and Most Popular Musics"></a>
+			</div>
+			<%-- 헤더 네비게이션 바 --%>
+			<nav>
                 <ul class="sf-menu">
                     <li class="current selectedLava"><a href="/prj">Home<span class="sub">start here</span></a>
                     </li>
@@ -29,45 +39,42 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#">공연<span class="sub">Photo Gallery</span></a>
-                        <ul>
-                            <li><a href="gallery4.html">Gallery 4 Column</a></li>
-                            <li><a href="gallery3.html">Gallery 3 Column</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">게시판<span class="sub">more templates</span></a>
-                        <ul>
-                            <li><a href="rtl.html">RTL Support</a></li>
-                            <li><a href="events.html">Events</a></li>
-                        </ul>
-                    </li>
-                </ul>
-<%--                로그인 버튼--%>
-                <div id="Login_PopUp_Link" class="sign-btn tbutton small"><span>로그인</span></div>
-            </nav>
-        </div>
-    </div>
+					<li><a href="#">공연<span class="sub">Photo Gallery</span></a>
+						<ul>
+							<li><a href="gallery4.html">Gallery 4 Column</a></li>
+							<li><a href="gallery3.html">Gallery 3 Column</a></li>
+						</ul></li>
+					<li><a href="#">게시판<span class="sub">more templates</span></a>
+						<ul>
+							<li><a href="rtl.html">RTL Support</a></li>
+							<li><a href="events.html">Events</a></li>
+						</ul></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 
-    <%-- 로그인 모달--%>
-    <div id="popupLogin">
-        <div class="def-block widget">
-            <h4> 로그인 </h4><span class="liner"></span>
-            <div class="widget-content row-fluid">
-                <form id="popup_login_form">
-                    <input type="text" name="login_username" id="login_username"
-                           onfocus="if (this.value=='username') this.value = '';"
-                           onblur="if (this.value=='') this.value = 'username';" value="username"
-                           placeholder="아이디">
-                    <input type="password" name="login_password" id="login_password"
-                           onfocus="if (this.value=='password') this.value = '';"
-                           onblur="if (this.value=='') this.value = 'password';" value="password"
-                           placeholder="비밀번호">
-                    <a href="#" class="tbutton small"><span>로그인</span></a>
-                    <a href="#" class="tbutton color2 small"><span>회원가입</span></a>
-                </form>
-            </div>
-        </div>
-        <div id="popupLoginClose">x</div>
-    </div>
-    <div id="LoginBackgroundPopup"></div>
+	<%-- 로그인 모달--%>
+	<div id="popupLogin">
+		<div class="def-block widget">
+			<h4>이게로그인창</h4>
+			<span class="liner"></span>
+			<div class="widget-content row-fluid">
+				<form id="popup_login_form">
+					<input type="text" name="login_username" id="login_username"
+						onfocus="if (this.value=='username') this.value = '';"
+						onblur="if (this.value=='') this.value = 'username';"
+						value="username" placeholder="아이디"> <input type="password"
+						name="login_password" id="login_password"
+						onfocus="if (this.value=='password') this.value = '';"
+						onblur="if (this.value=='') this.value = 'password';"
+						value="password" placeholder="비밀번호"> <a href="#"
+						class="tbutton small"><span>로그인</span></a> <a href="signupForm.do"
+						class="tbutton color2 small"><span>회원가입</span></a>
+				</form>
+			</div>
+		</div>
+		<div id="popupLoginClose">x</div>
+	</div>
+	<div id="LoginBackgroundPopup"></div>
 </header>

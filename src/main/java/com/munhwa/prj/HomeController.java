@@ -10,7 +10,7 @@ public class HomeController {
     public String home() {
         return "home/home";
     }
-    
+
     @GetMapping("/404")
     public String errorPage() {
         return "error/404";
