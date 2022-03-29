@@ -39,21 +39,22 @@
                             </li>
                         </ul>
                     </li>
-					<li><a href="#">공연<span class="sub">Photo Gallery</span></a>
-						<ul>
-							<li><a href="gallery4.html">Gallery 4 Column</a></li>
-							<li><a href="gallery3.html">Gallery 3 Column</a></li>
-						</ul></li>
-					<li><a href="#">게시판<span class="sub">more templates</span></a>
-						<ul>
-							<li><a href="rtl.html">RTL Support</a></li>
-							<li><a href="events.html">Events</a></li>
-						</ul></li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-
+                    <li><a href="#">공연<span class="sub">Photo Gallery</span></a>
+                        <ul>
+                            <li><a href="gallery4.html">Gallery 4 Column</a></li>
+                            <li><a href="cart">카트 임시</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">게시판<span class="sub">more templates</span></a>
+                        <ul>
+                            <li><a href="rtl.html">RTL Support</a></li>
+                            <li><a href="events.html">Events</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 	<%-- 로그인 모달--%>
 	<div id="popupLogin">
 		<div class="def-block widget">

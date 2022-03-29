@@ -100,8 +100,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="tbutton mt medium" name="update_cart"><span>구매하기</span>
-                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="tbutton mt medium" name="update_cart" onclick="payCart()">구매하기</button>
                   
                     </div><!-- widget content -->
                 </div><!-- widget shop cart -->
@@ -110,7 +109,15 @@
         </div><!-- row clearfix -->
     </div><!-- end page content -->
 </div>
+
+<form id="frm" name="frm">
+	<input type="hidden" name="mileage" id="mileage">
+	<input type="hidden" name="memberId" id="memberId" value="test0@gmail.com">
+	<input type="hidden" name="pks" id="pks" value="1">
+	<input type="hidden" name="place" id="place" value="U01">
+</form>
 <script>
+
 $(document).ready(function(){
 	
 	itemTotal();
@@ -128,6 +135,7 @@ function itemTotal() {
 	}
 // 	var summ = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(sum);
 	document.getElementById("itemTotalPrice").innerHTML = sum;
+	document.getElementById("mileage").value = sum;
 	$("#totalPrice").val(sum);
 }
 
@@ -155,4 +163,24 @@ function deleteCart(n) {
 	}
 	
 }
+
+function payCart() {
+	var formValues = $("form[name=frm]").serialize();
+	
+	$.ajax({
+		url : "payCart",
+		type : "post",
+		data : formValues,
+		async : false,
+		dataType : "text",
+        success : function(data) {
+                alert("결제에 성공하였습니다.")
+                location.href="chargeForm";
+            },
+			error: function(xhr, status, error){
+                alert(error);
+            }
+        });
+  
+    }
 </script>

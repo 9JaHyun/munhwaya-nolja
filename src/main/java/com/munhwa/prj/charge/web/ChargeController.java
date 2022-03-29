@@ -23,12 +23,11 @@ public class ChargeController {
 	// 테스트용 세션 id값 없이 결제 내역 남기기 
 	@PostMapping("/charge")
 	@ResponseBody
-	public String insertCharge(ChargeVO vo) { 
+	public void insertCharge(ChargeVO vo) { 
 		//HttpSession session = request.getSession();
 		vo.setType("P01");
 		//vo.setMemberId((String) session.getAttribute("id"));
 		chargeDao.insertCharge(vo);
-		return "home/home";
 	}
 	
 	

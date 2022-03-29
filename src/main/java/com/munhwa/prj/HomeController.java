@@ -20,10 +20,4 @@ public class HomeController {
     public String shopPage() {
         return "shop/shop";
     }
-
-    @GetMapping("/shop/cart")
-    public String shopCartPage() {
-        return "shop/shop_cart";
-    }
-    
 }
