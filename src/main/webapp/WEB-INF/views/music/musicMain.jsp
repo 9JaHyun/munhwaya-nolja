@@ -176,8 +176,9 @@
 						<span class="liner"></span>
 						<div class="widget-content row-fluid">
 							<ul class="tab-content-items">
-							<c:forEach var="music" items="${musicChartList}" begin="1" end="7">
+							<c:forEach var="music" items="${musicChartList}" begin="1" end="5" varStatus="status">
 								<li>
+										<span style="color: white; margin: 0px;">${status.count }</span>
 									<a class="m-thumbnail" href="streaming">
 										<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
 									</a>
