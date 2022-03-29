@@ -8,6 +8,8 @@ public interface MusicMapper {
 		List<MusicVO> musicSelectList();
 		List<MusicVO> musicSelectListByGenre(String genre);
 		List<MusicVO> musicPersonalList(String id);
+		List<MusicVO> musicSelectByTitle(String title);
+
 		MusicVO musicSelect(MusicVO vo);
 		int musicInsert(MusicVO vo);
 		int musicUpdate(MusicVO vo);

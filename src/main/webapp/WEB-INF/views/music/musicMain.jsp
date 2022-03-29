@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!-- <script>
 	function musicListByGenre() {
@@ -35,8 +34,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px; " value=""
+						<input id="title" name="title" type="text"
+							style="font-size:x-small; width: 1000px; height: 60px;"
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -260,38 +259,12 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Avril Lopez</strong>Daredevil (video version)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Bob Stoo</strong>No Name No Number</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Justin Gomez</strong>Love You as Love Me</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Back</strong>I Like It (Radio Edit)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Anna</strong>Bad Dog</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Armando</strong>On Time</span>
-									</a>
+									<c:forEach var="music" items="${musicPersonalList}" begin="1" end="8">
+										<a href="video_single_wide.html" class="grid_3">
+											<img src="resources/images/bg/musicBg3.jpg" alt="#">
+											<span><strong>${music.title }</strong>${nusic.artName }</span>
+										</a>
+									</c:forEach>
 								</div><!-- video grid -->
 							</li>
 						</ul>

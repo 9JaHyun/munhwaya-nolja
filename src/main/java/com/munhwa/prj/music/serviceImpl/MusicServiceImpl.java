@@ -21,6 +21,21 @@ public class MusicServiceImpl implements MusicService{
 	}
 
 	@Override
+	public List<MusicVO> musicSelectListByGenre(String genre) {
+		return map.musicSelectListByGenre(genre);
+	}
+	
+	@Override
+	public List<MusicVO> musicPersonalList(String id) {
+		return map.musicPersonalList(id);
+	}
+	
+	@Override
+	public List<MusicVO> musicSelectByTitle(String title) {
+		return map.musicSelectByTitle(title);
+	}
+	
+	@Override
 	public MusicVO musicSelect(MusicVO vo) {
 		return map.musicSelect(vo);
 	}
@@ -40,15 +55,7 @@ public class MusicServiceImpl implements MusicService{
 		return map.musicDelete(vo);
 	}
 
-	@Override
-	public List<MusicVO> musicSelectListByGenre(String genre) {
-		return map.musicSelectListByGenre(genre);
-	}
-
-	@Override
-	public List<MusicVO> musicPersonalList(String id) {
-		return map.musicPersonalList(id);
-	}
 	
+
 
 }

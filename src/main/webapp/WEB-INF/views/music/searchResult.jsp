@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-<!-- layout -->
-<div id="layout" class="full">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
@@ -41,38 +40,12 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
+								<c:forEach var="music" items="${musicSelectListByTitle}" begin="1" end="12">
 									<a href="video_single_wide.html" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dean</strong>half moon</span>
+										<span><strong>${music.title }</strong>${music.artName }</span>
 									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Bob Stoo</strong>No Name No Number</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Justin Gomez</strong>Love You as Love Me</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Back</strong>I Like It (Radio Edit)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Anna</strong>Bad Dog</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Armando</strong>On Time</span>
-									</a>
+								</c:forEach>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->
@@ -96,22 +69,12 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
+								<c:forEach var="album" items="${albumSelectListByTitle}" begin="1" end="4">
 									<a href="video_single_wide.html" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Avril Lopez</strong>Daredevil (video version)</span>
+										<span><strong>${album.title }</strong>${album.title }</span>
 									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Bob Stoo</strong>No Name No Number</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
+								</c:forEach>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->
@@ -121,6 +84,4 @@
 		</div>
 	</div>
 		<!-- content끝 -->
-</div>
-	<!-- layout 끝 -->
 	

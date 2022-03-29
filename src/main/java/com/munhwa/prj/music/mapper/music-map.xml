@@ -39,6 +39,13 @@
 		ORDER BY LIKE_IT DESC
 	</select>
 	
+	<select id="musicSelectByTitle" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE UPPER(TITLE) = UPPER(#{title}) || UPPER(TITLE) LIKE UPPER('%'||#{title}||'%') 
+		ORDER BY LIKE_IT DESC
+	</select>
+	
 	<select id="musicSelect" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC
