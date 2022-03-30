@@ -71,8 +71,8 @@
 	function send() {
 		if(idChk.value == "Y" && nickChk.value == "Y") {
 			
-			var pw = $("#password").val();
-			var pw2 = $("#password2").val();
+			var pw = frm.password.value;
+			var pw2 = frm.password2.value;
 			var num = pw.search(/[0-9]/g);
 			var eng = pw.search(/[a-z]/ig);
 			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);

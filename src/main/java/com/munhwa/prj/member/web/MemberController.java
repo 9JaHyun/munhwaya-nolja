@@ -1,12 +1,11 @@
 package com.munhwa.prj.member.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.member.service.MemberService;
@@ -17,6 +16,8 @@ public class MemberController {
 
     @Autowired
     private MemberService memberDao;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // 마이페이지
     @GetMapping("/mypage.do")
@@ -54,7 +55,6 @@ public class MemberController {
     	return "dropMember-member";
     }
     
-    
     // 회원가입폼
     @GetMapping("/signupForm.do")
     public String signupForm() {
@@ -64,9 +64,8 @@ public class MemberController {
     // 회원가입
     @PostMapping("memberSignup.do")
     public String memberSignup(MemberVO vo) {
-
-        String genre = vo.getGenre();
-        vo.setGenre(chooseGenre(genre));
+        vo.setGenre(chooseGenre(vo.getGenre()));
+        vo.setPassword(passwordEncoder.encode(vo.getPassword()));
 
         int n = memberDao.memberSignup(vo);
         if (n != 0) {
@@ -74,6 +73,17 @@ public class MemberController {
         } else {
             return "error/404";
         }
+    }
+
+    // 로그인폼
+    @GetMapping("/signIn")
+    public String signInForm() {
+        return "signIn/signInForm";
+    }
+
+    @PostMapping("/signIn")
+    public String login() {
+        return "/";
     }
 
     private String chooseGenre(String genre) {
