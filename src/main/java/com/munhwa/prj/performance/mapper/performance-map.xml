@@ -20,8 +20,8 @@
 		SELECT	ID
 		,		NAME
 		,		LOCATION
-		,		SDATE
-		,		EDATE
+		,		to_char(sdate, 'yyyy-MM-dd hh:mm:ss') as SDATE
+		,		to_char(edate, 'yyyy-MM-dd hh:mm:ss') as EDATE
 		,		CONTENT
 		,		STATUS
 		,		IMAGE
@@ -36,8 +36,8 @@
 				SELECT	ID
 		,		NAME
 		,		LOCATION
-		,		SDATE
-		,		EDATE
+		,		to_char(sdate, 'yyyy-MM-dd hh:mm:ss') as SDATE
+		,		to_char(edate, 'yyyy-MM-dd hh:mm:ss') as EDATE
 		,		CONTENT
 		,		STATUS
 		,		IMAGE

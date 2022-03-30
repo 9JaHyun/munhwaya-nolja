@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <div id="layout" class="full">
     <div class="under_header">
@@ -25,11 +26,12 @@
                         <div class="grid_12" style="width:960px;">
                             <c:forEach items="${performances}" var="performances">
                             <div class="product grid_6" onclick="performanceSearch('${performances.id}')" style="width:300px;">
-                                <img class="product_img" src="${resources}/images/assets/shop/1.jpg" style="margin-bottom:15px;">
+                                	<img class="product_img" src="api/picture/${performances.image }" style="margin-bottom:15px; width:300px; height:330px;">
 <%--                                 <img class="product_img_hover" src="${resources}/images/assets/shop/${performances.image}" alt=""> --%>
                                 <div class="product_inner" style="margin-bottom:5px;">
                                     <h3> <a> ${performances.name } </a> </h3>
-                                    <strong> ${performances.sdate } ~ ${performances.edate } </strong>
+                                    <strong> <fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${performances.sdate }" /> ~ 
+                                    <fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${performances.edate }" /> </strong>
                                 </div>
                             </div><!-- product -->
                             </c:forEach>

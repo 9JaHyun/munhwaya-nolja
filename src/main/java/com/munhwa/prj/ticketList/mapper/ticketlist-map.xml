@@ -27,8 +27,8 @@
 	resultMap="ticketListResultMap">
 		SELECT T.ID,
 		       P.NAME,
-			   P.SDATE,
-			   P.EDATE,
+			   to_char(sdate, 'yyyy-MM-dd hh:mm:ss') as P.SDATE,
+			   to_char(edate, 'yyyy-MM-dd hh:mm:ss') as P.EDATE,
 			   P.LOCATION
 		FROM TICKET_LIST T,
 			 MEMBER M,
@@ -42,8 +42,8 @@
 	resultMap="ticketListResultMap">
 		SELECT M.NICKNAME,
 			   P.NAME,
-			   P.SDATE,
-			   P.EDATE,
+			   to_char(sdate, 'yyyy-MM-dd hh:mm:ss') as P.SDATE,
+			   to_char(edate, 'yyyy-MM-dd hh:mm:ss') as P.EDATE,
 			   P.LOCATION,
 			   T.QRCODE
 		FROM TICKET_LIST T,

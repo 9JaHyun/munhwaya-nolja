@@ -35,10 +35,10 @@
                                         <tbody>
                                         <tr class="cart_table_item">
                                             <td class="product-thumbnail">
-                                                <img src="${resources}/images/assets/shop/1.jpg" style="height: 150px; margin-left:20px;">
+                                                <img src="api/picture/${performance.image }" style="height: 150px; width:130px; margin-left:20px;">
                                             </td>
                                             <td class="product-name" style="vertical-align : middle;">
-                                                <a>${performance.name }</a>
+                                                <a style="font-size:20pt;">${performance.name }</a>
                                             </td>
                                             <td class="product-subtotal" style=" vertical-align : middle;">
                                                 <a class="amount" style="font-size:18pt">${performance.price }</a>

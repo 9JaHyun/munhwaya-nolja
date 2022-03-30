@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <div id="layout" class="full">
     <div class="under_header">
@@ -29,7 +30,7 @@
 <%--                                 <img class="product_img_hover" src="${resources}/images/assets/shop/${ticketList.qrcode}" alt=""><!-- featured thumbnail hover --> --%>
  								<div class="product_inner"><br>
                                     <h3> &nbsp;&nbsp;&nbsp;&nbsp;<a> ${ticketLists.performancevo.name } </a> </h3>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>${ticketLists.performancevo.sdate }</a><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${ticketLists.performancevo.sdate }" /><br>
 <%--                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>${ticketList.performancevo.edate }</a> --%>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>${ticketLists.performancevo.location }</a>
                                 </div><br>
