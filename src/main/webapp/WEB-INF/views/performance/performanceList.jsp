@@ -13,8 +13,9 @@
                 <ul>
                     <li><a href="index.html" class="toptip" title="Homepage"> <i
                             class="icon-home"></i> </a></li>
-                    <li><a href="shop.html"> Shop </a></li>
-                    <li> SHOPPING BAG</li>
+                    <li><a href="shop.html"> 공연 </a></li>
+                    <li><a href="performanceSelect.do"> 공연 상세정보 </a></li>
+                    <li> 예매 </li>
                 </ul>
             </div><!-- breadcrumb -->
         </div>
@@ -22,9 +23,8 @@
         <div class="row row-fluid clearfix mbf">
             <div class="span8 posts">
                 <div class="def-block">
-                    <h4> 쇼핑 카트 </h4><span class="liner"></span>
-
-                    <div class="products shop clearfix">
+                    <h4> 공연 예매하기 </h4><span class="liner"></span>
+                    <div class="products shop clearfix" style="margin-bottom: 100px;">
                         <div class="grid_12">
                             <form id="frm" action="ticketListInsert.do" method="post">
                                 <div class="bag_table">
@@ -35,13 +35,12 @@
                                         <tbody>
                                         <tr class="cart_table_item">
                                             <td class="product-thumbnail">
-                                                <a href="#"><img src="images/assets/shop/thumb2.jpg"
-                                                                 alt="#"></a>
+                                                <img src="${resources}/images/assets/shop/1.jpg" style="height: 150px; margin-left:20px;">
                                             </td>
-                                            <td class="product-name">
+                                            <td class="product-name" style="vertical-align : middle;">
                                                 <a>${performance.name }</a>
                                             </td>
-                                            <td class="product-subtotal">
+                                            <td class="product-subtotal" style=" vertical-align : middle;">
                                                 <a class="amount" style="font-size:18pt">${performance.price }</a>
                                             </td>
                                         </tr>

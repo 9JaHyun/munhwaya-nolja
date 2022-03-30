@@ -23,7 +23,12 @@
 										</tr>
 										<tr>
 											<th width="200"><strong>공연 장소</strong></th>
-											<td width="300"><input style="width:500px" type="text" id="location" name="location" required="required"></td>
+											<td width="300">
+<!-- 											<input style="width:500px" type="text" id="location" name="location" required="required"> -->
+												<select id="location" name="location" required="required" style="width:515px">
+													<option value="대구광역시">대구광역시</option>
+												</select>
+											</td>
 										</tr>
 										<tr>
 											<th width="200"><strong>공연 시작 시간</strong></th>

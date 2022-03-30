@@ -11,7 +11,7 @@
             <div class="breadcrumbIn">
                 <ul>
                     <li><a href="index.html" class="toptip" original-title="Homepage"> <i class="icon-home"></i> </a></li>
-                    <li> Shop </li>
+                    <li> 공연 </li>
                 </ul>
             </div><!-- breadcrumb -->
         </div>
@@ -19,16 +19,17 @@
         <div class="row row-fluid clearfix mbf">
             <div class="span8 posts">
                 <div class="def-block" style="width:140%;">
-                    <h4> Products </h4><span class="liner"></span>
+                    <h4> 공연리스트 </h4><span class="liner"></span>
 
                     <div class="products shop clearfix">
-                        <div class="grid_12">
+                        <div class="grid_12" style="width:960px;">
                             <c:forEach items="${performances}" var="performances">
-                            <div class="product grid_6" onclick="performanceSearch('${performances.id}')">
-                                <img class="product_img" src="${resources}/images/assets/shop/${performances.image}" alt="">
-                                <img class="product_img_hover" src="${resources}/images/assets/shop/${performances.image}" alt="">
-                                <div class="product_inner">
+                            <div class="product grid_6" onclick="performanceSearch('${performances.id}')" style="width:300px;">
+                                <img class="product_img" src="${resources}/images/assets/shop/1.jpg" style="margin-bottom:15px;">
+<%--                                 <img class="product_img_hover" src="${resources}/images/assets/shop/${performances.image}" alt=""> --%>
+                                <div class="product_inner" style="margin-bottom:5px;">
                                     <h3> <a> ${performances.name } </a> </h3>
+                                    <strong> ${performances.sdate } ~ ${performances.edate } </strong>
                                 </div>
                             </div><!-- product -->
                             </c:forEach>

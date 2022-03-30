@@ -11,7 +11,7 @@
             <div class="breadcrumbIn">
                 <ul>
                     <li><a href="index.html" class="toptip" original-title="Homepage"> <i class="icon-home"></i> </a></li>
-                    <li> Shop </li>
+                    <li> 구매리스트 </li>
                 </ul>
             </div><!-- breadcrumb -->
         </div>
@@ -19,7 +19,7 @@
         <div class="row row-fluid clearfix mbf">
             <div class="span8 posts">
                 <div class="def-block" style="width:140%;">
-                    <h4> Products </h4><span class="liner"></span>
+                    <h4> 구매리스트 </h4><span class="liner"></span>
 
                     <div class="products shop clearfix">
                         <div class="grid_12">

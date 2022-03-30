@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 	<div id="layout" class="full">
 		<div class="under_header">
 			<img src="images/assets/breadcrumbs10.png" alt="#">
@@ -12,8 +14,8 @@
 						<li><a href="index.html" class="toptip" title="Homepage">
 								<i class="icon-home"></i>
 						</a></li>
-						<li><a href="shop.html"> Shop </a></li>
-						<li>Shop Product</li>
+						<li><a href="performance.do"> 공연 </a></li>
+						<li>공연 상세정보</li>
 					</ul>
 				</div>
 				<!-- breadcrumb -->
@@ -22,7 +24,7 @@
 			<div class="row row-fluid clearfix mbf">
 				<div class="span8 posts">
 					<div class="def-block" style="width: 140%;">
-						<h4>Shop Product</h4>
+						<h4>공연 상세정보</h4>
 						<span class="liner"></span>
 
 						<div class="products shop clearfix">
@@ -30,7 +32,7 @@
 								<div class="clearfix mbs">
 									<div class="grid_6">
 										<div class="postslider clearfix flexslider">
-											<a><img src="images/assets/shop/shop_product.jpg" alt="#"></a>
+											<a><img src="${resources}/images/assets/shop/1.jpg" alt="#"></a>
 										</div>
 									</div>
 									<!-- grid6 -->

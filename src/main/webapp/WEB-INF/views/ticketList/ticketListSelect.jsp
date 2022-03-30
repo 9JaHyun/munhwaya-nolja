@@ -12,8 +12,8 @@
 					<li><a href="index.html" class="toptip" title="Homepage">
 							<i class="icon-home"></i>
 					</a></li>
-					<li><a href="shop.html"> Shop </a></li>
-					<li>Shop Product</li>
+					<li><a href="ticketList.do"> 구매리스트 </a></li>
+					<li>입장표</li>
 				</ul>
 			</div>
 			<!-- breadcrumb -->
@@ -24,7 +24,6 @@
 				<div class="def-block" style="width: 140%; background-Color: black;">
 					<h4>입장표</h4>
 					<span class="liner"></span>
-
 					<div class="products shop clearfix">
 						<div class="grid_12">
 							<div class="clearfix mbs">
@@ -37,7 +36,7 @@
 
 								<div class="grid_6">
 									<div style="margin-bottom: 10px">
-										<strong style="font-size: 14pt;">회원아이디<a style="font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberId }</a></strong>
+										<strong style="font-size: 14pt;">구매자명<a style="font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberId }</a></strong>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
