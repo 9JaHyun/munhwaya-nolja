@@ -7,24 +7,26 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+	<!-- db.properties -->
 	<context:property-placeholder location="classpath:config/db.properties"/>
-	<!-- DBCP 설정 -->
-	<bean class = "org.apache.commons.dbcp2.BasicDataSource" id = "dataSource" destroy-method="close">
-		<property name="driverClassName" value="${driver}"/>
-		<property name="url" value="${url}"/>
-		<property name="username" value = "${user}"/>
-		<property name="password" value="${password}"/>
+	<!-- DBCP -->
+	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource" destroy-method="close">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${password}" />
 	</bean>
-	
-	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocation" value="classpath:config/mybatis-config.xml"/>
-		<property name="mapperLocations" value="classpath*:com/munhwa/prj/**/service/*-map.xml"/>
+
+	<!-- Mybatis -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean" >
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:com/munhwa/prj/**/mapper/*-map.xml" />
 	</bean>
-	
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">
-		<constructor-arg ref="sqlSessionFactoryBean"></constructor-arg>
+		<constructor-arg ref="sqlSessionFactoryBean" />
 	</bean>
 	
-	<mybatis-spring:scan base-package="com.munhwa.prj"/>
+	<mybatis-spring:scan base-package="com.munhwa.prj.**.mapper"/>
+
 </beans>
