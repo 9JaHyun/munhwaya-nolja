@@ -7,10 +7,21 @@
 	<%-- 로그인 버튼--%>
 	<div class="row clearfix">
 		<div class="little-head">
-			<div id="Login_PopUp_Link" class="sign-btn tbutton small">
-				<span>로그인</span>
-			</div>
-		<a href="mypage.do" class="tbutton color2 small" style="background-color: #4c4c4c;"><span>마이페이지</span></a>
+			<c:choose>
+				<c:when test="${sessionScope.member.nickname ne null}">
+					<div class="sign-btn tbutton small">
+						<span>로그아웃</span>		
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div id="Login_PopUp_Link" class="sign-btn tbutton small">
+						<span>로그인</span>		
+					</div>
+				</c:otherwise>
+			</c:choose>
+			<c:if test= "${sessionScope.member.nickname ne null}">
+				<a href="mypage.do" class="tbutton color2 small" style="background-color: #4c4c4c;"><span>마이페이지</span></a>
+			</c:if>
 		</div>
 	</div>
 	<div class="headdown">

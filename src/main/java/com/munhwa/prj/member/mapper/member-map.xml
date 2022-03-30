@@ -8,27 +8,48 @@
 		<result property="nickname" column="nickname" />
 		<result property="tel" column="tel" />
 		<result property="genre" column="genre" />
+		<result property="role" column="role" />
+		<result property="mileage" column="mileage" />
+		<result property="image" column="image" />
 	</resultMap>
 
 	<!-- 회원가입 -->
-	<insert id="memberSignup" parameterType="com.munhwa.prj.member.vo.MemberVO">
+	<insert id="memberSignup"
+		parameterType="com.munhwa.prj.member.vo.MemberVO">
 		INSERT INTO MEMBER (ID, PASSWORD, NICKNAME, TEL, GENRE)
 		VALUES(#{id}, #{password}, #{nickname}, #{tel}, #{genre})
 	</insert>
-	
+
 	<!-- 아이디 중복체크 -->
 	<select id="idChk" parameterType="string" resultType="int">
-		SELECT COUNT(*)
+		SELECT
+		COUNT(*)
 		FROM member
 		WHERE id = #{id}
 	</select>
-	
+
 	<!-- 닉네임 중복체크 -->
 	<select id="nickChk" parameterType="string" resultType="int">
-		SELECT COUNT(*)
+		SELECT
+		COUNT(*)
 		FROM member
 		WHERE nickname = #{nickname}
 	</select>
+
+	<!-- 마이페이지 회원정보 -->
+	<select id="mypageInfo" resultMap="memberResultMap" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		SELECT NICKNAME, ROLE, MILEAGE, IMAGE, ID, TEL, GENRE
+		FROM MEMBER
+		WHERE ID = #{id}
+	</select>
 	
+	<!-- 개인정보 업데이트 -->
+	<update id="updateInfo" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		UPDATE MEMBER
+		SET TEL = #{tel},
+			GENRE = #{genre}
+		WHERE ID = #{id}
+	</update>
+
 
 </mapper>

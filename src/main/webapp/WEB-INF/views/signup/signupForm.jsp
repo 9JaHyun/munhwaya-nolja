@@ -47,10 +47,10 @@
 								placeholder="TEL" required="required" />
 						</div>
 						<select id="genre" name="genre">
-							<option>발라드</option>
-							<option>댄스</option>
-							<option>랩/힙합</option>
-							<option>R&B/Soul</option>
+							<option value="G01">발라드</option>
+							<option value="G02">댄스</option>
+							<option value="G03">랩/힙합</option>
+							<option value="G04">R&B/Soul</option>
 						</select>
 
 					</div>
@@ -77,8 +77,10 @@
 			var eng = pw.search(/[a-z]/ig);
 			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 			
+			var tel = $('#tel').val();
+			var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+			
 			if(pw.length < 8 || pw.length > 20){
-
 				 alert("비밀번호를 8자리 ~ 20자리 이내로 입력해주세요.");
 				 return false;
 				}else if(pw.search(/\s/) != -1){
@@ -89,6 +91,9 @@
 				 return false;
 				}else if(pw != pw2) {
 				 alert("비밀번호가 서로 일치하지 않습니다.");
+				 return false;
+				}else if (!tel.match(regPhone)) {
+				 alert("적절하지 않은 휴대폰번호 양식입니다.");
 				 return false;
 				}else {
 				 return true;	

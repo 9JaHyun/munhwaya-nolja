@@ -1,5 +1,6 @@
 package com.munhwa.prj.member.serviceImpl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +28,16 @@ public class MemberServiceImpl implements MemberService {
 	public int nickChk(String nickname) {
 		return map.nickChk(nickname);
 	}
+
+	@Override
+	public MemberVO mypageInfo(MemberVO vo) {
+		return map.mypageInfo(vo);
+	}
+
+	@Override
+	public int updateInfo(MemberVO vo) {
+		return map.updateInfo(vo);
+	}
+
+
 }

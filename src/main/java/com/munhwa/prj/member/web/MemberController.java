@@ -1,12 +1,12 @@
 package com.munhwa.prj.member.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.member.service.MemberService;
@@ -17,11 +17,28 @@ public class MemberController {
 
     @Autowired
     private MemberService memberDao;
+    
+    
+    // 로그인 대체
+    @GetMapping("/createMember")
+    public @ResponseBody String createMember(HttpServletRequest req) {
+    	MemberVO memberVO = new MemberVO();
+    	memberVO.setId("test@test.test");
+    	memberVO = memberDao.mypageInfo(memberVO);
+        req.getSession().setAttribute("member", memberVO);
+        return "OK";
+    }
 
     // 마이페이지
     @GetMapping("/mypage.do")
-    public String mypage() {
-        return "mypage-member";
+    public String mypage(HttpServletRequest req, Model model) {
+    	MemberVO vo = (MemberVO) req.getSession().getAttribute("member");
+    	if (vo != null) {
+    		model.addAttribute("member", vo);
+    		return "mypage-member";
+    	} else {
+    		return "error/404";
+    	}
     }
     
     // 회원정보 변경 페이지
@@ -30,7 +47,7 @@ public class MemberController {
     	return "memberChangeInfo-member";
     }
 
-    // 프로플 변경 페이지
+    // 프로필 변경 페이지
     @GetMapping("/changeProfile.do")
     public String changeProfile() {
     	return "changeProfile-member";
@@ -41,6 +58,17 @@ public class MemberController {
     public String changeInfo() {
     	return "changeInfo-member";
     }
+    
+    // 개인정보 업데이트
+	@PostMapping("updateInfo.do")
+	public String updateInfo(MemberVO vo) {
+		int n = memberDao.updateInfo(vo);
+		if (n != 0) {
+			return "redirect:memberChangeInfo.do";
+		} else {			
+			return "error/404";
+		}
+	}
     
     // 비밀번호 변경 페이지
     @GetMapping("/changePassword.do")
@@ -65,9 +93,6 @@ public class MemberController {
     @PostMapping("memberSignup.do")
     public String memberSignup(MemberVO vo) {
 
-        String genre = vo.getGenre();
-        vo.setGenre(chooseGenre(genre));
-
         int n = memberDao.memberSignup(vo);
         if (n != 0) {
             return "redirect:home.do";
@@ -76,26 +101,6 @@ public class MemberController {
         }
     }
 
-    private String chooseGenre(String genre) {
-        String result;
-        switch (genre) {
-            case "발라드":
-                result = "G01";
-                break;
-            case "댄스":
-                result = "G02";
-                break;
-            case "랩/힙합":
-                result = "G03";
-                break;
-            case "R&B/Soul":
-                result = "G04";
-                break;
-            default:
-                throw new AssertionError("정확하지 않은 장르입니다.");
-        }
-        return result;
-    }
 
     // 아이디 중복체크
     @ResponseBody
