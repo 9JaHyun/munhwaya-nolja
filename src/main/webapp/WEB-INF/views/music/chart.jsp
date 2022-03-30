@@ -176,6 +176,7 @@
 		<!-- content끝 -->
 </div>
 	<!-- layout 끝 -->
+
 <script>
 $(document).ready(function(){
 	

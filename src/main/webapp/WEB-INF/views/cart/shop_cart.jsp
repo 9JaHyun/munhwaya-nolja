@@ -113,7 +113,7 @@
 <form id="frm" name="frm">
 	<input type="hidden" name="mileage" id="mileage">
 	<input type="hidden" name="memberId" id="memberId" value="test0@gmail.com">
-	<input type="hidden" name="pks" id="pks" value=""> 
+	<input type="hidden" name="pks" id="pks" value="1"> 
 	<input type="hidden" name="place" id="place" value="U01">
 </form>
 <script>
