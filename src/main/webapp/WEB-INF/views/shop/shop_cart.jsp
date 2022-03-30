@@ -1,3 +1,4 @@
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
@@ -22,26 +23,25 @@
         <div class="row row-fluid clearfix mbf">
             <div class="span8 posts">
                 <div class="def-block">
-                    <h4> SHOPPING BAG </h4><span class="liner"></span>
+                    <h4> 쇼핑 카트 </h4><span class="liner"></span>
 
                     <div class="products shop clearfix">
                         <div class="grid_12">
                             <form action="#" method="post">
                                 <div class="bag_table">
-                                    <table class="shop_table footable tablet footable-loaded"
+                                    <table class="shop_table footable tablet footable-loaded" style="width:100%"
                                            cellspacing="0">
                                         <thead>
                                         <tr>
                                             <th data-hide="phone" class="product-thumbnail">&nbsp;
                                             </th>
-                                            <th class="product-name">Item</th>
-                                            <th class="product-quantity">Quantity</th>
-                                            <th class="product-subtotal">Total</th>
+                                            <th class="product-name">노래</th>
+                                            <th class="product-subtotal">가격</th>
                                             <th class="product-remove">&nbsp;</th>
                                         </tr>
                                         </thead>
-
                                         <tbody>
+                                        <c:forEach items="${carts }" var="cart">
                                         <tr class="cart_table_item">
                                             <td class="product-thumbnail">
                                                 <a href="#"><img src="images/assets/shop/thumb2.jpg"
@@ -49,59 +49,23 @@
                                             </td>
 
                                             <td class="product-name">
-                                                <a href="#">109F SOLID WOMEN'S TOP</a>
-                                                <div class="product-price">
-                                                    <span class="amount">$50.00</span>
-                                                </div>
+                                                <a href="#">${cart.musicvo.title}</a>
+                                                <br><br>
                                             </td>
 
-                                            <td class="product-quantity">
-                                                <div class="quantity buttons_added">
-                                                    <input name="qty" value="1" size="4" class="qty"
-                                                           maxlength="12">
-                                                </div>
-                                            </td>
 
                                             <td class="product-subtotal">
-                                                <span class="amount">$55.00</span>
+                                                <div class="price" id="price">${cart.musicvo.price}</div>
                                             </td>
 
                                             <td class="product-remove tac">
-                                                <a href="#" class="remove toptip"
+                                                <a onclick="deleteCart(${cart.id})" class="remove toptip"
                                                    original-title="Remove this item">×</a>
                                             </td>
                                         </tr>
+										</c:forEach>
 
-
-                                        <tr class="cart_table_item">
-                                            <td class="product-thumbnail">
-                                                <a href="#"><img src="images/assets/shop/thumb1.jpg"
-                                                                 alt="#"></a>
-                                            </td>
-
-                                            <td class="product-name">
-                                                <a href="#">MEN'S TOP</a>
-                                                <div class="product-price">
-                                                    <span class="amount">$110.00</span>
-                                                </div>
-                                            </td>
-
-                                            <td class="product-quantity">
-                                                <div class="quantity buttons_added">
-                                                    <input name="qty" value="2" size="4" class="qty"
-                                                           maxlength="12">
-                                                </div>
-                                            </td>
-
-                                            <td class="product-subtotal">
-                                                <span class="amount">$220.00</span>
-                                            </td>
-
-                                            <td class="product-remove tac">
-                                                <a href="#" class="remove toptip"
-                                                   original-title="Remove this item">×</a>
-                                            </td>
-                                        </tr>
+                                       
                                         </tbody>
                                     </table>
                                 </div><!-- bag table -->
@@ -113,45 +77,32 @@
             </div><!-- span8 posts -->
 
             <div class="span4 sidebar">
-                <div class="def-block widget">
-                    <h4> Have a coupon? </h4><span class="liner"></span>
-                    <div class="widget-content">
-                        <div class="clearfix">
-                            <form action="#" method="post">
-                                <input name="text" class="coupon_input"
-                                       placeholder="Enter coupon code" value="">
-                                <button type="button" class="tbutton coupon_button small"
-                                        name="button"><span>Apply</span></button>
-                            </form>
-                        </div>
-                    </div><!-- widget content -->
-                </div><!-- widget shop cart -->
 
                 <div class="def-block widget">
-                    <h4> SHOPPING BAG TOTALS </h4><span class="liner"></span>
+                    <h4> 가격 </h4><span class="liner"></span>
                     <div class="widget-content">
                         <table class="total_w_table" cellspacing="0">
                             <tbody>
                             <tr class="cart-subtotal">
-                                <th><strong>Subtotal</strong></th>
-                                <td><strong><span class="amount">$275.00</span></strong></td>
-                            </tr>
-                            <tr class="shipping">
-                                <th>Shipping</th>
-                                <td>Free Shipping<input type="hidden" name="shipping_method"
-                                                        id="shipping_method" value="free_shipping">
-                                </td>
+                                <th><strong>보유중인 마일리지 </strong></th>
+                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;${cart.musicvo.price }[0]</span></strong></td>
                             </tr>
                             <tr class="total">
-                                <th><strong>Total</strong></th>
-                                <td><strong><span class="amount">$275.00</span></strong></td>
+                                <th><strong>총 가격</strong></th>
+                                <td><strong>&nbsp;&nbsp;&nbsp;<span id="itemTotalPrice"></span>
+                                	
+                                </strong></td>
+                            </tr>
+                          
+                            <tr class="total">
+                                <th><strong>잔여 마일리지</strong></th>
+                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;0</span></strong></td>
                             </tr>
                             </tbody>
                         </table>
-                        <button type="button" class="tbutton mt medium" name="update_cart"><span>Update Bag</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="tbutton mt medium" name="update_cart"><span>구매하기</span>
                         </button>
-                        <button type="button" class="tbutton mt medium color2" name="proceed"><span>Checkout</span>
-                        </button>
+                  
                     </div><!-- widget content -->
                 </div><!-- widget shop cart -->
 
@@ -159,3 +110,49 @@
         </div><!-- row clearfix -->
     </div><!-- end page content -->
 </div>
+<script>
+$(document).ready(function(){
+	
+	itemTotal();
+
+	});
+	
+function itemTotal() {
+	console.log("토탈들어옴?");
+	var price = document.getElementsByClassName("price").innerHTML
+	var sum = 0;
+
+	for (var i = 0; i < document.getElementsByClassName("price").length; i++){
+		sum += parseInt(document.getElementsByClassName("price")[i].innerHTML)
+		
+	}
+// 	var summ = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(sum);
+	document.getElementById("itemTotalPrice").innerHTML = sum;
+	$("#totalPrice").val(sum);
+}
+
+
+
+function deleteCart(n) {
+	var del = false;
+	$.ajax({
+		url : "deleteCart",
+		type : "post",
+		data : {"id" : n},
+		async: false,
+		dataType: "text",
+		success : function(data) {
+			if(data.length > 0) {
+				del = true;
+			}
+		}
+	});
+	if(del) {
+		$(event.target).parent().parent().remove();
+		itemTotal();
+	} else {
+		alert(del + "삭제 실패!!!!");
+	}
+	
+}
+</script>

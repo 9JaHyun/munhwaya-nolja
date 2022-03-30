@@ -173,6 +173,7 @@ jQuery( function($) {
 			speed: 800
 		});
 	}
+	
 	if ($(".mp3-carousel")[0]) {
 		jQuery(".mp3-carousel").jCarouselLite({
 			btnNext: ".nexte",
@@ -185,6 +186,7 @@ jQuery( function($) {
 			speed: 800
 		});
 	}
+	
 	if ($(".progress-bar")[0]) {
 		$(".progress-bar > span").each(function () {
 			$(this)
