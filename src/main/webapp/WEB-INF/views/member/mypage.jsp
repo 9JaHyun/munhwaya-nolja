@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<div class="span8 posts">
-    <div class="def-block">
-        <div class="post row-fluid clearfix">
+         pageEncoding="UTF-8" %>        
+
             <div align="right" style="margin-bottom: 50px;"><h4>새소식</h4></div>
             <div class="mbf clearfix">
                 <div class="notification-box notification-box-success">
@@ -27,6 +25,3 @@
                             class="icon-remove"></i></a>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
