@@ -28,21 +28,26 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="${resources}/images/favicon.ico">
     <link rel="apple-touch-icon" href="${resources}/images/apple-touch-icon.png">
-
-
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=EmulateIE8; IE=EDGE"/>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/font-awesome-ie7.min.css"/>
-    <![endif]-->
 </head>
+
 <body id="fluidGridSystem">
 <div id="layout" class="full">
     <tiles:insertAttribute name="header"/>
-    <div class="row row-fluid clearfix mbf">
-        <tiles:insertAttribute name="sidebar"/>
-        <tiles:insertAttribute name="body"/>
-    </div>
+    	<div class="under_header">
+			<img src="resources/images/assets/mypageback.png" alt="#">
+		</div>
+		<div class="page-content back_to_up">
+	    	<div class="row row-fluid clearfix mbf">
+	    <tiles:insertAttribute name="sidebar"/>
+	   			<div class="span8 posts">
+	    			<div class="def-block">
+	    				<div class="post row-fluid clearfix">
+	<tiles:insertAttribute name="body"/>
+	     				</div>
+	    			</div>
+				</div>
+	    	</div>
+	    </div>
     <tiles:insertAttribute name="footer"/>
 </div>
 
