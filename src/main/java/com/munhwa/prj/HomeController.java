@@ -1,7 +1,11 @@
 package com.munhwa.prj;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HomeController {
@@ -16,13 +20,16 @@ public class HomeController {
         return "error/404";
     }
 
-    @GetMapping("/shop")
-    public String shopPage() {
-        return "shop/shop";
-    }
-
     @GetMapping("/shop/cart")
     public String shopCartPage() {
         return "shop/shop_cart.artist";
     }
+    
+    // 강제적으로 세션 "member" 생성
+    @GetMapping("/create-member")
+    public @ResponseBody String createSession(HttpServletRequest req) {
+    	req.getSession().setAttribute("member", "test0@gmail.com");
+    	return "ok";
+    }
+    
 }
