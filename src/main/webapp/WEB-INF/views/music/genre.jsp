@@ -48,7 +48,7 @@
 						<li id="Soon" class="active">
 							<div class="post no-border no-mp clearfix">
 								<ul class="tab-content-items">
-									<c:forEach var="music" items="${musicRnBList}" begin="1" end="16">
+									<c:forEach var="music" items="${musicRnBList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="steraming">
 												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
@@ -71,7 +71,7 @@
 						<li id="Latest">
 							<div class="post no-border no-mp clearfix">
 								<ul class="tab-content-items">
-									<c:forEach var="music" items="${musicRapList}" begin="1" end="16">
+									<c:forEach var="music" items="${musicRapList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="steraming">
 												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
@@ -94,7 +94,7 @@
 						<li id="Featured">
 							<div class="post no-border no-mp clearfix">
 								<ul class="tab-content-items">
-									<c:forEach var="music" items="${musicDanceList}" begin="1" end="16">
+									<c:forEach var="music" items="${musicDanceList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="steraming">
 												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
@@ -117,7 +117,7 @@
 						<li id="Albums">
 							<div class="post no-border no-mp clearfix">
 								<ul class="tab-content-items">
-										<c:forEach var="music" items="${musicBalladList}" begin="1" end="16">
+										<c:forEach var="music" items="${musicBalladList}" begin="0" end="15">
 											<li class="grid_6">
 												<a class="m-thumbnail" href="steraming">
 													<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">

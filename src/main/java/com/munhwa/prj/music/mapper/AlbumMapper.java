@@ -7,9 +7,8 @@ import com.munhwa.prj.music.vo.AlbumVO;
 public interface AlbumMapper {
 	List<AlbumVO> albumSelectList();
 	List<AlbumVO> albumSelectListByRelease();
-	List<AlbumVO> albumSelectByTitle(String title);
 
-	AlbumVO albumSelect(AlbumVO vo);
+	AlbumVO albumSelect(int id);
 	int albumInsert(AlbumVO vo);
 	int albumUpdate(AlbumVO vo);
 	int albumDelete(AlbumVO vo);

@@ -37,7 +37,7 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="1" end="12">
+								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="11">
 									<a href="albumInfo" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>${album.albName }</strong>${album.artName }</span>

@@ -62,11 +62,11 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="music" items="${musicChartList}" begin="1" end="20" varStatus="status">
-												<tr class="cart_table_item" style="text-align: center; font-size:x-small ;">
-													<td>${status.count}</td>
+												<c:forEach var="music" items="${musicChartList}" begin="0" end="19" varStatus="status">
+												<tr class="cart_table_item" style="text-align: center; font-size:small ;">
+													<td >${status.count}</td>
 													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
+													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px; width:100%; height:100%; object-fit: cover;"></a>
 													</td>
 													<td class="product-name">
 														${music.title }

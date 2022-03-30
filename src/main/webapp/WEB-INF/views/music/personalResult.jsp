@@ -53,15 +53,15 @@
 											<thead>
 												<tr>
 													<th></th>
-													<th><h4>제목</h4></th>
+													<th style="width: 300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
 													<th><h4>좋아요</h4></th>
 													<th><h4>다운로드</h4></th>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="music" items="${musicPersonalList}" begin="1" end="20" varStatus="status">
-												<tr class="cart_table_item" style="text-align: center; font-size:x-small;">
+												<c:forEach var="music" items="${musicPersonalList}" begin="0" end="19" varStatus="status">
+												<tr class="cart_table_item" style="text-align: center; font-size:medium ;">
 													<td class="product-thumbnail" style="width:70px;">
 													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>

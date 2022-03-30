@@ -3,14 +3,17 @@ package com.munhwa.prj.music.mapper;
 import java.util.List;
 
 import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.music.vo.SearchVO;
 
 public interface MusicMapper {
 		List<MusicVO> musicSelectList();
 		List<MusicVO> musicSelectListByGenre(String genre);
 		List<MusicVO> musicPersonalList(String id);
-		List<MusicVO> musicSelectByTitle(String title);
-
+		List<SearchVO> musicSelectByTitle(String title);
+		
+		List<MusicVO> musicSelectByAlBum(int id);
 		MusicVO musicSelect(MusicVO vo);
+		
 		int musicInsert(MusicVO vo);
 		int musicUpdate(MusicVO vo);
 		int musicDelete(MusicVO vo);

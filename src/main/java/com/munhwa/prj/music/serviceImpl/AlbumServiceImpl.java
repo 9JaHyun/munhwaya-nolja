@@ -19,14 +19,10 @@ public class AlbumServiceImpl implements AlbumService{
 		return map.albumSelectList();
 	}
 	
-	@Override
-		public List<AlbumVO> albumSelectByTitle(String title) {
-			return map.albumSelectByTitle(title);
-	}
 		
 	@Override
-	public AlbumVO albumSelect(AlbumVO vo) {
-		return map.albumSelect(vo);
+	public AlbumVO albumSelect(int id) {
+		return map.albumSelect(id);
 	}
 
 	@Override

@@ -25,14 +25,7 @@
 		WHERE RELEASE_AT BETWEEN SYSDATE-365 AND SYSDATE
 	</select>
 	
-	<select id="albumSelectByTitle" parameterType="String" resultMap="albumResultMap">
-		SELECT *
-		FROM ALBUM
-		WHERE UPPER(ALB_NAME) = UPPER(#{title}) || UPPER(ALB_NAME) LIKE UPPER('%'||#{title}||'%') 
-		ORDER BY SCORE DESC
-	</select>
-	
-	<select id="albumSelect" resultMap="albumResultMap">
+	<select id="albumSelect" parameterType="int" resultMap="albumResultMap">
 		SELECT *
 		FROM ALBUM
 		WHERE ID = #{id}

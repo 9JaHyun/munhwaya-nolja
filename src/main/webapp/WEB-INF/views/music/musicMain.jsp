@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- <script>
 	function musicListByGenre() {
@@ -25,7 +26,7 @@
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBg.jpg" alt="" style="height: 1500px;">
 	</div>
-		
+	
 	<!-- content -->
 	<div class="page-content back_to_up">
 		<!-- 최상단메인칸 -->
@@ -35,7 +36,7 @@
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
 						<input id="title" name="title" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px;"
+							style="font-size:small; width: 1000px; height: 60px;"
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -68,10 +69,10 @@
 						<li id="Soon" class="active">
 							<div class="post no-border no-mp clearfix">
 								<ul class="tab-content-items">
-									<c:forEach var="music" items="${musicRnBList}" begin="1" end="10">
+									<c:forEach var="music" items="${musicRnBList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="steraming">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
 												<a href="streaming">${music.title }</a>
@@ -81,7 +82,6 @@
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -91,10 +91,10 @@
 						<li id="Latest">
 							<div class="post no-border no-mp clearfix">
 								<ul class="tab-content-items">
-									<c:forEach var="music" items="${musicRapList}" begin="1" end="10">
+									<c:forEach var="music" items="${musicRapList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="steraming">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
 												<a href="streaming">${music.title }</a>
@@ -104,7 +104,6 @@
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -114,10 +113,10 @@
 						<li id="Featured">
 							<div class="post no-border no-mp clearfix">
 								<ul class="tab-content-items">
-									<c:forEach var="music" items="${musicDanceList}" begin="1" end="10">
+									<c:forEach var="music" items="${musicDanceList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="steraming">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
 												<a href="streaming">${music.title }</a>
@@ -127,7 +126,6 @@
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -137,10 +135,10 @@
 						<li id="Albums">
 							<div class="post no-border no-mp clearfix">
 								<ul class="tab-content-items">
-										<c:forEach var="music" items="${musicBalladList}" begin="1" end="10">
+										<c:forEach var="music" items="${musicBalladList}" begin="0" end="9">
 											<li class="grid_6">
 												<a class="m-thumbnail" href="steraming">
-													<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+													<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 												</a>
 												<h3>
 													<a href="streaming">${music.title }</a>
@@ -150,7 +148,6 @@
 											</li>
 										</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- news -->
 						</li>
@@ -176,11 +173,13 @@
 						<span class="liner"></span>
 						<div class="widget-content row-fluid">
 							<ul class="tab-content-items">
-							<c:forEach var="music" items="${musicChartList}" begin="1" end="5" varStatus="status">
+							<c:forEach var="music" items="${musicChartList}" begin="0" end="4" varStatus="status">
 								<li>
-										<span style="color: white; margin: 0px;">${status.count }</span>
+									<span style="margin:0px;"><h4 style="color: white; margin: 0px; 
+										font-size:small;padding: 0px;">${status.count }위</h4></span>
 									<a class="m-thumbnail" href="streaming">
-										<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+										<img style="width:100%; height:100%; object-fit: cover;" 
+											src="resources/images/bg/musicBg3.jpg" alt="#">
 									</a>
 									<h3>
 										<a href="mp3_single_half.html">${music.title }</a>
@@ -212,16 +211,16 @@
 					<div class="mp3-carousel">
 						<div class="anyClass">
 							<ul class="tab-content-items">
-								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="1" end="5">
+								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="4">
 								<li>
-									<a class="m-thumbnail" href="mp3_single_half.html">
-										<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+									<a class="m-thumbnail" href="albumInfo?id=${album.id }">
+										<img style="width:100%; height:100%; object-fit: cover; " src="resources/images/bg/musicBg3.jpg" alt="#">
 									</a>
 									<h3>
 										<a href="mp3_single_half.html">${album.albName}</a>
 									</h3> 
 									<span>${album.artName}</span> 
-									<span>${album.releaseAt}</span> 
+									<span><fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${album.releaseAt}" /></span> 
 								</li>
 								</c:forEach>
 							</ul>
@@ -260,10 +259,10 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-									<c:forEach var="music" items="${musicPersonalList}" begin="1" end="8">
+									<c:forEach var="music" items="${musicPersonalList}" begin="0" end="7">
 										<a href="video_single_wide.html" class="grid_3">
-											<img src="resources/images/bg/musicBg3.jpg" alt="#">
-											<span><strong>${music.title }</strong>${nusic.artName }</span>
+											<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
+											<span><strong>${music.title }</strong>${music.artName }</span>
 										</a>
 									</c:forEach>
 								</div><!-- video grid -->

@@ -1,6 +1,5 @@
 package com.munhwa.prj.music.web;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -50,17 +49,19 @@ public class MusicController {
 	@GetMapping("/searchResult")
     public String searchResult(String title, Model model) {
 		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title));
-		model.addAttribute("albumSelectListByTitle", albumDAO.albumSelectByTitle(title));
-        return "music/searchResult";
+        model.addAttribute("title", title);
+		return "music/searchResult";
     }
 	
 	@GetMapping("/searchResultMusic")
-    public String searchResultMusic() {
+    public String searchResultMusic(Model model, String title) {
+		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title));
         return "music/searchResultMusic";
     }
 	
 	@GetMapping("/searchResultAlbum")
-    public String searchResultAlbum() {
+    public String searchResultAlbum(Model model, String title) {
+		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title));
         return "music/searchResultAlbum";
     }
 	
@@ -77,7 +78,9 @@ public class MusicController {
 	}
 	
 	@GetMapping("/albumInfo")
-	public String albumInfo() {
+	public String albumInfo(Model model, int id) {
+		model.addAttribute("selectAlbum", albumDAO.albumSelect(id));
+		model.addAttribute("selectMusicByAlbum", musicDAO.musicSelectByAlBum(id));
 		return "music/albumInfo";
 	}
 	

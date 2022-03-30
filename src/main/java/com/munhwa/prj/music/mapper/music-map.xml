@@ -16,7 +16,7 @@
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
 	</resultMap>
-	
+
 	<select id="musicSelectList" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC
@@ -39,11 +39,19 @@
 		ORDER BY LIKE_IT DESC
 	</select>
 	
-	<select id="musicSelectByTitle" parameterType="String" resultMap="musicResultMap">
+	<select id="musicSelectByTitle" parameterType="String" resultType="com.munhwa.prj.music.vo.SearchVO">
+		SELECT m.ID as musicId, m.TITLE as musicTitle, m.ART_NAME as musicArtistName, m.FILE_NAME as musicImage, 
+			   a.ID as albumId, a.ALB_NAME as albumTitle, a.ART_NAME as albumArtistName, a.PICTURE as albumImage
+		FROM MUSIC m 
+		JOIN ALBUM a 
+		ON(m.ALBUM_ID = a.ID)
+		WHERE UPPER(TITLE) LIKE UPPER('%'||#{title}||'%') 
+	</select>
+	
+	<select id="musicSelectByAlBum" parameterType="int" resultMap="musicResultMap">
 		SELECT *
-		FROM MUSIC
-		WHERE UPPER(TITLE) = UPPER(#{title}) || UPPER(TITLE) LIKE UPPER('%'||#{title}||'%') 
-		ORDER BY LIKE_IT DESC
+		FROM MUSIC m 
+		WHERE ALBUM_ID = #{id}
 	</select>
 	
 	<select id="musicSelect" resultMap="musicResultMap">
