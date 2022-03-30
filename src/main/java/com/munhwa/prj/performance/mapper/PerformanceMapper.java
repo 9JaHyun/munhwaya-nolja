@@ -1,4 +1,4 @@
-package com.munhwa.prj.performance.service;
+package com.munhwa.prj.performance.mapper;
 
 import java.util.List;
 

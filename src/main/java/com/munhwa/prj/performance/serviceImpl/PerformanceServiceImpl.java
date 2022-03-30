@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.munhwa.prj.performance.service.PerformanceMapper;
+import com.munhwa.prj.performance.mapper.PerformanceMapper;
 import com.munhwa.prj.performance.service.PerformanceService;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 

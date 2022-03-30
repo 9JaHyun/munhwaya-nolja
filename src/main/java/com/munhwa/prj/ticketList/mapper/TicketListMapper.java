@@ -1,4 +1,4 @@
-package com.munhwa.prj.ticketList.service;
+package com.munhwa.prj.ticketList.mapper;
 
 import java.util.List;
 

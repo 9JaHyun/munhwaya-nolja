@@ -16,7 +16,7 @@ public class HomeController {
     }
     
     @GetMapping("home.do")
-    public String home() {
+    public String homeDo() {
         return "home/home";
     }
 
