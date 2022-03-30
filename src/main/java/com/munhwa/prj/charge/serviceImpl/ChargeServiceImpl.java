@@ -15,8 +15,8 @@ public class ChargeServiceImpl implements ChargeService {
 	private ChargeMapper map;
 	
 	@Override
-	public List<ChargeVO> listCharge() {
-		return map.listCharge();
+	public List<ChargeVO> findByMemberId(String id) {
+		return map.selectChargeListByMemberId(id);
 	}
 
 	@Override

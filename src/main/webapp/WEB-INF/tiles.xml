@@ -34,6 +34,10 @@
   <definition name="*-member" extends="memberTemplate">
     <put-attribute name="body" value="/WEB-INF/views/member/{1}.jsp"/>
   </definition>
+  
+  <definition name="*-memberWallet" extends="memberTemplate">
+    <put-attribute name="body" value="/WEB-INF/views/wallet/{1}.jsp"/>
+  </definition>
 
   <definition name="*-artist" extends="artistTemplate">
     <put-attribute name="body" value="/WEB-INF/views/artist/{1}.jsp"/>

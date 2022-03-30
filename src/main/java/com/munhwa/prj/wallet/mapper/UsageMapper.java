@@ -1,8 +1,8 @@
-package com.munhwa.prj.usage.mapper;
+package com.munhwa.prj.wallet.mapper;
 
 import java.util.List;
 
-import com.munhwa.prj.usage.vo.UsageVO;
+import com.munhwa.prj.wallet.vo.UsageVO;
 
 public interface UsageMapper {
 	List<UsageVO> listUsage();

@@ -5,7 +5,7 @@ import java.util.List;
 import com.munhwa.prj.charge.vo.ChargeVO;
 
 public interface ChargeService {
-	List<ChargeVO> listCharge();
+	List<ChargeVO> findByMemberId(String memberId);
 
 	ChargeVO selectCharge(ChargeVO vo);
 

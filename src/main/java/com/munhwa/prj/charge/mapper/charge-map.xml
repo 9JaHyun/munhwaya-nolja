@@ -8,19 +8,34 @@
     <result property="mileage" column="mileage"/>
     <result property="type" column="type"/>
     <result property="memberId" column="member_id"/>
+    <collection property="commonCodevo" resultMap="commonResultMap"/>
+  </resultMap>
+  
+  <resultMap type="com.munhwa.prj.commonCode.vo.CommonCodeVO" id="commonResultMap">
+  	<id property="id" column="id"/>
+  	<result property="name" column="name"/>
   </resultMap>
 
-  <select id="listCharge" resultMap="chargeResultMap">
-    SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, member_id
-    FROM charge_history
-    ORDER BY id DESC
+  <select id="selectChargeListByMemberId" parameterType="String" resultMap="chargeResultMap">
+  	select a.id, 
+        a.charge_at, 
+        a.mileage, 
+        a.type, 
+        a.member_id, 
+        b.id, 
+        b.name
+	from charge_history a, 
+		 common_code b
+	where a.type = b.id
+	and a.member_id = #{id}
   </select>
 
-  <select id="selectCharge" resultMap="chargeResultMap">
-    SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, member_id
-    FROM charge_history
-    WHERE member_id = #{memberId}
-  </select>
+<!--   <select id="selectCharge" resultMap="chargeResultMap"> -->
+<!--     SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, member_id -->
+<!--     SELECT id, charge_at, mileage, type, member_id -->
+<!--     FROM charge_history -->
+<!--     WHERE member_id = #{memberId} -->
+<!--   </select> -->
 
   <insert id="insertCharge" parameterType="com.munhwa.prj.charge.vo.ChargeVO">
     INSERT INTO charge_history(id, charge_at, mileage, type, member_id)

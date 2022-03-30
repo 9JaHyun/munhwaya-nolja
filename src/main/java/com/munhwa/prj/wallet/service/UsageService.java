@@ -1,8 +1,8 @@
-package com.munhwa.prj.usage.service;
+package com.munhwa.prj.wallet.service;
 
 import java.util.List;
 
-import com.munhwa.prj.usage.vo.UsageVO;
+import com.munhwa.prj.wallet.vo.UsageVO;
 
 public interface UsageService {
 	List<UsageVO> listUsage();

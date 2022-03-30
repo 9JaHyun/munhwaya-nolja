@@ -44,7 +44,7 @@ public class ChargeController {
 	
 	@PostMapping("/charge")
 	@ResponseBody
-	public void insertCharge(ChargeVO vo, HttpServletRequest req,Model model) {
+	public void insertCharge(ChargeVO vo, HttpServletRequest req, Model model) {
 		String memberId = (String) req.getSession().getAttribute("id");
 		model.addAttribute("memberId", memberId);
 		//HttpSession session = request.getSession();

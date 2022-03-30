@@ -1,4 +1,4 @@
-package com.munhwa.prj.usage.vo;
+package com.munhwa.prj.wallet.vo;
 
 import java.util.Date;
 

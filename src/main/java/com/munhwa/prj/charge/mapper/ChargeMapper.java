@@ -5,7 +5,7 @@ import java.util.List;
 import com.munhwa.prj.charge.vo.ChargeVO;
 
 public interface ChargeMapper {
-	List<ChargeVO> listCharge();
+	List<ChargeVO> selectChargeListByMemberId(String memberId);
 
 	ChargeVO selectCharge(ChargeVO vo);
 

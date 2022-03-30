@@ -110,5 +110,7 @@ public class MemberController {
     public int nickChk(String nickname) {
         return memberDao.nickChk(nickname);
     }
+    
+    
 
 }
