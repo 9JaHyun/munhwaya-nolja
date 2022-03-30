@@ -10,9 +10,10 @@ public interface MusicMapper {
 		List<MusicVO> musicSelectListByGenre(String genre);
 		List<MusicVO> musicPersonalList(String id);
 		List<SearchVO> musicSelectByTitle(String title);
-		
 		List<MusicVO> musicSelectByAlBum(int id);
-		MusicVO musicSelect(MusicVO vo);
+		List<MusicVO> musicSelectListByPurchase(String id);
+		
+		MusicVO musicSelect(int id);
 		
 		int musicInsert(MusicVO vo);
 		int musicUpdate(MusicVO vo);

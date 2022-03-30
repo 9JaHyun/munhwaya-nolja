@@ -31,6 +31,14 @@
 		WHERE ID = #{id}
 	</select>
 	
+	<select id="albumSelectByMusicId" parameterType="int" resultMap="albumResultMap">
+		SELECT *
+		FROM ALBUM
+		WHERE ID = (SELECT ALBUM_ID
+                    FROM MUSIC
+                    WHERE id = #{id})
+	</select>
+	
 	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO">
 		INSERT INTO ALBUM
 		VALUES(ALBUM_SEQ.NEXTVAL, 

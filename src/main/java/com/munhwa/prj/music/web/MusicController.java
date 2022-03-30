@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.music.service.MusicService;
+import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.AlbumVO;
 
 
@@ -22,7 +23,10 @@ public class MusicController {
 	private MusicService musicDAO;
 	@Autowired
 	private AlbumService albumDAO;
-
+	@Autowired
+	private PurchaseService purchaseDAO;
+	
+	
 	/* 페이지 요청 */
 	@GetMapping("/musicMain")
 		public String musicMain(Model model,HttpServletRequest req) {
@@ -55,6 +59,8 @@ public class MusicController {
 	
 	@GetMapping("/searchResultMusic")
     public String searchResultMusic(Model model, String title) {
+		System.out.println(title);
+		System.out.println("타이틀테스트");
 		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title));
         return "music/searchResultMusic";
     }
@@ -85,7 +91,9 @@ public class MusicController {
 	}
 	
 	@GetMapping("/streaming")
-	public String streaming() {
+	public String streaming(Model model, int id) {
+		model.addAttribute("musicSelect", musicDAO.musicSelect(id));
+		model.addAttribute("AlbumSelectByMusicId", albumDAO.albumSelectByMusicId(id));
 		return "music/streaming";
 	}
 	
@@ -110,7 +118,12 @@ public class MusicController {
 	}
 	
 	@GetMapping("/purchase")
-	public String purchase() {
+	public String purchase(Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.setAttribute("id", "test0@gmail.com");
+		String id = session.getAttribute("id").toString();
+		
+		model.addAttribute("purchasedList",musicDAO.musicSelectListByPurchase(id));
 		return "music/purchase";
 	}
 	

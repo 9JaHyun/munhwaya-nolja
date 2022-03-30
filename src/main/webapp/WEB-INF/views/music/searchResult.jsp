@@ -31,15 +31,13 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
-					<form action="searchResultMusic" id="frm">
-						<input type="hidden" name="title" value="${title }">
+						<a href="searchResultMusic?title=${title}">
 							<h3>검색결과</h3>
 							<span class="liner"></span> 
-							<h4>음악</h4>
-							<button type="submit" class="Rmore tbutton small" style="margin-bottom:5px;">
+							<h4>음악
 								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
-							</button>
-					</form>
+							</h4>
+						</a>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
@@ -62,15 +60,13 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
-						<form action="searchResultAlbum" id="frm">
-						<input type="hidden" name="title" value="${title }">
+						<a href="searchResultAlbum?title=${title}">
 							<h3>검색결과</h3>
 							<span class="liner"></span> 
-							<h4>수록앨범</h4>
-							<button type="submit" class="Rmore tbutton small" style="margin-bottom:5px;">
+							<h4>수록앨범
 								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
-							</button>
-						</form>
+							</h4>
+						</a>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">

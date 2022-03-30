@@ -71,7 +71,7 @@
 								<ul class="tab-content-items">
 									<c:forEach var="music" items="${musicRnBList}" begin="0" end="9">
 										<li class="grid_6">
-											<a class="m-thumbnail" href="steraming">
+											<a class="m-thumbnail" href="streaming?id=${music.id }">
 												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
@@ -175,8 +175,11 @@
 							<ul class="tab-content-items">
 							<c:forEach var="music" items="${musicChartList}" begin="0" end="4" varStatus="status">
 								<li>
-									<span style="margin:0px;"><h4 style="color: white; margin: 0px; 
-										font-size:small;padding: 0px;">${status.count }위</h4></span>
+									<span style="margin:0px;">
+										<h4 style="color: white; margin: 0px;font-size:small;padding: 0px;">
+											${status.count }위
+										</h4>
+									</span>
 									<a class="m-thumbnail" href="streaming">
 										<img style="width:100%; height:100%; object-fit: cover;" 
 											src="resources/images/bg/musicBg3.jpg" alt="#">

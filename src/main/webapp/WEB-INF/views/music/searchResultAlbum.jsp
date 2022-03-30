@@ -34,7 +34,7 @@
 			<div class="posts">
 					<div class="def-block">
 						<a href="/prj">
-						<h4>앨범</h4>
+						<h4>검색결과</h4>
 						<i class="icon-angle-right" style="font-size:large; margin-left: 7px;"></i>
 						</a>
 						<span class="liner"></span>
@@ -42,7 +42,7 @@
 							<li id="Latest" class="active">
 								<div class="video-grid">
 								<c:forEach var="album" items="${musicSelectListByTitle}">
-									<a href="video_single_wide.html" class="grid_3">
+									<a href="albumInfo?id=${album.id }" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>${album.albumTitle }</strong>${album.albumArtistName }</span>
 									</a>

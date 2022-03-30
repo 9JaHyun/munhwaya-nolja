@@ -55,7 +55,7 @@
 												<tr>
 													<th><h4>순위</h4></th>
 													<th></th>
-													<th><h4>제목</h4></th>
+													<th style="width: 300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
 													<th><h4>좋아요</h4></th>
 													<th><h4>다운로드</h4></th>

@@ -52,9 +52,18 @@
 		SELECT *
 		FROM MUSIC m 
 		WHERE ALBUM_ID = #{id}
+		ORDER BY LIKE_IT DESC
 	</select>
 	
-	<select id="musicSelect" resultMap="musicResultMap">
+	<select id="musicSelectListByPurchase" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE ID IN (SELECT MUSIC_ID
+                     FROM PURCHASED_MUSIC
+                     WHERE MEMBER_ID = #{id})
+	</select>
+	
+	<select id="musicSelect" parameterType="int" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC
 		WHERE ID = #{id}

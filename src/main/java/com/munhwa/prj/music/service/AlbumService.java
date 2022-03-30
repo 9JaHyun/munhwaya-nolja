@@ -9,6 +9,8 @@ public interface AlbumService {
 	List<AlbumVO> albumSelectListByRelease();
 	
 	AlbumVO albumSelect(int id);
+	AlbumVO albumSelectByMusicId(int id);
+
 	int albumInsert(AlbumVO vo);
 	int albumUpdate(AlbumVO vo);
 	int albumDelete(AlbumVO vo);

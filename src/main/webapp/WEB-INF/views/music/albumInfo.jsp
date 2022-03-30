@@ -62,7 +62,7 @@
 							</c:choose>
 								<h3>발매일: ${selectAlbum.releaseAt }</h3>
 								<h3>앨범코멘트: </h3>
-								<span style="color: white; font-size: large; ;">${selectAlbum.content }</span>
+								<span style="color: white; font-size:medium;">${selectAlbum.content }</span>
 								<br><br><br><br>
 									<div class="single_variation_wrap" style="text-align:right;">
 											<button class="tbutton medium"><span>전체재생</span></button>
@@ -104,16 +104,16 @@
 														<td class="product-thumbnail" style="width:70px;">
 														<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 														</td>
-														<td class="product-name">
+														<td class="product-name" style="vertical-align:middle;">
 															${music.title }
 														</td>
-														<td class="product-name">
+														<td class="product-name" style="vertical-align:middle;">
 															${music.artName }
 														</td>
-														<td class="product-name">
+														<td class="product-name" style="vertical-align:middle;">
 															${music.likeIt }
 														</td>
-														<td class="product-name">
+														<td class="product-name" style="vertical-align:middle;">
 															<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
 														</td>
 													</tr>

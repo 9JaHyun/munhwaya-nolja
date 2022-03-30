@@ -52,7 +52,7 @@
 											<thead>
 												<tr>
 													<th></th>
-													<th><h4>제목</h4></th>
+													<th style="width: 300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
 													<th><h4>앨범</h4></th>
 													<th><h4>다운로드</h4></th>

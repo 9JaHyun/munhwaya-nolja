@@ -11,8 +11,9 @@ public interface MusicService {
 	List<MusicVO> musicPersonalList(String id);
 	List<SearchVO> musicSelectByTitle(String title);
 	List<MusicVO> musicSelectByAlBum(int id);
+	List<MusicVO> musicSelectListByPurchase(String id);
 	
-	MusicVO musicSelect(MusicVO vo);
+	MusicVO musicSelect(int id);
 	
 	int musicInsert(MusicVO vo);
 	int musicUpdate(MusicVO vo);

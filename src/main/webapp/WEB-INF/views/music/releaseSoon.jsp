@@ -16,7 +16,7 @@
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
 						<input  id="id" name="id" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px; " value=""
+							style="font-size:small; width: 1000px; height: 60px; " value=""
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -38,7 +38,7 @@
 							<li id="Latest" class="active">
 								<div class="video-grid">
 								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="11">
-									<a href="albumInfo" class="grid_3">
+									<a href="albumInfo?id=${album.id }" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>${album.albName }</strong>${album.artName }</span>
 										<span style="margin:0px;">${album.releaseAt }</span>

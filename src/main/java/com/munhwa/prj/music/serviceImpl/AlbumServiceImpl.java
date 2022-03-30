@@ -24,7 +24,12 @@ public class AlbumServiceImpl implements AlbumService{
 	public AlbumVO albumSelect(int id) {
 		return map.albumSelect(id);
 	}
-
+	
+	@Override
+		public AlbumVO albumSelectByMusicId(int id) {
+			return map.albumSelectByMusicId(id);
+	}
+	
 	@Override
 	public int albumInsert(AlbumVO vo) {
 		return map.albumInsert(vo);
@@ -44,6 +49,9 @@ public class AlbumServiceImpl implements AlbumService{
 	public List<AlbumVO> albumSelectListByRelease() {
 		return map.albumSelectListByRelease();
 	}
+
+
+	
 
 	
 

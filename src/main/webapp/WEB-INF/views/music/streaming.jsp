@@ -1,5 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<script>
+$.ajax({
+	as
+	type: "GET", //요청 메소드 방식
+	url:"/AjaxTest/ex01.do",
+	dataType:"text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+	success : function(result){
+		//서버의 응답데이터가 클라이언트에게 도착하면 자동으로 실행되는함수(콜백)
+		//result - 응답데이터
+		//$('#result').text(result);
+		alert(result);
+	},
+	error : function(a, b, c){
+		//통신 실패시 발생하는 함수(콜백)
+		alert(a + b + c);
+	}
+});
+</script>
 <style>
 	xmp {
 		color: white;
@@ -7,8 +25,6 @@
 		text-align: center;
 	}
 </style>
-<!-- layout -->
-<div id="layout" class="full">
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
@@ -38,8 +54,9 @@
 				<div class="posts">
 					<div class="def-block">
 						<div class="post row-fluid clearfix">
-							<div class="music-player-list wide-mp3 mbf clearfix"></div><!-- Player -->
-							
+							<div class="music-player-list wide-mp3 mbf clearfix">
+							</div>
+							<!-- Player -->
 						</div><!-- post -->
 					</div><!-- def block -->
 				</div><!-- span8 posts -->
@@ -51,26 +68,7 @@
 					<div class="def-block">
 						<h4> 가사 </h4><span class="liner"></span>
 						<xmp>
-대통령이 궐위된 때 또는 
-대통령 당선자가 
-사망하거나 판결 기타의
-사유로 그 자격을 상실한 
-							
-때에는 60일 이내에 
-후임자를 선거한다. 
-국군의 조직과 편성은 
-법률로 정한다.
-
-비상계엄하의 군사재판은 
-군인의 
-범죄에 관한 간첩죄의 
-경우·초소
-
-·유공급·포로에 관한 
-죄중이정한 경우에 한하여 
-단심 수 있다. 다만, 
-사형한 
-경우러하지 아니하다.
+${musicSelect.lyric }
 						</xmp>
 					</div><!-- def block -->
 				</div><!-- span8 posts -->
@@ -89,7 +87,7 @@
 								<div class="video-grid">
 									<a href="albumInfo" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Avril Lopez</strong>Daredevil (video version)</span>
+										<span><strong>${AlbumSelectByMusicId.albName }</strong>${AlbumSelectByMusicId.artName }</span>
 									</a>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
@@ -101,5 +99,3 @@
 		<!-- 수록앨범 끝 -->
 	</div>
 	<!-- content끝 -->
-</div>
-	<!-- layout 끝 -->
