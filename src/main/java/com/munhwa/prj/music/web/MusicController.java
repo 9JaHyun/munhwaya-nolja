@@ -96,7 +96,7 @@ public class MusicController {
 	public String streamingWishList(Model model, int id) {
 		model.addAttribute("musicSelectListByWishList", musicDAO.musicSelectListByWishList(id));
 		model.addAttribute("albumSelectListByWishList", albumDAO.albumSelectListByWishList(id));
-		model.addAttribute("albumSelectByWishList", albumDAO.albumSelectByWishList(id));
+		model.addAttribute("albumSelectByWishList", albumDAO.albumSelectByWishList(id)); //위시리스트의 첫번째 곡의 앨범정보
 		return "music/streamingWishList";
 	}
 	

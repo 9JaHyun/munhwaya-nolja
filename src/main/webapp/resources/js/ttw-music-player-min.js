@@ -381,7 +381,6 @@
                         '            <span class="highlight"></span>' +
                         '        </div>' +
                         '        <div class="track-info" style="margin-top:17px">' +
-						'			 <input id="musicId" type="hidden" value="">' +
                         '            <p class="title"></p>' +
                         '            <p class="artist-outer">가수: <span class="artist"></span></p>' +
 						'			 <p><span class="artist-outer" id="writer"></span></p>' +
