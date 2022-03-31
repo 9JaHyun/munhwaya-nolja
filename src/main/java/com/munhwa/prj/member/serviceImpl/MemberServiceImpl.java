@@ -27,4 +27,21 @@ public class MemberServiceImpl implements MemberService {
 	public int nickChk(String nickname) {
 		return map.nickChk(nickname);
 	}
+
+	@Override
+	public MemberVO mypageInfo(MemberVO vo) {
+		return map.mypageInfo(vo);
+	}
+
+	@Override
+	public int updateInfo(MemberVO vo) {
+		return map.updateInfo(vo);
+	}
+
+	@Override
+	public int updatePassword(MemberVO vo) {
+		return map.updatePassword(vo);
+	}
+
+
 }

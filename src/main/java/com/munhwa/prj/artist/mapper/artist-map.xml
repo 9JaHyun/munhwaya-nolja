@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.artist.mapper.ArtistMapper">
+	
+	<resultMap type="com.munhwa.prj.artist.vo.ArtistVO" id="artistMap">
+		<id property="id" column="id"/>
+		<result property="image" column="image"/>
+		<result property="gender" column="gender"/>
+		<result property="genre" column="genre"/>
+		<result property="content" column="content"/>
+		<result property="type" column="type"/>
+		<result property="memberId" column="member_id"/>
+		<result property="name" column="name"/>
+	</resultMap>
+
+	<select id="artistSelectList" resultMap="artistMap">  
+		SELECT * FROM ARTIST ORDER BY DESC
+	</select>
+	
+	<select id="artistSelect" resultMap="artistMap" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+		SELECT * FROM ARTIST WHERE ID = #{id}
+	</select>
+	
+	<insert id="artistInsert" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+	 	INSERT INTO ARTIST VALUES(#{id},#{image},#{gender},#{genre},#{content},#{type},#{member_id},#{name})
+	</insert>
+	
+	<update id="artistUpdate" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+		UPDATE ARTIST
+		<set>
+			<if test="image != null">SET image = #{image},</if>
+			<if test="gender != null">SET gender = #{gender},</if>
+			<if test="genre != null">SET genre = #{genre},</if>
+			<if test="content != null">SET content = #{content},</if>
+			<if test="type !=null">SET type = #{type},</if>
+			<if test="memberId != null">SET memberId = #{member_id},</if>
+			<if test="name= != null">SET name = #{name}</if>  
+		</set>
+	</update>
+	
+</mapper>

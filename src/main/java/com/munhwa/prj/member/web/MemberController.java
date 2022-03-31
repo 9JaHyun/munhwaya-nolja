@@ -18,6 +18,16 @@ public class MemberController {
     @Autowired
     private MemberService memberDao;
 
+    // 로그인 대체
+    @GetMapping("/createMember")
+    public @ResponseBody String createMember(HttpServletRequest req) {
+    	MemberVO memberVO = new MemberVO();
+    	memberVO.setId("test@test.test");
+    	memberVO = memberDao.mypageInfo(memberVO);
+        req.getSession().setAttribute("member", memberVO);
+        return "OK";
+    }
+
     // 마이페이지
     @GetMapping("/mypage.do")
     public String mypage() {
@@ -47,6 +57,17 @@ public class MemberController {
     public String changePassword() {
     	return "changePassword-member";
     }
+    
+    // 비밀번호 업데이트
+	@PostMapping("updatePassword.do")
+	public String updatePassword(MemberVO vo) {
+		int n = memberDao.updatePassword(vo);
+		if (n != 0) {
+			return "redirect:memberChangeInfo.do";
+		} else {			
+			return "error/404";
+		}
+	}
     
     // 회원탈퇴 변경 페이지
     @GetMapping("/dropMember.do")

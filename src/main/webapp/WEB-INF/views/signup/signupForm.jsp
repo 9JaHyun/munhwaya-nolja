@@ -39,19 +39,22 @@
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"
 							type="text" name="nickname" id="nickname"
-								placeholder="NICKNAME (4자리 이상)" required="required" />
+								placeholder="NICKNAME" required="required" />
 						</div>
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"
 							type="text" name="tel" id="tel"
 								placeholder="TEL" required="required" />
 						</div>
+						
 						<select id="genre" name="genre">
-							<option>발라드</option>
-							<option>댄스</option>
-							<option>랩/힙합</option>
-							<option>R&B/Soul</option>
+							<option disabled selected="selected">관심장르</option>
+							<option value="G01">발라드</option>
+							<option value="G02">댄스</option>
+							<option value="G03">랩/힙합</option>
+							<option value="G04">R&B/Soul</option>
 						</select>
+						
 
 					</div>
 					<input style="padding: 5px 10px 5px 10px;" 
@@ -127,7 +130,7 @@
 	function nickChkFn() {
 		var nickname = $("#nickname").val();
 		var regExp = /\s/g;
-		if (nickname.length > 3 && !nickname.match(regExp)) {
+		if (nickname.length > 0 && !nickname.match(regExp)) {
 			$.ajax({
 				url : "nickChk",
 				type : "POST",

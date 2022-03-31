@@ -30,5 +30,19 @@
 		WHERE nickname = #{nickname}
 	</select>
 	
+	<!-- 개인정보 업데이트 -->
+	<update id="updateInfo" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		UPDATE MEMBER
+		SET TEL = #{tel},
+			GENRE = #{genre}
+		WHERE ID = #{id}
+	</update>
+	
+	<!-- 비밀번호 업데이트 -->
+	<update id="updatePassword" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		UPDATE MEMBER
+		SET PASSWORD = #{password}
+		WHERE ID = #{id}
+	</update>
 
 </mapper>
