@@ -21,5 +21,8 @@ public interface MemberService {
 	
 	// 비밀번호 업데이트
 	int updatePassword(MemberVO vo);
+	
+	// 회원탈퇴
+	int deleteMember(MemberVO vo);
 
 }

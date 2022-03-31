@@ -38,7 +38,7 @@
 
 	<!-- 마이페이지 회원정보 -->
 	<select id="mypageInfo" resultMap="memberResultMap" parameterType="com.munhwa.prj.member.vo.MemberVO">
-		SELECT NICKNAME, ROLE, MILEAGE, IMAGE, ID, TEL, GENRE
+		SELECT NICKNAME, ROLE, MILEAGE, IMAGE, ID, TEL, GENRE, PASSWORD
 		FROM MEMBER
 		WHERE ID = #{id}
 	</select>
@@ -58,5 +58,10 @@
 		WHERE ID = #{id}
 	</update>
 
+	<!-- 회원탈퇴 -->
+	<delete id="deleteMember" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		DELETE FROM MEMBER
+		WHERE ID = #{id}
+	</delete>
 
 </mapper>

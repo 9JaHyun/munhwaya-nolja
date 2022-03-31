@@ -22,7 +22,7 @@ public class MemberController {
     @GetMapping("/createMember")
     public @ResponseBody String createMember(HttpServletRequest req) {
     	MemberVO memberVO = new MemberVO();
-    	memberVO.setId("test@test.test");
+    	memberVO.setId("test1@gmail.com");
     	memberVO = memberDao.mypageInfo(memberVO);
         req.getSession().setAttribute("member", memberVO);
         return "OK";
@@ -86,12 +86,22 @@ public class MemberController {
 		}
 	}
     
-    // 회원탈퇴 변경 페이지
+    // 회원탈퇴 페이지
     @GetMapping("/dropMember.do")
     public String dropMember() {
     	return "dropMember-member";
     }
     
+    // 회원탈퇴
+    @PostMapping("/deleteMember.do")
+    public String deleteMember(MemberVO vo) {
+    	int n = memberDao.deleteMember(vo);
+    	if (n != 0) {
+    		return "redirect:home.do";
+    	} else {
+    		return "error/404";
+    	}
+    }  
     
     // 회원가입폼
     @GetMapping("/signupForm.do")

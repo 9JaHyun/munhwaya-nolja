@@ -44,5 +44,10 @@ public class MemberServiceImpl implements MemberService {
 		return map.updatePassword(vo);
 	}
 
+	@Override
+	public int deleteMember(MemberVO vo) {
+		return map.deleteMember(vo);
+	}
+
 
 }

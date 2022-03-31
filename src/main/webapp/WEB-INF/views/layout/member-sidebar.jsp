@@ -47,7 +47,7 @@
         <h4>카테고리</h4>
         <span class="liner"></span>
         <div class="widget-content">
-            <ul class="list">
+            <ul class="list" style="font-size: 13px;">
                 <li><a href="memberChangeInfo.do"><i class="icon-caret-right"> </i>회원정보 변경</a></li>
                 <li><a href="likeArtist.do"><i class="icon-caret-right"> </i>좋아요 한 아티스트</a></li>
                 <li><a href="wishlist.do"><i class="icon-caret-right"> </i>위시리스트</a></li>
