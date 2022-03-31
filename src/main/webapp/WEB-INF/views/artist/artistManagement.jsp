@@ -8,7 +8,7 @@
          <li>
             <i class="icon-comment-alt"></i> 
             <a href="changeProfile.do">음원 관리</a>
-            <div class="topic-time">움원 정보를 관리합니다.</div>
+            <div class="topic-time">음원 정보를 관리합니다.</div>
          </li>
          <li>
             <i class="icon-comment-alt"></i> 

@@ -3,7 +3,9 @@ package com.munhwa.prj.artist.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtistVO;
@@ -30,8 +32,19 @@ private ArtistService artistDao;
     	return "artistManagement-artist";
     }
 
-    @RequestMapping("/artistRequest")
-    public String artistRequest(){
-    	return "artistRequest-artist"; // memberÀÇ side bar°¡ ³ª¿À°Ô ¼öÁ¤
+    @RequestMapping("/artistRequestForm")
+    public String artistRequestForm(){
+    	return "artistRequest-artist"; // memberï¿½ï¿½ side barï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
+    
+    @PostMapping("/info")
+    public String artistRequest(ArtistVO vo, Model model){
+    	int a = artistDao.artistInsert(vo);
+    	if(a != 0) {
+    		model.addAttribute("message", "ì•„í‹°ìŠ¤íŠ¸ ì‹ ì²­ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
+    	}else {
+    		model.addAttribute("message", "ì…ë ¥ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+    	}
+    	return "mypage-artist";
+}
 }
