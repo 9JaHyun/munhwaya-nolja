@@ -28,7 +28,7 @@ public class ChargeController {
 	@GetMapping("/chargeForm")
 	public String chargeForm(MemberVO vo, HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		session.setAttribute("id", "test0@gmail.com");
+		session.setAttribute("id", "test1@gmail.com");
 		return "charge/chargeForm";
 	}
 	

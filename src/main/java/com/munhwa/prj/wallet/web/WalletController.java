@@ -10,11 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
+import com.munhwa.prj.common.vo.AmountChangeRequestDTO;
+import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.vo.PageDTO;
 import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.UsageVO;
 
@@ -49,12 +53,30 @@ public class WalletController {
 	@RequestMapping("/walletInfoSelect.do")
 	public String walletInfoSelect(HttpServletRequest req, Model model) {
 		String memberId = (String) req.getSession().getAttribute("id");
-		List<ChargeVO> list = chargeDao.findByMemberId(memberId);
+		Criteria cri = new Criteria();
+		String pageNum = req.getParameter("pageNum");
+		if(pageNum == null) { pageNum = "1";}
+		int result = Integer.parseInt(pageNum);
+		cri.setPageNum(result);
+		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri);
 //		list.forEach(charge -> System.out.println(tranSimpleFormat.format(charge.getChargeAt())));
 		model.addAttribute("charges", list);
+		int total = chargeDao.getCountByChargeId(memberId);
+	    PageDTO pageMake = new PageDTO(cri, total);
+	    model.addAttribute("pageMaker", pageMake);
 		return "walletInfoSelect-memberWallet";
 	}
 	
+	// 충전 내역 페이지 조절 
+	@GetMapping("/changeAmout.do")
+	@ResponseBody 
+	public String changeAmount(@RequestBody AmountChangeRequestDTO dto, Model model) {
+		Criteria cri = new Criteria();
+		cri.setAmount(dto.getAmount());
+		List<ChargeVO> list = chargeDao.findByMemberId(dto.getMemberId(), cri);
+		model.addAttribute("charges", list);
+		return "walletInfoSelect-memberWallet";
+	}
 	
 	
 //	@RequestMapping("/ticketListSelect.do")

@@ -1,4 +1,4 @@
-package com.munhwa.prj.commonCode.vo;
+package com.munhwa.prj.common.vo;
 
 import lombok.Getter;
 import lombok.Setter;
