@@ -8,6 +8,7 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,14 +31,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
               .headers().frameOptions().disable()
               .and()
               .authorizeRequests(request -> request
-                    .antMatchers("/", "/home.do", "/resources/**", "/css/**", "/js/**", "/signupForm.do", "memberSignup.do").permitAll()
-                    .antMatchers("/artist/**").access("hasRole('R02')")
+                    .antMatchers("/", "/home.do", "/signup.do", "/resources/**", "/css/**", "/js/**", "/*signup*", "/idChk", "/nickChk").permitAll()
+                    .antMatchers("/member/**").access("hasRole('R01')") // member
+                    .antMatchers("/artist/**").access("hasRole('R02')") // artist
+                    .antMatchers("/admin/**").access("hasRole('R03')")  // admin
                     .anyRequest().authenticated()
               )
               .formLogin(login -> login
-                    .loginPage("/signIn").permitAll()
+                    .loginPage("/signin").permitAll()
                     .defaultSuccessUrl("/", false)
-                    .failureUrl("/signIn"))
+                    .failureUrl("/signin"))
               .logout(logout -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/home.do")
@@ -50,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("ROLE_RO2 > ROLE_R01");
+        roleHierarchy.setHierarchy("ROLE_R03> ROLE_RO2 > ROLE_R01");
         return roleHierarchy;
     }
 

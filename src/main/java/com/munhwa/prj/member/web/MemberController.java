@@ -1,7 +1,7 @@
 package com.munhwa.prj.member.web;
 
+import com.munhwa.prj.member.vo.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,10 +62,11 @@ public class MemberController {
     }
 
     // 회원가입
-    @PostMapping("memberSignup.do")
+    @PostMapping("/signup.do")
     public String memberSignup(MemberVO vo) {
         vo.setGenre(chooseGenre(vo.getGenre()));
         vo.setPassword(passwordEncoder.encode(vo.getPassword()));
+        vo.setRole(Auth.R01.toString());
 
         int n = memberDao.memberSignup(vo);
         if (n != 0) {
@@ -76,14 +77,9 @@ public class MemberController {
     }
 
     // 로그인폼
-    @GetMapping("/signIn")
+    @GetMapping("/signin")
     public String signInForm() {
         return "signIn/signInForm";
-    }
-
-    @PostMapping("/signIn")
-    public String login() {
-        return "/";
     }
 
     private String chooseGenre(String genre) {

@@ -17,7 +17,7 @@
 						<button class="tbutton color2 small"
 						id="nickChk" name="nickChk" value="N" onclick="nickChkFn();"><span>닉네임 중복확인</span></button> 
 					</div>
-				<form method="post" id="frm" action="memberSignup.do" onsubmit="return send()">
+				<form method="post" id="frm" action="signup.do" onsubmit="return send()">
 
 					<div class="clearfix">
 						<div>
