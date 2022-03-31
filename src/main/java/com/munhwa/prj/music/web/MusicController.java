@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.music.service.MusicService;
-import com.munhwa.prj.music.service.PurchaseService;
-import com.munhwa.prj.music.vo.AlbumVO;
 
 
 @Controller
@@ -23,8 +21,6 @@ public class MusicController {
 	private MusicService musicDAO;
 	@Autowired
 	private AlbumService albumDAO;
-	@Autowired
-	private PurchaseService purchaseDAO;
 	
 	
 	/* 페이지 요청 */
@@ -37,7 +33,6 @@ public class MusicController {
 		HttpSession session = req.getSession();
 		session.setAttribute("id", "test0@gmail.com");
 		String id = session.getAttribute("id").toString();
-		
 		model.addAttribute("musicRnBList", musicDAO.musicSelectListByGenre("G04"));
 		model.addAttribute("musicRapList", musicDAO.musicSelectListByGenre("G03"));
 		model.addAttribute("musicDanceList", musicDAO.musicSelectListByGenre("G02"));
@@ -95,6 +90,14 @@ public class MusicController {
 		model.addAttribute("musicSelect", musicDAO.musicSelect(id));
 		model.addAttribute("AlbumSelectByMusicId", albumDAO.albumSelectByMusicId(id));
 		return "music/streaming";
+	}
+	
+	@GetMapping("/streamingWishList")
+	public String streamingWishList(Model model, int id) {
+		model.addAttribute("musicSelectListByWishList", musicDAO.musicSelectListByWishList(id));
+		model.addAttribute("albumSelectListByWishList", albumDAO.albumSelectListByWishList(id));
+		model.addAttribute("albumSelectByWishList", albumDAO.albumSelectByWishList(id));
+		return "music/streamingWishList";
 	}
 	
 	@GetMapping("/personalResult")

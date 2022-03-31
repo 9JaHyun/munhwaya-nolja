@@ -46,6 +46,11 @@ public class MusicServiceImpl implements MusicService{
 	}
 	
 	@Override
+	public List<MusicVO> musicSelectListByWishList(int id) {
+		return map.musicSelectListByWishList(id);
+	}
+	
+	@Override
 	public MusicVO musicSelect(int id) {
 		return map.musicSelect(id);
 	}
@@ -64,6 +69,8 @@ public class MusicServiceImpl implements MusicService{
 	public int musicDelete(MusicVO vo) {
 		return map.musicDelete(vo);
 	}
+
+	
 
 	
 

@@ -25,6 +25,16 @@
 		WHERE RELEASE_AT BETWEEN SYSDATE-365 AND SYSDATE
 	</select>
 	
+	<select id="albumSelectListByWishList" parameterType="int" resultMap="albumResultMap">
+		SELECT * 
+		FROM ALBUM 
+		WHERE ID IN(SELECT ALBUM_ID 
+					FROM MUSIC
+                	WHERE ID IN (SELECT MUSIC_ID
+                                 FROM WISHLIST_MUSIC
+                                 WHERE WISHLIST_ID=#{id}))
+	</select>
+	
 	<select id="albumSelect" parameterType="int" resultMap="albumResultMap">
 		SELECT *
 		FROM ALBUM
@@ -37,6 +47,16 @@
 		WHERE ID = (SELECT ALBUM_ID
                     FROM MUSIC
                     WHERE id = #{id})
+	</select>
+	
+	<select id="albumSelectByWishList" parameterType="int" resultMap="albumResultMap">
+		SELECT *
+		FROM ALBUM
+		WHERE ID = ( SELECT ALBUM_ID FROM MUSIC
+                  	 WHERE ID = (SELECT MUSIC_ID
+                                 FROM WISHLIST_MUSIC
+                                 WHERE WISHLIST_ID=#{id}
+                                 AND ROWNUM=1))
 	</select>
 	
 	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO">

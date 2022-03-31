@@ -858,6 +858,7 @@ a > .sf-sub-indicator {
 }
 
 .ttw-music-player .rating {
+	display: none !important;
     height: 16px;
     margin: 20px 0 20px 0;
 }

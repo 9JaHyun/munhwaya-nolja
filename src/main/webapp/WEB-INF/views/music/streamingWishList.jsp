@@ -1,24 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<!-- <script>
+jQuery(document).ready(function(){
+	$('#writer').html('작사: ${musicSelect.writer}');
+	$('#composing').html('작곡: ${musicSelect.composing}');
+	$('#arrangement').html('편곡: ${musicSelect.arrangement}');
+})
+</script> -->
 
+<!-- 변수에 다 지정 후에 배열하나 만들고 총 배열에 add() 추가 * -->
 <script>
-var title1 = '${musicSelect.title}'
-var myPlaylist = [
-	{
-		mp3:'${musicSelect.fileName}',
-		title: title1,
-		artist:'${musicSelect.artName}',
-		rating: 0,  // album에서 가져오던가, 아예 삭제
-		buy:'#',
-		price:'',
-		duration:'${musicSelect.time}',
-		cover:'resources/images/bg/musicBg3.jpg',
-		writer:'',
-		composing:'',
-		arrangement:''
-	}
-];
+var myPlaylist = []
+<c:forEach items="${musicSelectListByWishList}" var = "music">
+	myPlaylist.push({
+					mp3 : '${music.fileName}',
+					title : '${music.title}',
+					artist : '${music.artName}',
+					rating: 5,
+					buy:'#',
+					price:'',
+					duration : '${music.time}',
+					cover:'resources/images/bg/musicBg3.jpg'
+					})
+	
+</c:forEach>
 jQuery(document).ready(function () {
 	$('.music-player-list').ttwMusicPlayer(myPlaylist, {
 		currencySymbol: '',
@@ -38,6 +44,11 @@ jQuery(document).ready(function () {
 			warningAlerts: true
 		}
 	})
+})
+jQuery(document).ready(function(){
+	$('#writer').html('작사: ${musicSelectListByWishList[0].writer}');
+	$('#composing').html('작곡: ${musicSelectListByWishList[0].composing}');
+	$('#arrangement').html('편곡: ${musicSelectListByWishList[0].arrangement}');
 })
 </script>
 
@@ -91,7 +102,7 @@ jQuery(document).ready(function () {
 					<div class="def-block">
 						<h4> 가사 </h4><span class="liner"></span>
 						<xmp>
-${musicSelect.lyric }
+${musicSelectListByWishList[0].lyric}
 						</xmp>
 					</div><!-- def block -->
 				</div><!-- span8 posts -->
@@ -108,9 +119,9 @@ ${musicSelect.lyric }
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-									<a href="albumInfo?id=${AlbumSelectByMusicId.id }" class="grid_3">
+									<a href="albumInfo?id=${albumSelectByWishList.id }" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>${AlbumSelectByMusicId.albName }</strong>${AlbumSelectByMusicId.artName }</span>
+										<span><strong>${albumSelectByWishList.albName }</strong>${albumSelectByWishList.artName }</span>
 									</a>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
@@ -122,10 +133,3 @@ ${musicSelect.lyric }
 		<!-- 수록앨범 끝 -->
 	</div>
 	<!-- content끝 -->
-<script>
-jQuery(document).ready(function(){
-	$('#writer').html('작사: ${musicSelect.writer}');
-	$('#composing').html('작곡: ${musicSelect.composing}');
-	$('#arrangement').html('편곡: ${musicSelect.arrangement}');
-})
-</script>

@@ -19,6 +19,10 @@ public class AlbumServiceImpl implements AlbumService{
 		return map.albumSelectList();
 	}
 	
+	@Override
+	public List<AlbumVO> albumSelectListByWishList(int id) {
+		return map.albumSelectListByWishList(id);
+	}
 		
 	@Override
 	public AlbumVO albumSelect(int id) {
@@ -28,6 +32,11 @@ public class AlbumServiceImpl implements AlbumService{
 	@Override
 		public AlbumVO albumSelectByMusicId(int id) {
 			return map.albumSelectByMusicId(id);
+	}
+	
+	@Override
+	public AlbumVO albumSelectByWishList(int id) {
+		return map.albumSelectByWishList(id);
 	}
 	
 	@Override
@@ -49,6 +58,11 @@ public class AlbumServiceImpl implements AlbumService{
 	public List<AlbumVO> albumSelectListByRelease() {
 		return map.albumSelectListByRelease();
 	}
+
+	
+
+
+	
 
 
 	

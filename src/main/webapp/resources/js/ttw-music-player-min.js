@@ -77,10 +77,9 @@
             var playing = false, markup, $myJplayer = {},$tracks,showHeight = 0,remainingHeight = 0,$tracksWrapper, $more;
 
             markup = {
-                listItem:'<li class="track">' +
+                listItem:'<li class="track" id="id">' +
                             '<span class="title"></span>' +
                             '<span class="duration"></span>' +
-                            '<span class="rating"></span>' +
                             '<a href="#" class="buy not-active" target="_blank"></a>' +
                         '</li>',
                 ratingBar:'<span class="rating-level rating-bar"></span>'
@@ -381,9 +380,13 @@
                         '<span class="img"></span>' +
                         '            <span class="highlight"></span>' +
                         '        </div>' +
-                        '        <div class="track-info">' +
+                        '        <div class="track-info" style="margin-top:17px">' +
+						'			 <input id="musicId" type="hidden" value="">' +
                         '            <p class="title"></p>' +
-                        '            <p class="artist-outer">By <span class="artist"></span></p>' +
+                        '            <p class="artist-outer">가수: <span class="artist"></span></p>' +
+						'			 <p><span class="artist-outer" id="writer"></span></p>' +
+						'			 <p><span class="artist-outer" id="composing"></span></p>' +
+						'			 <p><span class="artist-outer" id="arrangement"></span></p>' +			 		
                         '            <div class="rating">' +
                         '                <span class="rating-level rating-star on"></span>' +
                         '                <span class="rating-level rating-star on"></span>' +
@@ -392,7 +395,13 @@
                         '                <span class="rating-level rating-star"></span>' +
                         '            </div>' +
                         '        </div>' +
-                        '        <div class="player-controls">' +
+						'			<p class="single_variation_wrap" style="text-align:right; vertical-align:middle;">' +
+						'					<button class="tbutton small"><span>위시리스트 추가</span></button>' +
+						'					<button class="tbutton small"><span>공유</span></button>' +
+						'					<button class="tbutton small"><span>구매</span></button>' +
+						'					<a href="#"><i class="icon-heart" style="font-size: 25px; margin-right:10px"></i></a>' +
+						'			 </p>' +	
+                        '        <div class="player-controls" style="width:93%">' +
                         '            <div class="main">' +
                         '                <div class="previous jp-previous"></div>' +
                         '                <div class="play jp-play"></div>' +
@@ -416,7 +425,7 @@
                         '                    <span class="jp-gui"></span>' +
                         '                </span>' +
                         '            </div>' +
-                        '            <div class="progress-wrapper">' +
+                        '            <div class="progress-wrapper" style="width:80%">' +
                         '                <div class="progress jp-seek-bar">' +
                         '                    <div class="elapsed jp-play-bar"></div>' +
                         '                </div>' +

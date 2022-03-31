@@ -63,6 +63,13 @@
                      WHERE MEMBER_ID = #{id})
 	</select>
 	
+	<select id="musicSelectListByWishList" parameterType="int" resultMap="musicResultMap">
+		SELECT * FROM MUSIC
+		WHERE ID IN (SELECT MUSIC_ID
+        			 FROM WISHLIST_MUSIC
+        			 WHERE WISHLIST_ID=#{id})
+	</select>
+	
 	<select id="musicSelect" parameterType="int" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC

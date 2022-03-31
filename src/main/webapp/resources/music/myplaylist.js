@@ -1,14 +1,15 @@
 /*
 	For Edit This File Please Read Documentation
 */
-function player() {
+	
+	//var myPlayList = List<PlayListVO> => 의 MusicList.serialize()
 	var myPlaylist = [
 		
 		{
 			mp3:'1.mp3',
-			title:'Track 1',
+			title: "111",
 			artist:'Alexandra',
-			rating:5,
+			rating:5,  // album에서 가져오던가, 아예 삭제
 			buy:'#',
 			price:'17',
 			duration:'0:38',
@@ -105,4 +106,3 @@ function player() {
 			}
 		});
 	});
-}
