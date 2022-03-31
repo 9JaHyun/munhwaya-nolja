@@ -18,5 +18,8 @@ public interface MemberMapper {
 	
 	// 개인정보 업데이트
 	int updateInfo(MemberVO vo);
+	
+	// 비밀번호 업데이트
+	int updatePassword(MemberVO vo);
 
 }

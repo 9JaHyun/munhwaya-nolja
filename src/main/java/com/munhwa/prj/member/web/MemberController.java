@@ -18,7 +18,6 @@ public class MemberController {
     @Autowired
     private MemberService memberDao;
     
-    
     // 로그인 대체
     @GetMapping("/createMember")
     public @ResponseBody String createMember(HttpServletRequest req) {
@@ -75,6 +74,17 @@ public class MemberController {
     public String changePassword() {
     	return "changePassword-member";
     }
+    
+    // 비밀번호 업데이트
+	@PostMapping("updatePassword.do")
+	public String updatePassword(MemberVO vo) {
+		int n = memberDao.updatePassword(vo);
+		if (n != 0) {
+			return "redirect:memberChangeInfo.do";
+		} else {			
+			return "error/404";
+		}
+	}
     
     // 회원탈퇴 변경 페이지
     @GetMapping("/dropMember.do")
