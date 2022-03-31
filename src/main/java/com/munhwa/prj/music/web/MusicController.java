@@ -16,6 +16,7 @@ public class MusicController {
 	
 	@GetMapping("/musicMain")
 	    public String musicMain() {
+
 	        return "music/musicMain";
 	}
 	

@@ -13,11 +13,13 @@
                 <span>로그인</span>
             </div>
             </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
                 <form action="logout" method="post">
                     <button class="btn btn-info" type="submit">  로그아웃 </button>
                 </form>
             <a href="mypage.do" class="tbutton color2 small" style="background-color: #4c4c4c;">
                 <span>마이페이지</span></a>
+            </sec:authorize>
         </div>
     </div>
     <div class="headdown">

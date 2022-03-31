@@ -1,15 +1,13 @@
 package com.munhwa.prj.config;
 
-import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,14 +18,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    @Autowired
-    private DataSource dataSource;
+    private final BasicDataSource dataSource;
+
+    public SecurityConfig(BasicDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
+              .headers().frameOptions().disable()
+              .and()
               .authorizeRequests(request -> request
-                    .antMatchers("/", "/home.do", "/resources/**", "/css/**", "/js/**").permitAll()
+                    .antMatchers("/", "/home.do", "/resources/**", "/css/**", "/js/**", "/signupForm.do", "memberSignup.do").permitAll()
                     .antMatchers("/artist/**").access("hasRole('R02')")
                     .anyRequest().authenticated()
               )
@@ -43,13 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
               .exceptionHandling(e -> e
                     .accessDeniedPage("/access-denied"));
     }
-//
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring()
-//              .antMatchers("/resources/**", "/css/**", "/js/**");
-//    }
-//
+
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
