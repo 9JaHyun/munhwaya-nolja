@@ -37,8 +37,9 @@
                 <li><a href="likeArtist.do"><i class="icon-caret-right"> </i>좋아요 한 아티스트</a></li>
                 <li><a href="wishlist.do"><i class="icon-caret-right"> </i>위시리스트</a></li>
                 <li><a href="#"><i class="icon-caret-right"> </i>지갑 정보</a></li>
-                <li><a href="artistRequestForm.do"><i class="icon-caret-right"> </i>아티스트 신청</a>
-                <li><a href="artistManagement.do"><i class="icon-caret-right"> </i>아티스트 관리</a>
+                <li><a href="artistRequestForm.do"><i class="icon-caret-right"></i>아티스트 신청</a>
+                <li><a href="artistManagement.do"><i class="icon-caret-right"></i>아티스트 관리</a>
+                <li><a href="artistInsertForm"><i class="icon-caret-right"></i>아티스트 정보등록</a> <!-- 테스트용 임시 리스트 -->
                 </li>
             </ul>
         </div>

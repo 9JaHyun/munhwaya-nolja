@@ -1,15 +1,19 @@
 package com.munhwa.prj.artist.web;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtistVO;
 
+/*
+ * 작성자:
+ * 작성일자:
+ * 내용: 아티스트
+ */
 @Controller
 public class ArtistController {
 
@@ -32,19 +36,28 @@ private ArtistService artistDao;
     	return "artistManagement-artist";
     }
 
-    @RequestMapping("/artistRequestForm")
-    public String artistRequestForm(){
-    	return "artistRequest-artist"; // member�� side bar�� ������ ����
+    @RequestMapping("/artistInsertForm")
+    public String artistInsertForm(){
+    	return "artistInsert-artist"; 
     }
     
-    @PostMapping("/info")
-    public String artistRequest(ArtistVO vo, Model model){
+    @RequestMapping("/artistInsert")
+    public String artistInsert(ArtistVO vo, Model model){
     	int a = artistDao.artistInsert(vo);
+    	System.out.println(a);
     	if(a != 0) {
-    		model.addAttribute("message", "아티스트 신청이 완료되었습니다.");
+    		model.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
+    		
     	}else {
-    		model.addAttribute("message", "입력 실패했습니다.");
+    		model.addAttribute("message", "입력에 실패했습니다.");
     	}
-    	return "mypage-artist";
-}
+    	return "redirect:mypage.do-artist";
+    }
+    
+    @RequestMapping("/artistRequestForm")
+    public String artistRequestForm() {
+    	return "artistRequest-artist";
+    }
+    
+    
 }

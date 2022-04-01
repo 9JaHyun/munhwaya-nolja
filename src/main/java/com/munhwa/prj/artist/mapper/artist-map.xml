@@ -22,7 +22,8 @@
 	</select>
 	
 	<insert id="artistInsert" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
-	 	INSERT INTO ARTIST VALUES(#{id},#{image},#{gender},#{genre},#{content},#{type},#{member_id},#{name})
+		IF(ID = {#id}){
+	 	INSERT INTO ARTIST(image, gender, genre, content, type, name) VALUES(#{image},#{gender},#{genre},#{content},#{type},#{name})
 	</insert>
 	
 	<update id="artistUpdate" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
@@ -33,7 +34,6 @@
 			<if test="genre != null">SET genre = #{genre},</if>
 			<if test="content != null">SET content = #{content},</if>
 			<if test="type !=null">SET type = #{type},</if>
-			<if test="memberId != null">SET memberId = #{member_id},</if>
 			<if test="name= != null">SET name = #{name}</if>  
 		</set>
 	</update>
