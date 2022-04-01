@@ -14,6 +14,10 @@ jQuery(document).ready(function(){
 var myPlaylist = []
 <c:forEach items="${musicSelectListByWishList}" var = "music">
 	myPlaylist.push({
+					writer: '${music.writer}',
+					composing: '${music.composing}',
+					arrangement: '${music.arrangement}',
+					musicId: '${music.id}',
 					mp3 : '${music.fileName}',
 					title : '${music.title}',
 					artist : '${music.artName}',
@@ -23,7 +27,6 @@ var myPlaylist = []
 					duration : '${music.time}',
 					cover:'resources/images/bg/musicBg3.jpg'
 					})
-	
 </c:forEach>
 jQuery(document).ready(function () {
 	$('.music-player-list').ttwMusicPlayer(myPlaylist, {
@@ -45,11 +48,15 @@ jQuery(document).ready(function () {
 		}
 	})
 })
-jQuery(document).ready(function(){
-	$('#writer').html('작사: ${musicSelectListByWishList[0].writer}');
-	$('#composing').html('작곡: ${musicSelectListByWishList[0].composing}');
-	$('#arrangement').html('편곡: ${musicSelectListByWishList[0].arrangement}');
-})
+
+/*$.ajax()
+//아작스처리
+ function change() {
+	$('#id').on('click',function() {
+		
+	})
+} */
+
 </script>
 
 <style>
@@ -133,3 +140,16 @@ ${musicSelectListByWishList[0].lyric}
 		<!-- 수록앨범 끝 -->
 	</div>
 	<!-- content끝 -->
+<script>
+jQuery(document).ready(function(){
+	$('#writer').html('작사: ${musicSelectListByWishList[0].writer}');
+	$('#composing').html('작곡: ${musicSelectListByWishList[0].composing}');
+	$('#arrangement').html('편곡: ${musicSelectListByWishList[0].arrangement}');
+	
+	var li = $('.tracklist').find('.track').length
+		console.log(li)
+	/* $.each(li,function(idx, item) {
+		console.log(idx)
+	}) */
+})
+</script>

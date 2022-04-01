@@ -52,14 +52,15 @@
 	<select id="albumSelectByWishList" parameterType="int" resultMap="albumResultMap">
 		SELECT *
 		FROM ALBUM
-		WHERE ID = ( SELECT ALBUM_ID FROM MUSIC
+		WHERE ID = ( SELECT ALBUM_ID 
+					 FROM MUSIC
                   	 WHERE ID = (SELECT MUSIC_ID
                                  FROM WISHLIST_MUSIC
                                  WHERE WISHLIST_ID=#{id}
                                  AND ROWNUM=1))
 	</select>
 	
-	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO">
+	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO"><!-- 컬럼명 -->
 		INSERT INTO ALBUM
 		VALUES(ALBUM_SEQ.NEXTVAL, 
 			   #{albName}, 

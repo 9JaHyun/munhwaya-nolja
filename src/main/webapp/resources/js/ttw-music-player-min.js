@@ -76,12 +76,15 @@
 
             var playing = false, markup, $myJplayer = {},$tracks,showHeight = 0,remainingHeight = 0,$tracksWrapper, $more;
 
-            markup = {
-                listItem:'<li class="track" id="id">' +
-                            '<span class="title"></span>' +
-                            '<span class="duration"></span>' +
-                            '<a href="#" class="buy not-active" target="_blank"></a>' +
-                        '</li>',
+            markup = {/*$('<li>')->이벤트등록 DOM으로 생성*/
+                listItem: $('<li>').addClass( 'track' )
+						  $('<span>').addClass( 'title' )
+						  
+						/*`<li class="track"> 
+                            <span class="title"></span>
+                            <span class="duration"></span>
+                            <a href="#" class="buy not-active" target="_blank"></a>
+                        </li>`*/,
                 ratingBar:'<span class="rating-level rating-bar"></span>'
             };
 
@@ -221,8 +224,12 @@
 
                     //since $ratings refers to a specific object, if we just use .html($ratings) we would be moving the $rating object from one list item to the next
                     $track.find(cssSelector.rating).html($ratings.clone());
-
-                    $track.find(cssSelector.title).html(trackName(j));
+					/*console.log(trackId(j));*/
+                    $track.find(cssSelector.title).html(trackName(j)).attr("data-musicid",trackId(j));
+					$track.find(cssSelector.title).attr("data-writer",trackWriter(j));
+					$track.find(cssSelector.title).attr("data-composing",trackComposing(j));
+					$track.find(cssSelector.title).attr("data-arrangement",trackArrangement(j));
+				
 
                     $track.find(cssSelector.duration).html(duration(j));
 
@@ -485,6 +492,20 @@
             else if (!isUndefined(myPlaylist[index].oga))
                 return fileName(myPlaylist[index].oga);
             else return '';
+        }
+
+		function trackId(index) {
+              return myPlaylist[index].musicId;
+        }
+
+		function trackWriter(index) {
+              return myPlaylist[index].writer;
+        }
+		function trackComposing(index) {
+              return myPlaylist[index].composing;
+        }
+		function trackArrangement(index) {
+              return myPlaylist[index].arrangement;
         }
 
         function fileName(path) {
