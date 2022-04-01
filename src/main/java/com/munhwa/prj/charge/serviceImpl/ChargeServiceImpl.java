@@ -21,11 +21,6 @@ public class ChargeServiceImpl implements ChargeService {
 	}
 
 	@Override
-	public ChargeVO selectCharge(ChargeVO vo) {
-		return map.selectCharge(vo);
-	}
-
-	@Override
 	public int insertCharge(ChargeVO vo) {
 		return map.insertCharge(vo);
 	}

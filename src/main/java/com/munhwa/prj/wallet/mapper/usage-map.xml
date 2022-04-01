@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.munhwa.prj.wallet.mapper.UsageMapper">
+	<resultMap type="com.munhwa.prj.wallet.vo.UsageVO" id="usageResultMap">
+		<id property="id" column="id"/>
+		<result property="useAt" column="use_at"/>
+		<result property="mileage" column="mileage"/>
+		<result property="place" column="place"/>
+		<result property="memberId" column="member_id"/>
+		<result property="pks" column="pks"/>
+		<collection property="commonCodevo" resultMap="commonResultMap"/>
+	</resultMap>
 	
+	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
+	  	<id property="id" column="id"/>
+	  	<result property="name" column="name"/>
+    </resultMap>
+	
+	<select id="selectUsageListMemberId" resultMap="usageResultMap">
+		<![CDATA[
+		select id, use_at, mileage, name, pks
+		from (select
+			rownum rn,
+			a.id,
+			a.use_at,
+			a.mileage,
+			b.name,
+			a.pks
+		from usage_history a,
+			 common_code b
+		where a.place = b.id
+			and rownum<= #{cri.pageNum} * #{cri.amount}
+			and a.member_id = #{memberId}
+			order by rn desc
+		)
+		where rn > (#{cri.pageNum}-1) * #{cri.amount}     
+		]]>
+	</select>
+	
+	<select id="getCountByUsageId" resultType="int">
+  		<![CDATA[
+  		select count(id)
+  		from usage_history
+  		where member_id = #{memberId}
+  		]]>
+  	</select>
+  	
 	<insert id="insertUsage" parameterType="com.munhwa.prj.wallet.vo.UsageVO">
 			INSERT INTO USAGE_HISTORY
 									(ID, 

@@ -44,8 +44,9 @@
 	where a.type = b.id
 		and rownum<= #{cri.pageNum} * #{cri.amount}
 		and a.member_id = #{memberId}    
+		order by id desc
     )
-	where rn > (#{cri.pageNum}-1) * #{cri.amount} 
+	where rn > (#{cri.pageNum}-1) * #{cri.amount}
   	]]>
   	</select>
   	
@@ -57,7 +58,6 @@
   		]]>
   	</select>
   
- 
 
 <!--   <select id="selectCharge" resultMap="chargeResultMap"> -->
 <!--     SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, member_id -->

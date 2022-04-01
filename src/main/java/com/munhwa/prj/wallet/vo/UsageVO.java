@@ -2,6 +2,8 @@ package com.munhwa.prj.wallet.vo;
 
 import java.util.Date;
 
+import com.munhwa.prj.common.vo.CommonCodeVO;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +16,6 @@ public class UsageVO {
 	private String place;
 	private String memberId;
 	private int pks;
+	
+	private CommonCodeVO commonCodevo;
 }

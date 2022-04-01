@@ -14,7 +14,5 @@ public interface ChargeMapper {
 	// 충전 내역 카운트
 	int getCountByChargeId(String id);
 	
-	ChargeVO selectCharge(ChargeVO vo);
-
 	int insertCharge(ChargeVO vo);
 }

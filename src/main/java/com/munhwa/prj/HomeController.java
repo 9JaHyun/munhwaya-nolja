@@ -31,23 +31,23 @@ public class HomeController {
         return "shop/shop";
     }
     
-    //카트 세션 테스트
-    @GetMapping("/cart/test")
-    @ResponseBody
-    public String cart(HttpServletRequest req) {
-    	Map<Integer, MusicVO> map = new HashMap<Integer, MusicVO>();
-    	req.getSession().setAttribute("cart", map);
-    	return "OK";
-    }
-    
-    @GetMapping("/cart/test/add")
-    @ResponseBody
-    public String addCart(MusicVO vo,HttpServletRequest req) {
-    	@SuppressWarnings("unchecked")
-		Map<Integer, MusicVO> map = (Map<Integer, MusicVO>) req.getSession().getAttribute("cart");
-    	map.put(vo.getId(), vo);
-    	req.getSession().setAttribute("cart", map);
-    	return "success";
-    }
+//    //카트 세션 테스트
+//    @GetMapping("/cart/test")
+//    @ResponseBody
+//    public String cart(HttpServletRequest req) {
+//    	Map<Integer, MusicVO> map = new HashMap<Integer, MusicVO>();
+//    	req.getSession().setAttribute("cart", map);
+//    	return "OK";
+//    }
+//    
+//    @GetMapping("/cart/test/add")
+//    @ResponseBody
+//    public String addCart(MusicVO vo,HttpServletRequest req) {
+//    	@SuppressWarnings("unchecked")
+//		Map<Integer, MusicVO> map = (Map<Integer, MusicVO>) req.getSession().getAttribute("cart");
+//    	map.put(vo.getId(), vo);
+//    	req.getSession().setAttribute("cart", map);
+//    	return "success";
+//    }
     
 }
