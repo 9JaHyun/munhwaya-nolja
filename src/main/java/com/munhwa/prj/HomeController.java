@@ -33,7 +33,7 @@ public class HomeController {
     // 강제적으로 세션 "member" 생성
     @GetMapping("/create-member")
     public @ResponseBody String createSession(HttpServletRequest req) {
-    	req.getSession().setAttribute("member", "test0@gmail.com");
+    	req.getSession().setAttribute("member", "test1@gmail.com");
     	return "ok";
     }
 }

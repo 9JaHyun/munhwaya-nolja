@@ -46,7 +46,7 @@ public class PerformanceController {
     // 공연신청
     @RequestMapping("/performanceInsert.do")
     public String performanceInsert(PerformanceVO vo) {
-    	vo.setArtistId(1);
+    	vo.setArtistId(2);
 //    	fileUtils.storeFile(null)
     	vo.getImage();
     	int n = performanceDao.performanceInsert(vo);

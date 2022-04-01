@@ -1,6 +1,7 @@
 package com.munhwa.prj.ticketList.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,13 +17,13 @@ public class TicketListServiceImpl implements TicketListService {
 	private TicketListMapper map;
 	
 	@Override
-	public List<TicketListVO> ticketListSelectList() {
-		return map.ticketListSelectList();
+	public List<TicketListVO> ticketListSelectList(String id) {
+		return map.ticketListSelectList(id);
 	}
 
 	@Override
-	public int ticketListInsert(TicketListVO vo) {
-		return map.ticketListInsert(vo);
+	public int ticketListInsert(Map<String, Object> paramMap) {
+		return map.ticketListInsert(paramMap);
 	}
 
 	@Override

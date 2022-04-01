@@ -33,19 +33,20 @@
 	</select>
 	
 	<select id="performanceSelect" parameterType="com.munhwa.prj.performance.vo.PerformanceVO" resultMap="performanceResultMap">
-				SELECT	ID
-		,		NAME
-		,		LOCATION
-		,		to_char(sdate, 'yyyy-MM-dd hh:mm:ss') as SDATE
-		,		to_char(edate, 'yyyy-MM-dd hh:mm:ss') as EDATE
-		,		CONTENT
-		,		STATUS
-		,		IMAGE
-		,		ARTIST_ID
-		,		PRICE
-		,		PERSON
-		FROM	PERFORMANCE
-		WHERE    id = #{id}
+		SELECT	P.ID
+		,		P.NAME
+		,		P.LOCATION
+		,		P.SDATE
+		,		P.EDATE
+		,		P.CONTENT
+		,		P.STATUS
+		,		P.IMAGE
+		,		P.ARTIST_ID
+		,		P.PRICE
+		,		P.PERSON - PP.PERSONAL AS PERSON
+		FROM	PERFORMANCE p, PERFORMANCE_PERSONAL PP
+		WHERE   P.ID = #{id}
+		AND		P.ID = PP.ID
 	</select>
 	
 	<insert id="performanceInsert" parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
