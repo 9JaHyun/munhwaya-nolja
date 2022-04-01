@@ -6,7 +6,7 @@
 <!-- sidebar -->
 <div class="span4 sidebar">
     <div class="def-block widget">
-        <h4>여기 닉네임</h4>
+        <h4>${sessionScope}</h4>
         <div style="float: right;"><a style="color: #FF0078;">일반회원</a></div>
         <span class="liner"></span>
         <div class="widget-content">

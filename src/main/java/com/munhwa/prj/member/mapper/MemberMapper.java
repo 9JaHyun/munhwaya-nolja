@@ -1,6 +1,7 @@
 package com.munhwa.prj.member.mapper;
 
 import com.munhwa.prj.member.vo.MemberVO;
+import org.apache.ibatis.annotations.Param;
 
 public interface MemberMapper {
 	
@@ -13,4 +14,5 @@ public interface MemberMapper {
 	// 닉네임 중복체크
 	int nickChk(String nickname);
 
+	MemberVO selectByMemberId(@Param("username") String id);
 }

@@ -13,4 +13,5 @@ public interface MemberService {
 	// 닉네임 중복체크
 	int nickChk(String nickname);
 
+	MemberVO findById(String id);
 }

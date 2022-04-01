@@ -27,4 +27,8 @@ public class MemberServiceImpl implements MemberService {
 	public int nickChk(String nickname) {
 		return map.nickChk(nickname);
 	}
+
+	public MemberVO findById(String id) {
+		return map.selectByMemberId(id);
+	}
 }

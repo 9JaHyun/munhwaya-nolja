@@ -82,6 +82,16 @@ public class MemberController {
         return "signIn/signInForm";
     }
 
+    // 로그인폼
+    @PostMapping("/signin")
+    public String signIn(LoginRequestDto dto) {
+        MemberVO member = memberDao.findById(dto.getUsername());
+        if (passwordEncoder.matches(dto.getPassword(), member.getPassword())){
+
+        }
+        return "signIn/signInForm";
+    }
+
     private String chooseGenre(String genre) {
         String result;
         switch (genre) {

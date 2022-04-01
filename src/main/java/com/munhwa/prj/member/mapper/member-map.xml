@@ -30,6 +30,11 @@
     FROM member
     WHERE nickname = #{nickname}
   </select>
+  <select id="selectByMemberId" resultType="com.munhwa.prj.member.vo.MemberVO">
+    SELECT *
+    FROM member
+    WHERE id = #{id}
+  </select>
 
 
 </mapper>
