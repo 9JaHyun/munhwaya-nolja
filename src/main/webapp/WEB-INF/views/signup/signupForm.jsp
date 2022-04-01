@@ -80,8 +80,10 @@
 			var eng = pw.search(/[a-z]/ig);
 			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 			
-			var tel = $('#tel').val();
+			var tel = $("#tel").val();
 			var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+			
+			var genre = $("#genre").val();
 			
 			if(pw.length < 8 || pw.length > 20){
 				 alert("비밀번호를 8자리 ~ 20자리 이내로 입력해주세요.");
@@ -98,8 +100,11 @@
 				}else if (!tel.match(regPhone)) {
 				 alert("적절하지 않은 휴대폰번호 양식입니다.");
 				 return false;
+				}else if (genre === null){
+				 alert("관심 장르를 선택해주세요.");
+				 return false;
 				}else {
-				 return true;	
+				 return true;		
 				}
 
 		} else {

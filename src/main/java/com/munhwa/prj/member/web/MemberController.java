@@ -33,7 +33,6 @@ public class MemberController {
     public String mypage(HttpServletRequest req, Model model) {
     	MemberVO vo = (MemberVO) req.getSession().getAttribute("member");
     	if (vo != null) {
-    		model.addAttribute("member", vo);
     		return "mypage-member";
     	} else {
     		return "error/404";
