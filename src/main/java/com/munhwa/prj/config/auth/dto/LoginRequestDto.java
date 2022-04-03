@@ -1,4 +1,4 @@
-package com.munhwa.prj.member.web.dto;
+package com.munhwa.prj.config.auth.dto;
 
 import lombok.Data;
 

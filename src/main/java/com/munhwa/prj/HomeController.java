@@ -1,5 +1,7 @@
 package com.munhwa.prj;
 
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;

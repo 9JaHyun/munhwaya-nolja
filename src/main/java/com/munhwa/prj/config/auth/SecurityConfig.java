@@ -1,7 +1,9 @@
-package com.munhwa.prj.config;
+package com.munhwa.prj.config.auth;
 
-import com.munhwa.prj.member.service.LoginService;
-import lombok.extern.slf4j.Slf4j;
+import com.munhwa.prj.config.auth.service.CustomOauth2UserService;
+import com.munhwa.prj.config.auth.service.LoginService;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -12,6 +14,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
@@ -21,21 +25,15 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.AuthenticatedPrincipalOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-@Slf4j
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BasicDataSource dataSource;
     private final LoginService loginService;
-
-    public SecurityConfig(BasicDataSource dataSource,
-          LoginService loginService) {
-        this.dataSource = dataSource;
-        this.loginService = loginService;
-    }
+    private final CustomOauth2UserService customOauth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .formLogin(login -> login
                     .loginPage("/signin").permitAll()
                     .defaultSuccessUrl("/", false)
-                    .failureUrl("/signin"))
+                    .failureUrl("/signin")
+                    .failureHandler(loginFailureHandler()))
               .logout(logout -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/home.do")
@@ -61,20 +60,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("remember-me", "JSESSION_ID"))
               .exceptionHandling(e -> e
                     .accessDeniedPage("/access-denied"))
-              .oauth2Login();
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler loginSuccessHandler() {
-        return new CustomLoginSucc
+              .oauth2Login(
+                    oauth -> oauth
+                    .userInfoEndpoint().userService(customOauth2UserService))
+              .sessionManagement(session -> session
+                    .maximumSessions(1) // 다른 곳에서 해당 회원으로 로그인 시 로그아웃
+                    .maxSessionsPreventsLogin(false)
+                    .expiredUrl("/session-expired"));
     }
 
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("ROLE_R03> ROLE_RO2 > ROLE_R01");
+        roleHierarchy.setHierarchy("R03> RO2 > R01");
         return roleHierarchy;
     }
+
     // Encode
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -88,8 +89,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public LoginFailureHandler loginFailureHandler() {
+        return new LoginFailureHandler();
+    }
+
+    // Session
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        SessionRegistryImpl registry = new SessionRegistryImpl();
+        return registry;
+    }
+
+    //Oauth Service
+    @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(this.googleClientRegistration());
+        return new InMemoryClientRegistrationRepository(List.of(this.googleClientRegistration()));
     }
 
     @Bean
@@ -106,6 +120,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private ClientRegistration googleClientRegistration() {
         return CommonOAuth2Provider.GOOGLE.getBuilder("google")
+              .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")
+              .clientSecret("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")
+              .scope("profile", "email")
+              .build();
+    }
+
+    private ClientRegistration faceBookClientRegistration() {
+        return CommonOAuth2Provider.FACEBOOK.getBuilder("faceBook")
+              .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")
+              .clientSecret("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")
+              .scope("profile", "email")
+              .build();
+    }
+
+    private ClientRegistration naverClientRegistration() {
+        return CommonOAuth2Provider.OKTA.getBuilder("naver")
               .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")
               .clientSecret("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")
               .scope("profile", "email")

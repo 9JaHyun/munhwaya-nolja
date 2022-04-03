@@ -13,8 +13,8 @@
 
   <!-- 회원가입 -->
   <insert id="memberSignup" parameterType="com.munhwa.prj.member.vo.MemberVO">
-    INSERT INTO member (id, password, nickname, tel, genre, role)
-    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, #{role})
+    INSERT INTO member (id, password, nickname, tel, genre, role, image)
+    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, #{role}, #{image})
   </insert>
 
   <!-- 아이디 중복체크 -->
@@ -33,7 +33,7 @@
   <select id="selectByMemberId" resultType="com.munhwa.prj.member.vo.MemberVO">
     SELECT *
     FROM member
-    WHERE id = #{id}
+    WHERE id = #{username}
   </select>
 
 

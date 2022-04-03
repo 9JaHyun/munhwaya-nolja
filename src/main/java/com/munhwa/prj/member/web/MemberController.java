@@ -1,7 +1,9 @@
 package com.munhwa.prj.member.web;
 
 import com.munhwa.prj.member.vo.Auth;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +20,11 @@ public class MemberController {
     private MemberService memberDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private HttpSession httpSession;
 
     // 마이페이지
+    @PreAuthorize("hasRole('R01')")
     @GetMapping("/mypage.do")
     public String mypage() {
         return "mypage-member";
@@ -79,16 +84,6 @@ public class MemberController {
     // 로그인폼
     @GetMapping("/signin")
     public String signInForm() {
-        return "signIn/signInForm";
-    }
-
-    // 로그인폼
-    @PostMapping("/signin")
-    public String signIn(LoginRequestDto dto) {
-        MemberVO member = memberDao.findById(dto.getUsername());
-        if (passwordEncoder.matches(dto.getPassword(), member.getPassword())){
-
-        }
         return "signIn/signInForm";
     }
 
