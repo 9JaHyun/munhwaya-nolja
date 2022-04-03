@@ -77,14 +77,11 @@
             var playing = false, markup, $myJplayer = {},$tracks,showHeight = 0,remainingHeight = 0,$tracksWrapper, $more;
 
             markup = {/*$('<li>')->이벤트등록 DOM으로 생성*/
-                listItem: $('<li>').addClass( 'track' )
-						  $('<span>').addClass( 'title' )
-						  
-						/*`<li class="track"> 
+                listItem:`<li class="track" onclick="change()"> 
                             <span class="title"></span>
                             <span class="duration"></span>
                             <a href="#" class="buy not-active" target="_blank"></a>
-                        </li>`*/,
+                          </li>`,
                 ratingBar:'<span class="rating-level rating-bar"></span>'
             };
 
@@ -388,8 +385,8 @@
                         '            <span class="highlight"></span>' +
                         '        </div>' +
                         '        <div class="track-info" style="margin-top:17px">' +
-                        '            <p class="title"></p>' +
-                        '            <p class="artist-outer">가수: <span class="artist"></span></p>' +
+                        '            <p class="title" id="title1"></p>' +
+                        '            <p class="artist-outer">가수: <span id="artName1" class="artist"></span></p>' +
 						'			 <p><span class="artist-outer" id="writer"></span></p>' +
 						'			 <p><span class="artist-outer" id="composing"></span></p>' +
 						'			 <p><span class="artist-outer" id="arrangement"></span></p>' +			 		
@@ -402,7 +399,7 @@
                         '            </div>' +
                         '        </div>' +
 						'			<p class="single_variation_wrap" style="text-align:right; vertical-align:middle;">' +
-						'					<button class="tbutton small"><span>위시리스트 추가</span></button>' +
+						'					<button class="tbutton small" onclick="addWishList()"><span>위시리스트 추가</span></button>' +
 						'					<button class="tbutton small"><span>공유</span></button>' +
 						'					<button class="tbutton small"><span>구매</span></button>' +
 						'					<a href="#"><i class="icon-heart" style="font-size: 25px; margin-right:10px"></i></a>' +

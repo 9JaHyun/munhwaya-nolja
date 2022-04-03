@@ -48,14 +48,83 @@ jQuery(document).ready(function () {
 		}
 	})
 })
-
-/*$.ajax()
-//아작스처리
- function change() {
-	$('#id').on('click',function() {
-		
+function change() {
+	//li"track", span"title", span"duration" a"buy" => 각각 마다 다르게 주기
+	var musicId = null;
+	if(event.target.className == 'track') {
+		console.log('this is li Tag')
+		musicId = $(event.target).children().data("musicid")
+	} 
+	if(event.target.className == 'title') {
+		console.log('this is spanTilte Tag')
+		musicId = $(event.target).data("musicid")
+	} 
+	if(event.target.className == 'duration') {
+		console.log('this is spanduration Tag')
+		musicId = $(event.target).prev().data("musicid")
+		console.log(musicId)
+	} 
+	if(event.target.className == 'buy') {
+		return
+	}
+	
+	//뮤직아이디 받아왔으니 아작스로 해당하는 뮤직아이디의 정보를 가져와야함
+	$.ajax({
+		type: "GET", //요청 메소드 방식
+		url:"musicSelectBymusicId/"+musicId,
+		dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+		error : function(a, b, c){
+			alert(a + b + c);
+		},
+		success: musicSelectResult
 	})
-} */
+	//작사작곡편곡 바꾸기, 가사바꾸기, 수록앨범 바꾸기
+ 	function musicSelectResult(data) {
+		console.log(data.writer)
+		$('#writer').html('작사: '+data.writer)
+		$('#composing').html('작곡: '+data.composing)
+		$('#arrangement').html('편곡: '+data.arrangement)
+		$('#lyric').html(data.lyric)
+		//음악 사진 작업
+		
+		$.ajax({
+		type: "GET", //요청 메소드 방식
+		url:"albumSelectBymusicId/"+data.id,
+		dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+		error : function(a, b, c){
+			alert(a + b + c);
+		},
+		success: albumSelectResult
+	})
+		function albumSelectResult(result) {
+			$('.grid_3').attr('href','albumInfo?id='+result.id)
+			$('#albName').html(result.albName)
+			$('#artName').html(result.artName)
+			//앨범사진작업
+		}
+	}
+}
+
+//위시리스트 추가
+function addWishList() {
+	var title = $('#title1').html()
+	var artName = $('#artName1').html()
+	
+	$.ajax({
+		type: "POST", //요청 메소드 방식
+		url:"addWishList",
+		contentType:'application/json;charset=utf-8',
+		data: {"title": title, "artName": artName},
+		dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+		error : function(a, b, c){
+			alert(a + b + c);
+		},
+		success: function(result) {
+			console.log(result)
+		}
+	})
+	
+}
 
 </script>
 
@@ -108,7 +177,7 @@ jQuery(document).ready(function () {
 				<div class="posts">
 					<div class="def-block">
 						<h4> 가사 </h4><span class="liner"></span>
-						<xmp>
+						<xmp id="lyric">
 ${musicSelectListByWishList[0].lyric}
 						</xmp>
 					</div><!-- def block -->
@@ -127,8 +196,8 @@ ${musicSelectListByWishList[0].lyric}
 							<li id="Latest" class="active">
 								<div class="video-grid">
 									<a href="albumInfo?id=${albumSelectByWishList.id }" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>${albumSelectByWishList.albName }</strong>${albumSelectByWishList.artName }</span>
+										<img id="albImg" src="resources/images/bg/musicBg3.jpg" alt="#">
+										<span><strong id="albName"> ${albumSelectByWishList.albName }</strong><span id="artName">${albumSelectByWishList.artName }</span></span>
 									</a>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
@@ -146,10 +215,5 @@ jQuery(document).ready(function(){
 	$('#composing').html('작곡: ${musicSelectListByWishList[0].composing}');
 	$('#arrangement').html('편곡: ${musicSelectListByWishList[0].arrangement}');
 	
-	var li = $('.tracklist').find('.track').length
-		console.log(li)
-	/* $.each(li,function(idx, item) {
-		console.log(idx)
-	}) */
 })
 </script>
