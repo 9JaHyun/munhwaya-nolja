@@ -56,6 +56,12 @@ public class MusicServiceImpl implements MusicService{
 	}
 
 	@Override
+	public int musicIdByTitle(MusicVO vo) {
+		return map.musicIdByTitle(vo);
+	}
+
+	
+	@Override
 	public int musicInsert(MusicVO vo) {
 		return map.musicInsert(vo);
 	}
@@ -69,13 +75,5 @@ public class MusicServiceImpl implements MusicService{
 	public int musicDelete(MusicVO vo) {
 		return map.musicDelete(vo);
 	}
-
-	
-
-	
-
-
-	
-
 
 }

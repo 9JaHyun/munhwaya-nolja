@@ -148,22 +148,16 @@ public class MusicController {
 		return vo;
 	}
 	
+	/*
 	@ResponseBody
 	@PostMapping("/addWishList") 
 	public void addWishList(@RequestBody MusicVO vo, Model model) {
 		//제목이랑 가수이름으로 musicId를 찾고 그 뮤직아이디를 해당 위시리스트에 넣는다
-		
-		//매퍼설정
-		/*select id from music
-		where title=#{title}
-		AND art_name=#{artName};*/
-		
-		//
-		
-		//int r = insertWishList
+		int musicId = musicDAO.musicIdByTitle(vo);
+		int r = musicDAO.insertWishList(musicId);
 		//System.out.println(title);
 		
 	}
-	
+	*/
 
 }

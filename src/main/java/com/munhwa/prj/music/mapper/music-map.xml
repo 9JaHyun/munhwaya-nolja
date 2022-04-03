@@ -76,6 +76,13 @@
 		WHERE ID = #{id}
 	</select>
 	
+	<select id="musicIdByTitle" parameterType="com.munhwa.prj.music.vo.MusicVO" resultType="int">
+		SELECT ID
+		FROM MUSIC
+		WHERE TITLE = #{title}
+		AND ART_NAME = #{artName)
+	</select>
+	
 	<insert id="musicInsert" parameterType="com.munhwa.prj.music.vo.MusicVO">
 		INSERT INTO MUSIC
 		VALUES(MUSIC_SEQ.NEXTVAL, 

@@ -15,6 +15,7 @@ public interface MusicMapper {
 		List<MusicVO> musicSelectListByWishList(int id);
 		
 		MusicVO musicSelect(int id);
+		int musicIdByTitle(MusicVO vo);
 		
 		int musicInsert(MusicVO vo);
 		int musicUpdate(MusicVO vo);
