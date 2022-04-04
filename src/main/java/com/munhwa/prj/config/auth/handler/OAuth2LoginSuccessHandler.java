@@ -11,13 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 @Slf4j
 @Getter @Setter
-@Component
-public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler  {
 
     @Autowired private MemberMapper memberMapper;
 
@@ -28,7 +26,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         request.getSession().setAttribute("member",
               new SessionUser(memberMapper.selectByMemberId(username)));
-        response.sendRedirect("home.do");
+        log.info("result={}", (DefaultOAuth2User) authentication.getPrincipal());
+        response.sendRedirect("http://localhost/prj/");
     }
 }
 
