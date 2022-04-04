@@ -55,7 +55,7 @@
 
 
                                             <td class="product-subtotal">
-                                                <div class="price" id="price">${cart.key}</div>
+                                                <div class="price" id="price">${cart.value.price}</div>
                                             </td>
 
                                             <td class="product-remove tac">

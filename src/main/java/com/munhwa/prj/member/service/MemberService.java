@@ -12,5 +12,10 @@ public interface MemberService {
 
 	// 닉네임 중복체크
 	int nickChk(String nickname);
-
+	
+	// 마일리지 충전 22/04/04 류기태
+	int plusMileage(MemberVO vo);
+	
+	// 마일리지 사용 22/04/04 류기태
+	int minusMileage(MemberVO vo);
 }

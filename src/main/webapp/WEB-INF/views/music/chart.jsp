@@ -188,7 +188,7 @@ $(document).ready(function(){
 		$.ajax ({
 			url : "cart/test/add",
 			type : "get",
-			data : {"id" : 2, "title" : "테스트2"},
+			data : {"id" : 2, "title" : "테스트2", "price" : 700},
 			dataType : "text",
 			success : function(data) {
 				alert("장바구니에 담았습니다.");

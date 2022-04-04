@@ -16,6 +16,8 @@ import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
 import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.common.vo.PageDTO;
+import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.member.vo.MemberVO;
 import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.UsageVO;
 
@@ -27,15 +29,29 @@ public class WalletController {
 	@Autowired
 	private ChargeService chargeDao;
 	
+	@Autowired
+	private MemberService memberDao;
+	
 	
 //	SimpleDateFormat tranSimpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
 	@PostMapping("/payCart")
 	@ResponseBody
-	public void payCart(UsageVO vo) {
-		usageDao.insertUsage(vo);
+	public MemberVO payCart(MemberVO vo, UsageVO uvo,HttpServletRequest req, Model model) {
+		String memberId = (String) req.getSession().getAttribute("id");
+		model.addAttribute("memberId", memberId);
+		vo.setId(memberId);
+		memberDao.minusMileage(vo);
+		insertUsage(uvo);
+		return vo;
 	}
+	
+	public UsageVO insertUsage(UsageVO vo) {
+		usageDao.insertUsage(vo);
+		return vo;
+	}
+	
 	
 	// 마이페이지 지갑 정보 리스트 페이지
 	@GetMapping("/walletInfo.do")

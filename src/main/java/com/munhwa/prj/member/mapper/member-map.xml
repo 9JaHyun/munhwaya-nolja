@@ -7,6 +7,7 @@
 		<result property="password" column="password" />
 		<result property="nickname" column="nickname" />
 		<result property="tel" column="tel" />
+		<result property="mileage" column="mileage"/>
 		<result property="genre" column="genre" />
 	</resultMap>
 
@@ -30,5 +31,17 @@
 		WHERE nickname = #{nickname}
 	</select>
 	
-
+	<!-- 마일리지 충전 22/04/04 류기태-->
+	<update id="plusMileage" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		update member
+		set mileage = mileage + #{mileage}
+		where id = #{id}
+	</update>
+	
+	<!-- 마일리지 차감 22/04/04 류기태 -->
+	<update id="minusMileage" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		update member
+		set mileage = mileage - #{mileage}
+		where id = #{id}
+	</update>
 </mapper>

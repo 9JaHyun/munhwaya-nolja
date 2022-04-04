@@ -27,4 +27,16 @@ public class MemberServiceImpl implements MemberService {
 	public int nickChk(String nickname) {
 		return map.nickChk(nickname);
 	}
+	
+	// 마일리지 충전 22/04/04 류기태
+	@Override
+	public int plusMileage(MemberVO vo) {
+		return map.plusMileage(vo);
+	}
+	
+	// 마일리지 사용 22/04/04 류기태
+	@Override
+	public int minusMileage(MemberVO vo) {
+		return map.minusMileage(vo);
+	}
 }

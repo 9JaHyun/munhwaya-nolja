@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
+import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
 
 @Controller
 public class ChargeController {
 	@Autowired
 	ChargeService chargeDao;
+	
+	@Autowired
+	MemberService memberDao;
 		
 	@GetMapping("/chargeForm")
 	public String chargeForm(MemberVO vo, HttpServletRequest req) {
@@ -28,16 +32,33 @@ public class ChargeController {
 		return "charge/chargeForm";
 	}
 	
-	
 	@PostMapping("/charge")
 	@ResponseBody
-	public void insertCharge(ChargeVO vo, HttpServletRequest req, Model model) {
+	public MemberVO plusMileage(MemberVO vo, ChargeVO cvo, HttpServletRequest req, Model model) {
 		String memberId = (String) req.getSession().getAttribute("id");
 		model.addAttribute("memberId", memberId);
-		//HttpSession session = request.getSession();
-		//vo.setMemberId((String) session.getAttribute("id"));
-		chargeDao.insertCharge(vo);
+		vo.setId(memberId);
+		memberDao.plusMileage(vo);
+		System.out.println(vo);
+			insertCharge(cvo);
+		return vo;
 	}
+	
+	public ChargeVO insertCharge(ChargeVO vo) {
+		chargeDao.insertCharge(vo);
+		return vo;
+	}
+	
+	// 세션 없이 충전
+//	@PostMapping("/charge")
+//	@ResponseBody
+//	public void insertCharge(ChargeVO vo, HttpServletRequest req, Model model) {
+//		String memberId = (String) req.getSession().getAttribute("id");
+//		model.addAttribute("memberId", memberId);
+//		//HttpSession session = request.getSession();
+//		//vo.setMemberId((String) session.getAttribute("id"));
+//		chargeDao.insertCharge(vo);
+//	}
 	
 //	@GetMapping("/chargeSuccess.do")
 //	public String chargeSuccess(ChargeVO vo, Model model, HttpServletRequest req) {

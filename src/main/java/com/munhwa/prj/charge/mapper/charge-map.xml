@@ -15,7 +15,7 @@
   	<id property="id" column="id"/>
   	<result property="name" column="name"/>
   </resultMap>
-
+  
 <!--   <select id="selectChargeListByMemberId" parameterType="String" resultMap="chargeResultMap"> -->
 <!--   	select a.id as cartId,  -->
 <!--         a.charge_at,  -->
@@ -47,7 +47,6 @@
 		order by id desc
     )
 	where rn > (#{cri.pageNum}-1) * #{cri.amount}
-	and
   	]]>
   	</select>
   	
@@ -66,9 +65,11 @@
 <!--     FROM charge_history -->
 <!--     WHERE member_id = #{memberId} -->
 <!--   </select> -->
-
+   <!-- 충전 내역 남기기  -->
   <insert id="insertCharge" parameterType="com.munhwa.prj.charge.vo.ChargeVO">
     INSERT INTO charge_history(id, charge_at, mileage, type, member_id)
     VALUES (charge_history_seq.nextval, SYSDATE, #{mileage}, #{type}, #{memberId})
   </insert>
+  
+
 </mapper>
