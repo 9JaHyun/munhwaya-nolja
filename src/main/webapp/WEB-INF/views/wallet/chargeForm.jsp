@@ -8,18 +8,6 @@
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-var value = document.getElementById('kakaoPay').value
-
-if (value == 'imp66890146') {
-	IMP.init('imp66890146');
-	requestPayKaKao();
-} else ()
-// switch(value){
-// case "imp66890146": {
-// 	IMP.init('imp66890146';)
-// 	requestPayKakao();
-// } 
-}
    
    function requestPayKaKao() {
       // IMP.request_pay(param, callback) 결제창 호출
@@ -62,8 +50,7 @@ if (value == 'imp66890146') {
       
    }
    
-   IMP.init('imp04405403');
-   function requestPayCard() {
+   function requestPaySmilePay() {
       // IMP.request_pay(param, callback) 결제창 호출
       IMP.request_pay({ // param
          pg : "smilepay",
@@ -102,37 +89,105 @@ if (value == 'imp66890146') {
     	});
       
    }
+   
+   function requestPayCard() {
+	      // IMP.request_pay(param, callback) 결제창 호출
+	      IMP.request_pay({ // param
+	         pg : "html5_inicis",
+	         pay_method : "card",
+	         merchant_uid : 'merchant_' + new Date().getTime(),
+	         name : "마일리지 충전",
+	         amount : mileage.value,
+	         buyer_email : "test0@gmail.com",
+	<%--         	"<%=(String)session.getAttribute("id")%>", --%>
+	         buyer_name : "테스트",
+	         buyer_tel : "테스트",
+	         buyer_addr : "테스트",
+	      }, function(rsp) {
+	    	    if ( rsp.success ) {
+	    	    	var msg = '결제가 완료되었습니다.';
+//	      	        msg += '고유ID : ' + rsp.imp_uid;
+//	      	        msg += '상점 거래ID : ' + rsp.merchant_uid;
+//	      	        msg += '결제 상품명 : ' + "마일리지 충전";
+	     	        msg += '결제 금액 : ' + rsp.paid_amount;
+	     	        
+	    	    	$.ajax({
+	    	    		url: "charge",
+	    	    		type:"post",
+	    	    		data:{"mileage" : mileage.value,
+	    	    			  "memberId" : "test1@gmail.com",
+	    	    			  "type" : "P03"
+	    	    		},
+	    	    	});
+	    	    	location.href="walletInfoSelect.do";
+	    	    } else {
+	    	        var msg = '결제에 실패하였습니다.';
+	    	        msg += '에러내용 : ' + rsp.error_msg;
+	    	    	location.href ="chargeForm.do";
+	    	    }
+	    	    alert(msg);
+	    	});
+	      
+	   }
 </script>
 <div class="def-block clearfix">
 	<div align="right" style="margin-bottom: 50px;">
-	<h4>마일리지 충전</h4>
-	<div>
-		<div class="def-block clearfix" align="center"
-			style="color: white; font-size: 20px; margin-top: 50px;">
-			충전 할 마일리지&nbsp;&nbsp;&nbsp;<input type="text" id="mileage"
-				name="mileage" style="height: 15px; margin-top: 5px;">
+		<h4>마일리지 충전</h4>
+		<div>
+<!-- 			<div class="def-block clearfix" align="center" -->
+<!-- 				style="color: white; font-size: 20px; margin-top: 50px;"> -->
+<!-- 				현재 보유중인 마일리지<input type="text" id="mileage" name="mileage" -->
+<!-- 					style="height: 15px; margin-top: 5px; margin-left: 20px;" required="required"> -->
+<!-- 			</div> -->
+			<div class="def-block clearfix" align="center"
+				style="color: white; font-size: 20px;">
+				충전 할 마일리지<input type="text" id="mileage" name="mileage"
+					style="height: 15px; margin-top: 5px; margin-left: 20px;">
+			</div>
+			<div class="def-block clearfix" align="center"
+				style="color: white; font-size: 20px; padding-top: 0px;">
+				충전 수단 &nbsp;<select id="pay" name="pay" onchange="payChange()"
+					style="height: 30px; margin-top: 5px; margin-left: 75px;">
+					<option value="">충전 수단을 선택해주세요</option>
+					<option value="imp66890146">카카오 페이</option>
+					<option value="imp04405403">스마일 페이</option>
+					<option value="imp00514439">카드 결제(KG 이니시스)</option>
+				</select>
+			</div>
+			<!-- 		<div align="center" -->
+			<!-- 			style="color: white; font-size: 20px; margin-bottom: 100px; margin-top: 50px;"> -->
+			<!-- 			충전 수단</div> -->
+			<button onclick="requestPayKaKao()" style="margin-left: 30px"
+				id="kakaoPay" value="imp66890146">
+				<img src="${path}/resources/images/payment/kakaopay.png" style="width:150px; height:75px;">
+			</button>
+			<button onclick="requestPaySmilePay()" style="margin-left: 30px"
+				id="smilePay" value="imp04405403">
+				<img src="${path}/resources/images/payment/smilepay.png" style="width:150px; height:75px;">
+			</button>
+			<button onclick="requestPayCard()" style="margin-left: 30px"
+				id="smilePay" value="imp00514439">
+				<img src="${path}/resources/images/payment/kginicis.jpg" style="width:150px; height:75px;">
+			</button>
 		</div>
-		<div align="center"
-			style="color: white; font-size: 20px; margin-bottom: 100px; margin-top: 50px;">
-			충전 수단</div>
-		<button onclick="requestPayKaKao()" style="margin-left: 30px" id="kakaoPay" value="imp66890146">
-			<img src="${path}/resources/images/payment/kakaopay.png" width="150"
-				height="80">
-		</button>
-		<button onclick="requestPayCard()" style="margin-left: 30px" id="smilePay" value="imp04405403">
-		<img src="${path}/prj/resources/images/payment/kakaopay.png"
-			width="150" height="80">
-	</button>
+		<div align="right">
+			<a href="walletInfo.do" class="tbutton small"
+				style="margin-top: 50px"><span>뒤로가기</span></a>
+		</div>
+		
 	</div>
-	<div align="right">
-                <a href="walletInfo.do" class="tbutton small" style="margin-top:50px"><span>뒤로가기</span></a>
-    </div>
-   	<form>
-  		<input type="hidden" value="imp66890146" id="kakao">
-  		<input type="hidden" value="imp04405403" id="smile">
-	</form>
-</div>
 </div>
 <script>
-	
+function payChange() {
+	var value = document.getElementById('pay').value
+	if (value == 'imp66890146') {
+		IMP.init('imp66890146');
+// 		requestPayKaKao();
+	} else if (value == 'imp04405403') {
+		IMP.init('imp04405403');
+// 		requestPaySmilePay();
+	} else if (value == 'imp00514439') {
+		IMP.init('imp00514439');
+	}
+	}	
 </script>

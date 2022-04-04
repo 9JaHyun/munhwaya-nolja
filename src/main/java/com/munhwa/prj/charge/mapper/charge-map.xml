@@ -47,6 +47,7 @@
 		order by id desc
     )
 	where rn > (#{cri.pageNum}-1) * #{cri.amount}
+	and
   	]]>
   	</select>
   	

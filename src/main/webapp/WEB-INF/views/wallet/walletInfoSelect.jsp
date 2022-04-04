@@ -60,19 +60,6 @@ a:hover {
 				현재 보유중인 마일리지&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly"
 					style="height: 15px; margin-top: 5px;">
 			</div>
-			<!-- 옵션선택 끝 -->
-			<!-- 			<div class="search_wrap"> -->
-			<!-- 				<div class="search_area"> -->
-			<!-- 					<select name="type"> -->
-			<!-- 						<option value="mileage" -->
-			<%-- 							<c:out value="${pageMaker.cri.type eq 'mileage'?'selected':'' }"/>>가격</option> --%>
-			<!-- 						<option value="name" -->
-			<%-- 							<c:out value="${pageMaker.cri.type eq 'name'?'selected':'' }"/>>결제 수단</option> --%>
-			<!-- 					</select> -->
-			<%-- 					<input type="text" name="keyword" value="${pageMaker.cri.keyword }"> --%>
-			<!-- 					<button>Search</button> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
 		</div>
 		<div style="float: right;">
 			<select id="cntPerPage" name="sel" onchange="selChange()">
@@ -147,7 +134,6 @@ a:hover {
 <script>
 	 function paging(num) {
 		moveForm.pageNum.value = num;
-// 		moveForm.attr("action", "walletInfoSelect.do");
 		moveForm.submit();
 		
 	};
@@ -158,34 +144,5 @@ a:hover {
 	}
 
 
-//     $(".search_area button").on("click", function(e){
-//         e.preventDefault();
-//         let val = $("input[name='keyword']").val();
-//         moveForm.find("input[name='keyword']").val(val);
-//         moveForm.find("input[name='pageNum']").val(1);
-//         moveForm.submit();
-//     });
-    
-//     $(".search_area button").on("click", function(e){
-//         e.preventDefault();
-        
-//         let type = $(".search_area select").val();
-//         let keyword = $(".search_area input[name='keyword']").val();
-        
-//         if(!type){
-//             alert("검색 종류를 선택하세요.");
-//             return false;
-//         }
-        
-//         if(!keyword){
-//             alert("키워드를 입력하세요.");
-//             return false;
-//         }        
-        
-//         moveForm.find("input[name='type']").val(type);
-//         moveForm.find("input[name='keyword']").val(keyword);
-//         moveForm.find("input[name='pageNum']").val(1);
-//         moveForm.submit();
-//     });
 	
 </script>
