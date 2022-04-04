@@ -192,15 +192,9 @@ function addWishList(e) {
 	<!-- 위시리스트모달 끝-->
 <!-- 구매 -->
 <script>
-$(document).ready(function(){
-   
-   addCart();
-
-   });
-   
    function addCart() {
-	  var confirm = confirm('장바구니에 담으시겠습니까?')
-	  if(confirm) {
+	  var confirm1 = confirm('장바구니에 담으시겠습니까?')
+	  if(confirm1) {
 	      $.ajax ({
 	         url : "cart/test/add",
 	         type : "get",
