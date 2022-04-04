@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <div class="under_header">
-	<img src="resources/images/assets/breadcrumbs11.png" alt="#">
+	<img src="resources/images/assets/signupback.png" alt="#">
 </div>
 <div class="page-content back_to_up">
 	<div class="row row-fluid clearfix mbf">
@@ -39,7 +39,7 @@
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"
 							type="text" name="nickname" id="nickname"
-								placeholder="NICKNAME(6자리 이상)" required="required" />
+								placeholder="NICKNAME (4자리 이상)" required="required" />
 						</div>
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"
@@ -60,7 +60,8 @@
 				</form>
 				<!-- end form -->
 			</div>
-			<img src="resources/images/signup-img.JPG" alt="signup-img" style="margin-left: 30px; float: left;">
+			<img src="resources/images/assets/signupimg.png" alt="signup-img" 
+			style="float: left; width: 449px; height: 341px; margin: 40px 0px 40px 40px;">
 		</div>
 	</div>
 </div>
@@ -68,7 +69,7 @@
 
 <script>
 	function send() {
-		if(idChk.value === "Y" && nickChk.value === "Y") {
+		if(idChk.value == "Y" && nickChk.value == "Y") {
 			
 			var pw = $("#password").val();
 			var pw2 = $("#password2").val();
@@ -119,7 +120,7 @@
 			}
 		})
 		} else {
-			alert('사용할 수 없는 아이디 양식입니다.');
+			alert('적절하지 않은 아이디 양식입니다.');
 		}
 	}
 	

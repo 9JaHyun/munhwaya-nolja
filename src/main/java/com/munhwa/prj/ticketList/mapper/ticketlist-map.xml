@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.ticketList.mapper.TicketListMapper">
+	<resultMap type="com.munhwa.prj.ticketList.vo.TicketListVO" id="ticketListResultMap">
+		<id property="id" column="id"/>
+		<result property="performanceId" column="performance_id"/>
+		<result property="memberId" column="member_id"/>
+		<result property="qrcode" column="qrcode"/>
+		<collection property="performancevo" resultMap="performanceResultMap"></collection>
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="location" column="location"/>
+		<result property="sdate" column="sdate"/>
+		<result property="edate" column="edate"/>
+		<result property="content" column="content"/>
+		<result property="status" column="status"/>
+		<result property="image" column="image"/>
+		<result property="artistId" column="artist_id"/>
+		<result property="price" column="price"/>
+		<result property="person" column="person"/>
+	</resultMap>
+	
+	<select id="ticketListSelectList" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
+	resultMap="ticketListResultMap">
+		SELECT T.ID,
+		       P.NAME,
+			   P.SDATE,
+			   P.EDATE,
+			   P.LOCATION
+		FROM TICKET_LIST T,
+			 MEMBER M,
+			 PERFORMANCE P
+		WHERE T.MEMBER_ID = M.ID
+		AND T.PERFORMANCE_ID = P.ID
+		ORDER BY SDATE DESC
+	</select>
+	
+	<select id="ticketListSelect" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
+	resultMap="ticketListResultMap">
+		SELECT M.NICKNAME,
+			   P.NAME,
+			   P.SDATE,
+			   P.EDATE,
+			   P.LOCATION,
+			   T.QRCODE
+		FROM TICKET_LIST T,
+			 MEMBER M,
+			 PERFORMANCE P
+		WHERE T.ID = #{id}
+		AND T.MEMBER_ID = M.ID
+		AND T.PERFORMANCE_ID = P.ID
+	</select>
+	
+	<insert id="ticketListInsert" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO">
+		INSERT INTO TICKET_LIST
+		VALUES(ticket_list_seq.nextval, #{performanceId}, #{memberId}, #{qrcode})
+	</insert>
+</mapper>

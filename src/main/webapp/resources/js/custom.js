@@ -212,6 +212,7 @@ jQuery( function($) {
 		});
 		// Aligning bg
 		$("#LoginBackgroundPopup").css({"height": windowHeight});
+		
 	
 		// Pop up the div and Bg
 		if (popupStatus == 0) {
@@ -237,7 +238,7 @@ jQuery( function($) {
 	$('#popupLogin, #Login_PopUp_Link').click(function(e) {
 		e.stopPropagation();
 	});
-
+	
 	// Masonry
 	if ($("#masonry-container")[0]) {
 		var $masonrytt = $('#masonry-container');

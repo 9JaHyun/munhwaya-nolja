@@ -23,7 +23,38 @@ public class MemberController {
     public String mypage() {
         return "mypage-member";
     }
+    
+    // 회원정보 변경 페이지
+    @GetMapping("/memberChangeInfo.do")
+    public String memberChangeInfo() {
+    	return "memberChangeInfo-member";
+    }
 
+    // 프로플 변경 페이지
+    @GetMapping("/changeProfile.do")
+    public String changeProfile() {
+    	return "changeProfile-member";
+    }
+    
+    // 개인정보 변경 페이지
+    @GetMapping("/changeInfo.do")
+    public String changeInfo() {
+    	return "changeInfo-member";
+    }
+    
+    // 비밀번호 변경 페이지
+    @GetMapping("/changePassword.do")
+    public String changePassword() {
+    	return "changePassword-member";
+    }
+    
+    // 회원탈퇴 변경 페이지
+    @GetMapping("/dropMember.do")
+    public String dropMember() {
+    	return "dropMember-member";
+    }
+    
+    
     // 회원가입폼
     @GetMapping("/signupForm.do")
     public String signupForm() {
