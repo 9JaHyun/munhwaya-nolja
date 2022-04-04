@@ -8,14 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.vo.AlbumVO;
 import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.wishlist.service.WishlistService;
 
 @Controller
 public class MusicController {
@@ -23,6 +23,8 @@ public class MusicController {
 	private MusicService musicDAO;
 	@Autowired
 	private AlbumService albumDAO;
+	@Autowired
+	private WishlistService wishlistDao;
 
 	/* 페이지 요청 */
 	@GetMapping("/musicMain")
@@ -31,7 +33,6 @@ public class MusicController {
 		 * Map<Integer, CartVO> map = (Map<Integer, cart>) session.getAttribute("cart");
 		 * map.set(musicVO.getId(), musicVO) session.addAttribue("cart", map)
 		 */
-		session.setAttribute("id", "test0@gmail.com");
 		String id = session.getAttribute("id").toString();
 		model.addAttribute("musicRnBList", musicDAO.musicSelectListByGenre("G04"));
 		model.addAttribute("musicRapList", musicDAO.musicSelectListByGenre("G03"));
@@ -89,11 +90,12 @@ public class MusicController {
 	public String streaming(Model model, int id) {
 		model.addAttribute("musicSelect", musicDAO.musicSelect(id));
 		model.addAttribute("AlbumSelectByMusicId", albumDAO.albumSelectByMusicId(id));
+		model.addAttribute("wishlists", wishlistDao.wishlistList("test0@gmail.com"));
 		return "music/streaming";
 	}
-
+	
 	@GetMapping("/streamingWishList")
-	public String streamingWishList(Model model, int id) {
+	public String streamingWishList(Model model, @RequestParam int id) {
 		model.addAttribute("musicSelectListByWishList", musicDAO.musicSelectListByWishList(id));
 		model.addAttribute("albumSelectListByWishList", albumDAO.albumSelectListByWishList(id));
 		model.addAttribute("albumSelectByWishList", albumDAO.albumSelectByWishList(id)); // 위시리스트의 첫번째 곡의 앨범정보
@@ -147,19 +149,5 @@ public class MusicController {
 		System.out.println(id);
 		return vo;
 	}
-	
-	
-	@ResponseBody
-	@PostMapping("/addWishList") 
-	public void addWishList(@RequestBody MusicVO vo, Model model) {
-		//제목이랑 가수이름으로 musicId를 찾고 그 뮤직아이디를 해당 위시리스트에 넣는다
-		int musicId = musicDAO.musicIdByTitle(vo);
-		
-		
-		//int r = musicDAO.insertWishList(musicId);
-		//System.out.println(title);
-		
-	}
-	
 
 }

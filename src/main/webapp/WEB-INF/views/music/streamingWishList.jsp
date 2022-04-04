@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!-- <script>
-jQuery(document).ready(function(){
-	$('#writer').html('작사: ${musicSelect.writer}');
-	$('#composing').html('작곡: ${musicSelect.composing}');
-	$('#arrangement').html('편곡: ${musicSelect.arrangement}');
-})
-</script> -->
-
-<!-- 변수에 다 지정 후에 배열하나 만들고 총 배열에 add() 추가 * -->
 <script>
 var myPlaylist = []
 <c:forEach items="${musicSelectListByWishList}" var = "music">
@@ -106,26 +97,6 @@ function change() {
 	}
 }
 
-//위시리스트 추가
-function addWishList() {
-	var title = $('#title1').html()
-	var artName = $('#artName1').html()
-	
-	$.ajax({
-		type: "POST", //요청 메소드 방식
-		url:"addWishList",
-		contentType:'application/json;charset=utf-8',
-		data: {"title": title, "artName": artName},
-		dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
-		error : function(a, b, c){
-			alert(a + b + c);
-		},
-		success: function(result) {
-			console.log(result)
-		}
-	})
-	
-}
 
 </script>
 
@@ -212,30 +183,6 @@ ${musicSelectListByWishList[0].lyric}
 		<!-- 수록앨범 끝 -->
 	</div>
 	<!-- content끝 -->
-<script>
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').focus()
-})
-</script>
-<!-- 위시리스트모달 -->
-<div class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 
 <script>
 jQuery(document).ready(function(){
@@ -245,33 +192,3 @@ jQuery(document).ready(function(){
 	
 })
 </script>
-
- <button id="testBtn" class="btn">모달 테스트</button>
-  <!-- 회원가입 확인 Modal-->
-	<div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					</button>
-					<h3 class="modal-title" id="exampleModalLabel">모달테스트</h3>
-				</div>
-				<div class="modal-body">내용 입력 !!</div>
-				<div class="modal-footer">
-					<a class="btn" id="modalY" href="#">예</a>
-					<button class="btn" type="button" data-dismiss="modal">아니요</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-
-
-	
-	<script>
-		$('#testBtn').click(function(e){
-			e.preventDefault();
-			$('#testModal').modal("show");
-		});
-	</script>

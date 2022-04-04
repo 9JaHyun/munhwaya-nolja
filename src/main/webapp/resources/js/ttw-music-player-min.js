@@ -399,9 +399,9 @@
                         '            </div>' +
                         '        </div>' +
 						'			<p class="single_variation_wrap" style="text-align:right; vertical-align:middle;">' +
-						'					<button class="tbutton small" onclick="addWishList()"><span>위시리스트 추가</span></button>' +
+						'					<button class="tbutton small" data-toggle="modal" data-target="#myModal"><span>위시리스트 추가</span></button>' +
 						'					<button class="tbutton small"><span>공유</span></button>' +
-						'					<button class="tbutton small"><span>구매</span></button>' +
+						'					<button class="tbutton small" onclick="addCart()"><span>구매</span></button>' +
 						'					<a href="#"><i class="icon-heart" style="font-size: 25px; margin-right:10px"></i></a>' +
 						'			 </p>' +	
                         '        <div class="player-controls" style="width:93%">' +
