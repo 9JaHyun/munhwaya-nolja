@@ -4,7 +4,7 @@
 	<resultMap type="com.munhwa.prj.music.vo.AlbumVO" id="albumResultMap">
 		<id property="id" column="ID" />
 		<result property="albName" column="ALB_NAME"/>
-		<result property="artName" column="ALB_NAME"/>
+		<result property="artName" column="ART_NAME"/>
 		<result property="releaseAt" column="RELEASE_AT"/>
 		<result property="genre" column="GENRE"/>
 		<result property="content" column="CONTENT"/>
@@ -19,13 +19,48 @@
 		FROM ALBUM
 	</select>
 	
-	<select id="albumSelect" resultMap="albumResultMap">
+	<select id="albumSelectListByRelease" resultMap="albumResultMap">
+		SELECT *
+		FROM ALBUM
+		WHERE RELEASE_AT BETWEEN SYSDATE-365 AND SYSDATE
+	</select>
+	
+	<select id="albumSelectListByWishList" parameterType="int" resultMap="albumResultMap">
+		SELECT * 
+		FROM ALBUM 
+		WHERE ID IN(SELECT ALBUM_ID 
+					FROM MUSIC
+                	WHERE ID IN (SELECT MUSIC_ID
+                                 FROM WISHLIST_MUSIC
+                                 WHERE WISHLIST_ID=#{id}))
+	</select>
+	
+	<select id="albumSelect" parameterType="int" resultMap="albumResultMap">
 		SELECT *
 		FROM ALBUM
 		WHERE ID = #{id}
 	</select>
 	
-	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO">
+	<select id="albumSelectByMusicId" parameterType="int" resultMap="albumResultMap">
+		SELECT *
+		FROM ALBUM
+		WHERE ID = (SELECT ALBUM_ID
+                    FROM MUSIC
+                    WHERE id = #{id})
+	</select>
+	
+	<select id="albumSelectByWishList" parameterType="int" resultMap="albumResultMap">
+		SELECT *
+		FROM ALBUM
+		WHERE ID = ( SELECT ALBUM_ID 
+					 FROM MUSIC
+                  	 WHERE ID = (SELECT MUSIC_ID
+                                 FROM WISHLIST_MUSIC
+                                 WHERE WISHLIST_ID=#{id}
+                                 AND ROWNUM=1))
+	</select>
+	
+	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO"><!-- 컬럼명 -->
 		INSERT INTO ALBUM
 		VALUES(ALBUM_SEQ.NEXTVAL, 
 			   #{albName}, 

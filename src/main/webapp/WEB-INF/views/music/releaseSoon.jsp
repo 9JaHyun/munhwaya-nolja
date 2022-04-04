@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-<!-- layout -->
-<div id="layout" class="full">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
@@ -17,7 +16,7 @@
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
 						<input  id="id" name="id" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px; " value=""
+							style="font-size:small; width: 1000px; height: 60px; " value=""
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -38,54 +37,13 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-									<a href="albumInfo" class="grid_3">
+								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="11">
+									<a href="albumInfo?id=${album.id }" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Avril Lopez</strong>Daredevil (video version)</span>
+										<span><strong>${album.albName }</strong>${album.artName }</span>
+										<span style="margin:0px;">${album.releaseAt }</span>
 									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Bob Stoo</strong>No Name No Number</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
+								</c:forEach>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->
@@ -95,6 +53,3 @@
 		</div>
 	</div>
 		<!-- content끝 -->
-</div>
-	<!-- layout 끝 -->
-	
