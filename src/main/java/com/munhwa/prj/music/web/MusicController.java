@@ -1,5 +1,9 @@
 package com.munhwa.prj.music.web;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -149,5 +154,34 @@ public class MusicController {
 		System.out.println(id);
 		return vo;
 	}
-
+	
+	@ResponseBody
+	@PostMapping(value = "/updateLike", produces = "application/text; charset=UTF-8")
+	public String updateLike(@RequestParam int musicId, HttpServletRequest req) {
+		boolean val = true;
+		@SuppressWarnings("unchecked")
+		Map<String, ArrayList<Integer>> map = (Map<String, ArrayList<Integer>>) req.getSession().getAttribute("like");
+		String id = (String) req.getSession().getAttribute("member");
+		ArrayList<Integer> musicIdList = map.get(id);
+		if(musicIdList.isEmpty()) {
+			val= true;
+		} else {
+			for (Integer check : musicIdList) {
+				Integer musicId1 = Integer.valueOf(musicId);
+				if (check == musicId1) {
+					val = false;
+				}
+			}
+		}
+		
+		if(val) {
+			musicDAO.updateLike(musicId);
+			musicIdList.add(musicId);
+			map.put(id, musicIdList);
+			req.getSession().setAttribute("like", map);
+			return "좋아요 하셨습니다";
+		} else {
+			return "이미 좋아요 하셨습니다.";
+		}
+	}
 }

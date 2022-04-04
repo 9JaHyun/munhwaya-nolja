@@ -40,14 +40,28 @@ jQuery(document).ready(function () {
 	})
 })
 </script>
-
+<script>
+jQuery(document).ready(function(){
+	$('#writer').html('작사: ${musicSelect.writer}');
+	$('#composing').html('작곡: ${musicSelect.composing}');
+	$('#arrangement').html('편곡: ${musicSelect.arrangement}');
+})
+</script>
+<!-- =================================================================== -->
 <style>
 	xmp {
 		color: white;
 		font-size: 20px;
 		text-align: center;
 	}
+	.single_variation_wrap > i{
+		 color: white;
+	}
+	.single_variation_wrap > i:hover{
+		 color: #FF0078;
+	}
 </style>
+
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
@@ -123,13 +137,8 @@ ${musicSelect.lyric }
 		
 	</div>
 	<!-- content끝 -->
-<script>
-jQuery(document).ready(function(){
-	$('#writer').html('작사: ${musicSelect.writer}');
-	$('#composing').html('작곡: ${musicSelect.composing}');
-	$('#arrangement').html('편곡: ${musicSelect.arrangement}');
-})
-</script>
+
+
 <!-- ================================================================ -->
 <!-- 위시리스트 추가 -->
 <script>
@@ -190,15 +199,21 @@ function addWishList(e) {
   </div>
 </div>
 	<!-- 위시리스트모달 끝-->
-<!-- 구매 -->
+
 <script>
+   <!-- 구매 -->
    function addCart() {
+	   
+	  var id = '${musicSelect.id}'
+	  var title = '${musicSelect.title}'
+	  var price = '${musicSelect.price}'
 	  var confirm1 = confirm('장바구니에 담으시겠습니까?')
+	  
 	  if(confirm1) {
-	      $.ajax ({
+	       $.ajax ({
 	         url : "cart/test/add",
 	         type : "get",
-	         data : {"id" : 2, "title" : "테스트2", "price" : 700},
+	         data : {"id" : id, "title" : title, "price" : price},
 	         dataType : "text",
 	         success : function(data) {
 	            alert("장바구니에 담았습니다.");
@@ -206,9 +221,27 @@ function addWishList(e) {
 	         error: function(xhr, status, error){
 	                alert(error);
 	            }
-	      })
+	      }) 
+	      
       } else {
     	  return
       }
+   }
+   
+   <!-- 좋아요기능 -->
+   function likeIt() {
+	   var musicId = '${musicSelect.id}'
+		   $.ajax ({
+		         url : "updateLike",
+		         type : "POST",
+		         data : {"musicId" : musicId},
+		         dataType : "text",
+		         success : function(result) {
+		            alert(result);
+		         },
+		         error: function(a,b,c){
+		        	 alert("통신실패")
+		            }
+		      }) 
    }
   </script>

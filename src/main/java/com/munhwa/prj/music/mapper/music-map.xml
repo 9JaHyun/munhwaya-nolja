@@ -101,6 +101,12 @@
 			   )
 	</insert>
 	
+	<update id="updateLike" parameterType="int">
+		UPDATE MUSIC
+		SET LIKE_IT=( LIKE_IT + 1 )
+		WHERE ID = #{id}
+	</update>
+	
 	<update id="musicUpdate" parameterType="com.munhwa.prj.music.vo.MusicVO">
 		UPDATE MUSIC
 	</update>

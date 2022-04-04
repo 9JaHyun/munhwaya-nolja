@@ -16,7 +16,8 @@ public interface MusicService {
 	
 	MusicVO musicSelect(int id);
 	int musicIdByTitle(MusicVO vo);
-
+	
+	int updateLike(int id);
 	int musicInsert(MusicVO vo);
 	int musicUpdate(MusicVO vo);
 	int musicDelete(MusicVO vo);

@@ -1,15 +1,17 @@
 package com.munhwa.prj;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.munhwa.prj.music.vo.MusicVO;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
@@ -49,4 +51,16 @@ public class HomeController {
     	return "ok";
 
     }
+    
+    /* 세션 라이크 맵 테스트 */
+	@GetMapping("/createLikeCheck")
+	@ResponseBody
+	public String createLikeCheck(HttpServletRequest req) {
+		String id = (String) req.getSession().getAttribute("member");
+		Map<String, ArrayList<Integer>> map = new HashMap<String, ArrayList<Integer>>();
+		ArrayList<Integer> musicIdList = new ArrayList<Integer>();
+		map.put(id, musicIdList);
+		req.getSession().setAttribute("like", map);
+		return "OK";
+	}
 }

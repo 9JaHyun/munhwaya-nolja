@@ -60,12 +60,20 @@ public class MusicServiceImpl implements MusicService{
 		return map.musicIdByTitle(vo);
 	}
 
-	
 	@Override
 	public int musicInsert(MusicVO vo) {
 		return map.musicInsert(vo);
 	}
 
+	/*@Override
+	public int updateLike(MusicVO vo) {
+		return map.updateLike(vo);
+	}*/
+	@Override
+	public int updateLike(int id) {
+		return map.updateLike(id);
+	}
+	
 	@Override
 	public int musicUpdate(MusicVO vo) {
 		return map.musicUpdate(vo);
