@@ -2,6 +2,9 @@ package com.munhwa.prj.config.auth;
 
 import com.munhwa.prj.config.auth.service.CustomOauth2UserService;
 import com.munhwa.prj.config.auth.service.LoginService;
+import com.munhwa.prj.config.auth.handler.LoginFailureHandler;
+import com.munhwa.prj.config.auth.handler.LoginSuccessHandler;
+import com.munhwa.prj.config.auth.handler.OAuth2LoginSuccessHandler;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -13,6 +16,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer.SessionFixationConfigurer;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -28,7 +32,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BasicDataSource dataSource;
@@ -43,15 +47,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .authorizeRequests(request -> request
                     .antMatchers("/", "/home.do", "/signup.do", "/resources/**", "/css/**",
                           "/js/**", "/*signup*", "/idChk", "/nickChk").permitAll()
-                    .antMatchers("/member/**").access("hasRole('R01')") // member
-                    .antMatchers("/artist/**").access("hasRole('R02')") // artist
-                    .antMatchers("/admin/**").access("hasRole('R03')")  // admin
+                    .antMatchers("/member/**").access("hasRole('ROLE_R01')") // member
+                    .antMatchers("/artist/**").access("hasRole('ROLE_R02')") // artist
+                    .antMatchers("/admin/**").access("hasRole('ROLE_R03')")  // admin
                     .anyRequest().authenticated()
               )
               .formLogin(login -> login
                     .loginPage("/signin").permitAll()
                     .defaultSuccessUrl("/", false)
                     .failureUrl("/signin")
+                    .successHandler(loginSuccessHandler())
                     .failureHandler(loginFailureHandler()))
               .logout(logout -> logout
                     .logoutUrl("/logout")
@@ -60,10 +65,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("remember-me", "JSESSION_ID"))
               .exceptionHandling(e -> e
                     .accessDeniedPage("/access-denied"))
-              .oauth2Login(
-                    oauth -> oauth
-                    .userInfoEndpoint().userService(customOauth2UserService))
+              .oauth2Login(oauth -> oauth
+                          .userInfoEndpoint()
+                            .userService(customOauth2UserService)
+                          .and()
+                          .successHandler(oAuth2LoginSuccessHandler()))
               .sessionManagement(session -> session
+                    .sessionFixation(SessionFixationConfigurer::changeSessionId)
                     .maximumSessions(1) // 다른 곳에서 해당 회원으로 로그인 시 로그아웃
                     .maxSessionsPreventsLogin(false)
                     .expiredUrl("/session-expired"));
@@ -72,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("R03> RO2 > R01");
+        roleHierarchy.setHierarchy("ROLE_R03> ROLE_RO2 > ROLE_R01");
         return roleHierarchy;
     }
 
@@ -89,6 +97,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public LoginSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler();
+    }
+
+    @Bean
+    public OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler() {
+        return new OAuth2LoginSuccessHandler();
+    }
+
+    @Bean
     public LoginFailureHandler loginFailureHandler() {
         return new LoginFailureHandler();
     }
@@ -96,14 +114,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Session
     @Bean
     public SessionRegistry sessionRegistry() {
-        SessionRegistryImpl registry = new SessionRegistryImpl();
-        return registry;
+        return new SessionRegistryImpl();
     }
 
     //Oauth Service
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(List.of(this.googleClientRegistration()));
+        return new InMemoryClientRegistrationRepository(List.of(this.googleClientRegistration()
+        , this.naverClientRegistration()));
     }
 
     @Bean
@@ -130,15 +148,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return CommonOAuth2Provider.FACEBOOK.getBuilder("faceBook")
               .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")
               .clientSecret("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")
-              .scope("profile", "email")
+              .scope("email", "nickname", "profile_image")
               .build();
     }
 
     private ClientRegistration naverClientRegistration() {
-        return CommonOAuth2Provider.OKTA.getBuilder("naver")
-              .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")
-              .clientSecret("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")
-              .scope("profile", "email")
+        return CustomCommonOAuth2Provider.NAVER.getBuilder("naver")
+              .clientId("XWHt07mxmHaiEzcYAjjP")
+              .clientSecret("iaxJ1Ih_qG")
+              .scope("nickname", "email", "profile_image")
               .build();
     }
 }

@@ -13,9 +13,22 @@
 
   <!-- 회원가입 -->
   <insert id="memberSignup" parameterType="com.munhwa.prj.member.vo.MemberVO">
-    INSERT INTO member (id, password, nickname, tel, genre, role, image)
-    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, #{role}, #{image})
+    INSERT INTO member (id, password, nickname, tel, genre, mileage, role, image)
+    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{image})
   </insert>
+
+  <insert id="memberOAuthSignup" statementType="CALLABLE" parameterType="map">
+	<![CDATA[
+    { call saveMember (
+      #{v_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_password, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_nickname, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_tel, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_genre, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_image, mode=IN, jdbcType=VARCHAR, javaType=string}
+      )}
+    ]]>
+	</insert>
 
   <!-- 아이디 중복체크 -->
   <select id="idChk" parameterType="string" resultType="int">
@@ -30,11 +43,13 @@
     FROM member
     WHERE nickname = #{nickname}
   </select>
+
   <select id="selectByMemberId" resultType="com.munhwa.prj.member.vo.MemberVO">
-    SELECT *
+    SELECT id, password, nickname, tel, genre, role, mileage, image
     FROM member
     WHERE id = #{username}
   </select>
+
 
 
 </mapper>

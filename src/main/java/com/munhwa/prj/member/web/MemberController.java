@@ -1,7 +1,12 @@
 package com.munhwa.prj.member.web;
 
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.Auth;
+import com.munhwa.prj.member.vo.MemberVO;
 import javax.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,9 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.member.vo.MemberVO;
-
+@Slf4j
 @Controller
 public class MemberController {
 
@@ -26,7 +29,7 @@ public class MemberController {
     // 마이페이지
     @PreAuthorize("hasRole('R01')")
     @GetMapping("/mypage.do")
-    public String mypage() {
+    public String mypage(@LoginUser SessionUser sessionUser) {
         return "mypage-member";
     }
     
