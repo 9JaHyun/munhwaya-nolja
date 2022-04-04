@@ -1,6 +1,8 @@
 package com.munhwa.prj.performance.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.munhwa.prj.common.service.FileUtils;
 import com.munhwa.prj.performance.service.PerformanceService;
+import com.munhwa.prj.performance.vo.Criteria;
+import com.munhwa.prj.performance.vo.PageMakeDTO;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 
 @Controller
@@ -20,23 +24,35 @@ public class PerformanceController {
 	@Autowired private FileUtils fileUtils;
 	
     @GetMapping("/performance")
-    public String performance(Model model) {
-    	List <PerformanceVO> list = performanceDao.performanceSelectList();
+    public String performance(Model model, Criteria cri) {
+    	List <PerformanceVO> list = performanceDao.performanceSelectList(cri);
     	
     	List<PerformanceVO> result = list.stream()
     			.filter(p -> p.getStatus().equals("A01"))
     			.collect(Collectors.toList());
     	
     	model.addAttribute("performances", result);
+    	
+    	int total = performanceDao.getTotal(cri);
+    	
+    	PageMakeDTO pageMake = new PageMakeDTO(cri, total);
+    	
+    	model.addAttribute("pageMake", pageMake);
+    	
+    	//model.addAttribute("list", performanceDao.getListPaging(cri));
         return "performance/performance";
     }
     
     @RequestMapping("/performanceSelect.do")
     public String performanceSelect(PerformanceVO vo, Model model) {
     	vo = performanceDao.performanceSelect(vo);
+    	Map<String, Object> paramMap = new HashMap<>();
+    	paramMap.put("v_per_id", vo.getId());
+    	//int n = performanceDao.performanceUpdate(paramMap);
     	model.addAttribute("performance", vo);
     	return "performance/performanceSelect";
     }
+    
     
     @RequestMapping("/performanceInsertForm.do")
     public String performanceInsertForm() {

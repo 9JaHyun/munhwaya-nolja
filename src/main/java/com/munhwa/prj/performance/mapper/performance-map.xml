@@ -15,22 +15,54 @@
 		<result property="person" column="person"/>
 	</resultMap>
 	
-	<select id="performanceSelectList" parameterType="com.munhwa.prj.performance.vo.PerformanceVO"
-	resultMap="performanceResultMap">
+	<select id="performanceSelectList" resultMap="performanceResultMap">
+		<![CDATA[
 		SELECT	ID
 		,		NAME
 		,		LOCATION
-		,		to_char(sdate, 'yyyy-MM-dd hh:mm:ss') as SDATE
-		,		to_char(edate, 'yyyy-MM-dd hh:mm:ss') as EDATE
+		,		SDATE
+		,		EDATE
 		,		CONTENT
 		,		STATUS
 		,		IMAGE
 		,		ARTIST_ID
 		,		PRICE
 		,		PERSON
-		FROM	PERFORMANCE
-		ORDER BY ID DESC
+		FROM	(SELECT ROWNUM AS RN
+		,		ID
+		,		NAME
+		,		LOCATION
+		,		SDATE
+		,		EDATE
+		,		CONTENT
+		,		STATUS
+		,		IMAGE
+		,		ARTIST_ID
+		,		PRICE
+		,		PERSON
+		FROM PERFORMANCE 
+		WHERE ROWNUM <= #{pageNum} * #{amount}
+		]]>
+		<if test="keyword != null">
+			AND NAME LIKE '%'||#{keyword}||'%'
+		</if>
+		ORDER BY SDATE DESC
+		)
+		<![CDATA[
+		WHERE RN > (#{pageNum} -1) * #{amount} 
+		]]>
 	</select>
+	
+	<select id="getTotal" resultType="int">
+    
+        SELECT COUNT(*) FROM PERFORMANCE
+        
+        <if test="keyword != null">
+        	WHERE NAME LIKE '%'||#{keyword}||'%'
+        </if>
+    
+    </select>
+	
 	
 	<select id="performanceSelect" parameterType="com.munhwa.prj.performance.vo.PerformanceVO" resultMap="performanceResultMap">
 		SELECT	P.ID
@@ -44,7 +76,7 @@
 		,		P.ARTIST_ID
 		,		P.PRICE
 		,		P.PERSON - PP.PERSONAL AS PERSON
-		FROM	PERFORMANCE p, PERFORMANCE_PERSONAL PP
+		FROM	PERFORMANCE P, PERFORMANCE_PERSONAL PP
 		WHERE   P.ID = #{id}
 		AND		P.ID = PP.ID
 	</select>
@@ -53,5 +85,13 @@
 		INSERT INTO PERFORMANCE(ID, NAME, LOCATION, SDATE, EDATE, CONTENT, IMAGE, PRICE, ARTIST_ID)
 		VALUES(PERFORMANCE_SEQ.nextval, #{name}, #{location}, #{sdate}, #{edate}, #{content}, #{image}, #{price}, #{artistId})
 	</insert>
+	
+	<update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call accept_performance (
+				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
+	</update>
 	
 </mapper>
