@@ -10,13 +10,13 @@
 			<h4>회원가입</h4>
 			<span class="liner"></span>
 			<div class="grid_6 mt">
-				<!-- form -->
 					<div style="margin-bottom: 20px;">
 						<button class="tbutton color2 small" 
 						id="idChk" name="idChk" value="N" onclick="idChkFn();"><span>아이디 중복확인</span></button>
 						<button class="tbutton color2 small"
 						id="nickChk" name="nickChk" value="N" onclick="nickChkFn();"><span>닉네임 중복확인</span></button> 
 					</div>
+				<!-- form -->
 				<form method="post" id="frm" action="memberSignup.do" onsubmit="return send()">
 
 					<div class="clearfix">

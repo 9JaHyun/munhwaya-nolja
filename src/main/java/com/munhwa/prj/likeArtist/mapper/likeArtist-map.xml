@@ -17,6 +17,7 @@
 		JOIN ARTIST A
 		ON L.ARTIST_ID = A.ID
 		WHERE L.MEMBER_ID = #{id}
+		ORDER BY A.NAME ASC
 	</select>
 	
 	<!-- 좋아요 한 아티스트 삭제 -->

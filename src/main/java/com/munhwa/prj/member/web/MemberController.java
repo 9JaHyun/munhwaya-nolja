@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.news.service.NewsService;
 
 @Controller
 public class MemberController {
 
     @Autowired
     private MemberService memberDao;
+    
+    @Autowired
+    private NewsService newsDao;
     
     // 로그인 대체
     @GetMapping("/createMember")
@@ -32,6 +36,7 @@ public class MemberController {
     @GetMapping("/mypage.do")
     public String mypage(HttpServletRequest req, Model model) {
     	MemberVO vo = (MemberVO) req.getSession().getAttribute("member");
+    	model.addAttribute("news1", newsDao.newsList("test1@gmail.com"));
     	if (vo != null) {
     		return "mypage-member";
     	} else {
@@ -119,7 +124,6 @@ public class MemberController {
             return "error/404";
         }
     }
-
 
     // 아이디 중복체크
     @ResponseBody

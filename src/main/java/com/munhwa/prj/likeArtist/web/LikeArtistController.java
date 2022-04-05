@@ -23,15 +23,16 @@ public class LikeArtistController {
 	@GetMapping("/likeArtist.do")
 	public String likeArtistList(HttpServletRequest request, Model model) {
 //		String memberId = request.getSession().getAttribute("member");
-		model.addAttribute("likeArtists", likeArtitstDao.likeArtistList("test0@gmail.com"));
+		model.addAttribute("likeArtists", likeArtitstDao.likeArtistList("test1@gmail.com"));
 		return "likeArtist-member";
 	}
 	
+	// 좋아요 한 아티스트 삭제
 	@ResponseBody
     @RequestMapping("/deleteLikeArtist.do")
     public String deleteLikeArtist(@RequestBody ArtistDeleteReqeustDto dto) {
     	LikeArtistVO vo = new LikeArtistVO();
-    	vo.setMemberId("test0@gmail.com");
+    	vo.setMemberId("test1@gmail.com");
     	vo.setArtistId(dto.getArtistId());
     	
     	likeArtitstDao.deleteLikeArtist(vo);
