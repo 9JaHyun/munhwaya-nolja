@@ -41,6 +41,7 @@ public class HomeController {
     	Map<Integer, MusicVO> map = new HashMap<Integer, MusicVO>();
     	req.getSession().setAttribute("cart", map);
     	return "OK";
+    }
 
     @GetMapping("/create-member")
     public @ResponseBody String createSession(HttpServletRequest req) {

@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.zxing.WriterException;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.ticketList.service.TicketListService;
 import com.munhwa.prj.ticketList.vo.TicketListVO;
 
@@ -24,8 +26,8 @@ public class TicketListController {
 	
 	//마이페이지 링크(회원 구매 목록)
 	@RequestMapping("/ticketList.do")
-	public String ticketList(Model model, HttpServletRequest req) {
-		String memberId = (String) req.getSession().getAttribute("member");
+	public String ticketList(Model model, @LoginUser SessionUser user) {
+		String memberId = user.getEmail();
 		List <TicketListVO> list = ticketListDao.ticketListSelectList(memberId);
 		model.addAttribute("ticketLists", list);
 		return "ticketList/ticketList";
@@ -34,7 +36,7 @@ public class TicketListController {
 	@RequestMapping("/ticketListSelect.do")
 	public String ticketListSelect(@LoginUser SessionUser user, Model model, TicketListVO vo) {
 
-		String memberId = (String) user.getEmail();
+		String memberId = user.getEmail();
 
 		vo = ticketListDao.ticketListSelect(vo);
 		System.out.println(vo);
