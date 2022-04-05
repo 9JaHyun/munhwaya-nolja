@@ -27,7 +27,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         request.getSession().setAttribute("member",
               new SessionUser(memberMapper.selectByMemberId(username)));
         log.info("result={}", (DefaultOAuth2User) authentication.getPrincipal());
-        response.sendRedirect("http://localhost/prj/");''
+        response.sendRedirect("http://localhost/prj/");
     }
 }
 
