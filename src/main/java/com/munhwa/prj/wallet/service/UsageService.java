@@ -6,8 +6,8 @@ import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.wallet.vo.UsageVO;
 
 public interface UsageService {
-	List<UsageVO> findByMemberId(String memberId, Criteria cri);
+	public List<UsageVO> findByMemberId(String memberId, Criteria cri);
 	int getCountByUsageId(String id);
 	UsageVO selectUsage(UsageVO vo);
-	int insertUsage(UsageVO vo);
+	int insertUsage(List<UsageVO> vo);
 }

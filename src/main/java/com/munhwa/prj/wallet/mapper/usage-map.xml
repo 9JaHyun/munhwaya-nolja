@@ -50,12 +50,14 @@
 									(ID, 
 									 MILEAGE, 
 									 PLACE, 
-									 MEMBER_ID, 
+									 MEMBER_ID,
+									 USE_AT, 
 									 PKS)
 			VALUES(usage_history_seq.nextval, 
 				   #{mileage},
 				   #{place},
 				   #{memberId},
+				   #{useAt},
 				   #{pks})
 		</insert>
 </mapper>

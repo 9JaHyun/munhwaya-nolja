@@ -1,5 +1,6 @@
 package com.munhwa.prj.member.mapper;
 
+
 import com.munhwa.prj.member.vo.MemberVO;
 
 public interface MemberMapper {
@@ -18,5 +19,8 @@ public interface MemberMapper {
 		
 	// 마일리지 사용 22/04/04 류기태
 	int minusMileage(MemberVO vo);
+	
+	// 아티스트 마일리지 수익 22/04/05 류기태 
+	int plusMileageOfAritst(MemberVO vo);
 
 }

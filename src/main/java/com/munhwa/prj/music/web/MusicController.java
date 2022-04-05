@@ -35,8 +35,9 @@ public class MusicController {
     }
 	
 	@GetMapping("/chart")
-    public String chart() {
-        return "music/chart";
+    public String chart(Model model) {
+		model.addAttribute("musicChartList", musicDAO.musicSelectList());// 갯수지정
+      	return "music/chart";
     }
 	
 	@GetMapping("/releaseSoon")

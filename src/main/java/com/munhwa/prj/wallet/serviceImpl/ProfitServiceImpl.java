@@ -20,22 +20,20 @@ public class ProfitServiceImpl implements ProfitService {
 	}
 
 	@Override
-	public int getCountByProfitId(String id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public ProfitVO selectProfit(ProfitVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		return map.selectProfit(vo);
+	}
+	
+	@Override
+	public int getCountByProfitId(String id) {
+		return map.getCountByProfitId(id);
 	}
 
 	@Override
 	public int insertProfit(ProfitVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return map.insertProfit(vo);
 	}
+
 
 
 }

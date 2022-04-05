@@ -10,6 +10,10 @@
 		<result property="mileage" column="mileage"/>
 		<result property="genre" column="genre" />
 	</resultMap>
+	
+<!-- 	<resultMap type="" id=""> -->
+	
+<!-- 	</resultMap> -->
 
 	<!-- 회원가입 -->
 	<insert id="memberSignup" parameterType="com.munhwa.prj.member.vo.MemberVO">
@@ -43,5 +47,16 @@
 		update member
 		set mileage = mileage - #{mileage}
 		where id = #{id}
+	</update>
+	
+	<!-- 아티스트 마일리지 수익 22/04/05 류기태 -->
+	<update id="plusMileageOfAritst" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		update member
+		set mileage = mileage + #{mileage}
+		where id = (select a.id
+                        from member a, music b, artist c
+                        where a.id = c.member_id
+                        and b.art_name = c.name
+                        and b.title = #{title})
 	</update>
 </mapper>

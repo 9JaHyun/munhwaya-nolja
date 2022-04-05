@@ -2,6 +2,8 @@ package com.munhwa.prj.wallet.vo;
 
 import java.util.Date;
 
+import com.munhwa.prj.common.vo.CommonCodeVO;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +15,6 @@ public class ProfitVO {
 	private int mileage;
 	private String place;
 	private String memberId;
+	
+	private CommonCodeVO commonCodevo;
 }

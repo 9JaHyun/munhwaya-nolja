@@ -11,5 +11,5 @@ public interface UsageMapper {
 	List<UsageVO> selectUsageListMemberId(@Param("memberId") String memberId, @Param("cri") Criteria cri);
 	int getCountByUsageId(String id);
 	UsageVO selectUsage(UsageVO vo);
-	int insertUsage(UsageVO vo);
+	int insertUsage(UsageVO usageVO);
 }

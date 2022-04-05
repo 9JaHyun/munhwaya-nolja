@@ -1,6 +1,7 @@
 package com.munhwa.prj.wallet.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import com.munhwa.prj.common.vo.CommonCodeVO;
 

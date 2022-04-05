@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -42,14 +45,15 @@ public class CartController {
 		
 	}
 	
-	@GetMapping("/cart/test/add")
-	@ResponseBody
-	public String addCart(MusicVO vo,HttpServletRequest req) {
+	@RequestMapping("/cart/test/add")
+	public ResponseEntity<String> addCart(@RequestBody MusicVO vo,HttpServletRequest req) {
 		@SuppressWarnings("unchecked")
 		Map<Integer, MusicVO> map = (Map<Integer, MusicVO>) req.getSession().getAttribute("cart");
 		map.put(vo.getId(), vo);
 		req.getSession().setAttribute("cart", map);
-		return "success";
+		System.out.println(vo.getId());
+
+		return ResponseEntity.ok().body("추가 완료");
 	}
 	
 	@PostMapping("/deleteCart")

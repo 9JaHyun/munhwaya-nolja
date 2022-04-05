@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.wallet.mapper.ProfitMapper">
+	<resultMap type="com.munhwa.prj.wallet.vo.ProfitVO" id="profitResultMap">
+		<id property="id" column="id"/>
+		<result property="profitAt" column="profit_at"/>
+		<result property="mileage" column="mileage"/>
+		<result property="place" column="place"/>
+		<result property="memberId" column="member_id"/>
+		<collection property="commonCodevo" resultMap="commonResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
+	  	<id property="id" column="id"/>
+	  	<result property="name" column="name"/>
+    </resultMap>
+    
+    <select id="selectProfitListMemberId" resultMap="profitResultMap">
+		<![CDATA[
+			select id, profit_at, mileage, name, 			
+		]]>
+		    
+    </select>
+</mapper>

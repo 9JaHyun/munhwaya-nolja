@@ -1,11 +1,14 @@
 package com.munhwa.prj.member.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.wallet.vo.UsageVO;
 
 @Service("memberDao")
 public class MemberServiceImpl implements MemberService {
@@ -35,8 +38,24 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	// 마일리지 사용 22/04/04 류기태
+//	@Override
+//	public int minusMileage(MemberVO vo) {
+//		return map.minusMileage(vo);
+//	}
+	
+	// 아티스트 마일리지 수익 22/04/05 류기태
 	@Override
-	public int minusMileage(MemberVO vo) {
-		return map.minusMileage(vo);
+	public int plusMileageOfAritst(MemberVO vo) {
+		return map.plusMileageOfAritst(vo);
+	}
+	
+	// 마일리지 사용 22/04/04 류기태
+	@Override
+	public int minusMileage(List<MemberVO> vo) {
+		int cnt = 0;
+		for (MemberVO memberVO : vo) {
+			map.minusMileage(memberVO);
+		}
+		return cnt;
 	}
 }

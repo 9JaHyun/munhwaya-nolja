@@ -13,7 +13,7 @@ import com.munhwa.prj.wallet.vo.UsageVO;
 public class UsageServiceImpl implements UsageService {
 	@Autowired
 	private UsageMapper map;
-	
+		
 	@Override
 	public List<UsageVO> findByMemberId(String memberId, Criteria cri) {
 		return map.selectUsageListMemberId(memberId,cri);
@@ -24,15 +24,22 @@ public class UsageServiceImpl implements UsageService {
 		return map.selectUsage(vo);
 	}
 
-	@Override
-	public int insertUsage(UsageVO vo) {
-		return map.insertUsage(vo);
-	}
-
+	
 	@Override
 	public int getCountByUsageId(String id) {
 		return map.getCountByUsageId(id);
 	}
+
+
+	@Override
+	public int insertUsage(List<UsageVO> vo) {
+		int cnt = 0;
+		for (UsageVO usageVO : vo) {
+			map.insertUsage(usageVO);
+		}
+		return cnt;
+	}
+
 	
 
 }
