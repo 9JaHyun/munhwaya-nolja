@@ -1,18 +1,14 @@
 package com.munhwa.prj.performance.web;
 
-import java.util.Collections;
+import com.munhwa.prj.performance.service.PerformanceService;
+import com.munhwa.prj.performance.vo.PerformanceVO;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.performance.vo.PerformanceVO;
 
 @Controller
 public class PerformanceController {
@@ -37,15 +33,15 @@ public class PerformanceController {
     	model.addAttribute("performance", vo);
     	return "performance/performanceSelect";
     }
-    
-    @RequestMapping("/performanceInsertForm.do")
-    public String performanceInsertForm() {
-    	return "performance/performanceInsertForm";
-    }
+
+	@RequestMapping("/performanceInsertForm.do")
+	public String performanceInsertForm() {
+		return "performance/performanceInsertForm";
+	}
     
     @RequestMapping("/performanceInsert.do")
     public String performanceInsert(PerformanceVO vo) {
-    	vo.setArtistId(1);
+		vo.setArtistId(1);
     	int n = performanceDao.performanceInsert(vo);
     	if(n != 0 ) {
     		return "redirect:performance";
