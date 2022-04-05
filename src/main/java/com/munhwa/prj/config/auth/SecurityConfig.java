@@ -144,6 +144,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .build();
     }
 
+    // 미구현
     private ClientRegistration faceBookClientRegistration() {
         return CommonOAuth2Provider.FACEBOOK.getBuilder("faceBook")
               .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")

@@ -1,16 +1,14 @@
 package com.munhwa.prj.ticketList.web;
 
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.ticketList.service.TicketListService;
+import com.munhwa.prj.ticketList.vo.TicketListVO;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.munhwa.prj.ticketList.service.TicketListService;
-import com.munhwa.prj.ticketList.vo.TicketListVO;
 
 @Controller
 public class TicketListController {
@@ -26,11 +24,13 @@ public class TicketListController {
 	}
 	
 	@RequestMapping("/ticketListSelect.do")
-	public String ticketListSelect(HttpServletRequest req, Model model, TicketListVO vo) {
-		String memberId = (String) req.getSession().getAttribute("member");
+	public String ticketListSelect(@LoginUser SessionUser user, Model model, TicketListVO vo) {
+
+		String memberId = (String) user.getEmail();
+
 		vo = ticketListDao.ticketListSelect(vo);
 		System.out.println(vo);
-		model.addAttribute("memberId", memberId);
+		model.addAttribute("member", user);
 		model.addAttribute("ticket", vo);
 		return "ticketList/ticketListSelect";
 	}
