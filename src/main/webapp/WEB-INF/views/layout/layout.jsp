@@ -52,7 +52,6 @@
 <script type="text/javascript" src="${resources}/js/jquery.flexslider-min.js"></script>
 <script type="text/javascript" src="${resources}/js/jquery.jplayer.js"></script>
 <script type="text/javascript" src="${resources}/js/ttw-music-player-min.js"></script>
-<script type="text/javascript" src="${resources}/music/myplaylist.js"></script>
 <script type="text/javascript" src="${resources}/js/countdown.js"></script>
 <script type="text/javascript" src="${resources}/js/jquery.nicescroll.min.js"></script>
 <script type="text/javascript" src="${resources}/js/custom.js"></script>
