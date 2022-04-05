@@ -1,7 +1,7 @@
 package com.munhwa.prj.music.web;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +38,7 @@ public class MusicController {
 		 * Map<Integer, CartVO> map = (Map<Integer, cart>) session.getAttribute("cart");
 		 * map.set(musicVO.getId(), musicVO) session.addAttribue("cart", map)
 		 */
-		String id = session.getAttribute("id").toString();
+		String id = session.getAttribute("member").toString();
 		model.addAttribute("musicRnBList", musicDAO.musicSelectListByGenre("G04"));
 		model.addAttribute("musicRapList", musicDAO.musicSelectListByGenre("G03"));
 		model.addAttribute("musicDanceList", musicDAO.musicSelectListByGenre("G02"));
@@ -106,6 +106,7 @@ public class MusicController {
 		model.addAttribute("albumSelectByWishList", albumDAO.albumSelectByWishList(id)); // 위시리스트의 첫번째 곡의 앨범정보
 		return "music/streamingWishList";
 	}
+	
 
 	@GetMapping("/personalResult")
 	public String personalResult(Model model, HttpServletRequest req) {
@@ -126,6 +127,15 @@ public class MusicController {
 
 		return "music/genre";
 	}
+	
+	@GetMapping("/playAllAlbum")
+	public String playAllAlbum(Model model) {
+		model.addAttribute("musicRnBList", musicDAO.musicSelectListByGenre("G04"));
+		model.addAttribute("musicRapList", musicDAO.musicSelectListByGenre("G03"));
+		model.addAttribute("musicDanceList", musicDAO.musicSelectListByGenre("G02"));
+		model.addAttribute("musicBalladList", musicDAO.musicSelectListByGenre("G01"));
+		return "music/genre";
+	}
 
 	@GetMapping("/purchase")
 	public String purchase(Model model, HttpServletRequest req) {
@@ -135,6 +145,13 @@ public class MusicController {
 
 		model.addAttribute("purchasedList", musicDAO.musicSelectListByPurchase(id));
 		return "music/purchase";
+	}
+	
+	@ResponseBody
+	@GetMapping("/musicSelectByArtName")
+	public MusicVO musicSelectByArtName(@RequestParam String title, @RequestParam String artName) {
+		MusicVO vo = musicDAO.musicSelectByArtName(title, artName );
+		return vo;
 	}
 	
 	@ResponseBody
@@ -158,30 +175,21 @@ public class MusicController {
 	@ResponseBody
 	@PostMapping(value = "/updateLike", produces = "application/text; charset=UTF-8")
 	public String updateLike(@RequestParam int musicId, HttpServletRequest req) {
-		boolean val = true;
-		@SuppressWarnings("unchecked")
-		Map<String, ArrayList<Integer>> map = (Map<String, ArrayList<Integer>>) req.getSession().getAttribute("like");
+		Map<String, Object> paramMap = new HashMap<>();
 		String id = (String) req.getSession().getAttribute("member");
-		ArrayList<Integer> musicIdList = map.get(id);
-		if(musicIdList.isEmpty()) {
-			val= true;
-		} else {
-			for (Integer check : musicIdList) {
-				Integer musicId1 = Integer.valueOf(musicId);
-				if (check == musicId1) {
-					val = false;
-				}
-			}
-		}
+		paramMap.put("v_member_id", id);
+		paramMap.put("v_music_id", musicId);
+		paramMap.put("p_result", 0);
 		
-		if(val) {
-			musicDAO.updateLike(musicId);
-			musicIdList.add(musicId);
-			map.put(id, musicIdList);
-			req.getSession().setAttribute("like", map);
-			return "좋아요 하셨습니다";
+		musicDAO.updateLike(paramMap);
+		int r = (int) paramMap.get("p_result");
+		
+		if(r==0) {
+			return "좋아요를 취소하셨습니다.";
 		} else {
-			return "이미 좋아요 하셨습니다.";
+			return "좋아요 하셨습니다.";
 		}
 	}
+	
+	
 }

@@ -20,7 +20,7 @@ public class HomeController {
     public String home() {
         return "home/home";
     }
-    
+     
     @GetMapping("home.do")
     public String homeDo() {
         return "home/home";
@@ -51,16 +51,4 @@ public class HomeController {
     	return "ok";
 
     }
-    
-    /* 세션 라이크 맵 테스트 */
-	@GetMapping("/createLikeCheck")
-	@ResponseBody
-	public String createLikeCheck(HttpServletRequest req) {
-		String id = (String) req.getSession().getAttribute("member");
-		Map<String, ArrayList<Integer>> map = new HashMap<String, ArrayList<Integer>>();
-		ArrayList<Integer> musicIdList = new ArrayList<Integer>();
-		map.put(id, musicIdList);
-		req.getSession().setAttribute("like", map);
-		return "OK";
-	}
 }

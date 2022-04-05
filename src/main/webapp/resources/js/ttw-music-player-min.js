@@ -80,7 +80,7 @@
                 listItem:`<li class="track" onclick="change()"> 
                             <span class="title"></span>
                             <span class="duration"></span>
-                            <button onclick="addCart()" class="buy not-active tbutton small" target="_blank"></button>
+                            <button onclick="addCart2()" class="buy not-active tbutton small" target="_blank"></button>
                           </li>`,
                 ratingBar:'<span class="rating-level rating-bar"></span>'
             };
@@ -399,7 +399,7 @@
                         '            </div>' +
                         '        </div>' +
 						'			<p class="single_variation_wrap" style="text-align:right; vertical-align:middle;">' +
-						'					<button class="tbutton small" data-toggle="modal" data-target="#myModal"><span>위시리스트 추가</span></button>' +
+						'					<button id="b1" class="tbutton small" data-toggle="modal" data-target="#myModal"><span id="s1" >위시리스트 추가</span></button>' +
 						'					<button class="tbutton small"><span>공유</span></button>' +
 						'					<button class="tbutton small" onclick="addCart()"><span>구매</span></button>' +
 						'					<i onclick="likeIt()" class="icon-heart" style="font-size: 25px; margin-right:10px;"></i>' +

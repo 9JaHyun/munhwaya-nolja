@@ -76,6 +76,13 @@
 		WHERE ID = #{id}
 	</select>
 	
+	<select id="musicSelectByArtName" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE TITLE = #{title}
+		AND ART_NAME= #{artName}
+	</select>
+	
 	<select id="musicIdByTitle" parameterType="com.munhwa.prj.music.vo.MusicVO" resultType="int">
 		SELECT ID
 		FROM MUSIC
@@ -101,10 +108,14 @@
 			   )
 	</insert>
 	
-	<update id="updateLike" parameterType="int">
-		UPDATE MUSIC
-		SET LIKE_IT=( LIKE_IT + 1 )
-		WHERE ID = #{id}
+	<update id="updateLike" statementType = "CALLABLE" parameterType="map" >
+		<![CDATA[
+			{ call updatelike (
+			#{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{p_result, mode=OUT, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
 	</update>
 	
 	<update id="musicUpdate" parameterType="com.munhwa.prj.music.vo.MusicVO">

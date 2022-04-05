@@ -65,7 +65,7 @@
 								<span style="color: white; font-size:medium;">${selectAlbum.content }</span>
 								<br><br><br><br>
 									<div class="single_variation_wrap" style="text-align:right;">
-											<button class="tbutton medium"><span>전체재생</span></button>
+											<button class="tbutton medium"><span onclick="playAll()">전체재생</span></button>
 											<button class="tbutton medium"><span>위시리스트 추가</span></button>
 											<button class="tbutton medium"><span>공유</span></button>
 											<button class="tbutton medium"><span>구매</span></button>
@@ -100,11 +100,11 @@
 											</thead>
 											<tbody>
 												<c:forEach var="music" items="${selectMusicByAlbum}">
-													<tr class="cart_table_item" style="text-align: center; font-size: medium;">
+													<tr data-musicid="${music.id }" class="cart_table_item" style="text-align: center; font-size: medium;">
 														<td class="product-thumbnail" style="width:70px;">
-														<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
+														<a href="streaming?id=${music.id }"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 														</td>
-														<td class="product-name" style="vertical-align:middle;">
+														<td  class="product-name" style="vertical-align:middle;">
 															${music.title }
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
@@ -114,7 +114,7 @@
 															${music.likeIt }
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
-															<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
+															<button class="tbutton medium" style="font-size:10px"><span>구매</span></button>
 														</td>
 													</tr>
 												</c:forEach>
@@ -131,4 +131,20 @@
 		<!-- 수록곡리스트 끝 -->
 	</div>
 	<!-- content끝 -->
-	
+<!-- <script>
+function playAll() {
+	var musicId = td의 데이터 속성 읽어서 뮤직아이디 리스트
+		   $.ajax ({
+			   url : "updateLike",
+			   type : "POST",
+			   data : {"musicId" : musicId},
+			   dataType : "text",
+			   success : function(result) {
+			   		alert(result);
+			   },
+			   error: function(a,b,c){
+			   		alert("통신실패")
+			   }
+		   }) 
+}
+</script> -->
