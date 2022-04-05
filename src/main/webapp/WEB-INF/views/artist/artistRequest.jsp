@@ -36,34 +36,48 @@
 			</ul>
 		</div>
 </div>
+<!-- 아티스트 승급 신청에 필요한 인증 -->
 <div style="padding-top:5%;">
-	<div style="margin: 100px 0px 10px 0px; border: none;"><br> <!-- class="grid_12 tt삭제 -->
-		<form name="info" method="post">
-			<label id="request-label"><div class="sort">작업물 설명란</div><textarea id="artwork" name="artwork" placeholder="내용을 입력해 주세요."></textarea></label><br>
+	<div style="margin: 100px 0px 10px 0px; border: none;"><br> 
+		<form method="post" action="artistRequest" enctype="multipart/form-data" onsubmit="return chk_request()">
+			<label id="request-label"><div class="sort">작업물 설명란</div>
+				<textarea id="artwork" name="artwork" placeholder="내용을 입력해 주세요."></textarea>
+			</label><br>
 			<label><div class="sort">작업물 인증</div><input type="file" id="file" name="file" accept="image/png, image/jpeg"></label><br>
 			<label><div class="sort">본인인증</div></label><br>
+	
+	<!-- 신청, 취소 버튼 -->
+	<div align="center" style="margin-bottom: 10px">
+			<input type="submit" style="padding: 0.2em 1.1em 0.08em 1em; position: relative; bottom: 8px; margin: 1em 1em 1.1em 0em;" value="신청" class="tbutton small">
+	<!-- <a href="mypage.do" onsubmit="return chk_request()" class="tbutton small"><span>신청</span></a>&emsp; -->
+	<a href="javascript:window.history.back();" class="tbutton small"><span>취소</span></a> <!-- 클릭시 뒤로가기-->
+	</div>
 		</form>
 	</div>
 </div>
 <br>
-<div align="center" style="margin-bottom: 10px">
-	<a href="mypage.do" onclick="return chk_request()" class="tbutton small"><span>신청</span></a>&emsp;
-	<a href="javascript:window.history.back();" class="tbutton small"><span>취소</span></a> <!-- 클릭시 뒤로가기-->
-</div>
+
+
 <script>
-function chk_request(){
-	if(!document.info.artwork.value){
-		alert("작업물 설명란에 내용을 입력하세요.");
-		return false;
-	}
-	if(!document.info.file.value){
-		alert("작업물 인증란에 파일을 첨부하세요.");
-		return false;
-	}
-	if(!document.info.identify.value){
-		alert("본인인증을 진행해주세요.");
-		return false;
-	}	
-		
-}
+	<!-- 유효성 검사-->
+		function chk_request(){
+			if(!document.info.artwork.value){
+				alert("작업물 내용을 입력하세요.");
+			return false;
+			}
+			if(!document.info.file.value){
+				alert("작업물 인증 파일을 첨부하세요.");
+			return false;
+			}
+// 			if(!document.info.identify.value){
+// 				alert("본인인증을 진행해주세요.");
+// 				return false;
+// 			}
+			/* if(document.info.file.value){
+				alert("아티스트 승급 신청을 요청했습니다.");
+			return true;
+			}	 */
+// 				return true;
+		}
+	
 </script>

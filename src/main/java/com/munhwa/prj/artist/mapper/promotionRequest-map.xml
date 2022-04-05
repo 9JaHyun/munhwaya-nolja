@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.artist.mapper.PromotionRequestMapper">
+	
+	<resultMap type="com.munhwa.prj.artist.vo.PromotionRequestVO" id="requestMap">
+		<id property="memberId" column="member_id"/>
+		<result property="identify" column="identify"/>
+		<result property="artwork" column="artwork"/>
+		<result property="status" column="stauts"/>
+		<result property="fileGroupId" column="file_group_id"/>
+	</resultMap>
+
+
+	<select id="promotionRequestSelectList" resultMap="requestMap">
+		SELECT * FROM PROMOTION_REQUEST ORDER BY DESC
+	</select>
+	
+	<select id="promotionRequestSelect" resultMap="requestMap" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
+		SELECT * FROM PROMOTION_REQUEST WHERE ID = #{member_id}
+	</select>
+	
+	<insert id="promotionRequestInsert" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
+		INSERT INTO PROMOTION_REQUEST(MEMBER_ID, IDENTIFY, ARTWORK, STATUS, FILE_GROUP_ID)
+		VALUES(#{memberId}, #{identify}, #{artwork}, #{status},#{fileGroupId})
+	</insert>
+	
+	<delete id="promotionRequestDelete"  parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
+		DELETE FROM PROMOTION_REQUEST WHERE ID = #{memeber_id}
+	</delete>
+	
+</mapper>

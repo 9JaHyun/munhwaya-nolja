@@ -22,7 +22,7 @@
  
  label{
  	display: block;
- }
+	 }
 
 </style>
 
@@ -43,34 +43,34 @@
 			<label><div class="sort">활동사진&emsp;</div><input type="file" id="image" name="image" accept="image/png, image/jpeg"></label><br>
 			<ul>
 				<label>활동정보 선택</label><!-- 아티스트 상세에 한번에 두개의 내용이 들어가므로 목록 묶음 처리 -->
-					<label>성별<br><select id="gender" name="gender"></label> <!-- select box 수직 정렬 -->
+					<label>성별<br><select id="gender" name="gender" ></label> <!-- select box 수직 정렬 -->
 											<option>선택</option>
-											<option>남자</option>
-											<option>여자</option>
-											<option>혼성</option>
+											<option value="S01">남자</option>
+											<option value="S02">여자</option>
+											<option value="S03">혼성</option>
 									  </select><br>	
 					<label>활동유형<br><select id="type" name="type"></label><br>
 											<option>선택</option>
-											<option>솔로</option>
-											<option>그룹</option>
+											<option value="T01">솔로</option>
+											<option value="T02">그룹</option>
 								      </select>
 			</ul><br>						
 	
 				<label>주요활동 장르<br><select id="genre" name="genre"></label>
 											<option>선택</option>
-											<option>발라드</option>
-											<option>댄스</option>
-											<option>랩/힙합</option>
-											<option>R&B/Soul</option>
+											<option value="G01">발라드</option>
+											<option value="G02">댄스</option>
+											<option value="G03">랩/힙합</option>
+											<option value="G04">R&B/Soul</option>
 									   </select><br><br>
 				<label>소개글<br><textarea id="content" name="content" placeholder="내용을 입력해 주세요."></textarea></label>
 		</form>
 	</div>
 </div>
 <br>
-<div align="center" style="margin-bottom: 10px">
-		<input type="submit" value="신청" class="tbutton small" onclick="document.getElementById('frm').submit();"/>
-		<input style="padding: 5px 10px 5px 10px;" onclick="location.href='home.do'" class="tbutton small" value="취소"/>
+<div align="left">
+		<input type="submit" style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" value="등록" class="tbutton small" onclick="document.getElementById('frm').submit();"/>
+		<button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='home.do'" class="tbutton small" >취소</button>
 	
 		
 </div>
@@ -94,4 +94,7 @@ function chk_insert(){
 		return false;
 	}
 }
+
+
+
 </script>

@@ -100,8 +100,11 @@ table {
 			
 			
 							<!-- Player -->
-
-							
+				<div class="posts">
+					<div class="def-block">
+					<h4>곡(갯수)</h4>
+						<i class="icon-angle-right" style="font-size:large; margin-left: 7px;"></i>
+							<span class="liner"></span>
 								<caption>인기순(or 최신순)</caption>
 								<table>
 									<tr>
@@ -127,6 +130,8 @@ table {
 										<td>
 							<div class="like-post">
 								<div id="fb-root"></div>
+							</div>
+							</div>
 								<script>(function(d, s, id) { 			<!--계정연결 변경하기-->
 								  var js, fjs = d.getElementsByTagName(s)[0];
 								  if (d.getElementById(id)) return;
@@ -150,59 +155,7 @@ table {
 							
 							</div>-->
 							
-			<div class="row row-fluid clearfix mbf">
-				<div class="posts">
-					<div class="album">
-					<div class="def-block">
-						<div class="post row-fluid clearfix">
-							<div class="music-player-lis t wide-mp3 mbf clearfix">
-								<div class="ttw-music-player" style="opacity: 1;">
-							
-								<div class="album-cover"></div>
-									<span class="img" style="opacity: 0;"></span>
-								</div>
-							
-							
-								<div class="artist-album" style="float: right;">
-									<a>앨범명</a>&nbsp;<a herf=""> </a><br>
-									<a>아티스트명</a><br>
-									<a>앨범날짜</a>
-								</div>
-							</div>
-							
-							<div class="music-player-lis t wide-mp3 mbf clearfix">
-								<div class="ttw-music-player" style="opacity: 1;">
-							
-								<div class="album-cover"></div>
-									<span class="img" style="opacity: 0;"></span>
-								</div>
-							
-							
-								<div class="artist-album" style="float: right;">
-									<a>앨범명</a>&nbsp;<a herf=""> </a><br>
-									<a>아티스트명</a><br>
-									<a>앨범날짜</a>
-								</div>
-							</div>
-							
-							<div class="music-player-lis t wide-mp3 mbf clearfix">
-								<div class="ttw-music-player" style="opacity: 1;">
-							
-								<div class="album-cover"></div>
-									<span class="img" style="opacity: 0;"></span>
-								</div>
-							
-							
-								<div class="artist-album" style="float: right;">
-
-									<a>앨범명</a>&nbsp;<a herf=""> </a><br>
-									<a>아티스트명</a><br>
-									<a>앨범날짜</a>
-								</div>
-							</div>
-							
-						</div>
-					</div>
+			
 							
 			
 							
@@ -220,7 +173,39 @@ table {
 							</p>--> 
 
 						
-						
+						<!-- 앨범 -->
+		<div class="row row-fluid clearfix mbf">
+			<!-- 왼쪽하단 메인 -->	
+			<div class="posts">
+					<div class="def-block">
+						<h4>앨범(갯수)</h4>
+						<i class="icon-angle-right" style="font-size:large; margin-left: 7px;"></i>
+						<span class="liner"></span>
+						<ul class="tabs-content">
+							<li id="Latest" class="active">
+								<div class="video-grid">
+									<a href="albumInfo" class="grid_3" style="margin: 0em 0.5em 0em 0.5em; width : 32%;">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
+										<span><strong>앨범명</strong>아티스트명 / 앨범날짜</span>
+									</a>
+									<a href="video_single_wide.html" class="grid_3" style="margin: 0em 0.5em 0em 0.5em; width : 32%;">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
+										<span><strong>앨범명</strong>아티스트명 / 앨범날짜</span>
+									</a>
+									<a href="video_single_wide.html" class="grid_3" style="margin: 0em 0.5em 0em 0.5em; width : 32%;">
+										<img src="resources/images/bg/musicBg3.jpg" alt="#">
+										<span><strong>앨범명</strong>아티스트명 / 앨범날짜</span>
+									</a>
+									
+								</div><!-- video grid -->
+							</li><!-- tab content -->
+						</ul><!-- end tabs -->
+					</div><!-- def block -->
+				</div><!-- posts -->
+			<!-- 왼쪽하단 메인 끝-->	
+		</div>
+	</div>
+		<!-- content끝 -->		
 
 
 		
@@ -249,5 +234,51 @@ table {
 			(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
 		}());
 	/* ]]> */
+	
+	function makeList(){
+				let list = [];
+				
+				// 체크한 행만 전송할 데이터 만들기
+				$("[name='selId']:checked").each(function(i, checkbox){
+					var tr = $(checkbox).parent().parent();
+					var td = $(tr).children();
+					var obj = {}; // 객체에 담기위해 선언
+					
+					var no = td.eq(1).text(); // no
+					var listen = td.eq(2).find("button").val(); // 듣기 ( 전부 button인지 모르겠음 재확인)
+					var download = td.eq(3).text(); // 다운
+					var musicName = td.eq(4).text(); // 곡명
+					var artistName = td.eq(5).text(); //아티스트명
+					var album = td.eq.(6).text(); // 앨범
+					var like = td.eq(7).find("button").val(); // 좋아요
+					var wishList = td.eq(8).find("button").val(); // 위시리스트
+				
+				
+				// 객체에 담기
+				obj["no"] = no; 
+				obj["listen"] = listen;
+				obj["download"] = download;
+				obj["musicName"] = musicName;
+				obj["artistName"] = artistName;
+				obj["album"] = album;
+				obj["like"] = like;
+				obj["wishList"] = wishList;
+				
+				// 목록에 담기
+				list.push(obj);
+			});
+				
+			console.log(JSON.stringify(list));
+			
+			// ajax호출
+			$.ajax({
+				url : "", //(프로젝트명, 컨트롤러에 호출할 경로)
+				type : "post",
+				contentType : "", 
+				data : JSON.stringify(list),
+		
+			})
+			}
+				
 	</script>
 </html>

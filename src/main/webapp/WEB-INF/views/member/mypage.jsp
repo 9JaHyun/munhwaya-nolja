@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>        
 
-            <div align="right" style="margin-bottom: 50px;"><h4>새소식</h4></div>
+            <div align="right" style="margin-bottom: 50px;"><h4>새소식${message}</h4></div>
             <div class="mbf clearfix">
                 <div class="notification-box notification-box-success">
                     <p><i class="icon-ok"></i>새소식 1</p>
@@ -25,3 +25,12 @@
                             class="icon-remove"></i></a>
                 </div>
             </div>
+            <script>
+            console.log(${message});
+            	/* if(${message!=''}){
+            		console.log(${message});
+            		alert(${message});
+            	} else{
+            		
+            	} */
+            </script>

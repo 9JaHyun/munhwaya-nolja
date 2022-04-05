@@ -22,8 +22,10 @@
 	</select>
 	
 	<insert id="artistInsert" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
-		IF(ID = {#id}){
-	 	INSERT INTO ARTIST(image, gender, genre, content, type, name) VALUES(#{image},#{gender},#{genre},#{content},#{type},#{name})
+
+	INSERT INTO ARTIST(ID, IMAGE, GENDER, GENRE, CONTENT, TYPE, NAME, member_id)
+	VALUES(artist_seq.nextval, #{image}, #{gender}, #{genre}, #{content}, #{type}, #{name}, #{memberId})
+	
 	</insert>
 	
 	<update id="artistUpdate" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
