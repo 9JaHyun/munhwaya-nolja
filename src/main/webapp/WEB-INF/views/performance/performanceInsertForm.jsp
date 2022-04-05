@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+
 <body id="fluidGridSystem">
 	<div id="layout" class="full">
 		<div class="under_header">
@@ -19,7 +20,7 @@
 									<table border="1">
 										<tr>
 											<th width="200"><strong>아티스트 이름</strong></th>
-											<td width="300"><input style="width:500px" type="text" id=artistId name="artistId" required="required"></td>
+											<td width="300"><input style="width:500px" type="text" value="${artist}" readonly="readonly"></td>
 										</tr>
 										<tr>
 											<th width="200"><strong>공연 장소</strong></th>

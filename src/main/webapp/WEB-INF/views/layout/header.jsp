@@ -52,8 +52,13 @@
                     </li>
                     <li><a href="performance">공연<span class="sub">Photo Gallery</span></a>
                         <ul>
-                            <li><a href="performanceInsertForm.do">아티스트 공연 등록 신청</a></li>
+                        	<sec:authorize access="hasRole('ROLE_R02')">
+                            	<li><a href="performanceInsertForm.do">아티스트 공연 등록 신청</a></li>                        	
+                        	</sec:authorize>
                             <li><a href="ticketList.do">구매리스트</a></li>
+                            <sec:authorize access="hasRole('ROLE_R03')">
+                            	<li><a href="admin/performanceList">관리자 공연리스트</a></li>
+                            </sec:authorize>
                         </ul>
                     </li>
                     <li><a href="#">게시판<span class="sub">more templates</span></a>

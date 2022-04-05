@@ -91,7 +91,8 @@
 	<update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
 		<![CDATA[
 			{ call accept_performance (
-				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int}
+				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{v_per_status, mode=IN, jdbcType=VARCHAR, javaType=string}
 			)}
 		]]>
 	</update>

@@ -4,7 +4,7 @@
 <div id="layout" class="full">
 
     <div class="under_header">
-        <img src="${resources}/images/assets/breadcrumbs10.png" alt="#">
+        <img src="${resources }images/assets/breadcrumbs10.png" alt="#">
     </div><!-- under header -->
 
     <div class="page-content back_to_up">
