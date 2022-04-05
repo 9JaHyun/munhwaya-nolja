@@ -30,6 +30,7 @@
 	<select id="ticketListSelectList"
 		parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
 		resultMap="ticketListResultMap">
+
 		SELECT T.ID,
 		P.NAME,
 		P.SDATE,
@@ -48,8 +49,8 @@
 		resultMap="ticketListResultMap">
 		SELECT M.NICKNAME,
 		P.NAME,
-		to_char(sdate, 'yyyy-MM-dd hh:mm:ss') as SDATE,
-		to_char(edate, 'yyyy-MM-dd hh:mm:ss') as EDATE,
+		SDATE,
+		EDATE,
 		P.LOCATION,
 		T.QRCODE
 		FROM TICKET_LIST T,
@@ -69,6 +70,5 @@
             )}
      ]]>
 	</insert>
-	
 	
 </mapper>

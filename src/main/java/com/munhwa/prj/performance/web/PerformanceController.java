@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,19 +51,20 @@ public class PerformanceController {
     	model.addAttribute("performance", vo);
     	return "performance/performanceSelect";
     }
-    
-    
-    @RequestMapping("/performanceInsertForm.do")
-    public String performanceInsertForm() {
-    	return "performance/performanceInsertForm";
-    }
-    
+
+	@RequestMapping("/performanceInsertForm.do")
+	public String performanceInsertForm() {
+		return "performance/performanceInsertForm";
+	}
+
     // 공연신청
     @RequestMapping("/performanceInsert.do")
     public String performanceInsert(PerformanceVO vo) {
+
     	vo.setArtistId(2);
 //    	fileUtils.storeFile(null)
     	vo.getImage();
+
     	int n = performanceDao.performanceInsert(vo);
     	if(n != 0 ) {
     		return "redirect:performance";

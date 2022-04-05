@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.google.zxing.WriterException;
 import com.munhwa.prj.ticketList.service.TicketListService;
 import com.munhwa.prj.ticketList.vo.TicketListVO;
@@ -33,11 +32,13 @@ public class TicketListController {
 	}
 	
 	@RequestMapping("/ticketListSelect.do")
-	public String ticketListSelect(HttpServletRequest req, Model model, TicketListVO vo) {
-		String memberId = (String) req.getSession().getAttribute("member");
+	public String ticketListSelect(@LoginUser SessionUser user, Model model, TicketListVO vo) {
+
+		String memberId = (String) user.getEmail();
+
 		vo = ticketListDao.ticketListSelect(vo);
 		System.out.println(vo);
-		model.addAttribute("memberId", memberId);
+		model.addAttribute("member", user);
 		model.addAttribute("ticket", vo);
 		return "ticketList/ticketListSelect";
 	}

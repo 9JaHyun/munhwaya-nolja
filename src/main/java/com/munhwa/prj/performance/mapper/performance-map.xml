@@ -85,6 +85,8 @@
 		INSERT INTO PERFORMANCE(ID, NAME, LOCATION, SDATE, EDATE, CONTENT, IMAGE, PRICE, ARTIST_ID)
 		VALUES(PERFORMANCE_SEQ.nextval, #{name}, #{location}, #{sdate}, #{edate}, #{content}, #{image}, #{price}, #{artistId})
 	</insert>
+
+
 	
 	<update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
 		<![CDATA[
