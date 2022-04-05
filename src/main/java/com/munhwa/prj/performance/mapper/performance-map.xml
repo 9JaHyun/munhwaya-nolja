@@ -15,8 +15,8 @@
 		<result property="person" column="person"/>
 	</resultMap>
 	
-	<select id="performanceSelectList" parameterType="com.munhwa.prj.performance.vo.PerformanceVO"
-	resultMap="performanceResultMap">
+	<select id="performanceSelectList" resultMap="performanceResultMap">
+		<![CDATA[
 		SELECT	ID
 		,		NAME
 		,		LOCATION
@@ -28,12 +28,8 @@
 		,		ARTIST_ID
 		,		PRICE
 		,		PERSON
-		FROM	PERFORMANCE
-		ORDER BY ID DESC
-	</select>
-	
-	<select id="performanceSelect" parameterType="com.munhwa.prj.performance.vo.PerformanceVO" resultMap="performanceResultMap">
-				SELECT	ID
+		FROM	(SELECT ROWNUM AS RN
+		,		ID
 		,		NAME
 		,		LOCATION
 		,		SDATE
@@ -44,8 +40,45 @@
 		,		ARTIST_ID
 		,		PRICE
 		,		PERSON
-		FROM	PERFORMANCE
-		WHERE    id = #{id}
+		FROM PERFORMANCE 
+		WHERE ROWNUM <= #{pageNum} * #{amount}
+		]]>
+		<if test="keyword != null">
+			AND NAME LIKE '%'||#{keyword}||'%'
+		</if>
+		ORDER BY SDATE DESC
+		)
+		<![CDATA[
+		WHERE RN > (#{pageNum} -1) * #{amount} 
+		]]>
+	</select>
+	
+	<select id="getTotal" resultType="int">
+    
+        SELECT COUNT(*) FROM PERFORMANCE
+        
+        <if test="keyword != null">
+        	WHERE NAME LIKE '%'||#{keyword}||'%'
+        </if>
+    
+    </select>
+	
+	
+	<select id="performanceSelect" parameterType="com.munhwa.prj.performance.vo.PerformanceVO" resultMap="performanceResultMap">
+		SELECT	P.ID
+		,		P.NAME
+		,		P.LOCATION
+		,		P.SDATE
+		,		P.EDATE
+		,		P.CONTENT
+		,		P.STATUS
+		,		P.IMAGE
+		,		P.ARTIST_ID
+		,		P.PRICE
+		,		P.PERSON - PP.PERSONAL AS PERSON
+		FROM	PERFORMANCE P, PERFORMANCE_PERSONAL PP
+		WHERE   P.ID = #{id}
+		AND		P.ID = PP.ID
 	</select>
 	
 	<insert id="performanceInsert" parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
@@ -54,5 +87,13 @@
 	</insert>
 
 
+	
+	<update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call accept_performance (
+				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
+	</update>
 	
 </mapper>

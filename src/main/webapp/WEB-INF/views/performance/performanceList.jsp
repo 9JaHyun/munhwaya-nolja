@@ -24,7 +24,8 @@
             <div class="span8 posts">
                 <div class="def-block">
                     <h4> 공연 예매하기 </h4><span class="liner"></span>
-                    <div class="products shop clearfix" style="margin-bottom: 100px;">
+                    <div style="border-bottom: 1px solid #FF0078;">
+                    <div class="products shop clearfix" style="margin-bottom:20px;">
                         <div class="grid_12">
                             <form id="frm" action="ticketListInsert.do" method="post">
                                 <div class="bag_table">
@@ -35,10 +36,10 @@
                                         <tbody>
                                         <tr class="cart_table_item">
                                             <td class="product-thumbnail">
-                                                <img src="${resources}/images/assets/shop/1.jpg" style="height: 150px; margin-left:20px;">
+                                                <img src="api/picture/${performance.image }" style="height: 150px; width:130px; margin-left:20px;">
                                             </td>
                                             <td class="product-name" style="vertical-align : middle;">
-                                                <a>${performance.name }</a>
+                                                <a style="font-size:20pt;">${performance.name }</a>
                                             </td>
                                             <td class="product-subtotal" style=" vertical-align : middle;">
                                                 <a class="amount" style="font-size:18pt">${performance.price }</a>
@@ -49,10 +50,15 @@
                                 </div><!-- bag table -->
                             </form><!-- end form -->
                         </div><!-- grid12 -->
+                        </div>
+                        <div style="float:right; margin-right:10px; margin-top:10px;">
+                            <Strong style="font-size:15pt;">남은 좌석수 : <a>${performance.person}</a></Strong>
+                        </div>
                     </div><!-- products -->
 
                 </div><!-- def block -->
             </div><!-- span8 posts -->
+            
 
             <div class="span4 sidebar">
 

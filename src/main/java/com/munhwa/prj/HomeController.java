@@ -44,7 +44,7 @@ public class HomeController {
 
     @GetMapping("/create-member")
     public @ResponseBody String createSession(HttpServletRequest req) {
-    	req.getSession().setAttribute("member", "test0@gmail.com");
+    	req.getSession().setAttribute("member", "test1@gmail.com");
     	return "ok";
 
     }
