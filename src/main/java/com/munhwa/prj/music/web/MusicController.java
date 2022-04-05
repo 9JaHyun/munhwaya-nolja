@@ -24,8 +24,6 @@ public class MusicController {
 	@Autowired
 	private AlbumService albumDAO;
 
-	/* 페이지 요청 */
-	@GetMapping("/musicMain")
 	public String musicMain(Model model, HttpSession session) {
 		/*
 		 * Map<Integer, CartVO> map = (Map<Integer, cart>) session.getAttribute("cart");

@@ -8,7 +8,7 @@
 		<result property="qrcode" column="qrcode"/>
 		<collection property="performancevo" resultMap="performanceResultMap"></collection>
 	</resultMap>
-	
+
 	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
 		<id property="id" column="id"/>
 		<result property="name" column="name"/>
@@ -22,7 +22,7 @@
 		<result property="price" column="price"/>
 		<result property="person" column="person"/>
 	</resultMap>
-	
+
 	<select id="ticketListSelectList" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
 	resultMap="ticketListResultMap">
 		SELECT T.ID,
@@ -37,7 +37,7 @@
 		AND T.PERFORMANCE_ID = P.ID
 		ORDER BY SDATE DESC
 	</select>
-	
+
 	<select id="ticketListSelect" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
 	resultMap="ticketListResultMap">
 		SELECT M.NICKNAME,
@@ -53,7 +53,7 @@
 		AND T.MEMBER_ID = M.ID
 		AND T.PERFORMANCE_ID = P.ID
 	</select>
-	
+
 	<insert id="ticketListInsert" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO">
 		INSERT INTO TICKET_LIST
 		VALUES(ticket_list_seq.nextval, #{performanceId}, #{memberId}, #{qrcode})

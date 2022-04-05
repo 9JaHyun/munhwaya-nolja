@@ -29,7 +29,6 @@ public class FileClient {
         this.uploadFileService = uploadFileService;
     }
 
-
     // 로컬의 사진 파일을 웹에 렌더링 할 때 사용
     @ResponseBody
     @GetMapping("/api/picture/{filename:.+}")
