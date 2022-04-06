@@ -41,7 +41,7 @@ public class CartController {
 	@RequestMapping("/cart/test/add")
 	public ResponseEntity<String> addCart(@LoginUser SessionUser user, HttpServletRequest req, @RequestParam int id) {
 		MusicVO vo = musicDao.musicSelect(id);
-
+		System.out.println(vo.getId());
 		@SuppressWarnings("unchecked")
 		Map<Integer, MusicVO> map = user.getCart();
 		map.put(vo.getId(), vo);

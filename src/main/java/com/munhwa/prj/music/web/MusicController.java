@@ -44,7 +44,7 @@ public class MusicController {
 		model.addAttribute("musicChartList", musicDAO.musicSelectList());// 갯수지정
 		model.addAttribute("releaseSoonAlbumList", albumDAO.albumSelectListByRelease());// 갯수지정
 		model.addAttribute("musicPersonalList", musicDAO.musicPersonalList(id));
-
+		
 		return "music/musicMain";
 	}
 

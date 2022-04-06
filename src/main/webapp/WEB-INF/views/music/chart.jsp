@@ -126,7 +126,7 @@
                  alert("장바구니에 담았습니다.");
               },
               error: function(xhr, status, error){
-                     alert(error);
+                     alert("통신실패");
               }
            }) 
            

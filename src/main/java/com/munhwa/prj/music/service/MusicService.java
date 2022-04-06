@@ -19,6 +19,7 @@ public interface MusicService {
 	
 	MusicVO musicSelectByArtName(String title, String artName);
 	MusicVO musicSelect(int id);
+	
 	int musicIdByTitle(MusicVO vo);
 	int updateLike(Map<String, Object> paramMap);
 	int musicInsert(MusicVO vo);
