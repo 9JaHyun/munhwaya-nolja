@@ -1,6 +1,5 @@
 package com.munhwa.prj.music.web;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,6 @@ public class MusicController {
 	@Autowired
 	private WishlistService wishlistDao;
 
-	/* 페이지 요청 */
 	@GetMapping("/musicMain")
 	public String musicMain(Model model, HttpSession session) {
 		/*
@@ -164,8 +162,6 @@ public class MusicController {
 		return "music/purchase";
 	}
 	
-	
-	
 	@ResponseBody
 	@GetMapping("/musicSelectByArtName")
 	public MusicVO musicSelectByArtName(@RequestParam String title, @RequestParam String artName) {
@@ -190,7 +186,7 @@ public class MusicController {
 		System.out.println(id);
 		return vo;
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "/updateLike", produces = "application/text; charset=UTF-8")
 	public String updateLike(@RequestParam int musicId, HttpServletRequest req) {
@@ -209,6 +205,4 @@ public class MusicController {
 			return "좋아요 하셨습니다.";
 		}
 	}
-	
-	
 }

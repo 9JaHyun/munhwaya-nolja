@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<div align="right" style="margin-bottom: 50px;">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<div align="right" style="margin-bottom: 50px; height: 400px;">
 	<h4>회원정보 변경</h4>
 
-		<div class="grid_12 tt" style="border: none; padding: 150px 0px 200px 0px;">
+		<div class="grid_12 tt" style="border: none; padding-top: 150px; padding-bottom: 150px;">
 		<ul class="forum-items">
 			<li>
 				<i class="icon-comment-alt"></i> 

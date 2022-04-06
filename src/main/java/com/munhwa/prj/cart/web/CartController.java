@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,55 +23,41 @@ import com.munhwa.prj.cart.vo.CartVO;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.vo.MusicVO;
 
+@Slf4j
 @Controller
 public class CartController {
 	
-	@Autowired
-	private CartService cartDao;
-	@Autowired
 	private MusicService musicDao;
-	
-	// 카트 세션 테스트
-	@GetMapping("/cart/test")
-	@ResponseBody
-	public String cart(HttpServletRequest req) {
-		Map<Integer, MusicVO> map = new HashMap<Integer, MusicVO>();
-		req.getSession().setAttribute("cart", map);
-		return "OK";
-	}
 
+	//	@GetMapping("/shop/cart")
 	@RequestMapping("/cart")
-	public String listCart(Model model, HttpServletRequest req) {
+	public String listCart(@LoginUser SessionUser user,  Model model) {
 		@SuppressWarnings("unchecked")
-		Map<Integer, MusicVO> map = (Map<Integer, MusicVO>) req.getSession().getAttribute("cart");
-		model.addAttribute("carts", map);
+		Map<Integer, MusicVO> cart = user.getCart();
+		model.addAttribute("carts", cart);
 		return "cart/shop_cart";
-
-//	      model.addAttribute("carts", cartDao.listCart());
-//	      return "cart/shop_cart";
-
 	}
-	@ResponseBody
-	@RequestMapping("/cart/test/add")
-	   public ResponseEntity<String> addCart(@RequestParam int id, HttpServletRequest req) {
-		MusicVO vo = musicDao.musicSelect(id);
-	      @SuppressWarnings("unchecked")
-	      Map<Integer, MusicVO> map = (Map<Integer, MusicVO>) req.getSession().getAttribute("cart");
-	      map.put(vo.getId(), vo);
-	      req.getSession().setAttribute("cart", map);
 
-	      return ResponseEntity.ok().body("추가 완료");
-	   }
+	@RequestMapping("/cart/test/add")
+	public ResponseEntity<String> addCart(@LoginUser SessionUser user, HttpServletRequest req, @RequestParam int id) {
+		MusicVO vo = musicDao.musicSelect(id);
+
+		@SuppressWarnings("unchecked")
+		Map<Integer, MusicVO> map = user.getCart();
+		map.put(vo.getId(), vo);
+		user.setCart(map);
+		log.info("id={}", vo.getId());
+
+		return ResponseEntity.ok().body("추가 완료");
+	}
 	
 	@PostMapping("/deleteCart")
 	@ResponseBody
-	public String deleteCart(CartVO vo) {
-		int r = cartDao.deleteCart(vo);
-		if (r != 0) {
-			return "Success";
-		} else {
-			return null;
+	public String deleteCart(@LoginUser SessionUser user, MusicVO vo) {
+		@SuppressWarnings("unchecked")
+		Map<Integer, MusicVO> cart = user.getCart();
+		cart.remove((Integer) vo.getId());
+		user.setCart(cart);
+		return "ok";
 		}
-	}
-
 }

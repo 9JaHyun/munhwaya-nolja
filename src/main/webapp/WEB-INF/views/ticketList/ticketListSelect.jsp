@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <div id="layout" class="full">
 	<div class="under_header">
 		<img src="images/assets/breadcrumbs10.png" alt="#">
@@ -40,15 +41,17 @@
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
-										<strong style="font-size: 14pt">공연명<a style="font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;${ticket.performancevo.name }</a></strong>
+										<strong style="font-size: 14pt">공연명<a style="font-size: 13pt;">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										${ticket.performancevo.name }</a></strong>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
-										<strong style="font-size: 14pt">공연시작일<a style="font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;${ticket.performancevo.sdate }</a></strong>
+										<strong style="font-size: 14pt">공연시작일&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${ticket.performancevo.sdate }" /></strong>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
-										<strong style="font-size: 14pt">공연종료일<a style="font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;${ticket.performancevo.edate }</a></strong>
+										<strong style="font-size: 14pt">공연종료일&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${ticket.performancevo.edate }" /></strong>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">

@@ -10,11 +10,18 @@ public interface WishlistService {
 	
 	// 위시리스트 리스트
 	List<WishlistVO> wishlistList(String memberId);
+
+	// 위시리스트 삭제
+	int deleteWishlist(WishlistVO vo);
 	
 	// 위시리스트 곡 리스트
 	List<WishlistVO> wishlistMusicList(String memberId, String wishlistId);
 	
-	public int insertWishlist(int musicId, int wishId);
+	// 위시리스트 곡 삭제
+	int deleteWishlistMusic(int musicId, int wishId);
 	
+	// 위시리스트 곡 추가
+	public int insertWishlist(int musicId, int wishId);
+
 	public int insertWishlist2(Map<String, Integer> param);
 }

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 	<div id="layout" class="full">
 		<div class="under_header">
@@ -30,17 +31,18 @@
 						<div class="products shop clearfix">
 							<div class="grid_12">
 								<div class="clearfix mbs">
-									<div class="grid_6">
-										<div class="postslider clearfix flexslider">
-											<a><img src="${resources}/images/assets/shop/1.jpg" alt="#"></a>
+									<div class="grid_6" style="border:1px solid white; width:250px; height:300px; margin-left:70px; margin-top:20px;">
+										<div>
+											<img src="api/picture/${performance.image }" style="width:250px; height:300px;">
 										</div>
 									</div>
 									<!-- grid6 -->
 
-									<div class="grid_6">
+									<div class="grid_6" style="margin-left:150px;">
 										<h3 style="font-size:30pt; margin-bottom:30px;">${performance.name }</h3><br>
 										<div style="margin-bottom:10px"><strong style="font-size:14pt;">공연장소<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${performance.location }</a></strong></div><br>
-										<div style="margin-bottom:10px"><strong style="font-size:14pt">공연시작일<a>&nbsp;&nbsp;&nbsp;&nbsp;${performance.sdate }</a></strong></div><br>
+										<div style="margin-bottom:10px"><strong style="font-size:14pt">공연시작일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value="${performance.sdate }"/></strong></div><br>
+										<div style="margin-bottom:10px"><strong style="font-size:14pt">공연종료일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value="${performance.edate }"/></strong></div><br>
 										<div style="margin-bottom:10px"><strong style="font-size:14pt">공연가격<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${performance.price }</a></strong></div><br><br>
 										<div class="single_variation_wrap">
 											<div class="variations_button">
