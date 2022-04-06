@@ -23,30 +23,31 @@
 		,		SDATE
 		,		EDATE
 		,		CONTENT
-		,		STATUS
 		,		IMAGE
 		,		ARTIST_ID
 		,		PRICE
 		,		PERSON
+		,		STATUS
 		FROM	(SELECT ROWNUM AS RN
-		,		ID
-		,		NAME
-		,		LOCATION
-		,		SDATE
-		,		EDATE
-		,		CONTENT
-		,		STATUS
-		,		IMAGE
-		,		ARTIST_ID
-		,		PRICE
-		,		PERSON
-		FROM PERFORMANCE 
+		,		P.ID
+		,		P.NAME
+		,		P.LOCATION
+		,		P.SDATE
+		,		P.EDATE
+		,		P.CONTENT
+		,		P.IMAGE
+		,		P.ARTIST_ID
+		,		P.PRICE
+		,		P.PERSON
+		,		CC.NAME as STATUS
+		FROM PERFORMANCE P, COMMON_CODE CC
 		WHERE ROWNUM <= #{pageNum} * #{amount}
+		AND P.STATUS = CC.ID
 		]]>
 		<if test="keyword != null">
-			AND NAME LIKE '%'||#{keyword}||'%'
+			AND P.NAME LIKE '%'||#{keyword}||'%'
 		</if>
-		ORDER BY SDATE DESC
+		ORDER BY P.SDATE DESC
 		)
 		<![CDATA[
 		WHERE RN > (#{pageNum} -1) * #{amount} 

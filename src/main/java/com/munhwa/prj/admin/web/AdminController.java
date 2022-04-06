@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.performance.service.PerformanceService;
@@ -39,17 +40,17 @@ public class AdminController {
     	return "admin/adminPerformanceList";
 	}
 	
-	// 공연 [승인&거절]
-//	@PostMapping("admin/performanceSelect")
-//	public @ResponseBody String changePerformanceStatus(int performanceId, String status, PerformanceVO vo, Model model) {
-//		Map<String, Object> paramMap = new HashMap<>();
-//		paramMap.put("v_per_id", performanceId);
-//		paramMap.put("v_per_status", status);
-//		int result = performanceService.performanceUpdate(paramMap);
-//		if(result == 1) {
-//			return "성공";
-//		} else {
-//			return "실패";
-//		}
-//	}
+	//공연 [승인&거절]
+	@PostMapping("admin/performanceSelect")
+	public @ResponseBody String changePerformanceStatus(int performanceId, @RequestParam String status , PerformanceVO vo, Model model ) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("v_per_id", performanceId);
+		paramMap.put("v_per_status", status);
+		int result = performanceService.performanceUpdate(paramMap);
+		if(result == 1) {
+			return "성공";
+		} else {
+			return "실패";
+		}
+	}
 }

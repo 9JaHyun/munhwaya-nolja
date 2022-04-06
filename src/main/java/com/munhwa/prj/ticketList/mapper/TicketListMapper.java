@@ -7,6 +7,8 @@ import com.munhwa.prj.ticketList.vo.TicketListVO;
 
 public interface TicketListMapper {
 	List<TicketListVO> ticketListSelectList(String id);
-	int ticketListInsert(Map<String, Object> paramMap);
+	Map<String, Object> ticketListInsert(Map<String, Object> paramMap);
 	TicketListVO ticketListSelect(TicketListVO vo);
+	int qrcodeUpdate(TicketListVO vo);
+	int qrcodeAttendance(int id);
 }

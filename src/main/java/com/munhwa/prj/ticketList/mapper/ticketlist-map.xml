@@ -8,6 +8,7 @@
 		<result property="performanceId" column="performance_id" />
 		<result property="memberId" column="member_id" />
 		<result property="qrcode" column="qrcode" />
+		<result property="attendance" column="attendance" />
 		<collection property="performancevo"
 			resultMap="performanceResultMap"></collection>
 	</resultMap>
@@ -61,14 +62,26 @@
 		AND T.PERFORMANCE_ID = P.ID
 	</select>
 
-	<insert id="ticketListInsert" statementType="CALLABLE" parameterType="map">
+	<select id="ticketListInsert" statementType="CALLABLE" parameterType="map" resultType="hashmap">
 	<![CDATA[
-        { call TICKET (
+        call TICKET (
                 #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
                 #{v_performance_id, mode=IN, jdbcType=INTEGER, javaType=int},
-                #{v_qrcode, mode=IN, jdbcType=VARCHAR, javaType=string}
-            )}
+                #{v_ticket_id, mode=OUT, jdbcType=INTEGER, javaType=int}
+            )
      ]]>
-	</insert>
+	</select>
+	
+	<update id="qrcodeUpdate" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO">
+		UPDATE TICKET_LIST
+		SET QRCODE = #{qrcode}
+		WHERE ID = #{id}
+	</update>
+	
+	<update id="qrcodeAttendance" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO" >
+		UPDATE TICKET_LIST
+		SET ATTENDANCE = 'C01'
+		WHERE ID = #{id}
+	</update>
 	
 </mapper>

@@ -29,9 +29,7 @@
 						<div class="grid_12">
 							<div class="clearfix mbs">
 								<div class="grid_6">
-									<div class="postslider clearfix flexslider">
-										<a><img src="images/assets/shop/shop_product.jpg" alt="#"></a>
-									</div>
+									<img src="api/picture/${ticketList.qrcode }" alt="#">
 								</div>
 								<!-- grid6 -->
 

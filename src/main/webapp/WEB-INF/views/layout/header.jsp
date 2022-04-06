@@ -34,30 +34,30 @@
                     <li class="current selectedLava"><a href="/prj">Home<span
                             class="sub">start here</span></a>
                     </li>
-                    <li><a href="musicMain">음악<span
+                    <li><a href="/prj/musicMain">음악<span
                             class="sub">Search And Streaming Music</span></a>
                         <%-- <ul> - <li>를 사용해서 메뉴 계층화 가능 --%>
                         <ul>
-                            <li><a href="genre">장르별 음악추천</a>
+                            <li><a href="/prj/genre">장르별 음악추천</a>
                             </li>
-                            <li><a href="chart">차트순위</a>
+                            <li><a href="/prj/chart">차트순위</a>
                             </li>
-                            <li><a href="releaseSoon">발매임박 앨범</a>
+                            <li><a href="/prj/releaseSoon">발매임박 앨범</a>
                             </li>
-                            <li><a href="personalResult">퍼스널 추천</a>
+                            <li><a href="/prj/personalResult">퍼스널 추천</a>
                             </li>
-                            <li><a href="purchase">내가 구입한 음원</a>
+                            <li><a href="/prj/purchase">내가 구입한 음원</a>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="performance">공연<span class="sub">Photo Gallery</span></a>
+                    <li><a href="/prj/performance">공연<span class="sub">Photo Gallery</span></a>
                         <ul>
                         	<sec:authorize access="hasRole('ROLE_R02')">
-                            	<li><a href="performanceInsertForm.do">아티스트 공연 등록 신청</a></li>                        	
+                            	<li><a href="/prj/performanceInsertForm.do">아티스트 공연 등록 신청</a></li>                        	
                         	</sec:authorize>
-                            <li><a href="ticketList.do">구매리스트</a></li>
+                            <li><a href="/prj/ticketList.do">구매리스트</a></li>
                             <sec:authorize access="hasRole('ROLE_R03')">
-                            	<li><a href="admin/performanceList">관리자 공연리스트</a></li>
+                            	<li><a href="/prj/admin/performanceList">관리자 공연리스트</a></li>
                             </sec:authorize>
                         </ul>
                     </li>

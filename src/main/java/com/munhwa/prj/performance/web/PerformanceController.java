@@ -36,7 +36,7 @@ public class PerformanceController {
     	List <PerformanceVO> list = performanceDao.performanceSelectList(cri);
     	
     	List<PerformanceVO> result = list.stream()
-    			.filter(p -> p.getStatus().equals("A01"))
+    			.filter(p -> p.getStatus().equals("승인"))
     			.collect(Collectors.toList());
     	
     	model.addAttribute("performances", result);
@@ -70,7 +70,7 @@ public class PerformanceController {
 
     // 공연신청
     @RequestMapping("/performanceInsert.do")
-    public String performanceInsert(PerformanceVO vo, HttpServletResponse response) throws IOException {
+    public String performanceInsert(PerformanceVO vo) throws IOException {
 
     	vo.setArtistId(2);
 //    	fileUtils.storeFile(null)
@@ -78,14 +78,6 @@ public class PerformanceController {
     	
     	int n = performanceDao.performanceInsert(vo);
     	if(n != 0 ) {
-//    		response.setContentType("text/html; charset=UTF-8");
-//        	PrintWriter out = response.getWriter();
-//
-//        	out.println("<script language='javascript'>'");
-//        	out.println("alert('알림창')");
-//        	out.println("</script>");
-//
-//        	out.flush();
     		return "redirect:performance";
     	}
     	return "performance/performanceError";

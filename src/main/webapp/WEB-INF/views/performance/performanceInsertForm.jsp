@@ -1,13 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <body id="fluidGridSystem">
 	<div id="layout" class="full">
 		<div class="under_header">
-			<img src="images/assets/breadcrumbs10.png" alt="#">
+			<img src="${resources}/images/assets/breadcrumbs10.png" alt="#">
 		</div>
 		<!-- under header -->
 
-		<div class="row row-fluid clearfix mbf">
+		<div class="row row-fluid clearfix mbf" style="padding-bottom:300px;">
 			<div class="span8 posts">
 				<div class="def-block" style="width: 140%; border: 3px solid white">
 					<div align="center">
