@@ -1,21 +1,17 @@
 package com.munhwa.prj.music.web;
 
+import com.munhwa.prj.music.service.AlbumService;
+import com.munhwa.prj.music.service.MusicService;
+import com.munhwa.prj.music.vo.AlbumVO;
+import com.munhwa.prj.music.vo.MusicVO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.munhwa.prj.music.service.AlbumService;
-import com.munhwa.prj.music.service.MusicService;
-import com.munhwa.prj.music.vo.AlbumVO;
-import com.munhwa.prj.music.vo.MusicVO;
 
 @Controller
 public class MusicController {
@@ -24,6 +20,7 @@ public class MusicController {
 	@Autowired
 	private AlbumService albumDAO;
 
+	@GetMapping("/musicMain")
 	public String musicMain(Model model, HttpSession session) {
 		/*
 		 * Map<Integer, CartVO> map = (Map<Integer, cart>) session.getAttribute("cart");
@@ -145,19 +142,18 @@ public class MusicController {
 		System.out.println(id);
 		return vo;
 	}
-	
-	
-	@ResponseBody
-	@PostMapping("/addWishList") 
-	public void addWishList(@RequestBody MusicVO vo, Model model) {
-		//제목이랑 가수이름으로 musicId를 찾고 그 뮤직아이디를 해당 위시리스트에 넣는다
-		int musicId = musicDAO.musicIdByTitle(vo);
-		
-		
-		//int r = musicDAO.insertWishList(musicId);
-		//System.out.println(title);
-		
-	}
+
+//	@ResponseBody
+//	@PostMapping("/addWishList")
+//	public void addWishList(@RequestBody MusicVO vo, Model model) {
+//		//제목이랑 가수이름으로 musicId를 찾고 그 뮤직아이디를 해당 위시리스트에 넣는다
+//		int musicId = musicDAO.musicIdByTitle(vo);
+//
+//
+//		//int r = musicDAO.insertWishList(musicId);
+//		//System.out.println(title);
+//
+//	}
 	
 
 }

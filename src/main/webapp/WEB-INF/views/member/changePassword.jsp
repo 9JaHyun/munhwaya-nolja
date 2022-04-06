@@ -11,7 +11,7 @@
 </div>
 
 <!-- 수정폼 -->
-<form method="post" id="frm" action="updatePassword.do?id=${sessionScope.member.id}" onsubmit="return send()">
+<form method="post" id="frm" action="updatePassword.do?id=${member.id}" onsubmit="return send()">
 	<div class="grid_12 tt"
 		style="margin: 100px 0px 100px 0px; border: none;">
 		<a>변경할 비밀번호 : </a> <input type="password" id="password" name="password"><br> 

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.zxing.WriterException;
 import com.munhwa.prj.config.auth.LoginUser;
@@ -27,7 +26,7 @@ public class TicketListController {
 	//마이페이지 링크(회원 구매 목록)
 	@RequestMapping("/ticketList.do")
 	public String ticketList(Model model, @LoginUser SessionUser user) {
-		String memberId = user.getEmail();
+		String memberId = user.getId();
 		List <TicketListVO> list = ticketListDao.ticketListSelectList(memberId);
 		model.addAttribute("ticketLists", list);
 		return "ticketList/ticketList";
@@ -36,7 +35,7 @@ public class TicketListController {
 	@RequestMapping("/ticketListSelect.do")
 	public String ticketListSelect(@LoginUser SessionUser user, Model model, TicketListVO vo) {
 
-		String memberId = user.getEmail();
+		String memberId = user.getId();
 
 		vo = ticketListDao.ticketListSelect(vo);
 		System.out.println(vo);

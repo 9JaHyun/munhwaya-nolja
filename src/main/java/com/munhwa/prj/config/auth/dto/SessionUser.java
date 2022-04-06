@@ -1,6 +1,7 @@
 package com.munhwa.prj.config.auth.dto;
 
 import com.munhwa.prj.cart.vo.MusicVO;
+import com.munhwa.prj.common.code.Genre;
 import com.munhwa.prj.member.vo.Auth;
 import com.munhwa.prj.member.vo.MemberVO;
 import java.io.Serializable;
@@ -9,21 +10,26 @@ import java.util.Map;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 도메인 엔티티는 항상 순수해야하기 때문에, 직렬화를 구현한 SessionUser을 따로 생성
 @NoArgsConstructor
 @Data
 public class SessionUser implements Serializable {
 
-    private String email;
-    private String name;
-    private String picture;
+    private String id;
+    private String nickname;
+    private String image;
+    private String tel;
+    private Genre genre;
+    private int mileage;
     private Map<Integer, MusicVO> cart;
     private Auth role;
 
     public SessionUser(MemberVO member) {
-        this.email = member.getId();
-        this.name = member.getNickname();
-        this.picture = member.getImage();
+        this.id = member.getId();
+        this.nickname = member.getNickname();
+        this.image = member.getImage();
+        this.mileage = member.getMileage();
+        this.tel = member.getTel();
+        this.genre = Genre.valueOf(member.getGenre());
         this.cart = new HashMap<>();
         this.role = Auth.valueOf(member.getRole());
     }

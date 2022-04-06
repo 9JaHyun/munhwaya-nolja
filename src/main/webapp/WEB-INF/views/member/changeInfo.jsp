@@ -14,28 +14,28 @@
 	</div>
 </div>
 <!-- 수정폼 -->
-<form method="post" id="frm" action="updateInfo.do?id=${sessionScope.member.id}" onsubmit="return send()">
+<form method="post" id="frm" action="updateInfo.do?id=${member.id}" onsubmit="return send()">
 	<div class="grid_12 tt"
 		style="margin: 100px 0px 100px 0px; border: none;">
-		<a>전화번호 : </a> <input id="tel" name="tel" type="text" value="${sessionScope.member.tel}"><br> 
+		<a>전화번호 : </a> <input id="tel" name="tel" type="text" value="${member.tel}"><br>
 		<a>관심장르 : </a> <select id="genre" name="genre">
 							<option value="G01" 
-								<c:if test="${sessionScope.member.genre eq 'G01'}">
+								<c:if test="${member.genre eq 'G01'}">
 								 selected="selected"
 								</c:if>>발라드
 							</option>
 							<option value="G02" 
-								<c:if test="${sessionScope.member.genre eq 'G02'}">
+								<c:if test="${member.genre eq 'G02'}">
 								 selected="selected"
 								</c:if>>댄스
 							</option>
 							<option value="G03" 
-								<c:if test="${sessionScope.member.genre eq 'G03'}">
+								<c:if test="${member.genre eq 'G03'}">
 								 selected="selected"
 								</c:if>>랩/힙합
 							</option>
 							<option value="G04" 
-								<c:if test="${sessionScope.member.genre eq 'G04'}">
+								<c:if test="${member.genre eq 'G04'}">
 								 selected="selected"
 								</c:if>>R&B/Soul
 							</option>					

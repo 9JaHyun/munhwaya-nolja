@@ -21,7 +21,6 @@ public class WishlistController {
 	
 	@Autowired
 	private WishlistService wishlistDao;
-	
 
     // 위시리스트 리스트
    	@GetMapping("/wishlist.do")

@@ -37,7 +37,7 @@
 
 	<div align="center" style="margin-top: 80px;">
 		<!-- 프로필사진 -->
-		<img id="image_container" src="resources/music/1.jpg" alt="album cover"
+		<img id="image_container" src="${member.image}" alt="album cover"
 			style="border-radius: 70%; overflow: hidden; height: 180px; width: 180px;"><br>
 		<!-- 프로필사진 선택 -->
 		<div class="filebox">
@@ -47,7 +47,7 @@
 	</div>
 	<div align="center" style="margin: 20px 0px 100px 0px;">
 		<a>닉네임 : </a><input type="text"
-			value="${sessionScope.member.nickname}">
+			value="${member.nickname}">
 	</div>
 	<div align="right">
 		<a href="#" class="tbutton small"><span>수정</span></a>

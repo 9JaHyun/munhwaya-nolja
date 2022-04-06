@@ -7,28 +7,29 @@
 <!-- sidebar -->
 <div class="span4 sidebar">
     <div class="def-block widget">
-        <h4>${member.name}</h4>
+        <h4>${member.nickname}</h4>
         <div style="float: right;">
-        	<a style="color: #FF0078;">
-        <div style="float: right;"><a style="color: #FF0078;">${member.role.role}</a></div>
-        	</a>
+            <a style="color: #FF0078;">
+                <div style="float: right;"><a style="color: #FF0078;">${member.role.role}</a></div>
+            </a>
         </div>
         <span class="liner"></span>
         <div class="widget-content">
 
             <!-- 프로필 이미지 -->
             <div align="center" style="margin-top: 35px;">
-            	<c:choose>
-            		<c:when test="${member.image eq null}">
-            		<!-- 사진 없을 경우 기본 이미지 -->
-            		<img src="resources/music/1.jpg" alt="album cover" 
-					style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
-            		</c:when>
-            		<c:otherwise>
-            		<!-- 사진 있을 경우-->
-                <img src="${member.picture}" alt="album cover" style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
-            		</c:otherwise>
-            	</c:choose>
+                <c:choose>
+                    <c:when test="${member.image eq null}">
+                        <!-- 사진 없을 경우 기본 이미지 -->
+                        <img src="resources/music/1.jpg" alt="album cover"
+                             style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
+                    </c:when>
+                    <c:otherwise>
+                        <!-- 사진 있을 경우-->
+                        <img src="${member.image}" alt="album cover"
+                             style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
+                    </c:otherwise>
+                </c:choose>
             </div>
 
             <!-- 마일리지 -->
@@ -51,15 +52,15 @@
                 <li><a href="likeArtist.do"><i class="icon-caret-right"> </i>좋아요 한 아티스트</a></li>
                 <li><a href="wishlist.do"><i class="icon-caret-right"> </i>위시리스트</a></li>
                 <li><a href="#"><i class="icon-caret-right"> </i>지갑정보</a></li>
-	                <c:choose>
-	        			<c:when test="${member.role == 'R01'}">
- 			                <li><a href="#"><i class="icon-caret-right"> </i>구매한 공연</a></li>
-	       					<li><a href="#"><i class="icon-caret-right"> </i>아티스트 신청</a></li>
-	        			</c:when>
-	        			<c:otherwise>
-	        				<li><a href="#"><i class="icon-caret-right"> </i>아티스트 관리</a></li>
-	        			</c:otherwise>
-	        		</c:choose> 
+                <c:choose>
+                    <c:when test="${member.role == 'R01'}">
+                        <li><a href="#"><i class="icon-caret-right"> </i>구매한 공연</a></li>
+                        <li><a href="#"><i class="icon-caret-right"> </i>아티스트 신청</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#"><i class="icon-caret-right"> </i>아티스트 관리</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>

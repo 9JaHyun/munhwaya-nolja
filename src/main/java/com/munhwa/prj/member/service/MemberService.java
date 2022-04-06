@@ -12,10 +12,7 @@ public interface MemberService {
 
 	// 닉네임 중복체크
 	int nickChk(String nickname);
-	
-	// 마이페이지 회원정보
-	MemberVO mypageInfo(MemberVO vo);
-	
+
 	// 개인정보 업데이트
 	int updateInfo(MemberVO vo);
 	
