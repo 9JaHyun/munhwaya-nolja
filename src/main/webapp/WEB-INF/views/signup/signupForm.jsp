@@ -16,9 +16,7 @@
 						<button class="tbutton color2 small"
 						id="nickChk" name="nickChk" value="N" onclick="nickChkFn();"><span>닉네임 중복확인</span></button> 
 					</div>
-				<!-- form -->
-				<form method="post" id="frm" action="memberSignup.do" onsubmit="return send()">
-
+				<form method="post" id="frm" action="signup.do" onsubmit="return send()">
 					<div class="clearfix">
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;" 
@@ -74,8 +72,8 @@
 	function send() {
 		if(idChk.value == "Y" && nickChk.value == "Y") {
 			
-			var pw = $("#password").val();
-			var pw2 = $("#password2").val();
+			var pw = frm.password.value;
+			var pw2 = frm.password2.value;
 			var num = pw.search(/[0-9]/g);
 			var eng = pw.search(/[a-z]/ig);
 			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);

@@ -1,16 +1,14 @@
 package com.munhwa.prj.member.serviceImpl;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("memberDao")
 public class MemberServiceImpl implements MemberService {
-	
+
 	@Autowired
 	private MemberMapper map;
 
@@ -30,11 +28,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberVO mypageInfo(MemberVO vo) {
-		return map.mypageInfo(vo);
-	}
-
-	@Override
 	public int updateInfo(MemberVO vo) {
 		return map.updateInfo(vo);
 	}
@@ -49,5 +42,7 @@ public class MemberServiceImpl implements MemberService {
 		return map.deleteMember(vo);
 	}
 
-
+	public MemberVO findById(String id) {
+		return map.selectByMemberId(id);
+	}
 }

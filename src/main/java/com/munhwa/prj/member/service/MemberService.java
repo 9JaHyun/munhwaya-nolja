@@ -25,4 +25,5 @@ public interface MemberService {
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
 
+	MemberVO findById(String id);
 }
