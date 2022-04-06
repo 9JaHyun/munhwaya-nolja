@@ -70,6 +70,14 @@
         			 WHERE WISHLIST_ID=#{id})
 	</select>
 	
+	<select id="musicSelectListByMusicId" parameterType="map" resultMap="musicResultMap">
+		SELECT * FROM MUSIC
+		WHERE ID IN 
+		<foreach item="item" index="index" collection="musicIdList" open="(" separator="," close=")">
+        	#{item}
+  		</foreach>
+	</select>
+	
 	<select id="musicSelect" parameterType="int" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC

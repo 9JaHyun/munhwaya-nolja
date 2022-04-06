@@ -2,6 +2,7 @@ package com.munhwa.prj.music.web;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -88,6 +90,8 @@ public class MusicController {
 	public String albumInfo(Model model, int id) {
 		model.addAttribute("selectAlbum", albumDAO.albumSelect(id));
 		model.addAttribute("selectMusicByAlbum", musicDAO.musicSelectByAlBum(id));// list
+		model.addAttribute("wishlists", wishlistDao.wishlistList("test0@gmail.com"));
+
 		return "music/albumInfo";
 	}
 
@@ -97,6 +101,19 @@ public class MusicController {
 		model.addAttribute("AlbumSelectByMusicId", albumDAO.albumSelectByMusicId(id));
 		model.addAttribute("wishlists", wishlistDao.wishlistList("test0@gmail.com"));
 		return "music/streaming";
+	}
+	
+	@RequestMapping("/streamingList")
+	public String streamingList(@RequestParam("musicIdList") List<Integer> musicIdList, Model model) {
+		int first = musicIdList.get(0);
+		System.out.println(first);
+		model.addAttribute("album", albumDAO.albumSelectByMusicId(first));
+		
+		Map<String, List<Integer>> paramMap = new HashMap<>();
+		paramMap.put("musicIdList", musicIdList);
+		model.addAttribute("musicList", musicDAO.musicSelectListByMusicId(paramMap));
+		
+		return "music/streamingList";
 	}
 	
 	@GetMapping("/streamingWishList")
@@ -146,6 +163,8 @@ public class MusicController {
 		model.addAttribute("purchasedList", musicDAO.musicSelectListByPurchase(id));
 		return "music/purchase";
 	}
+	
+	
 	
 	@ResponseBody
 	@GetMapping("/musicSelectByArtName")

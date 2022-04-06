@@ -11,12 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.cart.service.CartService;
 import com.munhwa.prj.cart.vo.CartVO;
+import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.vo.MusicVO;
 
 @Controller
@@ -24,6 +25,8 @@ public class CartController {
 	
 	@Autowired
 	private CartService cartDao;
+	@Autowired
+	private MusicService musicDao;
 	
 	// 카트 세션 테스트
 	@GetMapping("/cart/test")
@@ -45,17 +48,18 @@ public class CartController {
 //	      return "cart/shop_cart";
 
 	}
-
+	@ResponseBody
 	@RequestMapping("/cart/test/add")
-	   public ResponseEntity<String> addCart(@RequestBody MusicVO vo,HttpServletRequest req) {
+	   public ResponseEntity<String> addCart(@RequestParam int id, HttpServletRequest req) {
+		MusicVO vo = musicDao.musicSelect(id);
 	      @SuppressWarnings("unchecked")
 	      Map<Integer, MusicVO> map = (Map<Integer, MusicVO>) req.getSession().getAttribute("cart");
 	      map.put(vo.getId(), vo);
 	      req.getSession().setAttribute("cart", map);
-	      System.out.println(vo.getId());
+
 	      return ResponseEntity.ok().body("추가 완료");
 	   }
-
+	
 	@PostMapping("/deleteCart")
 	@ResponseBody
 	public String deleteCart(CartVO vo) {

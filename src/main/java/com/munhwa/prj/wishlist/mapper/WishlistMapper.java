@@ -1,6 +1,7 @@
 package com.munhwa.prj.wishlist.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +16,7 @@ public interface WishlistMapper {
 	List<WishlistVO> wishlistMusicList(@Param("memberId") String memberId, @Param("wishlistId") String wishlistId);
 	
 	public int insertWishlist(@Param("musicId") int musicId, @Param("wishId") int wishId);
+
+	public int insertWishlist2(Map<String, Integer> param);
+
 }

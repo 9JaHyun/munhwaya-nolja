@@ -86,5 +86,10 @@ public class MusicServiceImpl implements MusicService{
 		return map.updateLike(paramMap);
 	}
 
+	@Override
+	public List<MusicVO> musicSelectListByMusicId(Map<String, List<Integer>> paramMap) {
+		return map.musicSelectListByMusicId(paramMap);
+	}
+
 
 }

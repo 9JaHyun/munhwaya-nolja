@@ -3,7 +3,7 @@
 
 <script>
 var myPlaylist = []
-<c:forEach items="${musicSelectListByWishList}" var = "music">
+<c:forEach items="${musicList}" var = "music">
 	myPlaylist.push({
 					writer: '${music.writer}',
 					composing: '${music.composing}',
@@ -110,8 +110,6 @@ function change() {
 		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
 	</div>
 	
-	
-	<button type="button" data-toggle="modal" data-target="#myModal">Launch modal</button>
 <!-- content -->
 	<div class="page-content back_to_up">
 		<!-- 최상단메인칸 -->
@@ -150,7 +148,7 @@ function change() {
 					<div class="def-block">
 						<h4> 가사 </h4><span class="liner"></span>
 						<xmp id="lyric">
-${musicSelectListByWishList[0].lyric}
+${musicList[0].lyric}
 						</xmp>
 					</div><!-- def block -->
 				</div><!-- span8 posts -->
@@ -167,9 +165,9 @@ ${musicSelectListByWishList[0].lyric}
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-									<a href="albumInfo?id=${albumSelectByWishList.id }" class="grid_3">
+									<a href="albumInfo?id=${album.id }" class="grid_3">
 										<img id="albImg" src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong id="albName"> ${albumSelectByWishList.albName }</strong><span id="artName">${albumSelectByWishList.artName }</span></span>
+										<span><strong id="albName"> ${album.albName }</strong><span id="artName">${album.artName }</span></span>
 									</a>
 								</div><!-- video grid -->
 							</li><!-- tab content -->

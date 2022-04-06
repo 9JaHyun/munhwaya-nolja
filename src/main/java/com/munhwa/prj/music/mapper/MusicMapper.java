@@ -16,6 +16,7 @@ public interface MusicMapper {
 		List<MusicVO> musicSelectByAlBum(int id);
 		List<MusicVO> musicSelectListByPurchase(String id);
 		List<MusicVO> musicSelectListByWishList(int id);
+		List<MusicVO> musicSelectListByMusicId(Map<String, List<Integer>> paramMap);
 		
 		MusicVO musicSelectByArtName(@Param("title") String title, @Param("artName") String artName);
 		MusicVO musicSelect(int id);

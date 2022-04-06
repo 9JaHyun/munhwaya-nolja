@@ -258,7 +258,7 @@ function addCart2() {
 	      	$.ajax ({
 		        url : "musicSelectBymusicId/"+musicId,
 		        type : "get",
-		        data : {"musicId" : musicId},               
+		        data : {},               
 		        dataType : "json",
 		        success :addCart2Result,
 		        error: function(xhr, status, error){

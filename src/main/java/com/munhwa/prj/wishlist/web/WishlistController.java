@@ -1,5 +1,7 @@
 package com.munhwa.prj.wishlist.web;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +45,19 @@ public class WishlistController {
    		int musicId =  param.get("musicId");
    		int wishId =  param.get("wishId");
    		wishlistDao.insertWishlist(musicId, wishId);
+   		
+   	}
+   	
+   	@ResponseBody
+   	@PostMapping("addWishList2") 
+   	public void addWishList2(@RequestParam (value="wishId") int wishId, 
+   							 @RequestParam (value="musicIdList")  List<Integer> musicIdList){
+   		Map<String, Integer> paramMap = new HashMap<>();
+   		for(int musicId : musicIdList) {
+   			paramMap.put("v_wishlist_id", wishId);
+   			paramMap.put("v_music_id", musicId);
+   			wishlistDao.insertWishlist2(paramMap);
+   		}
    		
    	}
 }
