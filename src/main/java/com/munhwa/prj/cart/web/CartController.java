@@ -31,6 +31,7 @@ public class CartController {
 		@SuppressWarnings("unchecked")
 		Map<Integer, MusicVO> cart = user.getCart();
 		model.addAttribute("carts", cart);
+		model.addAttribute("mileage", user.getMileage());
 		return "cart/shop_cart";
 	}
 

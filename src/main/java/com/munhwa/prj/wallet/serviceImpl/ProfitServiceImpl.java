@@ -20,11 +20,6 @@ public class ProfitServiceImpl implements ProfitService {
 	}
 
 	@Override
-	public ProfitVO selectProfit(ProfitVO vo) {
-		return map.selectProfit(vo);
-	}
-	
-	@Override
 	public int getCountByProfitId(String id) {
 		return map.getCountByProfitId(id);
 	}

@@ -7,6 +7,7 @@
 		<result property="mileage" column="mileage"/>
 		<result property="place" column="place"/>
 		<result property="memberId" column="member_id"/>
+		<result property="pks" column="pks"/>
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
 		<collection property="musicvo" resultMap="musicResultMap" />
 		<collection property="artistvo" resultMap="artistResultMap" />
@@ -46,11 +47,34 @@
     
     <select id="selectProfitListMemberId" resultMap="profitResultMap">
 		<![CDATA[
-			select id, profit_at, mileage, name, 			
-		]]>
-		    
+   		select * 
+        from (select
+            dense_rank() over(order by p.profit_at) as rn,
+            p.profit_at,
+            sum(p.mileage) as mileage,
+            c.name,
+            LISTAGG(m.title, ', ') within group(order by m.title) as title
+        from profit_history p,
+        common_code c, 
+        music m
+        where p.place = c.id
+            and p.pks = m.id
+            and rownum <= #{cri.pageNum} * #{cri.amount}
+				and p.member_id = #{memberId}
+	           group by p.profit_at, p.member_id, c.name
+	           order by rn desc
+                )
+	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+        ]]>
     </select>
     
+    <select id="getCountByProfitId" resultType="int">
+    	<![CDATA[
+		select count(id)
+		from profit_history
+		where member_id = #{memberId}
+		]]>
+    </select>
     <insert id="insertProfit" parameterType="com.munhwa.prj.wallet.vo.ProfitVO">
 <!--     	INSERT INTO profit_history -->
 <!--     							(ID,  -->
@@ -66,10 +90,11 @@
 		insert into profit_history(id, 
 								   profit_at, 
 								   mileage, 
-								   place, 
-								   member_id) 
+								   place,
+								   pks, 
+								   member_id)
 		select profit_history_seq.nextval, 
-		#{profitAt}, #{mileage}, #{place}, a.member_id
+		#{profitAt}, #{mileage}, #{place}, #{pks}, a.member_id
 		from artist a, music m
 		where a.name = m.art_name
 		and m.Id = #{id}

@@ -49,7 +49,7 @@
                 <li><a href="memberChangeInfo.do"><i class="icon-caret-right"> </i>회원정보 변경</a></li>
                 <li><a href="likeArtist.do"><i class="icon-caret-right"> </i>좋아요 한 아티스트</a></li>
                 <li><a href="wishlist.do"><i class="icon-caret-right"> </i>위시리스트</a></li>
-                <li><a href="#"><i class="icon-caret-right"> </i>지갑정보</a></li>
+                <li><a href="walletInfo.do"><i class="icon-caret-right"> </i>지갑정보</a></li>
                 <c:choose>
                     <c:when test="${member.role == 'R01'}">
                         <li><a href="#"><i class="icon-caret-right"> </i>구매한 공연</a></li>

@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
 
@@ -25,17 +28,17 @@ public class ChargeController {
 	@Autowired
 	MemberService memberDao;
 		
-	@GetMapping("/chargeForm")
-	public String chargeForm(MemberVO vo, HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		session.setAttribute("id", "test1@gmail.com");
-		return "charge/chargeForm";
-	}
+//	@GetMapping("/chargeForm")
+//	public String chargeForm(MemberVO vo, HttpServletRequest req) {
+//		HttpSession session = req.getSession();
+//		session.setAttribute("id", "test1@gmail.com");
+//		return "charge/chargeForm";
+//	}
 	
 	@PostMapping("/charge")
 	@ResponseBody
-	public MemberVO plusMileage(MemberVO vo, ChargeVO cvo, HttpServletRequest req, Model model) {
-		String memberId = (String) req.getSession().getAttribute("id");
+	public MemberVO plusMileage(MemberVO vo, ChargeVO cvo, @LoginUser SessionUser user , Model model) {
+		String memberId = user.getId();
 		model.addAttribute("memberId", memberId);
 		vo.setId(memberId);
 		memberDao.plusMileage(vo);

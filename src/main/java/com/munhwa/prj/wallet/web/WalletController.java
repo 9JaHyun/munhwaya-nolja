@@ -100,6 +100,11 @@ public class WalletController {
 			profitVO.setMileage(music.getPrice());
 			profitVO.setPlace("U01");
 			profitVO.setId(music.getId());
+			profitVO.setPks(music.getId());
+			
+			int total = user.getMileage() - music.getPrice();
+			
+			user.setMileage(total);
 			
 			
 			resultProfitByArtist.add(profitVO);
@@ -149,16 +154,17 @@ public class WalletController {
 	
 	// 마이페이지 지갑 정보 리스트 페이지
 	@GetMapping("/walletInfo.do")
-	public String walletInfo(Model model, HttpServletRequest req) {
-		String memberId = (String) req.getSession().getAttribute("id");
+	public String walletInfo(@LoginUser SessionUser user,  Model model) {
+		String memberId = user.getId();
 		model.addAttribute("memberId", memberId);
+		model.addAttribute("role", user.getRole());
 		return "walletInfo-memberWallet";
 	}
 	
 	// 지갑 정보 상세 페이지
 	@RequestMapping("/walletInfoSelect.do")
-	public String walletInfoSelect(HttpServletRequest req, Model model, Criteria cri) {
-		String memberId = (String) req.getSession().getAttribute("id");
+	public String walletInfoSelect(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
 //		Criteria cri = new Criteria();
 //		String pageNum = req.getParameter("pageNum");
 //		if(pageNum == null) { pageNum = "1";}
@@ -167,6 +173,7 @@ public class WalletController {
 		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri);
 //		list.forEach(charge -> System.out.println(tranSimpleFormat.format(charge.getChargeAt())));
 		model.addAttribute("charges", list);
+		model.addAttribute("mileage", user.getMileage());
 		int total = chargeDao.getCountByChargeId(memberId);
 	    PageDTO pageMake = new PageDTO(cri, total);
 	    model.addAttribute("pageMaker", pageMake);
@@ -175,8 +182,8 @@ public class WalletController {
 	
 	// 마일리지 사용 내역 페이지
 	@GetMapping("/usageHistory.do")
-	public String usageHistory(HttpServletRequest req, Model model, Criteria cri) {
-		String memberId = (String) req.getSession().getAttribute("id");
+	public String usageHistory(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
 		List<UsageVO> list = usageDao.findByMemberId(memberId, cri);
 		model.addAttribute("usages",list);
 		int total = usageDao.getCountByUsageId(memberId);
@@ -187,7 +194,9 @@ public class WalletController {
 	
 	// 마일리지 충전 페이지
 	@GetMapping("/chargeForm.do")
-	public String chargeForm() {
+	public String chargeForm( @LoginUser SessionUser user, Model model) {
+		String memberId = user.getId();
+		model.addAttribute("memberId", memberId);
 		return "chargeForm-memberWallet";
 	}
 	
@@ -199,8 +208,8 @@ public class WalletController {
 	
 	// 아티스트 수익 내역 페이지
 	@GetMapping("/profitHistory.do")
-	public String profitHistory(HttpServletRequest req, Model model, Criteria cri) {
-		String memberId = (String) req.getSession().getAttribute("id");
+	public String profitHistory(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
 		List<ProfitVO> list = profitDao.findByMemberId(memberId, cri);
 		model.addAttribute("profits", list);
 		int total = profitDao.getCountByProfitId(memberId);

@@ -59,7 +59,7 @@ a:hover {
 		<div class="mbf clearfix" style="font-size: 20px;">
 			<div align="center" style="color: white" class="def-block clearfix">
 				현재 보유중인 마일리지&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly"
-					style="height: 15px; margin-top: 5px;">
+					style="height: 15px; margin-top: 5px;" value="${mileage }">
 			</div>
 		</div>
 		<div style="float: right;">

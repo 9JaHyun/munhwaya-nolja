@@ -16,6 +16,7 @@ public class ProfitVO {
 	private int mileage;
 	private String place;
 	private String memberId;
+	private int pks;
 	
 	private CommonCodeVO commonCodevo;
 	private MusicVO musicvo;

@@ -91,7 +91,7 @@
                             <tbody>
                             <tr class="cart-subtotal">
                                 <th><strong>보유중인 마일리지 </strong></th>
-                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;${cart.musicvo.price }[0]</span></strong></td>
+                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;${mileage}</span></strong></td>
                             </tr>
                             <tr class="total">
                                 <th><strong>총 가격</strong></th>
@@ -102,7 +102,7 @@
                           
                             <tr class="total">
                                 <th><strong>잔여 마일리지</strong></th>
-                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;0</span></strong></td>
+                                <td><strong>&nbsp;&nbsp;&nbsp;<span class="amount" id="minusMileage"></span></strong></td>
                             </tr>
                             </tbody>
                         </table>
@@ -116,12 +116,6 @@
     </div><!-- end page content -->
 </div>
 
-<!-- <form id="frm" name="frm"> -->
-<!-- 	<input type="hidden" name="mileage" id="mileage"> -->
-<!-- 	<input type="hidden" name="memberId" id="memberId" value="test0@gmail.com"> -->
-<!-- 	<input type="hidden" name="pks" id="pks" value="1">  -->
-<!-- 	<input type="hidden" name="place" id="place" value="U01"> -->
-<!-- </form> -->
 <script>
 
 $(document).ready(function(){
@@ -141,8 +135,8 @@ function itemTotal() {
 	}
 // 	var summ = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(sum);
 	document.getElementById("itemTotalPrice").innerHTML = sum;
-	document.getElementById("mileage").value = sum;
-	$("#totalPrice").val(sum);
+	document.getElementById("minusMileage").innerHTML = parseInt(${mileage}) - parseInt(document.getElementById("itemTotalPrice").innerHTML);
+/*  $("#totalPrice").val(sum); */	 
 }
 
 

@@ -17,8 +17,7 @@
          merchant_uid : 'merchant_' + new Date().getTime(),
          name : "마일리지 충전",
          amount : mileage.value,
-         buyer_email : "test0@gmail.com",
-<%--         	"<%=(String)session.getAttribute("id")%>", --%>
+         buyer_email : "${memberId}",
          buyer_name : "테스트",
          buyer_tel : "테스트",
          buyer_addr : "테스트",
@@ -34,7 +33,7 @@
     	    		url: "charge",
     	    		type:"post",
     	    		data:{"mileage" : mileage.value,
-    	    			  "memberId" : "test1@gmail.com",
+    	    			  "memberId" : ${memberId},
     	    			  "type" : "P01"
     	    		},
     	    	}).done(function() {
@@ -58,7 +57,7 @@
          merchant_uid : 'merchant_' + new Date().getTime(),
          name : "마일리지 충전",
          amount : mileage.value,
-         buyer_email : "test0@gmail.com",
+         buyer_email : "${memberId}",
 <%--         	"<%=(String)session.getAttribute("id")%>", --%>
          buyer_name : "테스트",
          buyer_tel : "테스트",
@@ -75,7 +74,7 @@
     	    		url: "charge",
     	    		type:"post",
     	    		data:{"mileage" : mileage.value,
-    	    			  "memberId" : "test1@gmail.com",
+    	    			  "memberId" : ${memberId},
     	    			  "type" : "P02"
     	    		},
     	    	});
@@ -98,7 +97,7 @@
 	         merchant_uid : 'merchant_' + new Date().getTime(),
 	         name : "마일리지 충전",
 	         amount : mileage.value,
-	         buyer_email : "test0@gmail.com",
+	         buyer_email : "${memberId}",
 	<%--         	"<%=(String)session.getAttribute("id")%>", --%>
 	         buyer_name : "테스트",
 	         buyer_tel : "테스트",
@@ -115,7 +114,7 @@
 	    	    		url: "charge",
 	    	    		type:"post",
 	    	    		data:{"mileage" : mileage.value,
-	    	    			  "memberId" : "test1@gmail.com",
+	    	    			  "memberId" : ${memberId},
 	    	    			  "type" : "P03"
 	    	    		},
 	    	    	});
