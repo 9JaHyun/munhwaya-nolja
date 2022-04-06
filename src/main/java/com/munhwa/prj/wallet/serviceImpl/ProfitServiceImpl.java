@@ -30,8 +30,12 @@ public class ProfitServiceImpl implements ProfitService {
 	}
 
 	@Override
-	public int insertProfit(ProfitVO vo) {
-		return map.insertProfit(vo);
+	public int insertProfit(List<ProfitVO> vo) {
+		int cnt = 0;
+		for (ProfitVO profitVO : vo) {
+			map.insertProfit(profitVO);
+		}
+		return cnt;
 	}
 
 

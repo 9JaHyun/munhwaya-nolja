@@ -115,47 +115,14 @@
    <script>
    function addCart() {
         var id = $(event.target).data("musicid")
-        var title = $(event.target).parent().parent().prev().prev().prev().html().trim()
-        var price = $(event.target).data("price")
-        var artName = $(event.target).parent().parent().prev().prev().html().trim()
-        var genre = $(event.target).data("genre")
-        var lyric = $(event.target).data("lyric")
-       
-        var likeIt = $(event.target).data("likeit")
-        var fileName = $(event.target).data("filename")
-        var albumId = $(event.target).data("albumid")
-        
-        var time = $(event.target).data("time")
-        var writer = $(event.target).data("writer")
-        var composing = $(event.target).data("composing")
-        var arrangement = $(event.target).data("arrangement")
-        
-//         alert(id)
-//         alert(title)
-//         alert(price)
-//         alert(artName)
-//         alert(genre)
-//         alert(lyric)
-        
-//         alert(likeIt)
-//         alert(fileName)
-//         alert(albumId)
-        
-//         alert(time)
-//         alert(writer)
-//         alert(composing)
-//         alert(arrangement)
-        
+      
         var confirm1 = confirm('장바구니에 담으시겠습니까?')
         if(confirm1) {
              $.ajax ({
                url : "cart/test/add",
                type : "post",
-               data : JSON.stringify({"id" : id, "title" : title, "price" : price, "artName" : artName,"genre" : genre,
-                      "lyric" : lyric, "likeIt" : likeIt, "fileName" : fileName, "albumId" : albumId, "time" : time, 
-                      "writer" : writer,   "composing" : composing, "arrangement" : arrangement}),                   
+               data : {"id" : id},                   
                dataType : "text",
-               contentType : 'application/json',
                success : function(data) {
             	  console.log(data);
                   alert("장바구니에 담았습니다.");

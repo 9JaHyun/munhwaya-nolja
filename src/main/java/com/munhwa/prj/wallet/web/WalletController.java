@@ -68,6 +68,7 @@ public class WalletController {
 		List<UsageVO> resultUsageList = new ArrayList<>();
 		List<MemberVO> resultListByMember = new ArrayList<>();
 		List<PurchaseVO> resultPurchaseList = new ArrayList<>();
+		List<ProfitVO> resultProfitByArtist = new ArrayList<>();
 		for(MusicVO music : musics) {
 			sum += music.getPrice();
 			System.out.println("뮤직아이디" + music.getId());
@@ -80,22 +81,31 @@ public class WalletController {
 			
 			resultUsageList.add(usageVO);
 			
-			MemberVO mvo = new MemberVO();
-			mvo.setId(memberId);
-			mvo.setMileage(music.getPrice());
+			MemberVO memberVO = new MemberVO();
+			memberVO.setId(memberId);
+			memberVO.setMileage(music.getPrice());
 			
-			resultListByMember.add(mvo);
+			resultListByMember.add(memberVO);
             
-			PurchaseVO pvo = new PurchaseVO();
-			pvo.setMusicId(music.getId());
-			pvo.setMemberId(memberId);
+			PurchaseVO purchaseVO = new PurchaseVO();
+			purchaseVO.setMusicId(music.getId());
+			purchaseVO.setMemberId(memberId);
 			
-			resultPurchaseList.add(pvo);
-
+			resultPurchaseList.add(purchaseVO);
+			
+			ProfitVO profitVO = new ProfitVO();
+			profitVO.setProfitAt(useDate);
+			profitVO.setMileage(music.getPrice());
+			profitVO.setPlace("U01");
+			profitVO.setId(music.getId());
+			
+			
+			resultProfitByArtist.add(profitVO);
 		}
 			usageDao.insertUsage(resultUsageList);
 			minusMileage(resultListByMember);
 			insertPurchaseMusic(resultPurchaseList);
+			insertProfitHistory(resultProfitByArtist);
 				
 		return "wallet/usageHistory-memberWallet";
 	}
@@ -111,7 +121,13 @@ public class WalletController {
 		purchaseDao.purchaseInsert(vo);
 		return vo;
 	}
-
+	
+	// 곡 구매시 아티스트 수익 내역에 찍기
+	public List<ProfitVO> insertProfitHistory(@RequestBody List<ProfitVO> vo) {
+		profitDao.insertProfit(vo);
+		return vo;
+	}
+	
 //	@PostMapping("/payCart")
 //	@ResponseBody
 //	public MemberVO payCart(MemberVO vo, UsageVO uvo,HttpServletRequest req, Model model) {

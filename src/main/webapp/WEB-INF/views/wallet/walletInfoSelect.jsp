@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <style>
 .pageInfo {
 	list-style: none;
@@ -85,7 +86,7 @@ a:hover {
 			<tbody>
 				<c:forEach items="${charges }" var="charge">
 					<tr>
-						<td>${charge.chargeAt}</td>
+						<td><fmt:formatDate pattern="YYYY년 MM월 dd일 HH시 mm분" value="${charge.chargeAt}"/></td>
 						<td>${charge.mileage }</td>
 						<td>${charge.commonCodevo.name }</td>
 					</tr>

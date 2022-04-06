@@ -9,32 +9,69 @@
 		<result property="memberId" column="member_id"/>
 		<result property="pks" column="pks"/>
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
+		<collection property="musicvo" resultMap="musicResultMap" />
 	</resultMap>
 	
 	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
 	  	<id property="id" column="id"/>
 	  	<result property="name" column="name"/>
     </resultMap>
+    
+    <resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
+		<id property="id" column="ID" />
+		<result property="artName" column="ART_NAME"/>
+		<result property="genre" column="GENRE"/>
+		<result property="lyric" column="LYRIC"/>
+		<result property="likeIt" column="LIKE_IT"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="title" column="TITLE"/>
+		<result property="price" column="PRICE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="time" column="TIME"/>
+		<result property="writer" column="WRITER"/>
+		<result property="composing" column="COMPOSING"/>
+		<result property="arrangement" column="ARRANGEMENT"/>
+	</resultMap>
 	
 	<select id="selectUsageListMemberId" resultMap="usageResultMap">
-		<![CDATA[
-		select id, use_at, mileage, name, pks
-		from (select
-			rownum rn,
-			a.id,
-			a.use_at,
-			a.mileage,
-			b.name,
-			a.pks
-		from usage_history a,
-			 common_code b
-		where a.place = b.id
-			and rownum<= #{cri.pageNum} * #{cri.amount}
-			and a.member_id = #{memberId}
-			order by rn desc
-		)
-		where rn > (#{cri.pageNum}-1) * #{cri.amount}     
-		]]>
+	 <![CDATA[
+		 select *
+	        from ( select
+	            DENSE_RANK() OVER (ORDER BY u.use_at) as rn,
+				u.use_at,
+	            sum(u.mileage) as mileage,
+	            c.name,
+	            LISTAGG(m.title, ', ') within group(order by m.title) as title
+			from usage_history u, 
+	        common_code c, 
+	        music m
+			where u.place = c.id
+	            and u.pks = m.id
+				and rownum <= #{cri.pageNum} * #{cri.amount}
+				and u.member_id = #{memberId}
+	           group by u.use_at, u.member_id, c.name
+	           order by rn desc
+	     )
+	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+     ]]>
+<!-- 		<![CDATA[ -->
+<!-- 		select id, use_at, mileage, name, pks -->
+<!-- 		from (select -->
+<!-- 			rownum rn, -->
+<!-- 			a.id, -->
+<!-- 			a.use_at, -->
+<!-- 			a.mileage, -->
+<!-- 			b.name, -->
+<!-- 			a.pks -->
+<!-- 		from usage_history a, -->
+<!-- 			 common_code b -->
+<!-- 		where a.place = b.id -->
+<!-- 			and rownum<= #{cri.pageNum} * #{cri.amount} -->
+<!-- 			and a.member_id = #{memberId} -->
+<!-- 			order by rn desc -->
+<!-- 		) -->
+<!-- 		where rn > (#{cri.pageNum}-1) * #{cri.amount}      -->
+<!-- 		]]> -->
 	</select>
 	
 	<select id="getCountByUsageId" resultType="int">

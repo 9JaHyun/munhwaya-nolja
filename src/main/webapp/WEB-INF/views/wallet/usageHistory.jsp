@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <style>
 .pageInfo {
 	list-style: none;
@@ -51,7 +52,7 @@ a:hover {
 	height: 36px;
 }
 </style>
-<div class="def-block clearfix">
+<!-- <div class="def-block clearfix"> -->
 	<div align="right" style="margin-bottom: 50px;">
 		<h4>마일리지 사용내역</h4>
 
@@ -60,19 +61,6 @@ a:hover {
 				현재 보유중인 마일리지&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly"
 					style="height: 15px; margin-top: 5px;">
 			</div>
-			<!-- 옵션선택 끝 -->
-			<!-- 			<div class="search_wrap"> -->
-			<!-- 				<div class="search_area"> -->
-			<!-- 					<select name="type"> -->
-			<!-- 						<option value="mileage" -->
-			<%-- 							<c:out value="${pageMaker.cri.type eq 'mileage'?'selected':'' }"/>>가격</option> --%>
-			<!-- 						<option value="name" -->
-			<%-- 							<c:out value="${pageMaker.cri.type eq 'name'?'selected':'' }"/>>결제 수단</option> --%>
-			<!-- 					</select> -->
-			<%-- 					<input type="text" name="keyword" value="${pageMaker.cri.keyword }"> --%>
-			<!-- 					<button>Search</button> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
 		</div>
 		<div style="float: right;">
 			<select id="cntPerPage" name="sel" onchange="selChange()">
@@ -93,16 +81,16 @@ a:hover {
 					<th scope="col">사용 일자</th>
 					<th scope="col">사용 금액</th>
 					<th scope="col">사용처</th>
-					<th scope="col">사용처 정보</th>
+					<th scope="col">구매한 곡, 공연명</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${usages }" var="usage">
 					<tr>
-						<td>${usage.useAt}</td>
+						<td><fmt:formatDate pattern="YYYY년 MM월 dd일 HH시 mm분" value="${usage.useAt}"/></td>
 						<td>${usage.mileage }</td>
 						<td>${usage.commonCodevo.name }</td>
-						<td>${usage.pks}</td>
+						<td>${usage.musicvo.title }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -141,7 +129,7 @@ a:hover {
 	<div align="right">
 		<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>뒤로가기</span></a>
 	</div>
-</div>
+<!-- </div> -->
 
 
 <!-- def block -->

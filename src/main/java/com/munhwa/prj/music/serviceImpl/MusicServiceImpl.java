@@ -21,8 +21,8 @@ public class MusicServiceImpl implements MusicService{
 	}
 
 	@Override
-	public MusicVO musicSelect(MusicVO vo) {
-		return map.musicSelect(vo);
+	public MusicVO musicSelect(int id) {
+		return map.musicSelect(id);
 	}
 
 	@Override

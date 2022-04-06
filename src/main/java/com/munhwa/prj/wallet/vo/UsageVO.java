@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.munhwa.prj.common.vo.CommonCodeVO;
+import com.munhwa.prj.music.vo.MusicVO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +20,5 @@ public class UsageVO {
 	private int pks;
 	
 	private CommonCodeVO commonCodevo;
+	private MusicVO musicvo;
 }

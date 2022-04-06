@@ -8,11 +8,40 @@
 		<result property="place" column="place"/>
 		<result property="memberId" column="member_id"/>
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
+		<collection property="musicvo" resultMap="musicResultMap" />
+		<collection property="artistvo" resultMap="artistResultMap" />
 	</resultMap>
 	
 	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
 	  	<id property="id" column="id"/>
 	  	<result property="name" column="name"/>
+    </resultMap>
+    
+    <resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
+		<id property="id" column="ID" />
+		<result property="artName" column="ART_NAME"/>
+		<result property="genre" column="GENRE"/>
+		<result property="lyric" column="LYRIC"/>
+		<result property="likeIt" column="LIKE_IT"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="title" column="TITLE"/>
+		<result property="price" column="PRICE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="time" column="TIME"/>
+		<result property="writer" column="WRITER"/>
+		<result property="composing" column="COMPOSING"/>
+		<result property="arrangement" column="ARRANGEMENT"/>
+	</resultMap>
+    
+    <resultMap type="com.munhwa.prj.wallet.vo.ArtistVO" id="artistResultMap">
+    	<id property="id" column="id"/>
+		<result property="image" column="image"/>
+		<result property="gender" column="gender"/>
+		<result property="genre" column="genre"/>
+		<result property="content" column="content"/>
+		<result property="type" column="type"/>
+		<result property="memberId" column="member_id"/>
+		<result property="name" column="name"/>
     </resultMap>
     
     <select id="selectProfitListMemberId" resultMap="profitResultMap">
@@ -21,4 +50,28 @@
 		]]>
 		    
     </select>
+    
+    <insert id="insertProfit" parameterType="com.munhwa.prj.wallet.vo.ProfitVO">
+<!--     	INSERT INTO profit_history -->
+<!--     							(ID,  -->
+<!-- 								MILEAGE,  -->
+<!-- 								PLACE,  -->
+<!-- 								MEMBER_ID, -->
+<!-- 								PROFIT_AT,) -->
+<!-- 		values(profit_history_seq.nextval,  -->
+<!-- 			   #{mileage},  -->
+<!-- 			   #{place},  -->
+<!-- 			   #{memberId},  -->
+<!-- 			   #{profitAt}) -->
+		insert into profit_history(id, 
+								   profit_at, 
+								   mileage, 
+								   place, 
+								   member_id) 
+		select profit_history_seq.nextval, 
+		#{profitAt}, #{mileage}, #{place}, a.member_id
+		from artist a, music m
+		where a.name = m.art_name
+		and m.Id = #{id}
+    </insert>
 </mapper>

@@ -6,7 +6,7 @@ import com.munhwa.prj.music.vo.MusicVO;
 
 public interface MusicMapper {
 		List<MusicVO> musicSelectList();
-		MusicVO musicSelect(MusicVO vo);
+		MusicVO musicSelect(int id);
 		int musicInsert(MusicVO vo);
 		int musicUpdate(MusicVO vo);
 		int musicDelete(MusicVO vo);

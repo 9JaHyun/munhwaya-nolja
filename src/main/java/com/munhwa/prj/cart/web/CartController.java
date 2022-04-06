@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.vo.MusicVO;
 
 @Controller
@@ -22,7 +25,8 @@ public class CartController {
 	
 //	@Autowired
 //	private CartService cartDao;
-	
+	@Autowired
+	private MusicService musicDao;
 
 	//카트 세션 테스트
 	@GetMapping("/cart/test")
@@ -46,7 +50,9 @@ public class CartController {
 	}
 	
 	@RequestMapping("/cart/test/add")
-	public ResponseEntity<String> addCart(@RequestBody MusicVO vo,HttpServletRequest req) {
+	public ResponseEntity<String> addCart(@RequestParam int id, HttpServletRequest req) {
+		MusicVO vo = musicDao.musicSelect(id);
+		
 		@SuppressWarnings("unchecked")
 		Map<Integer, MusicVO> map = (Map<Integer, MusicVO>) req.getSession().getAttribute("cart");
 		map.put(vo.getId(), vo);

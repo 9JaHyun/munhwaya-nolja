@@ -9,5 +9,5 @@ public interface ProfitService {
 	List<ProfitVO> findByMemberId(String memberId, Criteria cri);
 	int getCountByProfitId(String id);
 	ProfitVO selectProfit(ProfitVO vo);
-	int insertProfit(ProfitVO vo);
+	int insertProfit(List<ProfitVO> vo);
 }
