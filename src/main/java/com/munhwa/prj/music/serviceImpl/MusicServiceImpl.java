@@ -1,6 +1,7 @@
 package com.munhwa.prj.music.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,6 +52,11 @@ public class MusicServiceImpl implements MusicService{
 	}
 	
 	@Override
+	public MusicVO musicSelectByArtName(String title, String artName) {
+		return map.musicSelectByArtName(title, artName);
+	}
+	
+	@Override
 	public MusicVO musicSelect(int id) {
 		return map.musicSelect(id);
 	}
@@ -60,7 +66,6 @@ public class MusicServiceImpl implements MusicService{
 		return map.musicIdByTitle(vo);
 	}
 
-	
 	@Override
 	public int musicInsert(MusicVO vo) {
 		return map.musicInsert(vo);
@@ -70,10 +75,21 @@ public class MusicServiceImpl implements MusicService{
 	public int musicUpdate(MusicVO vo) {
 		return map.musicUpdate(vo);
 	}
-
+	
 	@Override
 	public int musicDelete(MusicVO vo) {
 		return map.musicDelete(vo);
 	}
+
+	@Override
+	public int updateLike(Map<String, Object> paramMap) {
+		return map.updateLike(paramMap);
+	}
+
+	@Override
+	public List<MusicVO> musicSelectListByMusicId(Map<String, List<Integer>> paramMap) {
+		return map.musicSelectListByMusicId(paramMap);
+	}
+
 
 }

@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.munhwa.prj.wishlist.mapper.WishlistMapper">
 
-
 	<resultMap type="com.munhwa.prj.wishlist.vo.WishlistVO" id="wishlistResultMap">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
@@ -56,6 +55,22 @@
 									  AND ID = #{wishlistId}))
 	</select>
 
+	<!-- 위시리스트 한건 등록 -->
+	<insert id="insertWishlist" parameterType="int"> 
+		INSERT INTO WISHLIST_MUSIC 
+		VALUES(#{wishId},#{musicId})
+	</insert>
+	
+	<!-- 위시리스트 다건 등록 -->
+	<insert id="insertWishlist2" statementType = "CALLABLE" parameterType="map" >
+		<![CDATA[
+			{ call add_2_wishlist (
+			#{v_wishlist_id, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
+	</insert>
+  
 	<!-- 위시리스트 곡 삭제 -->
 	<delete id="deleteWishlistMusic" parameterType="int">
 	DELETE FROM WISHLIST_MUSIC
@@ -69,6 +84,4 @@
       INSERT INTO WISHLIST_MUSIC 
       VALUES(#{wishId},#{musicId})
    </insert>
-
-
 </mapper>

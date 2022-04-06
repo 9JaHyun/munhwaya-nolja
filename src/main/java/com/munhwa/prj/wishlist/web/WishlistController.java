@@ -1,8 +1,11 @@
 package com.munhwa.prj.wishlist.web;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,7 @@ import com.munhwa.prj.wishlist.vo.WishlistVO;
 @Controller
 public class WishlistController {
 
+	
 	@Autowired
 	private WishlistService wishlistDao;
 
@@ -60,4 +64,15 @@ public class WishlistController {
        wishlistDao.insertWishlist(musicId, wishId);
     }
 
+   	@ResponseBody
+   	@PostMapping("addWishList2") 
+   	public void addWishList2(@RequestParam (value="wishId") int wishId, 
+   							 @RequestParam (value="musicIdList")  List<Integer> musicIdList){
+   		Map<String, Integer> paramMap = new HashMap<>();
+   		for(int musicId : musicIdList) {
+   			paramMap.put("v_wishlist_id", wishId);
+   			paramMap.put("v_music_id", musicId);
+   			wishlistDao.insertWishlist2(paramMap);
+   		}	
+   	}
 }

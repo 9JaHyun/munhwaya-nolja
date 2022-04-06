@@ -22,9 +22,7 @@
 	<h4>위시리스트</h4>
 </div>
 
-
 <div style="overflow: auto; height: 450px; padding: 20px;" class="container1">
-
 	<c:forEach items="${wishlists}" var="wishlist">
 		<div class="mbf clearfix">
 			<ul>
@@ -53,14 +51,11 @@
 		</div>
 	</c:forEach>
 </div>
-
 <script>
+
 	function delWishFnc(id) {
-		
 		var wname = $(event.target).parent().parent().next().children().children().data("wname");
-
 		if (!confirm("[" + wname + '] 삭제하시겠습니까?')) {
-
 		} else {
 			$.ajax({
 				type : "POST",
@@ -68,7 +63,6 @@
 				data : JSON.stringify({"id": id}),
 				contentType : "application/json"
 			})
-			
 			.done(() => {
 				document.getElementById(id).parentNode.parentNode.parentNode.remove();
 			});

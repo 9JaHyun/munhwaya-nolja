@@ -42,7 +42,7 @@
 							<li id="Latest" class="active">
 								<div class="video-grid">
 								<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
-									<a href="video_single_wide.html" class="grid_3">
+									<a href="streaming?id=${music.musicId }" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>${music.musicTitle }</strong>${music.musicArtistName }</span>
 									</a>

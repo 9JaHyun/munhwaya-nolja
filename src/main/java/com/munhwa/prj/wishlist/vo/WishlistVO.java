@@ -8,5 +8,4 @@ public class WishlistVO {
 	private int id;
 	private String name;
 	private String memberId;
-	
 }
