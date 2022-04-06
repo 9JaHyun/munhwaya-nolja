@@ -15,6 +15,18 @@ public interface MemberMapper {
 	
 	// 닉네임 중복체크
 	int nickChk(String nickname);
+	
+	// 마이페이지 회원정보
+	MemberVO mypageInfo(MemberVO vo);
+	
+	// 개인정보 업데이트
+	int updateInfo(MemberVO vo);
+	
+	// 비밀번호 업데이트
+	int updatePassword(MemberVO vo);
+	
+	// 회원탈퇴
+	int deleteMember(MemberVO vo);
 
 	MemberVO selectByMemberId(@Param("username") String id);
 }

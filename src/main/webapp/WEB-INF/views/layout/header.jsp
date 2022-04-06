@@ -5,31 +5,37 @@
 <c:set var="resources"
        value="${pageContext.request.contextPath}/resources"/>
 <header id="header" class="glue">
-    <%-- 로그인 버튼--%>
-    <div class="row clearfix">
-        <div class="little-head">
-            <sec:authorize access="isAnonymous()">
-            <div id="Login_PopUp_Link" class="sign-btn tbutton small">
-                <span>로그인</span>
-            </div>
-            </sec:authorize>
+	<%-- 로그인 버튼--%>
+	<div class="row clearfix">
+		<div class="little-head">
             <sec:authorize access="isAuthenticated()">
                 <form action="logout" method="post">
                     <button class="btn btn-info" type="submit">  로그아웃 </button>
                 </form>
+            </sec:authorize>
+					<div class="sign-btn tbutton small">
+						<span>로그아웃</span>		
+					</div>
+				</c:when>
+        <sec:authorize access="isAnonymous()">
+            <div id="Login_PopUp_Link" class="sign-btn tbutton small">
+                <span>로그인</span>
+            </div>
+        </sec:authorize>
+        <sec:authorize access="isAuthenticated()">
             <a href="mypage.do" class="tbutton color2 small" style="background-color: #4c4c4c;">
                 <span>마이페이지</span></a>
-            </sec:authorize>
-        </div>
-    </div>
-    <div class="headdown">
-        <div class="row clearfix">
-            <div class="logo bottomtip" title="Best and Most Popular Musics">
-                <a href="home.do"><img src="${resources}/images/logo.png"
-                                       alt="Best and Most Popular Musics"></a>
-            </div>
-            <%-- 헤더 네비게이션 바 --%>
-            <nav>
+        </sec:authorize>
+		</div>
+	</div>
+	<div class="headdown">
+		<div class="row clearfix">
+			<div class="logo bottomtip" title="Best and Most Popular Musics">
+				<a href="home.do"><img src="${resources}/images/logo.png"
+					alt="Best and Most Popular Musics"></a>
+			</div>
+			<%-- 헤더 네비게이션 바 --%>
+			<nav>
                 <ul class="sf-menu">
                     <li class="current selectedLava"><a href="/prj">Home<span
                             class="sub">start here</span></a>
