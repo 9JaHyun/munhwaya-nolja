@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<script src="./scripts/jquery-3.2.1.min.js"></script>
 <div id="layout" class="full">
 
     <div class="under_header">
@@ -35,7 +36,8 @@
                                         <tr>
                                             <th data-hide="phone" class="product-thumbnail">&nbsp;
                                             </th>
-                                            <th class="product-name">노래</th>
+                                            <th class="product-song">노래</th>
+                                            <th class="product-name">아티스트</th>
                                             <th class="product-subtotal">가격</th>
                                             <th class="product-remove">&nbsp;</th>
                                         </tr>
@@ -43,24 +45,28 @@
                                         <tbody>
                                         <c:forEach items="${carts }" var="cart">
                                         <tr class="cart_table_item">
-                                            <td class="product-thumbnail">
+                                            <td class="product-thumbnail" >
                                                 <a href="#"><img src="images/assets/shop/thumb2.jpg"
-                                                                 alt="#"></a>
+                                                                 alt="#" name="carts"></a>
                                             </td>
-
                                             <td class="product-name">
-                                                <a href="#">${cart.musicvo.title}</a>
+                                                <div class="title" id="title">${cart.value.title}</div>
                                                 <br><br>
                                             </td>
+                                        	<td class="product-name">
+												<div class="artName" id="artName">${cart.value.artName }</div>	                                        	
+											</td>
 
-
-                                            <td class="product-subtotal">
-                                                <div class="price" id="price">${cart.musicvo.price}</div>
+                                            <td class="product-name">
+                                                <div class="price" id="price">${cart.value.price}</div>
                                             </td>
 
                                             <td class="product-remove tac">
-                                                <a onclick="deleteCart(${cart.id})" class="remove toptip"
+                                                <a onclick="deleteCart(${cart.key})" class="remove toptip"
                                                    original-title="Remove this item">×</a>
+                                            </td>
+                                            <td class="product-name">
+                                            	<input type="hidden" value="${cart.value.id }">
                                             </td>
                                         </tr>
 										</c:forEach>
@@ -110,12 +116,12 @@
     </div><!-- end page content -->
 </div>
 
-<form id="frm" name="frm">
-	<input type="hidden" name="mileage" id="mileage">
-	<input type="hidden" name="memberId" id="memberId" value="test0@gmail.com">
-	<input type="hidden" name="pks" id="pks" value="1">
-	<input type="hidden" name="place" id="place" value="U01">
-</form>
+<!-- <form id="frm" name="frm"> -->
+<!-- 	<input type="hidden" name="mileage" id="mileage"> -->
+<!-- 	<input type="hidden" name="memberId" id="memberId" value="test0@gmail.com"> -->
+<!-- 	<input type="hidden" name="pks" id="pks" value="1">  -->
+<!-- 	<input type="hidden" name="place" id="place" value="U01"> -->
+<!-- </form> -->
 <script>
 
 $(document).ready(function(){
@@ -165,22 +171,55 @@ function deleteCart(n) {
 }
 
 function payCart() {
-	var formValues = $("form[name=frm]").serialize();
+	let list = [];
 	
-	$.ajax({
-		url : "payCart",
-		type : "post",
-		data : formValues,
-		async : false,
-		dataType : "text",
-        success : function(data) {
-                alert("결제에 성공하였습니다.")
-                location.href="chargeForm";
-            },
-			error: function(xhr, status, error){
-                alert(error);
-            }
-        });
+	$("img[name='carts']").each(function(i){
+	var tr = $(this).parent().parent().parent();
+	var td = $(tr).children();
+	var obj = {};
+	
+	var title = td.eq(1).text().trim(); 
+	var artName = td.eq(2).text().trim(); 
+	var price = td.eq(3).text().trim();
+	var id = td.eq(5).find("input").val();
+	
+	obj["title"] = title;
+	obj["artName"] = artName;
+	obj["price"] = price;
+	obj["id"] = id;
+	
+	list.push(obj);
+	})	
+		$.ajax({
+			url : "payCart",
+			type : "post",
+			data : JSON.stringify(list),
+			dataType : "text",
+			contentType: 'application/json; charset=utf-8',
+	        success : function(data) {
+	                alert("결제에 성공하였습니다.")
+	                location.href="chargeForm";
+	            },
+				error: function(request, status, error){
+	                alert("결제에 실패하였습니다.");
+	            }
+	        });
   
+// 	var formValues = $("form[name=frm]").serialize();
+	
+// 	$.ajax({
+// 		url : "payCart",
+// 		type : "post",
+// 		data : formValues,
+// 		async : false,
+// 		dataType : "text",
+//         success : function(data) {
+//                 alert("결제에 성공하였습니다.")
+//                 location.href="chargeForm";
+//             },
+// 			error: function(xhr, status, error){
+//                 alert(error);
+//             }
+//         });
     }
 </script>

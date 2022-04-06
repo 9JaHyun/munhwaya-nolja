@@ -13,10 +13,8 @@ public interface MusicMapper {
 		List<MusicVO> musicSelectByAlBum(int id);
 		List<MusicVO> musicSelectListByPurchase(String id);
 		List<MusicVO> musicSelectListByWishList(int id);
-		
 		MusicVO musicSelect(int id);
 		int musicIdByTitle(MusicVO vo);
-		
 		int musicInsert(MusicVO vo);
 		int musicUpdate(MusicVO vo);
 		int musicDelete(MusicVO vo);

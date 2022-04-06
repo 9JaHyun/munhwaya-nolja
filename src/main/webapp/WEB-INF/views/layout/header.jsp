@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="resources"
@@ -21,6 +20,9 @@
             <sec:authorize access="isAuthenticated()">
                 <a href="mypage.do" class="tbutton color2 small" style="background-color: #4c4c4c;">
                     <span>마이페이지</span></a>
+                <div id="cart" style="float:right; margin-left:10px">
+                    <a href="cart"><i class="icon-shopping-cart" style="font-size:25px"></i></a>
+                </div>
             </sec:authorize>
         </div>
     </div>

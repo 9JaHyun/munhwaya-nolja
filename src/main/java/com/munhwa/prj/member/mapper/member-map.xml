@@ -3,21 +3,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.munhwa.prj.member.mapper.MemberMapper">
 
-  <resultMap type="com.munhwa.prj.member.vo.MemberVO" id="memberResultMap">
-    <id property="id" column="id"/>
-    <result property="password" column="password"/>
-    <result property="nickname" column="nickname"/>
-    <result property="tel" column="tel"/>
-    <result property="genre" column="genre"/>
-  </resultMap>
-  
+	<resultMap type="com.munhwa.prj.member.vo.MemberVO" id="memberResultMap">
+		<id property="id" column="id" />
+		<result property="password" column="password" />
+		<result property="nickname" column="nickname" />
+		<result property="tel" column="tel" />
+		<result property="mileage" column="mileage"/>
+		<result property="genre" column="genre" />
+	</resultMap>
+
 	<!-- 마이페이지 회원정보 -->
   <select id="selectByMemberId" resultType="com.munhwa.prj.member.vo.MemberVO">
     SELECT id, password, nickname, tel, genre, role, mileage, image
     FROM member
     WHERE id = #{username}
   </select>
-	
+
 	<!-- 개인정보 업데이트 -->
 	<update id="updateInfo" parameterType="com.munhwa.prj.member.vo.MemberVO">
 		UPDATE MEMBER
@@ -25,7 +26,7 @@
 			GENRE = #{genre}
 		WHERE ID = #{id}
 	</update>
-	
+
 	<!-- 비밀번호 업데이트 -->
 	<update id="updatePassword" parameterType="com.munhwa.prj.member.vo.MemberVO">
 		UPDATE MEMBER
@@ -45,7 +46,7 @@
     VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{image})
   </insert>
 
-  <!-- 소셜 로그인 시 회원가입 처리 -->  
+  <!-- 소셜 로그인 시 회원가입 처리 -->
   <insert id="memberOAuthSignup" statementType="CALLABLE" parameterType="map">
 	<![CDATA[
     { call saveMember (
@@ -73,4 +74,28 @@
     WHERE nickname = #{nickname}
   </select>
 
+	<!-- 마일리지 충전 22/04/04 류기태-->
+	<update id="plusMileage" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		update member
+		set mileage = mileage + #{mileage}
+		where id = #{id}
+	</update>
+
+	<!-- 마일리지 차감 22/04/04 류기태 -->
+	<update id="minusMileage" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		update member
+		set mileage = mileage - #{mileage}
+		where id = #{id}
+	</update>
+
+	<!-- 아티스트 마일리지 수익 22/04/05 류기태 -->
+	<update id="plusMileageOfArtist" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		update member
+		set mileage = mileage + #{mileage}
+		where id = (select a.id
+								from member a, music b, artist c
+								where a.id = c.member_id
+									and b.art_name = c.name
+									and b.title = #{title})
+	</update>
 </mapper>

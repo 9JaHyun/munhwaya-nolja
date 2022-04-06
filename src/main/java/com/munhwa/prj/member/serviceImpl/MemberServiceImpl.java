@@ -3,6 +3,7 @@ package com.munhwa.prj.member.serviceImpl;
 import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,27 @@ public class MemberServiceImpl implements MemberService {
 
 	public MemberVO findById(String id) {
 		return map.selectByMemberId(id);
+	}
+
+	// 마일리지 충전 22/04/04 류기태
+	@Override
+	public int plusMileage(MemberVO vo) {
+		return map.plusMileage(vo);
+	}
+
+	// 아티스트 마일리지 수익 22/04/05 류기태
+	@Override
+	public int plusMileageOfArtist(MemberVO vo) {
+		return map.plusMileageOfArtist(vo);
+	}
+
+	// 마일리지 사용 22/04/04 류기태
+	@Override
+	public int minusMileage(List<MemberVO> vo) {
+		int cnt = 0;
+		for (MemberVO memberVO : vo) {
+			map.minusMileage(memberVO);
+		}
+		return cnt;
 	}
 }

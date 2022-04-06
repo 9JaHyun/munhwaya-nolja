@@ -1,11 +1,10 @@
 package com.munhwa.prj.config.auth.dto;
 
-import com.munhwa.prj.cart.vo.MusicVO;
 import com.munhwa.prj.common.code.Genre;
 import com.munhwa.prj.member.vo.Auth;
 import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.music.vo.MusicVO;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +29,6 @@ public class SessionUser implements Serializable {
         this.mileage = member.getMileage();
         this.tel = member.getTel();
         this.genre = Genre.valueOf(member.getGenre());
-        this.cart = new HashMap<>();
         this.role = Auth.valueOf(member.getRole());
     }
 

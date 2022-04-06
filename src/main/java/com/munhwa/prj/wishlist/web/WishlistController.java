@@ -3,7 +3,6 @@ package com.munhwa.prj.wishlist.web;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,7 @@ import com.munhwa.prj.wishlist.vo.WishlistVO;
 
 @Controller
 public class WishlistController {
-	
+
 	@Autowired
 	private WishlistService wishlistDao;
 
@@ -28,14 +27,14 @@ public class WishlistController {
    		model.addAttribute("wishlists", wishlistDao.wishlistList("test1@gmail.com"));
    		return "wishlist-member";
    	}
-   	
+
    	// 위시리스트 삭제
     @PostMapping("/deleteWishlist.do")
     public String deleteWishlist(@RequestBody WishlistVO vo) {
     	wishlistDao.deleteWishlist(vo);
     	return "redirect:wishlist.do";
-    } 
-   	
+    }
+
    	// 위시리스트 곡 리스트
    	@GetMapping("wishlistMusic.do")
    	public String wishlistMusic(HttpServletRequest request,  Model model, @RequestParam int id, @RequestParam String name) {
@@ -44,17 +43,17 @@ public class WishlistController {
    		model.addAttribute("wishlistMusic", wishlistDao.wishlistMusicList("test1@gmail.com", wishlistId));
    		return "wishlistMusic-member";
    	}
-   	
+
    	// 위시리스트 곡 삭제
    	@PostMapping("deleteWishlistMusic.do")
    	public @ResponseBody String deleteWishlistMusic(@RequestParam int musicId, @RequestParam int wishId, @RequestParam String name) {
    		wishlistDao.deleteWishlistMusic(musicId, wishId);
    		return "redirect:wishlistMusic.do?id="+wishId+"&name="+name;
    	}
-   	
+
    	// 위시리스트 곡 추가
    	@ResponseBody
-    @PostMapping("addWishList") 
+    @PostMapping("addWishList")
     public void addWishList(@RequestBody Map<String, Integer> param){
        int musicId =  param.get("musicId");
        int wishId =  param.get("wishId");

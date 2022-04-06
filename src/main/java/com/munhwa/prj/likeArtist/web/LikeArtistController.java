@@ -1,7 +1,9 @@
 package com.munhwa.prj.likeArtist.web;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.likeArtist.service.LikeArtistService;
+import com.munhwa.prj.likeArtist.vo.LikeArtistVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,20 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.munhwa.prj.likeArtist.service.LikeArtistService;
-import com.munhwa.prj.likeArtist.vo.LikeArtistVO;
-
 @Controller
 public class LikeArtistController {
-	
+
 	@Autowired
-	private LikeArtistService likeArtitstDao;
+	private LikeArtistService likeArtistDao;
     
     // 좋아요 한 아티스트 리스트
 	@GetMapping("/likeArtist.do")
-	public String likeArtistList(HttpServletRequest request, Model model) {
-//		String memberId = request.getSession().getAttribute("member");
-		model.addAttribute("likeArtists", likeArtitstDao.likeArtistList("test1@gmail.com"));
+	public String likeArtistList(@LoginUser SessionUser user, Model model) {
+		model.addAttribute("likeArtists", likeArtistDao.likeArtistList(user.getId()));
 		return "likeArtist-member";
 	}
 	
@@ -35,9 +33,7 @@ public class LikeArtistController {
     	vo.setMemberId("test1@gmail.com");
     	vo.setArtistId(dto.getArtistId());
     	
-    	likeArtitstDao.deleteLikeArtist(vo);
+    	likeArtistDao.deleteLikeArtist(vo);
     	return "redirect:likeArtist.do";
-    	
-    } 
-
+    }
 }
