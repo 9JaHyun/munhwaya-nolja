@@ -34,11 +34,9 @@ public class TicketListController {
 	
 	@RequestMapping("/ticketListSelect.do")
 	public String ticketListSelect(@LoginUser SessionUser user, Model model, TicketListVO vo) {
-
 		String memberId = user.getId();
 
 		vo = ticketListDao.ticketListSelect(vo);
-		System.out.println(vo);
 		model.addAttribute("member", user);
 		model.addAttribute("ticket", vo);
 		return "ticketList/ticketListSelect";

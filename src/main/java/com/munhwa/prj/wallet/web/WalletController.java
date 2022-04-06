@@ -73,7 +73,6 @@ public class WalletController {
 		List<ProfitVO> resultProfitByArtist = new ArrayList<>();
 		for(MusicVO music : musics) {
 			sum += music.getPrice();
-			System.out.println("뮤직아이디" + music.getId());
 			UsageVO usageVO = new UsageVO();
 			usageVO.setMileage(music.getPrice());
 			usageVO.setUseAt(useDate);

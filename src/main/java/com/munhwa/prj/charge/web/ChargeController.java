@@ -39,7 +39,6 @@ public class ChargeController {
 		model.addAttribute("memberId", memberId);
 		vo.setId(memberId);
 		memberDao.plusMileage(vo);
-		System.out.println(vo);
 			insertCharge(cvo);
 		return vo;
 	}
