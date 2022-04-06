@@ -15,13 +15,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 	private PurchaseMapper map;
 
 	@Override
-	public List<PurchaseVO> purchaseSelectList() {
-		return map.purchaseSelectList();
-	}
-
-	@Override
-	public PurchaseVO purchaseSelect(PurchaseVO vo) {
-		return map.purchaseSelect(vo);
+	public List<PurchaseVO> purchaseSelectList(String id) {
+		return map.purchaseSelectList(id);
 	}
 
 	@Override
@@ -42,7 +37,5 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public int purchaseDelete(PurchaseVO vo) {
 		return map.purchaseDelete(vo);
 	}
-
-	
 
 }

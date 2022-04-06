@@ -22,5 +22,16 @@ public interface MemberService {
 	int minusMileage(List<MemberVO> vo);
 	
 	// 아티스트 마일리지 수익 22/04/05 류기태 
-	int plusMileageOfAritst(MemberVO vo);
+	int plusMileageOfArtist(MemberVO vo);
+
+	// 개인정보 업데이트
+	int updateInfo(MemberVO vo);
+	
+	// 비밀번호 업데이트
+	int updatePassword(MemberVO vo);
+	
+	// 회원탈퇴
+	int deleteMember(MemberVO vo);
+
+	MemberVO findById(String id);
 }

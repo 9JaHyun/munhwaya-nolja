@@ -11,13 +11,13 @@
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
 		<collection property="musicvo" resultMap="musicResultMap" />
 	</resultMap>
-	
+
 	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
-	  	<id property="id" column="id"/>
-	  	<result property="name" column="name"/>
-    </resultMap>
-    
-    <resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+	</resultMap>
+
+	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
 		<id property="id" column="ID" />
 		<result property="artName" column="ART_NAME"/>
 		<result property="genre" column="GENRE"/>
@@ -32,9 +32,9 @@
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
 	</resultMap>
-	
+
 	<select id="selectUsageListMemberId" resultMap="usageResultMap">
-	 <![CDATA[
+		<![CDATA[
 		 select *
 	        from ( select
 	            DENSE_RANK() OVER (ORDER BY u.use_at) as rn,
@@ -42,8 +42,8 @@
 	            sum(u.mileage) as mileage,
 	            c.name,
 	            LISTAGG(m.title, ', ') within group(order by m.title) as title
-			from usage_history u, 
-	        common_code c, 
+			from usage_history u,
+	        common_code c,
 	        music m
 			where u.place = c.id
 	            and u.pks = m.id
@@ -54,47 +54,47 @@
 	     )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
      ]]>
-<!-- 		<![CDATA[ -->
-<!-- 		select id, use_at, mileage, name, pks -->
-<!-- 		from (select -->
-<!-- 			rownum rn, -->
-<!-- 			a.id, -->
-<!-- 			a.use_at, -->
-<!-- 			a.mileage, -->
-<!-- 			b.name, -->
-<!-- 			a.pks -->
-<!-- 		from usage_history a, -->
-<!-- 			 common_code b -->
-<!-- 		where a.place = b.id -->
-<!-- 			and rownum<= #{cri.pageNum} * #{cri.amount} -->
-<!-- 			and a.member_id = #{memberId} -->
-<!-- 			order by rn desc -->
-<!-- 		) -->
-<!-- 		where rn > (#{cri.pageNum}-1) * #{cri.amount}      -->
-<!-- 		]]> -->
+		<!-- 		<![CDATA[ -->
+		<!-- 		select id, use_at, mileage, name, pks -->
+		<!-- 		from (select -->
+		<!-- 			rownum rn, -->
+		<!-- 			a.id, -->
+		<!-- 			a.use_at, -->
+		<!-- 			a.mileage, -->
+		<!-- 			b.name, -->
+		<!-- 			a.pks -->
+		<!-- 		from usage_history a, -->
+		<!-- 			 common_code b -->
+		<!-- 		where a.place = b.id -->
+		<!-- 			and rownum<= #{cri.pageNum} * #{cri.amount} -->
+		<!-- 			and a.member_id = #{memberId} -->
+		<!-- 			order by rn desc -->
+		<!-- 		) -->
+		<!-- 		where rn > (#{cri.pageNum}-1) * #{cri.amount}      -->
+		<!-- 		]]> -->
 	</select>
-	
+
 	<select id="getCountByUsageId" resultType="int">
   		<![CDATA[
-  		select count(id)
-  		from usage_history
-  		where member_id = #{memberId}
-  		]]>
+		select count(id)
+		from usage_history
+		where member_id = #{memberId}
+		]]>
   	</select>
-  	
+
 	<insert id="insertUsage" parameterType="com.munhwa.prj.wallet.vo.UsageVO">
-			INSERT INTO USAGE_HISTORY
-									(ID, 
-									 MILEAGE, 
-									 PLACE, 
-									 MEMBER_ID,
-									 USE_AT, 
-									 PKS)
-			VALUES(usage_history_seq.nextval, 
-				   #{mileage},
-				   #{place},
-				   #{memberId},
-				   #{useAt},
-				   #{pks})
-		</insert>
+		INSERT INTO USAGE_HISTORY
+		(ID,
+		 MILEAGE,
+		 PLACE,
+		 MEMBER_ID,
+		 USE_AT,
+		 PKS)
+		VALUES(usage_history_seq.nextval,
+					 #{mileage},
+					 #{place},
+					 #{memberId},
+					 #{useAt},
+					 #{pks})
+	</insert>
 </mapper>

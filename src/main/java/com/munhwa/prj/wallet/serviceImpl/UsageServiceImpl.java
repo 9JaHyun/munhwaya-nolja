@@ -20,12 +20,6 @@ public class UsageServiceImpl implements UsageService {
 	}
 
 	@Override
-	public UsageVO selectUsage(UsageVO vo) {
-		return map.selectUsage(vo);
-	}
-
-	
-	@Override
 	public int getCountByUsageId(String id) {
 		return map.getCountByUsageId(id);
 	}
@@ -39,7 +33,4 @@ public class UsageServiceImpl implements UsageService {
 		}
 		return cnt;
 	}
-
-	
-
 }

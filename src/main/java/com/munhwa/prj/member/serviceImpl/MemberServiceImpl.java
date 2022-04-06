@@ -1,18 +1,15 @@
 package com.munhwa.prj.member.serviceImpl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
-import com.munhwa.prj.wallet.vo.UsageVO;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("memberDao")
 public class MemberServiceImpl implements MemberService {
-	
+
 	@Autowired
 	private MemberMapper map;
 
@@ -30,25 +27,38 @@ public class MemberServiceImpl implements MemberService {
 	public int nickChk(String nickname) {
 		return map.nickChk(nickname);
 	}
-	
+
+	@Override
+	public int updateInfo(MemberVO vo) {
+		return map.updateInfo(vo);
+	}
+
+	@Override
+	public int updatePassword(MemberVO vo) {
+		return map.updatePassword(vo);
+	}
+
+	@Override
+	public int deleteMember(MemberVO vo) {
+		return map.deleteMember(vo);
+	}
+
+	public MemberVO findById(String id) {
+		return map.selectByMemberId(id);
+	}
+
 	// 마일리지 충전 22/04/04 류기태
 	@Override
 	public int plusMileage(MemberVO vo) {
 		return map.plusMileage(vo);
 	}
-	
-	// 마일리지 사용 22/04/04 류기태
-//	@Override
-//	public int minusMileage(MemberVO vo) {
-//		return map.minusMileage(vo);
-//	}
-	
+
 	// 아티스트 마일리지 수익 22/04/05 류기태
 	@Override
-	public int plusMileageOfAritst(MemberVO vo) {
-		return map.plusMileageOfAritst(vo);
+	public int plusMileageOfArtist(MemberVO vo) {
+		return map.plusMileageOfArtist(vo);
 	}
-	
+
 	// 마일리지 사용 22/04/04 류기태
 	@Override
 	public int minusMileage(List<MemberVO> vo) {

@@ -6,15 +6,10 @@
 		<result property="memberId" column="MEMBER_ID"/>
 	</resultMap>
 	
-	<select id="purchaseSelectList" resultMap="purchaseResultMap">
+	<select id="purchaseSelectList" parameterType="String" resultMap="purchaseResultMap">
 		SELECT *
 		FROM PURCHASED_MUSIC
-	</select>
-	
-	<select id="purchaseSelect" resultMap="purchaseResultMap">
-		SELECT *
-		FROM PURCHASED_MUSIC
-		WHERE ID = #{id}
+		WHERE MEMBER_ID = #{id}
 	</select>
 	
 	<insert id="purchaseInsert" parameterType="com.munhwa.prj.music.vo.PurchaseVO">

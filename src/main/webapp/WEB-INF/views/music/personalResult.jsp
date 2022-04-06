@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <style>
 	div,tbody, td, tr, table{
 		vertical-align: middle;
@@ -16,8 +18,6 @@
   		object-fit: cover;
 	}
 </style>
-<!-- layout -->
-<div id="layout" class="full">
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
@@ -50,95 +50,35 @@
 								<form action="#" method="post">
 									<div class="bag_table">
 										<table class="shop_table footable tablet footable-loaded" style="width:100%;">
+											<thead>
+												<tr>
+													<th></th>
+													<th style="width: 300px;"><h4>제목</h4></th>
+													<th><h4>가수</h4></th>
+													<th><h4>좋아요</h4></th>
+													<th><h4>다운로드</h4></th>
+												</tr>
+											</thead>
 											<tbody>
-												<tr class="cart_table_item" style="text-align: center;">
+												<c:forEach var="music" items="${musicPersonalList}" begin="0" end="19" varStatus="status">
+												<tr class="cart_table_item" style="text-align: center; font-size:medium ;">
 													<td class="product-thumbnail" style="width:70px;">
 													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>
 													<td class="product-name">
-														음원제목
+														${music.title }
 													</td>
 													<td class="product-name">
-														가수
+														${music.artName }
 													</td>
 													<td class="product-name">
-														앨범
+														${music.likeIt }
 													</td>
 													<td class="product-name">
 														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
 													</td>
 												</tr>
-			
-												<tr class="cart_table_item" style="text-align: center;">
-													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
-													</td>
-													<td class="product-name">
-														음원제목
-													</td>
-													<td class="product-name">
-														가수
-													</td>
-													<td class="product-name">
-														앨범
-													</td>
-													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
-													</td>
-												</tr>
-												
-												<tr class="cart_table_item" style="text-align: center;">
-													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
-													</td>
-													<td class="product-name">
-														음원제목
-													</td>
-													<td class="product-name">
-														가수
-													</td>
-													<td class="product-name">
-														앨범
-													</td>
-													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
-													</td>
-												</tr>
-												<tr class="cart_table_item" style="text-align: center;">
-													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
-													</td>
-													<td class="product-name">
-														음원제목
-													</td>
-													<td class="product-name">
-														가수
-													</td>
-													<td class="product-name">
-														앨범
-													</td>
-													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
-													</td>
-												</tr>
-												<tr class="cart_table_item" style="text-align: center;">
-													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
-													</td>
-													<td class="product-name">
-														음원제목
-													</td>
-													<td class="product-name">
-														가수
-													</td>
-													<td class="product-name">
-														앨범
-													</td>
-													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
-													</td>
-												</tr>
-												
+												</c:forEach>
 											</tbody>
 										</table>
 									</div><!-- bag table -->
@@ -153,6 +93,4 @@
 			<!-- 왼쪽 상단메인 끝 -->
 	</div>
 		<!-- content끝 -->
-</div>
-	<!-- layout 끝 -->
 	

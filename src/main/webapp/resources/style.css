@@ -858,6 +858,7 @@ a > .sf-sub-indicator {
 }
 
 .ttw-music-player .rating {
+	display: none !important;
     height: 16px;
     margin: 20px 0 20px 0;
 }
@@ -3248,16 +3249,16 @@ a.notification-close {
 	margin-right: 10px;
 }
 .notification-box-info {
-	background-color: #65cad3;
+	background-color: #618d91;
 }
 .notification-box-success {
-	background-color: #1abc9c;
+	background-color: #2d7568;
 }
 .notification-box-warning {
-	background-color: #eed880;
+	background-color: #9f9052;
 }
 .notification-box-error {
-	background-color: #e06f6f;
+	background-color: #a86868;
 }
 
 /* 	Google Map

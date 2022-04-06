@@ -1,5 +1,7 @@
 package com.munhwa.prj.wallet.web;
 
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -53,10 +55,10 @@ public class WalletController {
 
 	@PostMapping("/payCart")
 	@ResponseBody
-	public String payCart(@RequestBody List<MusicVO> musics, HttpServletRequest req) {
+	public String payCart(@LoginUser SessionUser user, @RequestBody List<MusicVO> musics) {
 		Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 
-		String memberId = (String) req.getSession().getAttribute("id");
+		String memberId = user.getId();
 		// musics -> 1. 마일리지 합계 구하기
 		//			 2. 곡 ID를 수집 => 구매음원, 사용, 수익 내역에 전달
 		
