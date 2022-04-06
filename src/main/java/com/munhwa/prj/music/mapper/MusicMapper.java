@@ -33,8 +33,6 @@ public interface MusicMapper {
   
 		int updateLike(Map<String, Object> paramMap);
   
-		int musicIdByTitle(MusicVO vo);
-  
 		int musicInsert(MusicVO vo);
   
 		int musicUpdate(MusicVO vo);

@@ -77,11 +77,4 @@
 	WHERE WISHLIST_ID = #{wishId} 
 	AND MUSIC_ID = #{musicId}
 	</delete>
-	
-	
-	<!-- 위시리스트 곡 추가 -->
-	<insert id="insertWishlist" parameterType="int"> 
-      INSERT INTO WISHLIST_MUSIC 
-      VALUES(#{wishId},#{musicId})
-   </insert>
 </mapper>
