@@ -44,7 +44,7 @@
 				<textarea id="artwork" name="artwork" placeholder="내용을 입력해 주세요."></textarea>
 			</label><br>
 			<label><div class="sort">작업물 인증</div><input type="file" id="file" name="file" accept="image/png, image/jpeg"></label><br>
-			<label><div class="sort">본인인증</div></label><br>
+			<label><div class="sort">본인인증</div><button onclick='location.href=/user/sms'>휴대폰 인증</button></label><br>
 	
 	<!-- 신청, 취소 버튼 -->
 	<div align="center" style="margin-bottom: 10px">

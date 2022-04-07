@@ -28,5 +28,12 @@
 	</bean>
 	
 	<mybatis-spring:scan base-package="com.munhwa.prj.**.mapper"/>
-
+	
+ 	<!-- sms --> 
+<!-- 	<context:property-placeholder location="classpath:config/sms.properties"/> -->
+<!-- 		<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource" destroy-method="close"> -->
+<!-- 		<property name="serviceId" value="${sms.serviceId}" /> -->
+<!-- 		<property name="accessKey" value="${sms.accessKey}" /> -->
+<!-- 		<property name="secretKey" value="sms.secretKey" /> -->
+<!-- 	</bean> -->
 </beans>

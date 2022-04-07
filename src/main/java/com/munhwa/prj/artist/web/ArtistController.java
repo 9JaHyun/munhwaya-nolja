@@ -2,21 +2,34 @@ package com.munhwa.prj.artist.web;
 
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.service.PromotionRequestService;
+import com.munhwa.prj.artist.serviceImpl.SmsServiceImpl;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.entity.UploadFile;
 import com.munhwa.prj.common.service.FileUtils;
+
+import lombok.RequiredArgsConstructor;
 
 /*
  * 작성자:차주연
@@ -98,6 +111,30 @@ private PromotionRequestService promotionRequestDao;
     	return "artist/myPageMove";
     }
     
- 
+    // 아티스트 승급페이지 본인인증
+    @RestController
+    @RequiredArgsConstructor
+    public class SmsController {
+
+        private final SmsServiceImpl smsServiceImpl;
+
+        @PostMapping("/user/sms")
+        public ResponseEntity<SmsResponse> test(@RequestBody ServerRequest request) throws NoSuchAlgorithmException, URISyntaxException, UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
+            SmsResponse data = smsServiceImpl.sendSms(request.getRecipientPhoneNumber(), request.getContent());
+            return ResponseEntity.ok().body(data);
+        }
+    }
+    
+// 
+//    @Bean(name="sms")
+//    public PropertiesFactoryBean propertiesFactoryBean() throws Exception{
+//    	PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
+//    	ClassPathResource classPathResource = new ClassPathResource("classpath:config/sms.properties");
+//    	
+//    	propertiesFactoryBean.setLocation(classPathResource);
+//    	
+//    	return propertiesFactoryBean;
+//    			
+//    }
     
 }
