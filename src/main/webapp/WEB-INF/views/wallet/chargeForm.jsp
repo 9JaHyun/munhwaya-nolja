@@ -9,112 +9,102 @@
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
    
-   function requestPayKaKao() {
-      // IMP.request_pay(param, callback) 결제창 호출
-      IMP.request_pay({ // param
-         pg : "kakaopay",
-         pay_method : "card",
-         merchant_uid : 'merchant_' + new Date().getTime(),
-         name : "마일리지 충전",
-         amount : mileage.value,
-         buyer_email : "${memberId}",
-         buyer_name : "테스트",
-         buyer_tel : "테스트",
-         buyer_addr : "테스트",
-      }, function(rsp) {
-    	    if ( rsp.success ) {
-    	    	var msg = '결제가 완료되었습니다.';
-//      	        msg += '고유ID : ' + rsp.imp_uid;
-//      	        msg += '상점 거래ID : ' + rsp.merchant_uid;
-//      	        msg += '결제 상품명 : ' + "마일리지 충전";
-     	        msg += '결제 금액 : ' + rsp.paid_amount;
-     	        
-    	    	$.ajax({
-    	    		url: "charge",
-    	    		type:"post",
-    	    		data:{"mileage" : mileage.value,
-    	    			  "memberId" : ${memberId},
-    	    			  "type" : "P01"
-    	    		},
-    	    	}).done(function() {
+function requestPayKaKao() {
+    // IMP.request_pay(param, callback) 결제창 호출
+    IMP.request_pay({ // param
+       pg : "kakaopay",
+       pay_method : "card",
+       merchant_uid : 'merchant_' + new Date().getTime(),
+       name : "마일리지 충전",
+       amount : mileage.value,
+       buyer_email : document.getElementById('memberId').value,
+       buyer_name : "테스트",
+       buyer_tel : "테스트",
+       buyer_addr : "테스트",
+    }, function(rsp) {
+  	    if ( rsp.success ) {
+  	    	var msg = '결제가 완료되었습니다.';
+    	        msg += '결제 상품명 : ' + "마일리지 충전";
+   	        msg += '결제 금액 : ' + rsp.paid_amount;
+   	        
+  	    	$.ajax({
+  	    		url: "charge",
+  	    		type:"post",
+  	    		data:{"mileage" : mileage.value,
+  	    			  "memberId" : document.getElementById('memberId').value,
+  	    			  "type" : "P01"
+  	    		},
+  	    	}).done(function() {
 			    	location.href="walletInfoSelect.do";
-    	    	});
-    	    } else {
-    	        var msg = '결제에 실패하였습니다.';
-    	        msg += '에러내용 : ' + rsp.error_msg;
-    	    	location.href ="chargeForm.do";
-    	    }
-    	    alert(msg);
-    	});
-      
-   }
-   
-   function requestPaySmilePay() {
-      // IMP.request_pay(param, callback) 결제창 호출
-      IMP.request_pay({ // param
-         pg : "smilepay",
-         pay_method : "card",
-         merchant_uid : 'merchant_' + new Date().getTime(),
-         name : "마일리지 충전",
-         amount : mileage.value,
-         buyer_email : "${memberId}",
-<%--         	"<%=(String)session.getAttribute("id")%>", --%>
-         buyer_name : "테스트",
-         buyer_tel : "테스트",
-         buyer_addr : "테스트",
-      }, function(rsp) {
-    	    if ( rsp.success ) {
-    	    	var msg = '결제가 완료되었습니다.';
-//      	        msg += '고유ID : ' + rsp.imp_uid;
-//      	        msg += '상점 거래ID : ' + rsp.merchant_uid;
-//      	        msg += '결제 상품명 : ' + "마일리지 충전";
-     	        msg += '결제 금액 : ' + rsp.paid_amount;
-     	        
-    	    	$.ajax({
-    	    		url: "charge",
-    	    		type:"post",
-    	    		data:{"mileage" : mileage.value,
-    	    			  "memberId" : ${memberId},
-    	    			  "type" : "P02"
-    	    		},
-    	    	});
-    	    	location.href="walletInfoSelect.do";
-    	    } else {
-    	        var msg = '결제에 실패하였습니다.';
-    	        msg += '에러내용 : ' + rsp.error_msg;
-    	    	location.href ="chargeForm.do";
-    	    }
-    	    alert(msg);
-    	});
-      
-   }
-   
-   function requestPayCard() {
-	      // IMP.request_pay(param, callback) 결제창 호출
+  	    	});
+  	    } else {
+  	        var msg = '결제에 실패하였습니다.';
+  	        msg += '에러내용 : ' + rsp.error_msg;
+  	    	location.href ="chargeForm.do";
+  	    }
+  	    alert(msg);
+  	});
+    
+ }
+ 
+ function requestPaySmilePay() {
+    IMP.request_pay({ // param
+       pg : "smilepay",
+       pay_method : "card",
+       merchant_uid : 'merchant_' + new Date().getTime(),
+       name : "마일리지 충전",
+       amount : mileage.value,
+       buyer_email : document.getElementById('memberId').value,
+       buyer_name : "테스트",
+       buyer_tel : "테스트",
+       buyer_addr : "테스트",
+    }, function(rsp) {
+  	    if ( rsp.success ) {
+  	    	var msg = '결제가 완료되었습니다.';
+   	        msg += '결제 상품명 : ' + "마일리지 충전";
+   	        msg += '결제 금액 : ' + rsp.paid_amount;
+   	        
+  	    	$.ajax({
+  	    		url: "charge",
+  	    		type:"post",
+  	    		data:{"mileage" : mileage.value,
+  	    			  "memberId" : document.getElementById('memberId').value,
+  	    			  "type" : "P02"
+  	    		},
+  	    	});
+  	    	location.href="walletInfoSelect.do";
+  	    } else {
+  	        var msg = '결제에 실패하였습니다.';
+  	        msg += '에러내용 : ' + rsp.error_msg;
+  	    	location.href ="chargeForm.do";
+  	    }
+  	    alert(msg);
+  	});
+    
+ }
+ 
+ function requestPayCard() {
 	      IMP.request_pay({ // param
 	         pg : "html5_inicis",
 	         pay_method : "card",
 	         merchant_uid : 'merchant_' + new Date().getTime(),
 	         name : "마일리지 충전",
 	         amount : mileage.value,
-	         buyer_email : "${memberId}",
-	<%--         	"<%=(String)session.getAttribute("id")%>", --%>
+	         buyer_email : document.getElementById('memberId').value,
 	         buyer_name : "테스트",
 	         buyer_tel : "테스트",
 	         buyer_addr : "테스트",
 	      }, function(rsp) {
 	    	    if ( rsp.success ) {
 	    	    	var msg = '결제가 완료되었습니다.';
-//	      	        msg += '고유ID : ' + rsp.imp_uid;
-//	      	        msg += '상점 거래ID : ' + rsp.merchant_uid;
-//	      	        msg += '결제 상품명 : ' + "마일리지 충전";
+	      	        msg += '결제 상품명 : ' + "마일리지 충전";
 	     	        msg += '결제 금액 : ' + rsp.paid_amount;
 	     	        
 	    	    	$.ajax({
 	    	    		url: "charge",
 	    	    		type:"post",
 	    	    		data:{"mileage" : mileage.value,
-	    	    			  "memberId" : ${memberId},
+	    	    			  "memberId" : document.getElementById('memberId').value,
 	    	    			  "type" : "P03"
 	    	    		},
 	    	    	});
@@ -173,7 +163,7 @@
 			<a href="walletInfo.do" class="tbutton small"
 				style="margin-top: 50px"><span>뒤로가기</span></a>
 		</div>
-		
+		<input type="hidden" id="memberId" value="${memberId }">
 	</div>
 </div>
 <script>

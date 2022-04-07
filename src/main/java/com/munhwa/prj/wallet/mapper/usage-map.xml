@@ -37,7 +37,7 @@
 		<![CDATA[
 		 select *
 	        from ( select
-	            DENSE_RANK() OVER (ORDER BY u.use_at) as rn,
+	            DENSE_RANK() OVER (ORDER BY u.use_at desc, u.member_id, c.name) as rn,
 				u.use_at,
 	            sum(u.mileage) as mileage,
 	            c.name,
@@ -47,38 +47,21 @@
 	        music m
 			where u.place = c.id
 	            and u.pks = m.id
-				and rownum <= #{cri.pageNum} * #{cri.amount}
 				and u.member_id = #{memberId}
 	           group by u.use_at, u.member_id, c.name
-	           order by rn desc
+	           order by u.use_at desc
 	     )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
      ]]>
-		<!-- 		<![CDATA[ -->
-		<!-- 		select id, use_at, mileage, name, pks -->
-		<!-- 		from (select -->
-		<!-- 			rownum rn, -->
-		<!-- 			a.id, -->
-		<!-- 			a.use_at, -->
-		<!-- 			a.mileage, -->
-		<!-- 			b.name, -->
-		<!-- 			a.pks -->
-		<!-- 		from usage_history a, -->
-		<!-- 			 common_code b -->
-		<!-- 		where a.place = b.id -->
-		<!-- 			and rownum<= #{cri.pageNum} * #{cri.amount} -->
-		<!-- 			and a.member_id = #{memberId} -->
-		<!-- 			order by rn desc -->
-		<!-- 		) -->
-		<!-- 		where rn > (#{cri.pageNum}-1) * #{cri.amount}      -->
-		<!-- 		]]> -->
 	</select>
 
 	<select id="getCountByUsageId" resultType="int">
   		<![CDATA[
-		select count(id)
+		select count(count(id))
 		from usage_history
 		where member_id = #{memberId}
+		group by use_at
 		]]>
   	</select>
 

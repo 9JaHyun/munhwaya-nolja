@@ -93,7 +93,7 @@ a:hover {
 		</table>
 	</div>
 	<div class="pageInfo_wrap">
-		<div class="pageInfo_area">
+		<div class="pageInfo_area" style="margin-left:100px;">
 			<ul id="pageInfo" class="pageInfo">
 				<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMaker.prev}">

@@ -1,14 +1,12 @@
 package com.munhwa.prj.wallet.web;
 
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +21,8 @@ import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
 import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.common.vo.PageDTO;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
 import com.munhwa.prj.music.service.PurchaseService;
@@ -33,6 +33,8 @@ import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.ProfitVO;
 import com.munhwa.prj.wallet.vo.UsageVO;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 public class WalletController {
 	@Autowired
@@ -51,8 +53,7 @@ public class WalletController {
 	private PurchaseService purchaseDao;
 	
 	
-//	SimpleDateFormat tranSimpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+	//카트 결제
 	@PostMapping("/payCart")
 	@ResponseBody
 	public String payCart(@LoginUser SessionUser user, @RequestBody List<MusicVO> musics) {
@@ -113,8 +114,10 @@ public class WalletController {
 			minusMileage(resultListByMember);
 			insertPurchaseMusic(resultPurchaseList);
 			insertProfitHistory(resultProfitByArtist);
-				
-		return "wallet/usageHistory-memberWallet";
+
+			user.getCart().clear();
+			
+			return "ok";
 	}
 	
 	// 곡 구매시 회원 마일리지 차감 
@@ -135,22 +138,6 @@ public class WalletController {
 		return vo;
 	}
 	
-//	@PostMapping("/payCart")
-//	@ResponseBody
-//	public MemberVO payCart(MemberVO vo, UsageVO uvo,HttpServletRequest req, Model model) {
-//		String memberId = (String) req.getSession().getAttribute("id");
-//		model.addAttribute("memberId", memberId);
-//		vo.setId(memberId);
-//		memberDao.minusMileage(vo);
-//		insertUsage(uvo);
-//		return vo;
-//	}
-//	
-//	public UsageVO insertUsage(UsageVO vo) {
-//		usageDao.insertUsage(vo);
-//		return vo;
-//	}
-	
 	
 	// 마이페이지 지갑 정보 리스트 페이지
 	@GetMapping("/walletInfo.do")
@@ -165,13 +152,7 @@ public class WalletController {
 	@RequestMapping("/walletInfoSelect.do")
 	public String walletInfoSelect(@LoginUser SessionUser user, Model model, Criteria cri) {
 		String memberId = user.getId();
-//		Criteria cri = new Criteria();
-//		String pageNum = req.getParameter("pageNum");
-//		if(pageNum == null) { pageNum = "1";}
-//		int result = Integer.parseInt(pageNum);
-//		cri.setPageNum(result);
 		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri);
-//		list.forEach(charge -> System.out.println(tranSimpleFormat.format(charge.getChargeAt())));
 		model.addAttribute("charges", list);
 		model.addAttribute("mileage", user.getMileage());
 		int total = chargeDao.getCountByChargeId(memberId);
@@ -218,27 +199,6 @@ public class WalletController {
 		return "profitHistory-memberWallet";
 	}
 		
-	// 충전 내역 페이지에 보일수량
-//	@GetMapping("/changeAmout.do")
-//	@ResponseBody 
-//	public String changeAmount(@RequestBody AmountChangeRequestDTO dto, Model model) {
-//		Criteria cri = new Criteria();
-//		cri.setAmount(dto.getAmount());
-//		List<ChargeVO> list = chargeDao.findByMemberId(dto.getMemberId(), cri);
-//		model.addAttribute("charges", list);
-//		return "walletInfoSelect-memberWallet";
-//	}
-	
-	
-//	@RequestMapping("/ticketListSelect.do")
-//	   public String ticketListSelect(HttpServletRequest req, Model model, TicketListVO vo) {
-//	      String memberId = (String) req.getSession().getAttribute("member");
-//	      vo = ticketListDao.ticketListSelect(vo);
-//	      System.out.println(vo);
-//	      model.addAttribute("memberId", memberId);
-//	      model.addAttribute("ticket", vo);
-//	      return "ticketList/ticketListSelect";
-//	   }
 	
 	
 }

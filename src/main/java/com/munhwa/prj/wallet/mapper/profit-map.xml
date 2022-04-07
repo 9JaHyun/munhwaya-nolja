@@ -49,7 +49,7 @@
 		<![CDATA[
    		select * 
         from (select
-            dense_rank() over(order by p.profit_at) as rn,
+            dense_rank() over(order by p.profit_at desc, p.member_id, c.name) as rn,
             p.profit_at,
             sum(p.mileage) as mileage,
             c.name,
@@ -59,12 +59,12 @@
         music m
         where p.place = c.id
             and p.pks = m.id
-            and rownum <= #{cri.pageNum} * #{cri.amount}
 				and p.member_id = #{memberId}
 	           group by p.profit_at, p.member_id, c.name
-	           order by rn desc
+	           order by p.profit_at desc
                 )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
         ]]>
     </select>
     

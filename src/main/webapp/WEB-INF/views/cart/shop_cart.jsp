@@ -192,28 +192,12 @@ function payCart() {
 			contentType: 'application/json; charset=utf-8',
 	        success : function(data) {
 	                alert("결제에 성공하였습니다.")
-	                location.href="chargeForm";
+	                location.href="usageHistory.do";
 	            },
 				error: function(request, status, error){
 	                alert("결제에 실패하였습니다.");
 	            }
 	        });
   
-// 	var formValues = $("form[name=frm]").serialize();
-	
-// 	$.ajax({
-// 		url : "payCart",
-// 		type : "post",
-// 		data : formValues,
-// 		async : false,
-// 		dataType : "text",
-//         success : function(data) {
-//                 alert("결제에 성공하였습니다.")
-//                 location.href="chargeForm";
-//             },
-// 			error: function(xhr, status, error){
-//                 alert(error);
-//             }
-//         });
     }
 </script>

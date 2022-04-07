@@ -93,7 +93,7 @@ a:hover {
 		</table>
 	</div>
 	<div class="pageInfo_wrap">
-		<div class="pageInfo_area">
+		<div class="pageInfo_area" style="margin-left:100px;">
 			<ul id="pageInfo" class="pageInfo">
 				<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMaker.prev}">
@@ -103,7 +103,7 @@ a:hover {
 				<!-- 각 번호 페이지 버튼 -->
 				<c:forEach var="num" begin="${pageMaker.startPage}"
 					end="${pageMaker.endPage}">
-					<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
+					<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":""}"><a
 						href="#" onclick="paging(${num})">${num}</a></li>
 				</c:forEach>
 				<!-- 다음페이지 버튼 -->

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Slf4j
+//@Slf4j
 @Controller
 public class CartController {
 	
@@ -43,7 +43,7 @@ public class CartController {
 		Map<Integer, MusicVO> map = user.getCart();
 		map.put(vo.getId(), vo);
 		user.setCart(map);
-		log.info("id={}", vo.getId());
+//		log.info("id={}", vo.getId());
 
 		return ResponseEntity.ok().body("추가 완료");
 	}
