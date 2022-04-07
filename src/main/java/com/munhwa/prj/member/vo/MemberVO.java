@@ -14,11 +14,12 @@ public class MemberVO {
 	private String genre;
 	private String role;
 	private int mileage;
-	private String image;
+	private String oname;
+	private String sname;	
 
 	public MemberVO update(String nickname, String image) {
 		this.nickname = nickname;
-		this.image = image;
+		this.sname = image;
 		return this;
 	}
 }

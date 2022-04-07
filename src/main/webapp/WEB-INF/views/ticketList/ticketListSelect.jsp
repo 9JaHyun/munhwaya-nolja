@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <div id="layout" class="full">
 	<div class="under_header">
 		<img src="images/assets/breadcrumbs10.png" alt="#">
@@ -29,11 +31,11 @@
 						<div class="grid_12">
 							<div class="clearfix mbs">
 								<div class="grid_6">
-									<img src="api/picture/${ticketList.qrcode }" alt="#">
+									<img src="api/picture/qrCodes/${ticket.qrcode}" style="width:300px; height:300px; margin-left: 50px; margin-top: 30px;">
 								</div>
 								<!-- grid6 -->
 
-								<div class="grid_6">
+								<div class="grid_6" style="margin-top:30px;">
 									<div style="margin-bottom: 10px">
 										<strong style="font-size: 14pt;">구매자명<a style="font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${memberId }</a></strong>
 									</div>
@@ -59,10 +61,6 @@
 								<!-- grid6 -->
 							</div>
 							<!-- clearfix -->
-
-
-
-
 						</div>
 						<!-- def block -->
 					</div>

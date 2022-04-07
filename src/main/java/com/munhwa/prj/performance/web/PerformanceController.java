@@ -28,7 +28,9 @@ public class PerformanceController {
 	@Autowired
 	private PerformanceService performanceDao;
 	
-	//@Autowired private ArtistService artistDao;
+	//@Autowired
+	//private ArtistService artistDao;
+	
 	@Autowired private FileUtils fileUtils;
 	
     @GetMapping("/performance")
@@ -72,7 +74,7 @@ public class PerformanceController {
     @RequestMapping("/performanceInsert.do")
     public String performanceInsert(PerformanceVO vo) throws IOException {
 
-    	vo.setArtistId(2);
+    	vo.setArtistId(42);
 //    	fileUtils.storeFile(null)
     	vo.getImage();
     	

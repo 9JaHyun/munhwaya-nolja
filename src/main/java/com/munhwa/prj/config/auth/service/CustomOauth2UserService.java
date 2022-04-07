@@ -71,7 +71,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         paramMap.put("v_nickname", vo.getNickname());
         paramMap.put("v_tel", vo.getTel());
         paramMap.put("v_genre", vo.getGenre());
-        paramMap.put("v_image", vo.getImage());
+        paramMap.put("v_image", vo.getSname());
         return paramMap;
     }
 }

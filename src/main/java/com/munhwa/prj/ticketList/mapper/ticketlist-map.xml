@@ -50,8 +50,8 @@
 		resultMap="ticketListResultMap">
 		SELECT M.NICKNAME,
 		P.NAME,
-		SDATE,
-		EDATE,
+		P.SDATE,
+		P.EDATE,
 		P.LOCATION,
 		T.QRCODE
 		FROM TICKET_LIST T,

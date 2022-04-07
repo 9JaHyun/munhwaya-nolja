@@ -23,7 +23,7 @@ public class SessionUser implements Serializable {
     public SessionUser(MemberVO member) {
         this.email = member.getId();
         this.name = member.getNickname();
-        this.picture = member.getImage();
+        this.picture = member.getSname();
         this.cart = new HashMap<>();
         this.role = Auth.valueOf(member.getRole());
     }

@@ -14,7 +14,7 @@
 
             <!-- 프로필 이미지 -->
             <div align="center" style="margin-top: 35px;">
-                <img src="${member.picture}" alt="album cover" style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
+                <img src="${member.sname}" alt="album cover" style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
             </div>
 
             <!-- 마일리지 -->

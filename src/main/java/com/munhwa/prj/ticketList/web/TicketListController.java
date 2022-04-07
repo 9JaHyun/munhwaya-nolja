@@ -11,12 +11,14 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +67,6 @@ public class TicketListController {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("v_member_id", memberId);
 		paramMap.put("v_performance_id", id);
-//		paramMap.put("v_ticket_id", 1);
 		
 		int ticketId = ticketListDao.ticketListInsert(paramMap);
 		log.info("ticketId={}", ticketId);
@@ -99,11 +100,12 @@ public class TicketListController {
 		} catch (SocketException e1) {
 			e1.printStackTrace();
 		}
+	    String id = UUID.randomUUID().toString();
 	    
-	    return makeQRDetail(path, qrURI, "test");
+	    return makeQRDetail(path, qrURI, id);
 	}
 	
-	public String makeQRDetail(String path, String qrURI, String fn) throws WriterException, IOException { 
+	public String makeQRDetail(String path, String qrURI, String fileName) throws WriterException, IOException { 
 		
 		String savePath = "C:\\DEV\\filetest" + "\\qrCodes\\"; // 파일 경로
 		System.out.println(savePath);
@@ -132,10 +134,7 @@ public class TicketListController {
 	  
 	    MatrixToImageConfig matrixToImageConfig = new MatrixToImageConfig(qrcodeColor,backgroundColor); 
 	    BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix,matrixToImageConfig); 
-	    
 
-	    String fileName= fn;
-	    
 	    //파일 경로, 파일 이름 , 파일 확장자에 맡는 파일 생성
 	    File temp =  new File(savePath+fileName+".png");  
 	    
@@ -147,10 +146,14 @@ public class TicketListController {
 		return fileName+".png"; 
 	}
 	
-
+	
+	@PreAuthorize("hasRole('ROLE_R03')")
 	@RequestMapping("ticketCheck/{ticketId}")
-	public @ResponseBody String qrLink(@PathVariable int ticketId, Model model) {
+	public String qrLink(@PathVariable int ticketId, Model model, @LoginUser SessionUser sessionUser) {
+		TicketListVO vo = new TicketListVO();
+		vo.setId(ticketId);
+		model.addAttribute("ticket", ticketListDao.ticketListSelect(vo));
 		ticketListDao.qrcodeAttendance(ticketId);
-		return "QR코드";
+		return "qrcodeDetail-qrcode";
 	}
 }

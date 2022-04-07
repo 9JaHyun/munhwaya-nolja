@@ -28,7 +28,7 @@
 		,		PRICE
 		,		PERSON
 		,		STATUS
-		FROM	(SELECT ROWNUM AS RN
+		FROM	(SELECT rank() over (ORDER BY P.SDATE desc) rank
 		,		P.ID
 		,		P.NAME
 		,		P.LOCATION
@@ -41,8 +41,7 @@
 		,		P.PERSON
 		,		CC.NAME as STATUS
 		FROM PERFORMANCE P, COMMON_CODE CC
-		WHERE ROWNUM <= #{pageNum} * #{amount}
-		AND P.STATUS = CC.ID
+		WHERE P.STATUS = CC.ID
 		]]>
 		<if test="keyword != null">
 			AND P.NAME LIKE '%'||#{keyword}||'%'
@@ -50,7 +49,8 @@
 		ORDER BY P.SDATE DESC
 		)
 		<![CDATA[
-		WHERE RN > (#{pageNum} -1) * #{amount} 
+		WHERE rank > (#{pageNum} -1) * #{amount}
+		AND rank <= #{pageNum} * #{amount}
 		]]>
 	</select>
 	

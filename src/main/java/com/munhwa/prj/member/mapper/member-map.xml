@@ -13,8 +13,8 @@
 
   <!-- 회원가입 -->
   <insert id="memberSignup" parameterType="com.munhwa.prj.member.vo.MemberVO">
-    INSERT INTO member (id, password, nickname, tel, genre, mileage, role, image)
-    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{image})
+    INSERT INTO member (id, password, nickname, tel, genre, mileage, role, sname, oname)
+    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{sname}, #{oname})
   </insert>
 
   <insert id="memberOAuthSignup" statementType="CALLABLE" parameterType="map">
@@ -45,7 +45,7 @@
   </select>
 
   <select id="selectByMemberId" resultType="com.munhwa.prj.member.vo.MemberVO">
-    SELECT id, password, nickname, tel, genre, role, mileage, image
+    SELECT id, password, nickname, tel, genre, role, mileage, sname, oname
     FROM member
     WHERE id = #{username}
   </select>
