@@ -68,4 +68,10 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return cnt;
 	}
+	
+
+	@Override
+	public int updateProfile(MemberVO vo) {
+		return map.updateProfile(vo);
+	}
 }
