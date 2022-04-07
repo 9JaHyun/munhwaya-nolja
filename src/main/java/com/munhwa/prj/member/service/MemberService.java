@@ -34,4 +34,6 @@ public interface MemberService {
 	int deleteMember(MemberVO vo);
 
 	MemberVO findById(String id);
+	
+	int updateProfile(MemberVO vo);
 }
