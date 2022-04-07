@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<<<<<<< HEAD
 <div align="right" style="margin-bottom: 50px;">
+=======
+<div align="right" style="margin-bottom: 50px; height: 400px;">
+>>>>>>> 2935405 (2022/04/07 회원테이블 수정)
 	<h4>회원정보 변경</h4>
 
 		<div class="grid_12 tt" style="border: none; padding: 150px 0px 200px 0px;">

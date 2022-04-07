@@ -15,11 +15,11 @@ public class MemberVO {
 	private String role;
 	private int mileage;
 	private String oname;
-	private String sname;	
-
-	public MemberVO update(String nickname, String image) {
+	private String sname;
+	
+	public MemberVO update(String nickname, String sname) {
 		this.nickname = nickname;
-		this.sname = image;
+		this.sname = sname;
 		return this;
 	}
 }

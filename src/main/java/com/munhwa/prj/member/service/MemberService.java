@@ -1,5 +1,7 @@
 package com.munhwa.prj.member.service;
 
+import java.util.List;
+
 import com.munhwa.prj.member.vo.MemberVO;
 
 public interface MemberService {
@@ -14,4 +16,15 @@ public interface MemberService {
 	int nickChk(String nickname);
 
 	MemberVO findById(String id);
+	
+	int updateProfile(MemberVO vo);
+
+	// 마일리지 충전 22/04/04 류기태
+	int plusMileage(MemberVO vo);
+
+	// 아티스트 마일리지 수익 22/04/05 류기태
+	int plusMileageOfArtist(MemberVO vo);
+
+	// 마일리지 사용 22/04/04 류기태
+	int minusMileage(List<MemberVO> vo);
 }
