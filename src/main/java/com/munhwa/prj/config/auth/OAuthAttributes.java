@@ -75,7 +75,7 @@ public class OAuthAttributes {
         MemberVO member = new MemberVO();
         member.setId(email);
         member.setNickname(name);
-        member.setImage(picture);
+        member.setSname(picture);
         member.setRole(Auth.R01.getKey());
         member.setMileage(0);
         return member;
