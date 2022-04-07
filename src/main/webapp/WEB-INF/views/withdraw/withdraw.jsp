@@ -15,6 +15,10 @@
     	   
        });
     }
+    
+    function testRealName() {
+    	
+    }
 </script>
 <div id="fluidGridSystem">
     <div id="layout" class="full">

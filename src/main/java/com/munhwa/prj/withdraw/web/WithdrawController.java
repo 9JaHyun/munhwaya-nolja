@@ -1,5 +1,8 @@
 package com.munhwa.prj.withdraw.web;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.munhwa.prj.withdraw.dto.CodeResponseDTO;
+import com.munhwa.prj.withdraw.dto.RealNameResponseDTO;
 import com.munhwa.prj.withdraw.dto.TokenRequestDTO;
 import com.munhwa.prj.withdraw.dto.TokenResponseDTO;
 import com.munhwa.prj.withdraw.dto.User;
@@ -64,7 +68,16 @@ public class WithdrawController {
         TokenResponseDTO result = restTemplate.exchange(
                 BASE_URL + "/oauth/2.0/token",
                 HttpMethod.POST, param, TokenResponseDTO.class).getBody();
+        System.out.println(result);
         
+        httpHeaders.add("authorization_code", result.getAccess_token());
+       
+      
+         
         return result;
+    }
+    
+    public RealNameResponseDTO getRealName() {
+    	
     }
 }
