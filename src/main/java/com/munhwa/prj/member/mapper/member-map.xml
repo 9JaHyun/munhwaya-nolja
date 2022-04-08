@@ -97,15 +97,4 @@
 		FROM member
 		WHERE nickname = #{nickname}
 	</select>
-
-
-
-  <select id="selectByMemberId" resultType="com.munhwa.prj.member.vo.MemberVO">
-    SELECT id, password, nickname, tel, genre, role, mileage, sname, oname
-    FROM member
-    WHERE id = #{username}
-  </select>
-
-
-
 </mapper>

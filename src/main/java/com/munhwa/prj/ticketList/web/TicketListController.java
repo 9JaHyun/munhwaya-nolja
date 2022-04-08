@@ -23,7 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -33,8 +32,10 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.ticketList.service.TicketListService;
 import com.munhwa.prj.ticketList.vo.TicketListVO;
+import com.munhwa.prj.usage.service.UsageService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,10 +45,19 @@ public class TicketListController {
 	@Autowired
 	private TicketListService ticketListDao;
 	
+	@Autowired
+	   private UsageService usageDao;
+	   
+	@Autowired
+	   private MemberService memberDao;
+	   
+//	@Autowired
+//	   private ProfitService profitDao;
+	
 	//마이페이지 링크(회원 구매 목록)
 	@RequestMapping("/ticketList.do")
 	public String ticketList(Model model, @LoginUser SessionUser user) {
-		String memberId = user.getEmail();
+		String memberId = user.getId();
 		List <TicketListVO> list = ticketListDao.ticketListSelectList(memberId);
 		model.addAttribute("ticketLists", list);
 		return "ticketList/ticketList";
@@ -55,15 +65,16 @@ public class TicketListController {
 	
 	@RequestMapping("/ticketListSelect.do")
 	public String ticketListSelect(@LoginUser SessionUser user, Model model, TicketListVO vo) {
+		String nickname = user.getNickname();
 		vo = ticketListDao.ticketListSelect(vo);
-		model.addAttribute("member", user);
+		model.addAttribute("nickname", nickname);
 		model.addAttribute("ticket", vo);
 		return "ticketList/ticketListSelect";
 	}
 	
 	@RequestMapping("/ticketListInsert.do")
 	public String ticketListInsert(@LoginUser SessionUser user, int id, HttpServletRequest req, HttpServletResponse response) throws WriterException, IOException {
-		String memberId = user.getEmail();
+		String memberId = user.getId();
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("v_member_id", memberId);
 		paramMap.put("v_performance_id", id);
@@ -83,6 +94,44 @@ public class TicketListController {
 		out.println("alert('예매가 완료되었습니다.');");
 		out.println("</script>");
 		out.flush();
+		
+//      Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+//      
+//      List<UsageVO> resultUsageList = new ArrayList<>();
+//     List<ProfitVO> resultProfitByArtist = new ArrayList<>();
+//     Map<String,Object> param = new HashMap<String, Object>();
+//     
+//      UsageVO usageVO = new UsageVO();
+//      usageVO.setMileage(vo.getPerformancevo().getPrice());
+//      usageVO.setUseAt(useDate);
+//      usageVO.setPlace("U02");
+//      usageVO.setMemberId(memberId);
+//      usageVO.setPks(vo.getPerformancevo().getId());
+//     
+//      resultUsageList.add(usageVO);
+//               
+//     ProfitVO profitVO = new ProfitVO();
+//     profitVO.setProfitAt(useDate);
+//     profitVO.setMileage(vo.getPerformancevo().getPrice());
+//     profitVO.setPlace("U02");
+//     profitVO.setId(vo.getPerformancevo().getId());
+//     profitVO.setPks(vo.getPerformancevo().getId());
+//     
+//     resultProfitByArtist.add(profitVO);
+//     
+//     param.put("v_member_id", memberId);
+//     param.put("v_mileage", vo.getPerformancevo().getPrice());
+//     param.put("v_performance_id", vo.getPerformancevo().getId());
+//     
+//     // 사용 내역 남기기
+//     usageDao.insertUsage(resultUsageList);
+//     // 공연 구매 시 아티스트 수익 내역에 찍기
+//     profitDao.insertProfit(resultProfitByArtist);
+//     // 공연 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저
+//     memberDao.updateMileagePerformance(param);
+//     
+//     user.setMileage(user.getMileage()-vo.getPerformancevo().getPrice());
+
 		
 		return "home/home"; //메인화면경로 넣어줘야함
 	}
@@ -155,5 +204,10 @@ public class TicketListController {
 		model.addAttribute("ticket", ticketListDao.ticketListSelect(vo));
 		ticketListDao.qrcodeAttendance(ticketId);
 		return "qrcodeDetail-qrcode";
+	}
+	
+	@RequestMapping("kakao")
+	public String kakao() {
+		return "qrcode/kakaotest";
 	}
 }

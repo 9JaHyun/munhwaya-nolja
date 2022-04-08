@@ -62,4 +62,16 @@ public class MemberServiceImpl implements MemberService {
 		return map.updateProfile(vo);
 	}
 
+	@Override
+	public int updatePassword(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return map.updatePassword(vo);
+	}
+
+	@Override
+	public int deleteMember(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return map.deleteMember(vo);
+	}
+
 }

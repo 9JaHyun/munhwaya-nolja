@@ -1,10 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-<<<<<<< HEAD
-    pageEncoding="UTF-8"%>
-<div align="right" style="margin-bottom: 50px;">
-	<h4>좋아요 한 아티스트</h4>
-</div>
-=======
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -97,4 +91,3 @@ function load(id, cnt, btn) {
  
 
 </script>
->>>>>>> 2935405 (2022/04/07 회원테이블 수정)

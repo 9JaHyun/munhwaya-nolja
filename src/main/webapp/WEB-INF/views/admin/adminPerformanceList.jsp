@@ -55,13 +55,13 @@
 										<c:forEach items="${performances}" var="performances">
 											<tr >
 												<td style="color:white;">${performances.name }</td>
-												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performances.sdate }" /></td>
-												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performances.edate }" /></td>
+												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performances.sdate }" /></td>
+												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performances.edate }" /></td>
 												<td style="color:white;">${performances.artistId }</td>
 												<td class="status" style="color:white;">${performances.status }</td>
 												<td>
-													<button data-pid = "${performances.id }" class="tbutton small" id="success" style="height: 25px; width: 50px;">승인</button>
-													<button data-pid = "${performances.id }" class="tbutton small" id="fail" style="height: 25px; width: 50px;">거절</button>
+													<button data-pid = "${performances.id }" class="tbutton small success" style="height: 25px; width: 50px;">승인</button>
+													<button data-pid = "${performances.id }" class="tbutton small fail" style="height: 25px; width: 50px;">거절</button>
 												</td>
 											</tr>
 										</c:forEach>
@@ -136,16 +136,15 @@
     });
   
     
-    $("#success").on("click", function(e) {
+    $(".success").on("click", function(e) {
 		var id = $(event.target).data("pid");    	
-    	console.log(id);
     	$.ajax({
     	    type: "POST",
     	    url: "performanceSelect",
     	    data: {"status" : "A01", "performanceId" : id},
     	    dataType:"text",
     	    success: function(res){
-				console.log("success");
+				alert("공연이 승인되었습니다.");
     	    },
     	    error: function(error){
     	    	console.log("fail");
@@ -153,16 +152,15 @@
     	});
     });
     
-    $("#fail").on("click", function(e) {
+    $(".fail").on("click", function(e) {
 		var id = $(event.target).data("pid");    	
-    	console.log(id);
     	$.ajax({
     	    type: "POST",
     	    url: "performanceSelect",
     	    data: {"status" : "A02", "performanceId" : id},
     	    dataType:"text",
     	    success: function(res){
-				console.log("success");
+    	    	alert("공연이 거절되었습니다.");
     	    },
     	    error: function(error){
     	    	console.log("fail");

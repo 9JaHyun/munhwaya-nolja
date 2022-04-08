@@ -27,4 +27,10 @@ public interface MemberService {
 
 	// 마일리지 사용 22/04/04 류기태
 	int minusMileage(List<MemberVO> vo);
+	
+	// 비밀번호 업데이트
+	int updatePassword(MemberVO vo);
+	
+	// 회원탈퇴
+	int deleteMember(MemberVO vo);
 }

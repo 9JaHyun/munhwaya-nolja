@@ -53,11 +53,15 @@
 		P.SDATE,
 		P.EDATE,
 		P.LOCATION,
-		T.QRCODE
+		P.IMAGE,
+		T.QRCODE,
+		CC.NAME as ATTENDANCE
 		FROM TICKET_LIST T,
 		MEMBER M,
-		PERFORMANCE P
+		PERFORMANCE P,
+		COMMON_CODE CC
 		WHERE T.ID = #{id}
+		AND T.ATTENDANCE = CC.ID
 		AND T.MEMBER_ID = M.ID
 		AND T.PERFORMANCE_ID = P.ID
 	</select>
@@ -80,7 +84,7 @@
 	
 	<update id="qrcodeAttendance" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO" >
 		UPDATE TICKET_LIST
-		SET ATTENDANCE = 'C01'
+		SET ATTENDANCE = '참석'
 		WHERE ID = #{id}
 	</update>
 	

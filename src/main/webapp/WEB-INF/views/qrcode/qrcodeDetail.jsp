@@ -206,11 +206,11 @@
         </p>
         <p>
           <span class="u-upper ticket__small-label">공연시작시간</span>
-          <span class="ticket__detail"><fmt:formatDate pattern = "HH시 mm분" value = "${ticket.performancevo.sdate }" /></span>
+          <span class="ticket__detail"><fmt:formatDate pattern = "HH시 MM분" value = "${ticket.performancevo.sdate }" /></span>
         </p>
         <p>
           <span class="u-upper ticket__small-label">공연종료시간</span>
-          <span class="ticket__detail"><fmt:formatDate pattern = "HH시 mm분" value = "${ticket.performancevo.edate }" /></span>
+          <span class="ticket__detail"><fmt:formatDate pattern = "HH시 MM분" value = "${ticket.performancevo.edate }" /></span>
         </p>
       </div><br>
       <a><MARQUEE behavior="scroll" bgColor="black" style="color:white; height:40px; font-size:20pt;">입장이 완료되었습니다.</MARQUEE></a>

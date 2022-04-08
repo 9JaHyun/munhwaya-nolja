@@ -4,7 +4,7 @@
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <div id="layout" class="full">
     <div class="under_header">
-        <img src="${resources}/images/assets/breadcrumbs10.png" alt="#">
+        <img src="${resources}/images/assets/breadcrumbs1.png" alt="#">
     </div><!-- under header -->
 
     <div class="page-content back_to_up">
@@ -39,8 +39,8 @@
 <%--                                 <img class="product_img_hover" src="${resources}/images/assets/shop/${performances.image}" alt=""> --%>
                                 <div class="product_inner" style="margin-bottom:5px;">
                                     <h3>${performances.name }</h3>
-                                    <strong> <fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${performances.sdate }" /> ~ 
-                                    <fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${performances.edate }" /> </strong>
+                                    <strong> <fmt:formatDate pattern = "MM월 dd일 HH시 MM분" value = "${performances.sdate }" /> ~ 
+                                    <fmt:formatDate pattern = "MM월 dd일 HH시 MM분" value = "${performances.edate }" /> </strong>
                                 </div>
                             </div><!-- product -->
                             </c:forEach>
@@ -54,7 +54,7 @@
                 			</c:if>
  			    			<!-- 각 번호 페이지 버튼 -->
                 			<c:forEach var="num" begin="${pageMake.startPage}" end="${pageMake.endPage}">
-                    			<li><a href="#" onclick="paging(${num})" class="deactive">${num}</a></li>
+                    			<li><a onclick="paging(${num})" class="deactive">${num}</a></li>
                 			</c:forEach>
                 			<!-- 다음페이지 버튼 -->
                 			<c:if test="${pageMake.next}">

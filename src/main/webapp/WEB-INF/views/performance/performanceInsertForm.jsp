@@ -4,7 +4,7 @@
 <body id="fluidGridSystem">
 	<div id="layout" class="full">
 		<div class="under_header">
-			<img src="${resources}/images/assets/breadcrumbs10.png" alt="#">
+			<img src="${resources}/images/assets/breadcrumbs1.png" alt="#">
 		</div>
 		<!-- under header -->
 

@@ -21,8 +21,6 @@ import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.Auth;
 import com.munhwa.prj.member.vo.MemberVO;
-import com.munhwa.prj.news.service.NewsService;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

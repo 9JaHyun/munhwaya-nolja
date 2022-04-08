@@ -54,12 +54,13 @@ public class PerformanceController {
     }
     
     @RequestMapping("/performanceSelect.do")
-    public String performanceSelect(PerformanceVO vo, Model model) {
+    public String performanceSelect(@LoginUser SessionUser user, PerformanceVO vo, Model model) {
     	vo = performanceDao.performanceSelect(vo);
     	Map<String, Object> paramMap = new HashMap<>();
     	paramMap.put("v_per_id", vo.getId());
     	//int n = performanceDao.performanceUpdate(paramMap);
     	model.addAttribute("performance", vo);
+    	model.addAttribute("mileage", user.getMileage());
     	return "performance/performanceSelect";
     }
 
