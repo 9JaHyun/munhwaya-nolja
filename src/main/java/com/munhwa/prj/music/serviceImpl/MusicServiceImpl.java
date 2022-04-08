@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.music.mapper.MusicMapper;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.vo.MusicVO;
@@ -27,8 +28,8 @@ public class MusicServiceImpl implements MusicService{
 	}
 	
 	@Override
-	public List<MusicVO> musicPersonalList(String id) {
-		return map.musicPersonalList(id);
+	public List<MusicVO> musicPersonalList(String id, Criteria cri) {
+		return map.musicPersonalList(id,cri);
 	}
 	
 	@Override
@@ -89,6 +90,11 @@ public class MusicServiceImpl implements MusicService{
 	@Override
 	public List<MusicVO> musicSelectListByMusicId(Map<String, List<Integer>> paramMap) {
 		return map.musicSelectListByMusicId(paramMap);
+	}
+
+	@Override
+	public int getCountByList(int id) {
+		return map.getCountByList(id);
 	}
 
 

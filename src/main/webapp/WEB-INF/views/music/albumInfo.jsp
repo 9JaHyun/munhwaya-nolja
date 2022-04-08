@@ -41,7 +41,7 @@
 						<div class="products shop clearfix">
 						<div class="clearfix mbs">
 							<div class="grid_6">
-								<img src="resources/images/bg/musicBg3.jpg" alt="#">
+								<img src="api/picture/${selectAlbum.picture }" alt="#">
 							</div>
 							<!-- grid6 -->
 							<div class="grid_6">
@@ -103,7 +103,7 @@
 														<td style="display:none;"><input name="musicIdList" value="${music.id }"></td>
 														<td class="product-thumbnail" style="width:70px;">
 															<a href="streaming?id=${music.id }">
-																<img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;">
+																<img class="img1" src="api/picture/${music.picture }" alt="#" style="margin: 10px 0px 10px 0px;">
 															</a>
 														</td>
 														<td  class="product-name" style="vertical-align:middle;">

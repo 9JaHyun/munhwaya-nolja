@@ -15,6 +15,7 @@
 		<result property="writer" column="WRITER"/>
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
+		<result property="picture" column="PICTURE"/>
 	</resultMap>
 
 	<select id="musicSelectList" resultMap="musicResultMap">
@@ -30,17 +31,31 @@
 		ORDER BY LIKE_IT DESC
 	</select>
 	
-	<select id="musicPersonalList" parameterType="String" resultMap="musicResultMap">
-		SELECT *
-		FROM MUSIC
-		WHERE GENRE=(SELECT GENRE
-					FROM MEMBER
-					WHERE ID=#{id})
-		ORDER BY LIKE_IT DESC
+	<select id="musicPersonalList" resultMap="musicResultMap">
+		<![CDATA[
+		SELECT id, picture, title, art_name, like_it
+		from (SELECT 
+        	rownum as rn,
+        	id, picture, title, art_name, like_it
+			FROM MUSIC
+			WHERE GENRE=(SELECT GENRE
+						FROM MEMBER
+						WHERE ID=#{id})
+			ORDER BY LIKE_IT DESC)
+	        where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	        and rn <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
 	</select>
 	
+	<select id="getCountByList" resultType="int">
+	  <![CDATA[
+	      select count(id)
+	      from music
+	      where id < #{id}
+      ]]>
+	</select>
 	<select id="musicSelectByTitle" parameterType="String" resultType="com.munhwa.prj.music.vo.SearchVO">
-		SELECT m.ID as musicId, m.TITLE as musicTitle, m.ART_NAME as musicArtistName, m.FILE_NAME as musicImage, 
+		SELECT m.ID as musicId, m.TITLE as musicTitle, m.ART_NAME as musicArtistName, m.FILE_ID as musicMp3, a.PICTURE as musicImage
 			   a.ID as albumId, a.ALB_NAME as albumTitle, a.ART_NAME as albumArtistName, a.PICTURE as albumImage
 		FROM MUSIC m 
 		JOIN ALBUM a 
@@ -98,24 +113,6 @@
 		AND ART_NAME = #{artName)
 	</select>
 	
-	<insert id="musicInsert" parameterType="com.munhwa.prj.music.vo.MusicVO">
-		INSERT INTO MUSIC
-		VALUES(MUSIC_SEQ.NEXTVAL, 
-			   #{artName}, 
-			   #{genre}, 
-			   #{lyric},
-			   #{likeIt},
-			   #{fileName},
-			   #{title},
-			   #{price},
-			   #{albumId},
-			   #{time},
-			   #{writer},
-			   #{composing},
-			   #{arrangement}
-			   )
-	</insert>
-	
 	<update id="updateLike" statementType = "CALLABLE" parameterType="map" >
 		<![CDATA[
 			{ call updatelike (
@@ -125,14 +122,5 @@
 			)}
 		]]>
 	</update>
-	
-	<update id="musicUpdate" parameterType="com.munhwa.prj.music.vo.MusicVO">
-		UPDATE MUSIC
-	</update>
-	
-	<delete id="musicDelete" parameterType="com.munhwa.prj.music.vo.MusicVO">
-		DELETE FROM MUSIC
-		WHERE ID = #{id}
-	</delete>
 	
 </mapper>

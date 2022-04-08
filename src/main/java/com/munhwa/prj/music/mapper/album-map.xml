@@ -61,28 +61,4 @@
                                  AND ROWNUM=1))
 	</select>
 	
-	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO"><!-- 컬럼명 -->
-		INSERT INTO ALBUM
-		VALUES(ALBUM_SEQ.NEXTVAL, 
-			   #{albName}, 
-			   #{artName}, 
-			   #{releaseAt},
-			   #{genre},
-			   #{content},
-			   #{picture},
-			   #{artistId},
-			   #{score},
-			   #{hit}
-			   )
-	</insert>
-	
-	<update id="albumUpdate" parameterType="com.munhwa.prj.music.vo.AlbumVO">
-		UPDATE ALBUM
-	</update>
-	
-	<delete id="albumDelete" parameterType="com.munhwa.prj.music.vo.AlbumVO">
-		DELETE FROM ALBUM
-		WHERE ID = #{id}
-	</delete>
-	
 </mapper>

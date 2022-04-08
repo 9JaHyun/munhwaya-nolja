@@ -10,6 +10,7 @@ public class SearchVO {
 	private int musicId;
 	private String musicTitle;
 	private String musicArtistName;
+	private String musicMp3;
 	private String musicImage;
 	
 	// albumVO 정보

@@ -15,6 +15,9 @@ public interface WishlistMapper {
 	// 위시리스트 곡 리스트
 	List<WishlistVO> wishlistMusicList(@Param("memberId") String memberId, @Param("wishlistId") String wishlistId);
 	
+	//위시리스트 생성
+	int createWishList(WishlistVO vo);
+	
   // 위시리스트 단건 추가
 	public int insertWishlist(@Param("musicId") int musicId, @Param("wishId") int wishId);
 
@@ -26,4 +29,7 @@ public interface WishlistMapper {
 	
 	// 위시리스트 곡 삭제
 	int deleteWishlistMusic(@Param("musicId") int musicId, @Param("wishId") int wishId);
+	
+	//위시리스트 생성
+	int createWishList(Map<String, Object> paramMap);
 }

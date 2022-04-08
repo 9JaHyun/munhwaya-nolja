@@ -43,7 +43,7 @@
 								<div class="video-grid">
 								<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
 									<a href="streaming?id=${music.musicId }" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
+										<img src="api/picture/${music.picture }" alt="#">
 										<span><strong>${music.musicTitle }</strong>${music.musicArtistName }</span>
 									</a>
 								</c:forEach>
@@ -72,7 +72,7 @@
 								<div class="video-grid">
 								<c:forEach var="album" items="${musicSelectListByTitle}" begin="0" end="7">
 									<a class="grid_3" href="albumInfo?id=${album.albumId }">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
+										<img src="api/picture/${album.picture }" alt="#">
 										<span><strong>${album.albumTitle }</strong>${album.albumArtistName }</span>
 									</a>
 								<%-- <form action="#" method="post">

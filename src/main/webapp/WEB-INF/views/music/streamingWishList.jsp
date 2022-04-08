@@ -78,7 +78,7 @@ ${musicSelectListByWishList[0].lyric}
 							<li id="Latest" class="active">
 								<div class="video-grid">
 									<a href="albumInfo?id=${albumSelectByWishList.id }" class="grid_3">
-										<img id="albImg" src="resources/images/bg/musicBg3.jpg" alt="#">
+										<img id="albImg" src="api/picture/${albumSelectByWishList.picture }" alt="#">
 										<span><strong id="albName"> ${albumSelectByWishList.albName }</strong><span id="artName">${albumSelectByWishList.artName }</span></span>
 									</a>
 								</div><!-- video grid -->
@@ -116,14 +116,14 @@ function pushList(result) {
 					composing: '${music.composing}',
 					arrangement: '${music.arrangement}',
 					musicId: '${music.id}',
-					mp3 : 'filetest/'+ fileName,
+					mp3 : "/prj/api/file/"+fileName,
 					title : '${music.title}',
 					artist : '${music.artName}',
 					rating: 5,
 					buy:'#',
 					price:'',
 					duration : '${music.time}',
-					cover:'resources/images/bg/musicBg3.jpg'
+					cover:'api/picture/${music.picture }'
 					})
 	} 
 </c:forEach>

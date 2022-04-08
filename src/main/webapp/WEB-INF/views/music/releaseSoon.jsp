@@ -41,7 +41,7 @@
 								<div class="video-grid">
 								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="11">
 									<a href="albumInfo?id=${album.id }" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
+										<img src="api/picture/${album.picture }" alt="#">
 										<span><strong>${album.albName }</strong>${album.artName }</span>
 										<span style="margin:0px;"><fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${album.releaseAt}" /></span>
 									</a>

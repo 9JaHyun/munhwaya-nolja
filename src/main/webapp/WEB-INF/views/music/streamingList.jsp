@@ -77,7 +77,7 @@ ${musicList[0].lyric}
 							<li id="Latest" class="active">
 								<div class="video-grid">
 									<a href="albumInfo?id=${album.id }" class="grid_3">
-										<img id="albImg" src="resources/images/bg/musicBg3.jpg" alt="#">
+										<img id="albImg" src="api/picture/${album.picture }" alt="#">
 										<span><strong id="albName"> ${album.albName }</strong><span id="artName">${album.artName }</span></span>
 									</a>
 								</div><!-- video grid -->
@@ -107,7 +107,7 @@ var myPlaylist = []
 					buy:'#',
 					price:'',
 					duration : '${music.time}',
-					cover:'resources/images/bg/musicBg3.jpg'
+					cover:'api/picture/${music.picture }'
 					})
 </c:forEach>
 jQuery(document).ready(function () {
@@ -173,16 +173,16 @@ function addWishList() {
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white" aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">위시리스트 선택</h4>
       </div>
-      <div class="modal-body def-block">
+      <div id="activeAdd" class="modal-body def-block">
         <c:forEach items="${wishlists}" var="wishlist">
 		<div class="mbf clearfix">
 			<ul>
 				<li>
 					<!-- 위시리스트 이름 -->
-					<div class="toggle-head">
+					<div class="toggle-head" style="padding-bottom:20px;">
 						<h5 style="margin:0px;">
 							${wishlist.name}
-							<button onclick="addWishList()" class="tbutton small" style="margin-left:90%">
+							<button onclick="addWishList()" class="tbutton small" style="float:right;">
 								<span data-wishid="${wishlist.id}">선택</span>
 							</button>
 						</h5>
@@ -193,13 +193,76 @@ function addWishList() {
 	</c:forEach>
       </div>
       <div class="modal-footer def-block">
+        <button class="tbutton small" data-toggle="modal" data-target="#myModal2" data-dismiss="modal" aria-label="Close"><span>위시리스트 생성</span></button>
         <button class="tbutton small" data-dismiss="modal" aria-label="Close"><span>확인</span></button>
       </div>
     </div>
   </div>
 </div>
 	<!-- 위시리스트모달 끝-->
+<!-- 위시리스트 추가모달 -->
+<div class="modal fade def-block" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
+  <div class="modal-dialog ">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white" aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">위시리스트 생성</h4>
+      </div>
+      <div class="modal-body def-block">
+		<div class="mbf clearfix">
+			<ul>
+				<li>
+					<!-- 위시리스트 이름 -->
+					<div class="toggle-head">
+							<input type="text" id="name" name="name" style="width:90%;" placeholder="위시리스트 제목 입력">
+					</div>
+				</li>
+			</ul>
+		</div>
+      </div>
+      <div class="modal-footer def-block">
+        <button type="submit" class="tbutton small" onclick="createWishList()"><span>생성</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+	<!-- 위시리스트 추가모달 끝-->
 <script>
+//위시리스트 생성 버튼 
+function createWishList() {
+	//onclick시 인풋밸류 보내고 위시리스트 DB에 넣고, alert띄우고, input밸류지우기
+	let name = $('#name').val()
+	$.ajax({
+		url : "createWishList",
+        type : "post",
+        data : JSON.stringify({"name" : name}),                   
+        dataType : "json",
+        contentType: 'application/json; charset=utf-8',
+        success : result,
+        error: function(xhr, status, error){
+        	alert("통신실패");
+        }
+	})
+}
+function result(data) {
+	alert('생성이 완료되었습니다.')
+	$('#name').val('')
+	$('#activeAdd').append('<div class="mbf clearfix">'+
+								'<ul id="addLi">'+
+									   '<li>'+
+											'<div class="toggle-head" style="padding-bottom:20px;">'+
+												'<h5 style="margin:0px;">'+
+													data.name+
+													'<button onclick="addWishList()" class="tbutton small" style="float:right;">'+
+														'<span data-wishid="'+data.id+'">선택</span>'+
+													'</button>'+
+												'</h5>'+
+											'</div>'+
+										'</li>'+
+								  '</ul>'+
+							'</div>')	
+}
+
 function change() {
 	//li"track", span"title", span"duration" a"buy" => 각각 마다 다르게 주기
 	let musicId = 0;

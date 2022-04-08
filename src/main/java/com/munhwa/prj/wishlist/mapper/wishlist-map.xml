@@ -19,7 +19,7 @@
 		<result property="genre" column="GENRE"/>
 		<result property="lyric" column="LYRIC"/>
 		<result property="likeIt" column="LIKE_IT"/>
-		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileId" column="FILE_ID"/>
 		<result property="title" column="TITLE"/>
 		<result property="price" column="PRICE"/>
 		<result property="albumId" column="ALBUM_ID"/>
@@ -27,6 +27,7 @@
 		<result property="writer" column="WRITER"/>
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
+		<result property="picture" column="PICTURE"/>
 	</resultMap>
 
 	<!-- 위시리스트 리스트 -->
@@ -42,6 +43,17 @@
 	DELETE FROM WISHLIST
 	WHERE ID = #{id}
 	</delete>
+	
+	<!-- 위시리스트 생성 -->
+	<insert id="createWishList" statementType = "CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call createwishlist (
+			#{v_name, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{p_id, mode=OUT, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
+	</insert>
 
 	<!-- 위시리스트 곡 리스트 -->
 	<select id="wishlistMusicList" parameterType="String" resultMap="musicResultMap" >

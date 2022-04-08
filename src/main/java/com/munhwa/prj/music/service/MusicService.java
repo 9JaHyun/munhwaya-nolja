@@ -3,13 +3,14 @@ package com.munhwa.prj.music.service;
 import java.util.List;
 import java.util.Map;
 
+import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.music.vo.SearchVO;
 
 public interface MusicService {
 	List<MusicVO> musicSelectList();
 	List<MusicVO> musicSelectListByGenre(String genre);
-	List<MusicVO> musicPersonalList(String id);
+	List<MusicVO> musicPersonalList(String id, Criteria cri);
 	List<SearchVO> musicSelectByTitle(String title);
 	List<MusicVO> musicSelectByAlBum(int id);
 	List<MusicVO> musicSelectListByPurchase(String id);
@@ -25,4 +26,6 @@ public interface MusicService {
 	int musicInsert(MusicVO vo);
 	int musicUpdate(MusicVO vo);
 	int musicDelete(MusicVO vo);
+	
+	int getCountByList(int id);
 }

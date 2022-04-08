@@ -1,6 +1,7 @@
 package com.munhwa.prj.music.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ import com.munhwa.prj.common.entity.UploadFile;
 import com.munhwa.prj.common.entity.UploadFileVO;
 import com.munhwa.prj.common.service.FileUtils;
 import com.munhwa.prj.common.service.UploadFileService;
+import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.vo.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.music.service.AlbumService;
@@ -27,7 +30,7 @@ import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.AlbumVO;
 import com.munhwa.prj.music.vo.MusicVO;
-import com.munhwa.prj.music.vo.PurchaseVO;
+import com.munhwa.prj.music.web.dto.MusicChartDto;
 import com.munhwa.prj.wishlist.service.WishlistService;
 
 @Controller
@@ -44,7 +47,7 @@ public class MusicController {
 	private UploadFileService uploadService;
 
 	@GetMapping("/musicMain")
-	public String musicMain(@LoginUser SessionUser user,  Model model) {
+	public String musicMain(@LoginUser SessionUser user,  Model model, Criteria cri) {
 		/*
 		 * Map<Integer, CartVO> map = (Map<Integer, cart>) session.getAttribute("cart");
 		 * map.set(musicVO.getId(), musicVO) session.addAttribue("cart", map)
@@ -57,7 +60,7 @@ public class MusicController {
 
 		model.addAttribute("musicChartList", musicDAO.musicSelectList());// 갯수지정
 		model.addAttribute("releaseSoonAlbumList", albumDAO.albumSelectListByRelease());// 갯수지정
-		model.addAttribute("musicPersonalList", musicDAO.musicPersonalList(id));
+		model.addAttribute("musicPersonalList", musicDAO.musicPersonalList(id,cri));
 		
 		return "music/musicMain";
 	}
@@ -83,11 +86,11 @@ public class MusicController {
 
 	@GetMapping("/chart")
 	public String chart(@LoginUser SessionUser user, Model model) {
-		List<PurchaseVO> list = purchaseDao.purchaseSelectList(user.getId());
+//		List<PurchaseVO> list = purchaseDao.purchaseSelectList(user.getId());
 //		해당 회원이 구매한 음원 목록
 //		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
 //		
-//		List<MusicChartDto> chartList = new ArrayList<>();
+		List<MusicChartDto> chartList = new ArrayList<>();
 //		
 //		for(MusicVO vo : list) {
 //			MusicChartDto dto = new MusicChartDto(vo);
@@ -103,7 +106,7 @@ public class MusicController {
 //			chartList.add(dto);
 //		}
 		
-		model.addAttribute("musicChartList", list);// 갯수지정
+		model.addAttribute("musicChartList", chartList);// 갯수지정
 		return "music/chart";
 	}
 
@@ -154,9 +157,13 @@ public class MusicController {
 	}
 	
 	@GetMapping("/personalResult")
-	public String personalResult(Model model, @LoginUser SessionUser user) {
+	public String personalResult(Model model, @LoginUser SessionUser user, Criteria cri) {
 		String id = user.getId();
-		model.addAttribute("musicPersonalList", musicDAO.musicPersonalList(id));
+		List<MusicVO> list = musicDAO.musicPersonalList(id,cri);
+ 		model.addAttribute("musicPersonalList", list);
+		  int total = musicDAO.getCountByList(21);
+	      PageDTO pageMake = new PageDTO(cri, total);
+	      model.addAttribute("pageMaker", pageMake);
 		return "music/personalResult";
 	}
 

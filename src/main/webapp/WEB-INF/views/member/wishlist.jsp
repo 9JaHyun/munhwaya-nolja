@@ -43,7 +43,7 @@
 						<div
 							style="position: absolute; float: left; left: 520px; bottom: -5px;">
 							<!-- 위시리스트 재생 버튼 (링크 넣어야함) -->
-							<a href="#"><i class="icon-play-sign"
+							<a href="streamingWishList?id=${wishlist.id }"><i class="icon-play-sign"
 								style="font-size: 35px; float: right;"></i></a>
 						</div>
 					</div>

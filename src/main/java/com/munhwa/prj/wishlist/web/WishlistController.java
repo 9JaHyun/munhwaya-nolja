@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,4 +75,19 @@ public class WishlistController {
    			wishlistDao.insertWishlist2(paramMap);
    		}	
    	}
-}
+   	
+   	@ResponseBody
+   	@PostMapping("createWishList") 
+   	public WishlistVO addWishList2(@RequestBody WishlistVO vo, @LoginUser SessionUser user){
+   		Map<String, Object> paramMap = new HashMap<>();
+   		paramMap.put("v_name", vo.getName());
+		paramMap.put("v_member_id", user.getId());
+		paramMap.put("p_id", 0);
+		wishlistDao.createWishList(paramMap);
+		
+		int id = (int)paramMap.get("p_id");
+		vo.setId(id); 
+		
+   		return vo;
+   		}	
+   	}

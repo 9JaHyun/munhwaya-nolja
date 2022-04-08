@@ -44,9 +44,10 @@
 		<div class="row row-fluid clearfix mbf">
 				<div class="posts">
 					<div class="def-block">
-						<h4> 내가 구입한 음원 </h4><span class="liner"></span>
+						<h4> 퍼스널추천 리스트 </h4><span class="liner"></span>
 						<div class="products shop clearfix">
 							<div class="grid_12">
+								<form action="#" method="post">
 									<div class="bag_table">
 										<table class="shop_table footable tablet footable-loaded" style="width:100%;">
 											<thead>
@@ -54,33 +55,36 @@
 													<th></th>
 													<th style="width: 300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
-													<th><h4>결제한 가격</h4></th>
+													<th><h4>좋아요</h4></th>
 													<th><h4>다운로드</h4></th>
 												</tr>
+											</thead>
 											<tbody>
-											<c:forEach var="music" items="${purchasedList}">
-												<tr class="cart_table_item" style="text-align: center; font-size:medium;">
+												<c:forEach var="music" items="${musicPersonalList}" begin="0" end="19" varStatus="status">
+												<tr class="cart_table_item" style="text-align: center; font-size:medium ;">
 													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="api/picture/${music.picture }" alt="#" style="margin: 10px 0px 10px 0px;"></a>
+													<a href="streaming?id=${music.id }"><img class="img1" src="api/picture/${music.picture }" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>
 													<td class="product-name">
-														${music.title}
+														${music.title }
 													</td>
 													<td class="product-name">
-														${music.artName}
+														${music.artName }
 													</td>
 													<td class="product-name">
-														${music.price}
+														${music.likeIt }
 													</td>
-													
 													<td class="product-name">
-														<button type="button" onclick="location.href='api/attach/${music.fileId}'" class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
+														<button type="button" onclick="addCart()" class="tbutton medium" style="font-size:10px">
+															<span  data-musicid="${music.id }">구매</span>
+														</button>
 													</td>
-												</tr>		
-											</c:forEach>
+												</tr>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div><!-- bag table -->
+								</form><!-- end form -->
 							</div><!-- grid12 -->
 						</div><!-- products -->
 
@@ -90,5 +94,29 @@
 			<!-- 크기지정  post 끝-->
 			<!-- 왼쪽 상단메인 끝 -->
 	</div>
-		<!-- content끝 -->
-	
+	<!-- content끝 -->
+<script>
+    function addCart() {
+        var id = $(event.target).data("musicid")
+
+        var confirm1 = confirm('장바구니에 담으시겠습니까?')
+        if (confirm1) {
+            $.ajax({
+                url: "cart/test/add",
+                type: "post",
+                data: {"id": id},
+                dataType: "text",
+                success: function (data) {
+                    console.log(data);
+                    alert("장바구니에 담았습니다.");
+                },
+                error: function (xhr, status, error) {
+                    alert("통신실패");
+                }
+            })
+
+        } else {
+            alert("삭제취소")
+        }
+    }
+</script>

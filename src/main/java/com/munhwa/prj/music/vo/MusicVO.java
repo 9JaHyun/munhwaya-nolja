@@ -19,4 +19,5 @@ public class MusicVO {
 	private String writer;
 	private String composing;
 	private String arrangement;
+	private String picture;
 }

@@ -51,7 +51,7 @@
 									<c:forEach var="music" items="${musicRnBList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:60; height:60;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -73,7 +73,7 @@
 									<c:forEach var="music" items="${musicRapList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:60; height:60;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -95,7 +95,7 @@
 									<c:forEach var="music" items="${musicDanceList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:60; height:60;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -117,7 +117,7 @@
 										<c:forEach var="music" items="${musicBalladList}" begin="0" end="15">
 											<li class="grid_6">
 												<a class="m-thumbnail" href="streaming?id=${music.id }">
-													<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+													<img style="width:60; height:60;" src="api/picture/${music.picture }" alt="#">
 												</a>
 												<h3>
 													<a href="streaming?id=${music.id }">${music.title }</a>
