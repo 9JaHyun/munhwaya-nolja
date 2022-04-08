@@ -67,7 +67,9 @@ public class MemberController {
     // 프로필 업데이트
     @PostMapping("updateProfile.do")
     public String updateProfile(MemberVO vo, MultipartFile file) throws IOException {
-    	if (file != null) {
+    	System.out.println(file);
+    	
+    	if (file.getSize() != 0) {
     		UploadFile upload = fileUtils.storeFile(file);
     		vo.setOname(upload.getOriginalFileName());
     		vo.setSname(upload.getStoredFileName());

@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <style>
-/* .filebox .upload-name {
+.filebox .upload-name {
 	display: inline-block;
 	height: 30px;
 	vertical-align: middle;
@@ -29,11 +32,8 @@
 	padding: 0;
 	overflow: hidden;
 	border: 0;
-} */
-
-#file {
-    visibility: hidden;
 }
+
 </style>
 
 <div align="right" style="margin-bottom: 30px;">
@@ -43,20 +43,30 @@
 <form method="post" id="frm" action="updateProfile.do?id=${member.id}" enctype="multipart/form-data">
 	<div align="center" style="margin-top: 80px;">
 		<!-- 변경할 프로필사진 썸네일 -->
-		<c:choose>
-			<c:when test="${member.sname eq null}">
-				<img id="image_container" src="resources/music/1.jpg" alt="image"
-					style="border-radius: 70%; overflow: hidden; height: 180px; width: 180px;"><br><br>	
-			</c:when>
-			<c:otherwise>
-				<img id="image_container" src="api/picture/${member.sname}" alt="image"
-					style="border-radius: 70%; overflow: hidden; height: 180px; width: 180px;"><br><br>		
-			</c:otherwise>
-		</c:choose>
+			<c:choose>
+				<c:when test="${member.sname eq null}">
+					<img id="image_container" src="resources/images/basic_profile.png" alt="image"
+						style="border-radius: 70%; overflow: hidden; height: 180px; width: 180px;"><br><br>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${fn:indexOf(member.sname, 'https://') != -1}">
+							<img id="image_container" src="${member.sname}" alt="image"
+								style="border-radius: 70%; overflow: hidden; height: 180px; width: 180px;"><br><br>
+						</c:when>
+						<c:otherwise>
+							<img id="image_container" src="api/picture/${member.sname}" alt="image"
+								style="border-radius: 70%; overflow: hidden; height: 180px; width: 180px;"><br><br>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
 		<!-- 변경할 프로필사진 선택 -->
 		<div class="filebox">
-			<input class="upload-name" id="image" name="image" style="text-align: center;">
-			<label for="file">프로필사진 선택</label> 
+			<input class="upload-name" id="imageName" name="imageName" value="${member.oname}" readonly="readonly" style="text-align: center; cursor: default;">
+				<label for="file">
+					프로필사진 선택
+				</label> 
 			<input type="file" id="file" name="file" accept="image/*" onchange="setThumbnail(event);">
 		</div>
 	</div>
@@ -73,6 +83,8 @@
 
 <script>
 	function setThumbnail(event) {
+		
+		// 썸네일 표시
 		var reader = new FileReader();
 		reader.onload = function(event) {
 			var img = document.getElementById('image_container');
@@ -80,6 +92,10 @@
 		};
 		reader.readAsDataURL(event.target.files[0]);
 		
+		// 현재 파일명 -> 변경할 파일명
+		var afterName = event.target.files[0].name;
+		var beforeName = $("#imageName");
+		beforeName.val(afterName);
 		
 	}
 	

@@ -16,6 +16,7 @@
 						<button class="tbutton color2 small"
 						id="nickChk" name="nickChk" value="N" onclick="nickChkFn();"><span>닉네임 중복확인</span></button> 
 					</div>
+				<!-- 회원가입폼 -->
 				<form method="post" id="frm" action="signup.do" onsubmit="return send()">
 					<div class="clearfix">
 						<div>
@@ -56,19 +57,17 @@
 						
 
 					</div>
+					<!-- 가입 버튼 -->
 					<input style="padding: 5px 10px 5px 10px;" 
 					type="submit" value="가입" class="sign-btn tbutton small"/>
-
 				</form>
-				<!-- end form -->
 			</div>
 			<img src="resources/images/assets/signupimg.png" alt="signup-img" 
 			style="float: left; width: 449px; height: 341px; margin: 40px 0px 40px 40px;">
 		</div>
 	</div>
 </div>
-<!-- end page content -->
-
+\
 <script>
 	function send() {
 		if(idChk.value == "Y" && nickChk.value == "Y") {

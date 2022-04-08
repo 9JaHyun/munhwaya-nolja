@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.munhwa.prj.wishlist.mapper.WishlistMapper;
 import com.munhwa.prj.wishlist.service.WishlistService;
+import com.munhwa.prj.wishlist.vo.WishlistMusicVO;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
 
 @Repository("wishlistDao")
@@ -36,13 +37,19 @@ public class WishlistServiceImpl implements WishlistService {
 		return map.insertWishlist(musicId, wishId);
 	}
 
-  @Override
+	@Override
 	public int insertWishlist2(Map<String, Integer> param) {
 		return map.insertWishlist2(param);
 	}
 
-  @Override
+	@Override
 	public int deleteWishlistMusic(int musicId, int wishId) {
 		return map.deleteWishlistMusic(musicId, wishId);
 	}
+
+	@Override
+	public int addWishlist(WishlistVO vo) {
+		return map.addWishlist(vo);
+	}
+
 }

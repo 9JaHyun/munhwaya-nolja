@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 <div align="right" style="margin-bottom: 50px;">
 	<a href="memberChangeInfo.do">회원정보 변경 ></a>
@@ -52,7 +53,7 @@
 		var tel = $('#tel').val();
 		var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
 		if (!tel.match(regPhone)) {
-		 alert("적절하지 않은 휴대폰번호 양식입니다.");
+		 swal("적절하지 않은 휴대폰번호 양식입니다.");		 
 		 return false;
 		}else {
 		 return true;

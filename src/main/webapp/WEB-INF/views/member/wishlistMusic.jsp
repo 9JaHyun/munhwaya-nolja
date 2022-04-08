@@ -33,7 +33,7 @@
 			<tbody>
 				<c:forEach items="${wishlistMusic}" var="wishlistMusic">
 					<tr class="js-load">
-						<td>${wishlistMusic.title}</td>
+						<td><a href="streaming?id=${wishlistMusic.id}">${wishlistMusic.title}</a></td>
 						<td style="padding-right: 30px;">${wishlistMusic.artName}</td>
 						<td style="padding-right: 20px;"><i class="icon-remove"
 							id="${wishlistMusic.id}"

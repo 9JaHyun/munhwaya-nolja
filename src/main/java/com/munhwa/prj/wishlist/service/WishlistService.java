@@ -3,6 +3,7 @@ package com.munhwa.prj.wishlist.service;
 import java.util.List;
 import java.util.Map;
 
+import com.munhwa.prj.wishlist.vo.WishlistMusicVO;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
 
 public interface WishlistService {
@@ -24,4 +25,9 @@ public interface WishlistService {
 	public int insertWishlist(int musicId, int wishId);
 
 	public int insertWishlist2(Map<String, Integer> param);
+	
+	// 마이페이지 - 위시리스트 추가
+	int addWishlist(WishlistVO vo);
+	
+	
 }
