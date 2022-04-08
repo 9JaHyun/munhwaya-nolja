@@ -29,8 +29,6 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     // 여기서는 세션에서 객체를 가져옴.
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        SessionUser vo = (SessionUser) httpSession.getAttribute("member");
-        httpSession.setAttribute("member", new SessionUser(memberMapper.selectByMemberId(vo.getId())));
         return httpSession.getAttribute("member");
     }
 }

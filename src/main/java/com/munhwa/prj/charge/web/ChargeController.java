@@ -4,6 +4,7 @@ package com.munhwa.prj.charge.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,23 +24,23 @@ public class ChargeController {
 	@Autowired
 	MemberService memberDao;
 		
-	
+	@Transactional
 	@PostMapping("/charge")
 	@ResponseBody
-	public MemberVO plusMileage(@LoginUser SessionUser user ,MemberVO vo, ChargeVO cvo, Model model) {
+	public MemberVO plusMileage(@LoginUser SessionUser user, MemberVO vo, ChargeVO cvo, Model model) {
 		String memberId = user.getId();
 		model.addAttribute("memberId", memberId);
 		vo.setId(memberId);
 		memberDao.plusMileage(vo);
 		System.out.println(vo);
-			insertCharge(cvo);
+		chargeDao.insertCharge(cvo);
 		user.setMileage(user.getMileage() + cvo.getMileage());
 		return vo;
 	}
 	
-	public ChargeVO insertCharge(ChargeVO vo) {
-		chargeDao.insertCharge(vo);
-		return vo;
-	}
+//	public ChargeVO insertCharge(ChargeVO vo) {
+//		chargeDao.insertCharge(vo);
+//		return vo;
+//	}
 	
 }	

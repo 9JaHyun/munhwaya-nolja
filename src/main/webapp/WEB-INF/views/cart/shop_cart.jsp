@@ -3,20 +3,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <script src="./scripts/jquery-3.2.1.min.js"></script>
+<style>
+td {
+	vertical-align: middle; 
+}
+
+tr {
+	margin-bottom:20px;
+}
+</style>
 <div id="layout" class="full">
 
     <div class="under_header">
-        <img src="${resources}/images/assets/breadcrumbs10.png" alt="#">
+        <img src="${resources}/images/assets/breadcrumbs1.png" alt="#">
     </div><!-- under header -->
 
     <div class="page-content back_to_up">
         <div class="row clearfix mb">
             <div class="breadcrumbIn">
                 <ul>
-                    <li><a href="index.html" class="toptip" title="Homepage"> <i
+                    <li><a href="home.do" class="toptip" title="Homepage"> <i
                             class="icon-home"></i> </a></li>
-                    <li><a href="shop.html"> Shop </a></li>
-                    <li> SHOPPING BAG</li>
+                    <li><a href="chart"> 차트 순위 </a></li>
+                    <li>쇼핑 카트</li>
                 </ul>
             </div><!-- breadcrumb -->
         </div>
@@ -30,34 +39,33 @@
                         <div class="grid_12">
                             <form action="#" method="post">
                                 <div class="bag_table">
-                                    <table class="shop_table footable tablet footable-loaded" style="width:100%"
+                                    <table id="cartTable"class="shop_table footable tablet footable-loaded" style="width:100%"
                                            cellspacing="0">
                                         <thead>
-                                        <tr>
-                                            <th data-hide="phone" class="product-thumbnail">&nbsp;
+                                        <tr style="height:50px; color:white;">
+                                            <th data-hide="phone" class="product-thumbnail" style="width:100px;">&nbsp;
                                             </th>
-                                            <th class="product-song">노래</th>
+                                            <th class="product-song">곡 제목</th>
                                             <th class="product-name">아티스트</th>
                                             <th class="product-subtotal">가격</th>
-                                            <th class="product-remove">&nbsp;</th>
+                                            <th class="product-remove">삭제</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${carts }" var="cart">
-                                        <tr class="cart_table_item">
+                                        <tr class="cart_table_item" style="height:50px; color:white;">
                                             <td class="product-thumbnail" >
-                                                <a href="#"><img src="images/assets/shop/thumb2.jpg"
-                                                                 alt="#" name="carts"></a>
+                                                <a href="#"><img src="resources/images/bg/musicBg3.jpg"
+                                                                 alt="#" name="carts"  style="width:100px; height:100px; object-fit: cover;"></a>
                                             </td>
-                                            <td class="product-name">
+                                            <td class="product-name" style="text-align:center;">
                                                 <div class="title" id="title">${cart.value.title}</div>
-                                                <br><br>
                                             </td>
-                                        	<td class="product-name">
+                                        	<td class="product-name" style="text-align:center;">
 												<div class="artName" id="artName">${cart.value.artName }</div>	                                        	
 											</td>
 
-                                            <td class="product-name">
+                                            <td class="product-name" style="text-align:center;">
                                                 <div class="price" id="price">${cart.value.price}</div>
                                             </td>
 
@@ -165,8 +173,10 @@ function deleteCart(n) {
 }
 
 function payCart() {
+ 	if(${mileage} < document.getElementById("itemTotalPrice").innerHTML) {
+	alert("잔액이 부족합니다.")		
+} else {
 	let list = [];
-	
 	$("img[name='carts']").each(function(i){
 	var tr = $(this).parent().parent().parent();
 	var td = $(tr).children();
@@ -199,5 +209,5 @@ function payCart() {
 	            }
 	        });
   
-    }
+    }}
 </script>

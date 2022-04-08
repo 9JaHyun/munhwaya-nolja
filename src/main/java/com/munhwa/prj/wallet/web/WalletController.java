@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,8 +53,8 @@ public class WalletController {
 	@Autowired
 	private PurchaseService purchaseDao;
 	
-	
 	//카트 결제
+	@Transactional
 	@PostMapping("/payCart")
 	@ResponseBody
 	public String payCart(@LoginUser SessionUser user, @RequestBody List<MusicVO> musics) {
@@ -69,9 +70,9 @@ public class WalletController {
 		 */
 		int sum = 0;
 		List<UsageVO> resultUsageList = new ArrayList<>();
-		List<MemberVO> resultListByMember = new ArrayList<>();
 		List<PurchaseVO> resultPurchaseList = new ArrayList<>();
 		List<ProfitVO> resultProfitByArtist = new ArrayList<>();
+		Map<String,Object> param = new HashMap<String, Object>();
 		for(MusicVO music : musics) {
 			sum += music.getPrice();
 			System.out.println("뮤직아이디" + music.getId());
@@ -83,13 +84,7 @@ public class WalletController {
 			usageVO.setPks(music.getId());
 			
 			resultUsageList.add(usageVO);
-			
-			MemberVO memberVO = new MemberVO();
-			memberVO.setId(memberId);
-			memberVO.setMileage(music.getPrice());
-			
-			resultListByMember.add(memberVO);
-            
+			            
 			PurchaseVO purchaseVO = new PurchaseVO();
 			purchaseVO.setMusicId(music.getId());
 			purchaseVO.setMemberId(memberId);
@@ -103,39 +98,25 @@ public class WalletController {
 			profitVO.setId(music.getId());
 			profitVO.setPks(music.getId());
 			
-			int total = user.getMileage() - music.getPrice();
-			
-			user.setMileage(total);
-			
-			
 			resultProfitByArtist.add(profitVO);
-		}
-			usageDao.insertUsage(resultUsageList);
-			minusMileage(resultListByMember);
-			insertPurchaseMusic(resultPurchaseList);
-			insertProfitHistory(resultProfitByArtist);
+								
+			param.put("v_member_id", memberId);
+			param.put("v_mileage", music.getPrice());
+			param.put("v_title", music.getTitle());
+		}	
 
-			user.getCart().clear();
+			// 사용내역 남기기 
+			usageDao.insertUsage(resultUsageList);
+			// 구매한 음원리스트에 담기
+			purchaseDao.purchaseInsert(resultPurchaseList);
+			// 곡 구매시 아티스트 수익 내역에 찍기
+			profitDao.insertProfit(resultProfitByArtist);
+			// 곡 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저 
+			memberDao.updateMileageMusic(param);
 			
-			return "ok";
-	}
-	
-	// 곡 구매시 회원 마일리지 차감 
-	public List<MemberVO> minusMileage(@RequestBody List<MemberVO> vo) {
-		memberDao.minusMileage(vo);
-		return vo;
-	}
-	
-	// 구매한 음원에 담기
-	public List<PurchaseVO> insertPurchaseMusic(@RequestBody List<PurchaseVO> vo) {
-		purchaseDao.purchaseInsert(vo);
-		return vo;
-	}
-	
-	// 곡 구매시 아티스트 수익 내역에 찍기
-	public List<ProfitVO> insertProfitHistory(@RequestBody List<ProfitVO> vo) {
-		profitDao.insertProfit(vo);
-		return vo;
+			user.getCart().clear();
+			user.setMileage(user.getMileage()-sum);
+			return "success";
 	}
 	
 	

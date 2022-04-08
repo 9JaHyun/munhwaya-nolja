@@ -129,6 +129,39 @@ a:hover {
 	</div>
 </div>
 
+<button class="tbutton small" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>위시리스트 생성</span></button>
+<!-- 위시리스트모달 -->
+<div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white" aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">위시리스트 선택</h4>
+      </div>
+      <div id="activeAdd" class="modal-body def-block">
+      <div class="mbf clearfix">
+         <ul>
+            <li>
+               <!-- 위시리스트 이름 -->
+               <div class="toggle-head">
+                  <h5 style="margin:0px;">
+                     <button onclick="" class="tbutton small" style="margin-left:90%">
+                        <span data-wishid="">선택</span>
+                     </button>
+                  </h5>
+               </div>
+            </li>
+         </ul>
+      </div>
+      </div>
+      <div class="modal-footer def-block">
+        <button class="tbutton small" data-toggle="modal" data-target="#myModal2" data-dismiss="modal" aria-label="Close"><span>위시리스트 생성</span></button>
+        <button class="tbutton small" data-dismiss="modal" aria-label="Close"><span>확인</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+   <!-- 위시리스트모달 끝-->
 
 <!-- def block -->
 <!-- span8 posts -->

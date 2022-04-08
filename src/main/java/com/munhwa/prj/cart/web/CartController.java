@@ -28,7 +28,6 @@ public class CartController {
 	//	@GetMapping("/shop/cart")
 	@RequestMapping("/cart")
 	public String listCart(@LoginUser SessionUser user,  Model model) {
-		@SuppressWarnings("unchecked")
 		Map<Integer, MusicVO> cart = user.getCart();
 		model.addAttribute("carts", cart);
 		model.addAttribute("mileage", user.getMileage());
@@ -36,13 +35,12 @@ public class CartController {
 	}
 
 	@RequestMapping("/cart/test/add")
-	public ResponseEntity<String> addCart(@LoginUser SessionUser user, HttpServletRequest req, @RequestParam int id) {
+	public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam int id) {
 		MusicVO vo = musicDao.musicSelect(id);
 
-		@SuppressWarnings("unchecked")
-		Map<Integer, MusicVO> map = user.getCart();
-		map.put(vo.getId(), vo);
-		user.setCart(map);
+		Map<Integer, MusicVO> cart = user.getCart();
+		cart.put(vo.getId(), vo);
+		user.setCart(cart);
 //		log.info("id={}", vo.getId());
 
 		return ResponseEntity.ok().body("추가 완료");
@@ -51,7 +49,6 @@ public class CartController {
 	@PostMapping("/deleteCart")
 	@ResponseBody
 	public String deleteCart(@LoginUser SessionUser user, MusicVO vo) {
-		@SuppressWarnings("unchecked")
 		Map<Integer, MusicVO> cart = user.getCart();
 		cart.remove((Integer) vo.getId());
 		user.setCart(cart);
