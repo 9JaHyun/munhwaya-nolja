@@ -3,14 +3,20 @@ package com.munhwa.prj.artist.serviceImpl;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,13 +24,13 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.munhwa.prj.artist.web.MessagesDTO;
 import com.munhwa.prj.artist.web.SmsRequest;
 import com.munhwa.prj.artist.web.SmsResponse;
+import com.munhwa.prj.common.service.PropertiesScan;
 
 
 
@@ -32,23 +38,28 @@ import com.munhwa.prj.artist.web.SmsResponse;
 @Transactional
 public class SmsServiceImpl {
 
-    @Value("#{sms['sms.serviceId']}") // ${sms.serviceId}
     private String serviceId;
-    @Value("#{sms['sms.accessKey']}")
     private String accessKey;
-    @Value("#{sms.secretKey']}")
     private String secretKey;
 
-
-    public SmsResponse sendSms(String recipientPhoneNumber, String content) throws JsonProcessingException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, URISyntaxException {
+    public SmsServiceImpl() {
+    	PropertiesScan scan = new PropertiesScan();
+    	Properties smsInfo = scan.readProperties("config/sms.properties");
+        serviceId = smsInfo.getProperty("sms.serviceId");
+        accessKey = smsInfo.getProperty("sms.accessKey");
+        secretKey = smsInfo.getProperty("sms.secretKey");
+	}
+    
+	public SmsResponse sendSms(String recipientPhoneNumber, String content) throws JsonProcessingException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, URISyntaxException {
         Long time = System.currentTimeMillis();
+
         // 메세지 생성
         List<MessagesDTO> messages = new ArrayList<>();
         messages.add(new MessagesDTO(recipientPhoneNumber, content)); // DTO에 들어감 필드 to, content
 
-        SmsRequest smsRequest = new SmsRequest("SMS", "COMM", "82", "발신자 전화번호", "내용", messages);
+        SmsRequest smsRequest = new SmsRequest("SMS", "COMM", "82", "01021771766", "내용", messages);
         
-        // json형태로 변환
+        // json형태로 변환(WEB에 만든 DTO -> JSON 타입으로 변환 후 JSP로 가게함 / JSON 타입은 object에서 값을 읽어 jsp로 보냄)
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonBody = objectMapper.writeValueAsString(smsRequest);
 
@@ -60,15 +71,15 @@ public class SmsServiceImpl {
 
         // signature 서명
         String sig = makeSignature(time); //암호화
-       
+               
         headers.set("x-ncp-apigw-signature-v2", sig); //위 예제의 Body를 Access Key ID와 맵핑되는 Secret Key로 암호화한 서명
         											// HMAC 암호화 알고리즘은 HmacSHA256 사용
 
         HttpEntity<String> body = new HttpEntity<>(jsonBody,headers);
-
+        System.out.println(body.toString());
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        SmsResponse smsResponse = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+this.serviceId+"/messages"), body, SmsResponse.class);
+        SmsResponse smsResponse = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+URLEncoder.encode(this.serviceId, "UTF-8")+"/messages"), body, SmsResponse.class);
 
         return smsResponse;
 
@@ -78,28 +89,29 @@ public class SmsServiceImpl {
         String space = " ";
         String newLine = "\n";
         String method = "POST";
-        String url = "/sms/v2/services/"+ this.serviceId+"/messages";
+        String url = "/sms/v2/services/"+ URLEncoder.encode(this.serviceId, "UTF-8")+"/messages";
         String timestamp = time.toString();
         String accessKey = this.accessKey;
         String secretKey = this.secretKey;
 
-        String message = new StringBuilder()
-                .append(method)
-                .append(space)
-                .append(url)
-                .append(newLine)
-                .append(timestamp)
-                .append(newLine)
-                .append(accessKey)
-                .toString();
+    	String message = new StringBuilder()
+    		.append(method)
+    		.append(space)
+    		.append(url)
+    		.append(newLine)
+    		.append(timestamp)
+    		.append(newLine)
+    		.append(accessKey)
+    		.toString();
 
-        SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(signingKey);
+    	SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
+    	Mac mac = Mac.getInstance("HmacSHA256");
+    	mac.init(signingKey);
 
-        byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
-        String encodeBase64String = Base64.encodeBase64String(rawHmac);
+    	byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
+    	String encodeBase64String = Base64.encodeBase64String(rawHmac);
 
-        return encodeBase64String;
+      return encodeBase64String;
     }
+    
 }

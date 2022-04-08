@@ -6,16 +6,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -114,16 +111,38 @@ private PromotionRequestService promotionRequestDao;
     // 아티스트 승급페이지 본인인증
     @RestController
     @RequiredArgsConstructor
-    public class SmsController {
+    class SmsController {
 
         private final SmsServiceImpl smsServiceImpl;
 
         @PostMapping("/user/sms")
-        public ResponseEntity<SmsResponse> test(@RequestBody ServerRequest request) throws NoSuchAlgorithmException, URISyntaxException, UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
+        public ResponseEntity<SmsResponse> test(String phoneNumber) throws NoSuchAlgorithmException, URISyntaxException, UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
+        	ServerRequest request = new ServerRequest();
+        	request.setRecipientPhoneNumber(phoneNumber);
+        	String randomNumber = createRandomNumber();
+        	request.setContent("인증번호는 " + randomNumber +" 입니다.");
             SmsResponse data = smsServiceImpl.sendSms(request.getRecipientPhoneNumber(), request.getContent());
+            data.setContent(randomNumber);
+            
             return ResponseEntity.ok().body(data);
         }
+        
+        private String createRandomNumber() {
+                Random random = new Random();		//랜덤 함수 선언
+        		int createNum = 0;  			//1자리 난수
+        		String ranNum = ""; 			//1자리 난수 형변환 변수
+                int letter    = 4;			//난수 자릿수:6
+        		String resultNum = "";  		//결과 난수
+        		
+        		for (int i=0; i<letter; i++) { 
+        			createNum = random.nextInt(9);		//0부터 9까지 올 수 있는 1자리 난수 생성
+        			ranNum =  Integer.toString(createNum);  //1자리 난수를 String으로 형변환
+        			resultNum += ranNum;			//생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
+        		}
+        		return resultNum;
+        }
     }
+}
     
 // 
 //    @Bean(name="sms")
@@ -136,5 +155,3 @@ private PromotionRequestService promotionRequestDao;
 //    	return propertiesFactoryBean;
 //    			
 //    }
-    
-}

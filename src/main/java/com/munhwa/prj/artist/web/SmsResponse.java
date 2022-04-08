@@ -14,4 +14,9 @@ public class SmsResponse {
 	private LocalDateTime requestTime;
 	private String statusCode;
 	private String statusName;
+	private String content;
+	
+	public void setContent(String content) {
+		this.content = content;
+	}
 }
