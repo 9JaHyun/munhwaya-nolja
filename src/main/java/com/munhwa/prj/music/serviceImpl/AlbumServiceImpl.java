@@ -59,14 +59,4 @@ public class AlbumServiceImpl implements AlbumService{
 		return map.albumSelectListByRelease();
 	}
 
-	
-
-
-	
-
-
-	
-
-	
-
 }

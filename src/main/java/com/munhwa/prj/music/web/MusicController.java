@@ -1,15 +1,10 @@
 package com.munhwa.prj.music.web;
 
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.music.service.AlbumService;
-import com.munhwa.prj.music.service.MusicService;
-import com.munhwa.prj.music.vo.AlbumVO;
-import com.munhwa.prj.music.vo.MusicVO;
-import com.munhwa.prj.wishlist.service.WishlistService;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +14,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.munhwa.prj.common.entity.UploadFile;
+import com.munhwa.prj.common.entity.UploadFileVO;
+import com.munhwa.prj.common.service.FileUtils;
+import com.munhwa.prj.common.service.UploadFileService;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.music.service.AlbumService;
+import com.munhwa.prj.music.service.MusicService;
+import com.munhwa.prj.music.service.PurchaseService;
+import com.munhwa.prj.music.vo.AlbumVO;
+import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.music.vo.PurchaseVO;
+import com.munhwa.prj.wishlist.service.WishlistService;
 
 @Controller
 public class MusicController {
@@ -28,6 +38,10 @@ public class MusicController {
 	private AlbumService albumDAO;
 	@Autowired
 	private WishlistService wishlistDao;
+	@Autowired
+	private PurchaseService purchaseDao;
+	@Autowired
+	private UploadFileService uploadService;
 
 	@GetMapping("/musicMain")
 	public String musicMain(@LoginUser SessionUser user,  Model model) {
@@ -68,8 +82,28 @@ public class MusicController {
 	}
 
 	@GetMapping("/chart")
-	public String chart(Model model) {
-		model.addAttribute("musicChartList", musicDAO.musicSelectList());// 갯수지정
+	public String chart(@LoginUser SessionUser user, Model model) {
+		List<PurchaseVO> list = purchaseDao.purchaseSelectList(user.getId());
+//		해당 회원이 구매한 음원 목록
+//		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
+//		
+//		List<MusicChartDto> chartList = new ArrayList<>();
+//		
+//		for(MusicVO vo : list) {
+//			MusicChartDto dto = new MusicChartDto(vo);
+//			int ids = dto.getId();
+//			boolean isPurchased = false;
+//			for(int id : musicList) {
+//				if(vo.getId() == id) {
+//					isPurchased = true;
+//					break;
+//				}
+//			}
+//			dto.setPurchase(isPurchased);
+//			chartList.add(dto);
+//		}
+		
+		model.addAttribute("musicChartList", list);// 갯수지정
 		return "music/chart";
 	}
 
@@ -89,21 +123,24 @@ public class MusicController {
 	}
 
 	@GetMapping("/streaming")
-	public String streaming(Model model, int id) {
+	public String streaming(Model model, int id, @LoginUser SessionUser user) {
 		model.addAttribute("musicSelect", musicDAO.musicSelect(id));
 		model.addAttribute("AlbumSelectByMusicId", albumDAO.albumSelectByMusicId(id));
-		model.addAttribute("wishlists", wishlistDao.wishlistList("test0@gmail.com"));
+		model.addAttribute("wishlists", wishlistDao.wishlistList(user.getId()));
 		return "music/streaming";
 	}
 	
 	@RequestMapping("/streamingList")
-	public String streamingList(@RequestParam("musicIdList") List<Integer> musicIdList, Model model) {
+	public String streamingList(@RequestParam("musicIdList") List<Integer> musicIdList, Model model, @LoginUser SessionUser user) {
 		int first = musicIdList.get(0);
 		model.addAttribute("album", albumDAO.albumSelectByMusicId(first));
 		
 		Map<String, List<Integer>> paramMap = new HashMap<>();
 		paramMap.put("musicIdList", musicIdList);
 		model.addAttribute("musicList", musicDAO.musicSelectListByMusicId(paramMap));
+		
+		
+		model.addAttribute("wishlists", wishlistDao.wishlistList(user.getId()));
 		
 		return "music/streamingList";
 	}
@@ -116,11 +153,9 @@ public class MusicController {
 		return "music/streamingWishList";
 	}
 	
-
 	@GetMapping("/personalResult")
 	public String personalResult(Model model, @LoginUser SessionUser user) {
 		String id = user.getId();
-
 		model.addAttribute("musicPersonalList", musicDAO.musicPersonalList(id));
 		return "music/personalResult";
 	}
@@ -131,7 +166,6 @@ public class MusicController {
 		model.addAttribute("musicRapList", musicDAO.musicSelectListByGenre("G03"));
 		model.addAttribute("musicDanceList", musicDAO.musicSelectListByGenre("G02"));
 		model.addAttribute("musicBalladList", musicDAO.musicSelectListByGenre("G01"));
-
 		return "music/genre";
 	}
 	
@@ -155,25 +189,19 @@ public class MusicController {
 	@ResponseBody
 	@GetMapping("/musicSelectByArtName")
 	public MusicVO musicSelectByArtName(@RequestParam String title, @RequestParam String artName) {
-		MusicVO vo = musicDAO.musicSelectByArtName(title, artName );
-		return vo;
+		return musicDAO.musicSelectByArtName(title, artName );
 	}
 	
 	@ResponseBody
 	@GetMapping("/musicSelectBymusicId/{musicId}") 
 	public MusicVO musicList(@PathVariable int musicId, Model model) {
-		MusicVO vo = new MusicVO();
-		vo = musicDAO.musicSelect(musicId);
-		return vo;
+		return musicDAO.musicSelect(musicId);
 	}
 	
 	@ResponseBody
 	@GetMapping("/albumSelectBymusicId/{musicId}") 
 	public AlbumVO albumSelectBymusicId(@PathVariable int musicId, Model model, @LoginUser SessionUser user) {
-		AlbumVO vo = new AlbumVO();
-		vo = albumDAO.albumSelectByMusicId(musicId);
-		String id = user.getId();
-		return vo;
+		return albumDAO.albumSelectByMusicId(musicId);
 	}
 
 	@ResponseBody
@@ -184,14 +212,41 @@ public class MusicController {
 		paramMap.put("v_member_id", id);
 		paramMap.put("v_music_id", musicId);
 		paramMap.put("p_result", 0);
-		
 		musicDAO.updateLike(paramMap);
 		int r = (int) paramMap.get("p_result");
-		
 		if(r==0) {
 			return "좋아요를 취소하셨습니다.";
 		} else {
 			return "좋아요 하셨습니다.";
 		}
 	}
+	
+	@ResponseBody
+	@PostMapping("/upload")
+	public String upload(MultipartFile file) throws IOException {
+		FileUtils utils = new FileUtils();
+		UploadFile uploadFile = utils.storeFile(file);
+		UploadFileVO vo = new UploadFileVO();
+		vo.setOname(uploadFile.getOriginalFileName());
+		vo.setSname(uploadFile.getStoredFileName());		
+		uploadService.save(vo);
+		return "ok";
+	}
+	
+	@ResponseBody
+	@GetMapping("/getFiles/{fileId}")
+	public UploadFileVO getFileSname(@PathVariable int fileId) {
+		UploadFileVO vo = uploadService.findById(fileId);
+		return vo;
+	}
+	
+	@GetMapping("/chicken")
+	public String chicken() {
+		return "music/chicken";
+	}
+	
+	
+	
+	
+	
 }

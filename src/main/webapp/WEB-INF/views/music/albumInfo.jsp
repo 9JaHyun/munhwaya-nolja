@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
 	table {
@@ -60,7 +61,7 @@
 									<h3>장르: R&B/SOUL</h3>
 								</c:when>
 							</c:choose>
-								<h3>발매일: ${selectAlbum.releaseAt }</h3>
+								<h3>발매일: <fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${selectAlbum.releaseAt}" /></h3>
 								<h3>앨범코멘트: </h3>
 								<span style="color: white; font-size:medium;">${selectAlbum.content }</span>
 								<br><br><br><br>

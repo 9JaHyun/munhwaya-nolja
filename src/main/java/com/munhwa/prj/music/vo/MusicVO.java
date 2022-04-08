@@ -11,7 +11,7 @@ public class MusicVO {
 	private String genre;
 	private String lyric;
 	private int likeIt;
-	private String fileName;
+	private int fileId;
 	private String title;
 	private int price;
 	private int albumId;

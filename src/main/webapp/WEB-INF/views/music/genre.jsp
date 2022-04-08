@@ -61,7 +61,6 @@
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -84,7 +83,6 @@
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -107,7 +105,6 @@
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -130,7 +127,6 @@
 											</li>
 										</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- news -->
 						</li>

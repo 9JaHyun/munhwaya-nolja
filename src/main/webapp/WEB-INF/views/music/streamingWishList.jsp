@@ -93,14 +93,30 @@ ${musicSelectListByWishList[0].lyric}
 	<!-- content끝 -->
 
 <script>
+//파일아이디로 sname가져오기
 var myPlaylist = []
+let fileId = 0;
+
 <c:forEach items="${musicSelectListByWishList}" var = "music">
+	fileId = '${music.fileId}'
+	$.ajax({
+		type: "GET", 
+		url:"getFiles/"+fileId,
+		dataType:"json", 
+		error : function(a, b, c){
+			alert("통신실패");
+		},
+		success: pushList
+	})
+function pushList(result) {
+	let fileName = result.sname
+	console.log(fileName)
 	myPlaylist.push({
 					writer: '${music.writer}',
 					composing: '${music.composing}',
 					arrangement: '${music.arrangement}',
 					musicId: '${music.id}',
-					mp3 : '${music.fileName}',
+					mp3 : 'filetest/'+ fileName,
 					title : '${music.title}',
 					artist : '${music.artName}',
 					rating: 5,
@@ -109,6 +125,7 @@ var myPlaylist = []
 					duration : '${music.time}',
 					cover:'resources/images/bg/musicBg3.jpg'
 					})
+	} 
 </c:forEach>
 jQuery(document).ready(function () {
 	$('.music-player-list').ttwMusicPlayer(myPlaylist, {
@@ -134,67 +151,62 @@ jQuery(document).ready(function () {
 //상태 업뎃
 function change() {
 	//li"track", span"title", span"duration" a"buy" => 각각 마다 다르게 주기
-	var musicId = null;
+	let musicId = 0;
 	if(event.target.className == 'track') {
-		console.log('this is li Tag')
+		//console.log('this is li Tag')
 		musicId = $(event.target).children().data("musicid")
 	} 
 	if(event.target.className == 'title') {
-		console.log('this is spanTilte Tag')
+		//console.log('this is spanTilte Tag')
 		musicId = $(event.target).data("musicid")
 	} 
 	if(event.target.className == 'duration') {
-		console.log('this is spanduration Tag')
+		//console.log('this is spanduration Tag')
 		musicId = $(event.target).prev().data("musicid")
-		console.log(musicId)
 	} 
 	if(event.target.className == 'buy') {
-		return
+		return;
 	}
 	
-	//뮤직아이디 받아왔으니 아작스로 해당하는 뮤직아이디의 정보를 가져와야함
 	$.ajax({
-		type: "GET", //요청 메소드 방식
+		type: "GET", 
 		url:"musicSelectBymusicId/"+musicId,
-		dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+		dataType:"json", 
 		error : function(a, b, c){
 			alert(a + b + c);
 		},
 		success: musicSelectResult
 	})
-	//작사작곡편곡 바꾸기, 가사바꾸기, 수록앨범 바꾸기
- 	function musicSelectResult(data) {
-		console.log(data.writer)
-		$('#writer').html('작사: '+data.writer)
-		$('#composing').html('작곡: '+data.composing)
-		$('#arrangement').html('편곡: '+data.arrangement)
-		$('#lyric').html(data.lyric)
-		//음악 사진 작업
-		
-		$.ajax({
-		type: "GET", //요청 메소드 방식
-		url:"albumSelectBymusicId/"+data.id,
-		dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
-		error : function(a, b, c){
-			alert(a + b + c);
-		},
-		success: albumSelectResult
-	})
-		function albumSelectResult(result) {
-			$('.grid_3').attr('href','albumInfo?id='+result.id)
-			$('#albName').html(result.albName)
-			$('#artName').html(result.artName)
-			//앨범사진작업
-			
-		}
-	}
 }
+	//작사작곡편곡 바꾸기, 가사바꾸기, 수록앨범 바꾸기
+function musicSelectResult(data) {
+	$('#writer').html('작사: '+data.writer)
+	$('#composing').html('작곡: '+data.composing)
+	$('#arrangement').html('편곡: '+data.arrangement)
+	$('#lyric').html(data.lyric)
+	//음악 사진 작업
+	
+	$.ajax({
+	type: "GET", 
+	url:"albumSelectBymusicId/"+data.id,
+	dataType:"json", 
+	error : function(a, b, c){
+		alert(a + b + c);
+	},
+	success: albumSelectResult
+	})
+}
+	function albumSelectResult(result) {
+		$('.grid_3').attr('href','albumInfo?id='+result.id)
+		$('#albName').html(result.albName)
+		$('#artName').html(result.artName)
+		//앨범사진작업
+	}
 
 jQuery(document).ready(function(){
 	$('#writer').html('작사: ${musicSelectListByWishList[0].writer}');
 	$('#composing').html('작곡: ${musicSelectListByWishList[0].composing}');
 	$('#arrangement').html('편곡: ${musicSelectListByWishList[0].arrangement}');
-	
 })
 
 <!-- 구매1 -->
@@ -208,98 +220,57 @@ jQuery(document).ready(function(){
 	        dataType : "json",
 	        success : result1,
 	        error: function(xhr, status, error){
-	        alert(error);
+	        	alert("통신실패");
 	        }
         }) 
    }
    function result1(result) {
    	  var confirm1 = confirm('장바구니에 담으시겠습니까?')
 	  var id = result.id
-	  var title = result.title
-	  var price = result.price
-      var artName = result.artName
-      var genre = result.genre
-      var lyric = result.lyric
-      var likeIt = result.likeIt
-      var fileName = result.fileName
-      var albumId = result.albumId
-      var time = result.time
-      var writer = result.writer
-      var composing = result.composing
-      var arrangement = result.arrangement
 	  
 	   if(confirm1) {
       	$.ajax ({
 	        url : "cart/test/add",
 	        type : "post",
-	        data : JSON.stringify({"id" : id, "title" : title, "price" : price, "artName" : artName,"genre" : genre,
-	        	"lyric" : lyric, "likeIt" : likeIt, "fileName" : fileName, "albumId" : albumId, "time" : time, 
-	        	"writer" : writer,   "composing" : composing, "arrangement" : arrangement}),                   
+	        data : {"id" : id},                   
 	        dataType : "text",
-	        contentType : 'application/json',
 	        success : function(data) {
 	        console.log(data);
 	        alert("장바구니에 담았습니다.");
 	        },
 	        error: function(xhr, status, error){
-	        alert(error);
+	        	alert("통신실패");
 	        }
         }) 
        } else {
-             alert("삭제취소")
+             alert("구매취소")
         }
    }
    
 //  구매2
 function addCart2() {
-	  var confirm1 = confirm('장바구니에 담으시겠습니까?')
+	var confirm1 = confirm('장바구니에 담으시겠습니까?')
 	  var musicId= $(event.target).prev().prev().data("musicid")
 	   if(confirm1) {
 	      	$.ajax ({
-		        url : "musicSelectBymusicId/"+musicId,
-		        type : "get",
-		        data : {},               
-		        dataType : "json",
-		        success :addCart2Result,
+		        url : "cart/test/add",
+		        type : "post",
+		        data : {"id" : musicId},               
+		        dataType : "text",
+		        success :function(data) {
+			        console.log(data);
+			        alert("장바구니에 담았습니다.");
+			        },
 		        error: function(xhr, status, error){
 		        alert("통신실패");
 		        }
 	        }) 
+	        
 	       } else {
-	             alert("삭제취소")
+	             alert("구매취소")
 	        }
 	}
-	function addCart2Result(result) {
-			var id = result.id
-	  		var title = result.title
-	  		var price = result.price
-      		var artName = result.artName
-      		var genre = result.genre
-      		var lyric = result.lyric
-      		var likeIt = result.likeIt
-      		var fileName = result.fileName
-      		var albumId = result.albumId
-      		var time = result.time
-      		var writer = result.writer
-      		var composing = result.composing
-      		var arrangement = result.arrangement
-      		
-	        $.ajax ({
-		        url : "cart/test/add",
-		        type : "post",
-		        data : JSON.stringify({"id" : id, "title" : title, "price" : price, "artName" : artName,"genre" : genre,
-		        	"lyric" : lyric, "likeIt" : likeIt, "fileName" : fileName, "albumId" : albumId, "time" : time, 
-		        	"writer" : writer,   "composing" : composing, "arrangement" : arrangement}),                   
-		        dataType : "text",
-		        contentType : 'application/json',
-		        success : function(data) {
-		        alert("장바구니에 담았습니다.");
-		        },
-		        error: function(xhr, status, error){
-		        	alert("통신실패2");
-		        }
-	        })  
-	}
+	
 // 좋아요기능
 function likeIt() {
 	var title=$('#title1').html()
@@ -311,7 +282,7 @@ function likeIt() {
 	        dataType : "json",
 	        success : result2,
 	        error: function(xhr, status, error){
-	        alert(error);
+	        	alert("통신실패");
 	        }
      }) 
 }

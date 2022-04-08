@@ -9,7 +9,7 @@ var myPlaylist = [
 		composing: '${musicSelect.composing}',
 		arrangement: '${musicSelect.arrangement}',
 		musicId: '${musicSelect.id}',
-		mp3 : '${musicSelect.fileName}',
+		mp3 : '${musicSelect.fileId}',
 		title : '${musicSelect.title}',
 		artist : '${musicSelect.artName}',
 		rating: 5,
@@ -204,38 +204,21 @@ function addWishList(e) {
 <script>
    <!-- 구매1 -->
    function addCart() {
-	   
 	  var id = '${musicSelect.id}'
-	  var title = '${musicSelect.title}'
-	  var price = '${musicSelect.price}'
-      var artName = '${musicSelect.artName}'
-      var genre = '${musicSelect.genre}'
-      var lyric = '${musicSelect.lyric}'
-      var likeIt = '${musicSelect.likeIt}'
-      var fileName = '${musicSelect.fileName}'
-      var albumId = '${musicSelect.albumId}'
-      var time = '${musicSelect.time}'
-      var writer = '${musicSelect.writer}'
-      var composing = '${musicSelect.composing}'
-      var arrangement = '${musicSelect.arrangement}'
-      
 	  var confirm1 = confirm('장바구니에 담으시겠습니까?')
 	  
       if(confirm1) {
       	$.ajax ({
 	        url : "cart/test/add",
 	        type : "post",
-	        data : JSON.stringify({"id" : id, "title" : title, "price" : price, "artName" : artName,"genre" : genre,
-	        	"lyric" : lyric, "likeIt" : likeIt, "fileName" : fileName, "albumId" : albumId, "time" : time, 
-	        	"writer" : writer,   "composing" : composing, "arrangement" : arrangement}),                   
+	        data : {"id" : id},                   
 	        dataType : "text",
-	        contentType : 'application/json',
 	        success : function(data) {
 	        console.log(data);
 	        alert("장바구니에 담았습니다.");
 	        },
 	        error: function(xhr, status, error){
-	        alert(error);
+	        alert("통신실패");
 	        }
         }) 
        } else {
@@ -248,50 +231,22 @@ function addWishList(e) {
 	  var musicId= $(event.target).prev().prev().data("musicid")
 	   if(confirm1) {
 	      	$.ajax ({
-		        url : "musicSelectBymusicId/"+musicId,
-		        type : "get",
-		        data : {"musicId" : musicId},               
-		        dataType : "json",
-		        success :addCart2Result,
+		        url : "cart/test/add",
+		        type : "post",
+		        data : {"id" : musicId},               
+		        dataType : "text",
+		        success :function(data) {
+			        console.log(data);
+			        alert("장바구니에 담았습니다.");
+			        },
 		        error: function(xhr, status, error){
 		        alert("통신실패");
 		        }
 	        }) 
 	        
 	       } else {
-	             alert("삭제취소")
+	             alert("구매취소")
 	        }
-	}
-	function addCart2Result(result) {
-			var id = result.id
-	  		var title = result.title
-	  		var price = result.price
-      		var artName = result.artName
-      		var genre = result.genre
-      		var lyric = result.lyric
-      		var likeIt = result.likeIt
-      		var fileName = result.fileName
-      		var albumId = result.albumId
-      		var time = result.time
-      		var writer = result.writer
-      		var composing = result.composing
-      		var arrangement = result.arrangement
-	        $.ajax ({
-		        url : "cart/test/add",
-		        type : "post",
-		        data : JSON.stringify({"id" : id, "title" : title, "price" : price, "artName" : artName,"genre" : genre,
-		        	"lyric" : lyric, "likeIt" : likeIt, "fileName" : fileName, "albumId" : albumId, "time" : time, 
-		        	"writer" : writer,   "composing" : composing, "arrangement" : arrangement}),                   
-		        dataType : "text",
-		        contentType : 'application/json',
-		        success : function(data) {
-		        console.log(data);
-		        alert("장바구니에 담았습니다.");
-		        },
-		        error: function(xhr, status, error){
-		        alert("통신실패2");
-		        }
-	        })  
 	}
 	
    <!-- 좋아요기능 -->

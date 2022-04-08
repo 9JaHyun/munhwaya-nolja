@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
@@ -41,7 +43,7 @@
 									<a href="albumInfo?id=${album.id }" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>${album.albName }</strong>${album.artName }</span>
-										<span style="margin:0px;">${album.releaseAt }</span>
+										<span style="margin:0px;"><fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${album.releaseAt}" /></span>
 									</a>
 								</c:forEach>
 								</div><!-- video grid -->

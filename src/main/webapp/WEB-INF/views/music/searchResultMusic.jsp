@@ -74,7 +74,9 @@
 														${music.albumTitle }
 													</td>
 													<td class="product-name">
-														<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
+														<button type="button" onclick="addCart()" class="tbutton medium" style="font-size:10px">
+															<span  data-musicid="${music.musicId }">구매</span>
+														</button>
 													</td>
 												</tr>
 												</c:forEach>
@@ -91,4 +93,28 @@
 			<!-- 왼쪽 상단메인 끝 -->
 	</div>
 		<!-- content끝 -->
-	
+<script>
+    function addCart() {
+        var id = $(event.target).data("musicid")
+
+        var confirm1 = confirm('장바구니에 담으시겠습니까?')
+        if (confirm1) {
+            $.ajax({
+                url: "cart/test/add",
+                type: "post",
+                data: {"id": id},
+                dataType: "text",
+                success: function (data) {
+                    console.log(data);
+                    alert("장바구니에 담았습니다.");
+                },
+                error: function (xhr, status, error) {
+                    alert("통신실패");
+                }
+            })
+
+        } else {
+            alert("삭제취소")
+        }
+    }
+</script>	

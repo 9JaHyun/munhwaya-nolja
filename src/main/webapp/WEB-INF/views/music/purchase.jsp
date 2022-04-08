@@ -47,7 +47,6 @@
 						<h4> 내가 구입한 음원 </h4><span class="liner"></span>
 						<div class="products shop clearfix">
 							<div class="grid_12">
-								<form action="#" method="post">
 									<div class="bag_table">
 										<table class="shop_table footable tablet footable-loaded" style="width:100%;">
 											<thead>
@@ -73,15 +72,15 @@
 													<td class="product-name">
 														${music.price}
 													</td>
+													
 													<td class="product-name">
-														<a href="#?musicId=${music.id }" class="tbutton medium" style="font-size:10px"><span>다운로드</span></a>
+														<button type="button" onclick="location.href='api/attach/${music.fileId}'" class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
 													</td>
 												</tr>
 											</c:forEach>
 											</tbody>
 										</table>
 									</div><!-- bag table -->
-								</form><!-- end form -->
 							</div><!-- grid12 -->
 						</div><!-- products -->
 
@@ -92,5 +91,4 @@
 			<!-- 왼쪽 상단메인 끝 -->
 	</div>
 		<!-- content끝 -->
-
 	
