@@ -34,5 +34,7 @@
   <definition name="*-artist" extends="memberTemplate">
     <put-attribute name="body" value="/WEB-INF/views/artist/{1}.jsp"/>
   </definition>
+  
+
 
 </tiles-definitions>
