@@ -50,6 +50,10 @@
 											<th width="200"><strong>공연 가격</strong></th>
 											<td width="300"><input style="width:500px" type="text" id="price" name="price" required="required"></td>
 										</tr>
+										<tr>
+											<th width="200"><strong>공연 이미지</strong></th>
+											<td width="300"><input style="width:500px; color: red; " type="file" id="image" name="image" required="required"></td>
+										</tr>
 									</table>
 								</div>
 								<br>

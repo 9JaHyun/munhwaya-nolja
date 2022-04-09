@@ -19,7 +19,6 @@
     <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp"/>
   </definition>
 
-
   <definition name="*/*" extends="template">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
   </definition>
@@ -27,8 +26,12 @@
   <definition name="*-member" extends="memberTemplate">
     <put-attribute name="body" value="/WEB-INF/views/member/{1}.jsp"/>
   </definition>
-  
-    <definition name="*-artist" extends="memberTemplate">
+
+  <definition name="*-memberWallet" extends="memberTemplate">
+    <put-attribute name="body" value="/WEB-INF/views/wallet/{1}.jsp"/>
+  </definition>
+
+  <definition name="*-artist" extends="memberTemplate">
     <put-attribute name="body" value="/WEB-INF/views/artist/{1}.jsp"/>
   </definition>
   

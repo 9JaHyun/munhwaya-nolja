@@ -5,9 +5,8 @@ import java.util.List;
 import com.munhwa.prj.music.vo.PurchaseVO;
 
 public interface PurchaseService {
-	List<PurchaseVO> purchaseSelectList();
-	PurchaseVO purchaseSelect(PurchaseVO vo);
-	int purchaseInsert(PurchaseVO vo);
+	List<PurchaseVO> purchaseSelectList(String id);
+	int purchaseInsert(List<PurchaseVO> vo);
 	int purchaseUpdate(PurchaseVO vo);
 	int purchaseDelete(PurchaseVO vo);
 }

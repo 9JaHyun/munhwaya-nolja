@@ -16,16 +16,86 @@
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
 	</resultMap>
-	
+
 	<select id="musicSelectList" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC
+		ORDER BY LIKE_IT DESC
 	</select>
 	
-	<select id="musicSelect" resultMap="musicResultMap">
+	<select id="musicSelectListByGenre" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE GENRE = #{genre}
+		ORDER BY LIKE_IT DESC
+	</select>
+	
+	<select id="musicPersonalList" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE GENRE=(SELECT GENRE
+					FROM MEMBER
+					WHERE ID=#{id})
+		ORDER BY LIKE_IT DESC
+	</select>
+	
+	<select id="musicSelectByTitle" parameterType="String" resultType="com.munhwa.prj.music.vo.SearchVO">
+		SELECT m.ID as musicId, m.TITLE as musicTitle, m.ART_NAME as musicArtistName, m.FILE_NAME as musicImage, 
+			   a.ID as albumId, a.ALB_NAME as albumTitle, a.ART_NAME as albumArtistName, a.PICTURE as albumImage
+		FROM MUSIC m 
+		JOIN ALBUM a 
+		ON(m.ALBUM_ID = a.ID)
+		WHERE UPPER(TITLE) LIKE UPPER('%'||#{title}||'%') 
+	</select>
+	
+	<select id="musicSelectByAlBum" parameterType="int" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC m 
+		WHERE ALBUM_ID = #{id}
+		ORDER BY LIKE_IT DESC
+	</select>
+	
+	<select id="musicSelectListByPurchase" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE ID IN (SELECT MUSIC_ID
+                     FROM PURCHASED_MUSIC
+                     WHERE MEMBER_ID = #{id})
+	</select>
+	
+	<select id="musicSelectListByWishList" parameterType="int" resultMap="musicResultMap">
+		SELECT * FROM MUSIC
+		WHERE ID IN (SELECT MUSIC_ID
+        			 FROM WISHLIST_MUSIC
+        			 WHERE WISHLIST_ID=#{id})
+	</select>
+	
+	<select id="musicSelectListByMusicId" parameterType="map" resultMap="musicResultMap">
+		SELECT * FROM MUSIC
+		WHERE ID IN 
+		<foreach item="item" index="index" collection="musicIdList" open="(" separator="," close=")">
+        	#{item}
+  		</foreach>
+	</select>
+	
+	<select id="musicSelect" parameterType="int" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC
 		WHERE ID = #{id}
+	</select>
+	
+	<select id="musicSelectByArtName" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE TITLE = #{title}
+		AND ART_NAME= #{artName}
+	</select>
+	
+	<select id="musicIdByTitle" parameterType="com.munhwa.prj.music.vo.MusicVO" resultType="int">
+		SELECT ID
+		FROM MUSIC
+		WHERE TITLE = #{title}
+		AND ART_NAME = #{artName)
 	</select>
 	
 	<insert id="musicInsert" parameterType="com.munhwa.prj.music.vo.MusicVO">
@@ -45,6 +115,16 @@
 			   #{arrangement}
 			   )
 	</insert>
+	
+	<update id="updateLike" statementType = "CALLABLE" parameterType="map" >
+		<![CDATA[
+			{ call updatelike (
+			#{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{p_result, mode=OUT, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
+	</update>
 	
 	<update id="musicUpdate" parameterType="com.munhwa.prj.music.vo.MusicVO">
 		UPDATE MUSIC

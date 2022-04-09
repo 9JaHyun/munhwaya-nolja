@@ -1,22 +1,26 @@
 package com.munhwa.prj;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.munhwa.prj.music.vo.MusicVO;
 
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
-    public String home() {
+    @GetMapping("/home.do")
+    public String homeDo() {
         return "home/home";
     }
-    
-    @GetMapping("home.do")
-    public String homeDo() {
+
+    @GetMapping("/")
+    public String home() {
         return "home/home";
     }
 
@@ -28,12 +32,5 @@ public class HomeController {
     @GetMapping("/shop/cart")
     public String shopCartPage() {
         return "shop/shop_cart.artist";
-    }
-    
-    // 강제적으로 세션 "member" 생성
-    @GetMapping("/create-member")
-    public @ResponseBody String createSession(HttpServletRequest req) {
-    	req.getSession().setAttribute("member", "test0@gmail.com");
-    	return "ok";
     }
 }

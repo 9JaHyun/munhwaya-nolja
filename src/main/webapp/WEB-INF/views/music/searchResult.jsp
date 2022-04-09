@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-<!-- layout -->
-<div id="layout" class="full">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
@@ -16,8 +16,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px; " value=""
+						<input  id="title" name="title" type="text"
+							style="font-size:small; width: 1000px; height: 60px; " value=""
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -31,48 +31,22 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
-						<a href="searchResultMusic">
-						<h4>검색결과</h4>
-						<span class="liner"></span> 
-						<h4>음악</h4>
-						<i class="icon-angle-right" style="font-size:large; margin-left: 7px;"></i>
+						<a href="searchResultMusic?title=${title}">
+							<h3>검색결과</h3>
+							<span class="liner"></span> 
+							<h4>음악
+								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
+							</h4>
 						</a>
-						<span class="liner"></span> 
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-									<a href="video_single_wide.html" class="grid_3">
+								<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
+									<a href="streaming?id=${music.musicId }" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dean</strong>half moon</span>
+										<span><strong>${music.musicTitle }</strong>${music.musicArtistName }</span>
 									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Bob Stoo</strong>No Name No Number</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Justin Gomez</strong>Love You as Love Me</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Back</strong>I Like It (Radio Edit)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Anna</strong>Bad Dog</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Armando</strong>On Time</span>
-									</a>
+								</c:forEach>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->
@@ -86,32 +60,25 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
-						<a href="searchResultAlbum">
-						<h4>검색결과</h4>
-						<span class="liner"></span> 
-						<h4>앨범</h4>
-						<i class="icon-angle-right" style="font-size:large; margin-left: 7px;"></i>
+						<a href="searchResultAlbum?title=${title}">
+							<h3>검색결과</h3>
+							<span class="liner"></span> 
+							<h4>수록앨범
+								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
+							</h4>
 						</a>
-						<span class="liner"></span>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-									<a href="video_single_wide.html" class="grid_3">
+								<c:forEach var="album" items="${musicSelectListByTitle}" begin="0" end="7">
+									<a class="grid_3" href="albumInfo?id=${album.albumId }">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Avril Lopez</strong>Daredevil (video version)</span>
+										<span><strong>${album.albumTitle }</strong>${album.albumArtistName }</span>
 									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Bob Stoo</strong>No Name No Number</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Alfered Graceful</strong>Tonight (Remix)</span>
-									</a>
-									<a href="video_single_wide.html" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>Dj Alex</strong>Divine</span>
-									</a>
+								<%-- <form action="#" method="post">
+									<input type="hidden" value="${album.albumId }" name="albumId">
+								</form> --%>
+							</c:forEach>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->
@@ -121,6 +88,3 @@
 		</div>
 	</div>
 		<!-- content끝 -->
-</div>
-	<!-- layout 끝 -->
-	

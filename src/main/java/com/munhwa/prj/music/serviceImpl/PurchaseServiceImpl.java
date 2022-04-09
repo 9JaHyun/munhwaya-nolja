@@ -15,18 +15,17 @@ public class PurchaseServiceImpl implements PurchaseService{
 	private PurchaseMapper map;
 
 	@Override
-	public List<PurchaseVO> purchaseSelectList() {
-		return map.purchaseSelectList();
+	public List<PurchaseVO> purchaseSelectList(String id) {
+		return map.purchaseSelectList(id);
 	}
 
 	@Override
-	public PurchaseVO purchaseSelect(PurchaseVO vo) {
-		return map.purchaseSelect(vo);
-	}
-
-	@Override
-	public int purchaseInsert(PurchaseVO vo) {
-		return map.purchaseInsert(vo);
+	public int purchaseInsert(List<PurchaseVO> vo) {
+		int cnt = 0;
+		for(PurchaseVO purchaseVO : vo) {
+			map.purchaseInsert(purchaseVO);
+		}
+		return cnt;
 	}
 
 	@Override
@@ -38,6 +37,5 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public int purchaseDelete(PurchaseVO vo) {
 		return map.purchaseDelete(vo);
 	}
-	
 
 }

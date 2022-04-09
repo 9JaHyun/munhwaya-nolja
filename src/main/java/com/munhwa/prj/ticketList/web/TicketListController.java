@@ -1,14 +1,20 @@
 package com.munhwa.prj.ticketList.web;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import com.google.zxing.WriterException;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.ticketList.service.TicketListService;
 import com.munhwa.prj.ticketList.vo.TicketListVO;
 
@@ -17,36 +23,36 @@ public class TicketListController {
 	@Autowired
 	private TicketListService ticketListDao;
 	
-	//마이페이지 링크
+	//마이페이지 링크(회원 구매 목록)
 	@RequestMapping("/ticketList.do")
-	public String ticketList(Model model) {
-		List <TicketListVO> list = ticketListDao.ticketListSelectList();
+	public String ticketList(Model model, @LoginUser SessionUser user) {
+		String memberId = user.getId();
+		List <TicketListVO> list = ticketListDao.ticketListSelectList(memberId);
 		model.addAttribute("ticketLists", list);
 		return "ticketList/ticketList";
 	}
 	
 	@RequestMapping("/ticketListSelect.do")
-	public String ticketListSelect(HttpServletRequest req, Model model, TicketListVO vo) {
-		String memberId = (String) req.getSession().getAttribute("member");
+	public String ticketListSelect(@LoginUser SessionUser user, Model model, TicketListVO vo) {
+		String memberId = user.getId();
+
 		vo = ticketListDao.ticketListSelect(vo);
-		System.out.println(vo);
-		model.addAttribute("memberId", memberId);
+		model.addAttribute("member", user);
 		model.addAttribute("ticket", vo);
 		return "ticketList/ticketListSelect";
 	}
 	
-//	@RequestMapping("/ticketListInsert.do")
-//	public String ticketListInsert(HttpServletRequest req, HttpSession session,int id) throws WriterException, IOException {
-//		TicketListVO vo = new TicketListVO();
-////		vo.setMemberId(session.getAttribute("member"));
-//		vo.setMemberId("test0@gmail.com");
-//		vo.setPerformanceId(id);
-//		int n = ticketListDao.ticketListInsert(vo);
-//		vo.setQrcode(makeQR(req, ));
+	@RequestMapping("/ticketListInsert.do")
+	public String ticketListInsert(HttpServletRequest req, HttpSession session, int id) throws WriterException, IOException {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("v_member_id", "test1@gmail.com");
+		paramMap.put("v_performance_id", id);
+		paramMap.put("v_qrcode", "qrcode");
+//		vo.setMemberId(session.getAttribute("member"));
+		int n = ticketListDao.ticketListInsert(paramMap);
 //		ticketListDao.update(vo);
-//		
-//		return "redirect:performance"; //메인화면경로 넣어줘야함
-//	}
+		return "redirect:performance"; //메인화면경로 넣어줘야함
+	}
 //
 //	// QR코드 생성
 //	private String makeQR(HttpServletRequest req) throws WriterException, IOException {

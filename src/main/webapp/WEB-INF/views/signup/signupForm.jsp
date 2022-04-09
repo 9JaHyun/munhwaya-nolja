@@ -10,15 +10,13 @@
 			<h4>회원가입</h4>
 			<span class="liner"></span>
 			<div class="grid_6 mt">
-				<!-- form -->
 					<div style="margin-bottom: 20px;">
 						<button class="tbutton color2 small" 
 						id="idChk" name="idChk" value="N" onclick="idChkFn();"><span>아이디 중복확인</span></button>
 						<button class="tbutton color2 small"
 						id="nickChk" name="nickChk" value="N" onclick="nickChkFn();"><span>닉네임 중복확인</span></button> 
 					</div>
-				<form method="post" id="frm" action="memberSignup.do" onsubmit="return send()">
-
+				<form method="post" id="frm" action="signup.do" onsubmit="return send()">
 					<div class="clearfix">
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;" 
@@ -39,7 +37,7 @@
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"
 							type="text" name="nickname" id="nickname"
-								placeholder="NICKNAME" required="required" />
+								placeholder="NICKNAME (4자리 이상)" required="required" />
 						</div>
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"
@@ -74,14 +72,18 @@
 	function send() {
 		if(idChk.value == "Y" && nickChk.value == "Y") {
 			
-			var pw = $("#password").val();
-			var pw2 = $("#password2").val();
+			var pw = frm.password.value;
+			var pw2 = frm.password2.value;
 			var num = pw.search(/[0-9]/g);
 			var eng = pw.search(/[a-z]/ig);
 			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 			
+			var tel = $("#tel").val();
+			var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+			
+			var genre = $("#genre").val();
+			
 			if(pw.length < 8 || pw.length > 20){
-
 				 alert("비밀번호를 8자리 ~ 20자리 이내로 입력해주세요.");
 				 return false;
 				}else if(pw.search(/\s/) != -1){
@@ -93,8 +95,14 @@
 				}else if(pw != pw2) {
 				 alert("비밀번호가 서로 일치하지 않습니다.");
 				 return false;
+				}else if (!tel.match(regPhone)) {
+				 alert("적절하지 않은 휴대폰번호 양식입니다.");
+				 return false;
+				}else if (genre === null){
+				 alert("관심 장르를 선택해주세요.");
+				 return false;
 				}else {
-				 return true;	
+				 return true;		
 				}
 
 		} else {
