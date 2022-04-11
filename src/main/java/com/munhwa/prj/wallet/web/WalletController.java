@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
@@ -35,7 +37,7 @@ import com.munhwa.prj.wallet.vo.ProfitVO;
 import com.munhwa.prj.wallet.vo.UsageVO;
 
 import lombok.extern.slf4j.Slf4j;
-@Slf4j
+//@Slf4j
 @Controller
 public class WalletController {
 	@Autowired
@@ -142,16 +144,32 @@ public class WalletController {
 		return "walletInfoSelect-memberWallet";
 	}
 	
-	// 마일리지 사용 내역 페이지
-	@GetMapping("/usageHistory.do")
-	public String usageHistory(@LoginUser SessionUser user, Model model, Criteria cri) {
+	// 마일리지 사용 내역 페이지 (곡 구매)
+	@GetMapping("/usageHistoryOfMusic.do")
+	public String usageHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri) {
 		String memberId = user.getId();
-		List<UsageVO> list = usageDao.findByMemberId(memberId, cri);
-		model.addAttribute("usages",list);
-		int total = usageDao.getCountByUsageId(memberId);
+		List<UsageVO> music = usageDao.findByMusic(memberId, cri);
+		model.addAttribute("usages", music);
+		
+		System.out.println("--------------" + music);
+		int total = usageDao.getCountByMusic(memberId);
 		PageDTO pageMake = new PageDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
-		return "usageHistory-memberWallet";
+		return "usageHistoryOfMusic-memberWallet";
+	}
+	
+	// 마일리지 사용 내역 페이지 (공연 티켓 구매)
+	@GetMapping("/usageHistoryOfPerformance.do")
+	public String usageHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
+		List<UsageVO> performance = usageDao.findByPerformance(memberId, cri);
+		model.addAttribute("usages", performance);
+		
+		int total = usageDao.getCountByPerformance(memberId);
+		PageDTO pageMake = new PageDTO(cri, total);
+		model.addAttribute("pageMaker", pageMake);
+		
+		return "usageHistoryOfPerformance-memberWallet"; 
 	}
 	
 	// 마일리지 충전 페이지
@@ -168,18 +186,36 @@ public class WalletController {
 		return "withdrawForm-memberWallet";
 	}
 	
-	// 아티스트 수익 내역 페이지
-	@GetMapping("/profitHistory.do")
-	public String profitHistory(@LoginUser SessionUser user, Model model, Criteria cri) {
+	// 아티스트 수익 내역 페이지 (곡 수익)
+	@GetMapping("/profitHistoryOfMusic.do")
+	public String profitHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri) {
 		String memberId = user.getId();
-		List<ProfitVO> list = profitDao.findByMemberId(memberId, cri);
-		model.addAttribute("profits", list);
-		int total = profitDao.getCountByProfitId(memberId);
+		List<ProfitVO> music = profitDao.findByMusic(memberId, cri);
+		model.addAttribute("profits", music);
+		List<ProfitVO> performance = profitDao.findByPerformance(memberId, cri);
+		model.addAttribute("profits2", performance);
+		
+		int total = profitDao.getCountByMusic(memberId);
+		int total2 = profitDao.getCountByPerformance(memberId);
+		PageDTO pageMake = new PageDTO(cri, total);
+		PageDTO pageMake2 = new PageDTO(cri, total2);
+		model.addAttribute("pageMaker", pageMake);
+		model.addAttribute("pageMaker2", pageMake2);
+		return "profitHistoryOfMusic-memberWallet";
+	}
+	
+	// 아티스트 수익 내역 페이지 (공연 수익)
+	@GetMapping("/profitHistoryOfPerformance.do")
+	public String profitHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
+		List<ProfitVO> performance = profitDao.findByPerformance(memberId, cri);
+		model.addAttribute("profits", performance);
+		
+		int total = profitDao.getCountByPerformance(memberId);
 		PageDTO pageMake = new PageDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
-		return "profitHistory-memberWallet";
+		return "profitHistoryOfPerformance-memberWallet";
 	}
-		
 	
 	
 }

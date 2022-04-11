@@ -12,7 +12,7 @@
     <meta name="description" content="Remix - Music & Band Site Template HTML5 and CSS3">
     <meta name="keywords"
           content="remix, music, light, dark, themeforest, multi purpose, band, css3, html5">
-
+	
     <!-- jquery cdn -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
@@ -35,6 +35,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/font-awesome-ie7.min.css"/>
     <![endif]-->
+    
 </head>
 <body id="fluidGridSystem">
 <div id="layout" class="full">

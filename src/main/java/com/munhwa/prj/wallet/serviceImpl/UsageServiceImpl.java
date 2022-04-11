@@ -15,15 +15,24 @@ public class UsageServiceImpl implements UsageService {
 	private UsageMapper map;
 		
 	@Override
-	public List<UsageVO> findByMemberId(String memberId, Criteria cri) {
-		return map.selectUsageListMemberId(memberId,cri);
+	public List<UsageVO> findByMusic(String memberId, Criteria cri) {
+		return map.selectUsageListMusic(memberId, cri);
 	}
 
 	@Override
-	public int getCountByUsageId(String id) {
-		return map.getCountByUsageId(id);
+	public int getCountByMusic(String id) {
+		return map.getCountByMusic(id);
 	}
 
+	@Override
+	public List<UsageVO> findByPerformance(String memberId, Criteria cri) {
+		return map.selectUsageListPerformance(memberId, cri);
+	}
+
+	@Override
+	public int getCountByPerformance(String id) {
+		return map.getCountByPerformance(id);
+	}
 
 	@Override
 	public int insertUsage(List<UsageVO> vo) {
@@ -33,4 +42,5 @@ public class UsageServiceImpl implements UsageService {
 		}
 		return cnt;
 	}
+
 }

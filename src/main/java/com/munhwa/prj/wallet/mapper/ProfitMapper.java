@@ -8,7 +8,11 @@ import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.wallet.vo.ProfitVO;
 
 public interface ProfitMapper {
-	List<ProfitVO> selectProfitListMemberId(@Param("memberId") String memberId, @Param("cri") Criteria cri);
-	int getCountByProfitId(String id);
+	// 곡 수익 내역
+	List<ProfitVO> selectProfitListMusic(@Param("memberId") String memberId, @Param("cri") Criteria cri);
+	int getCountByMusic(String id);
+	// 공연 티켓 수익 내역
+	List<ProfitVO> selectProfitListPerformance(@Param("memberId") String memberId, @Param("cri") Criteria cri);
+	int getCountByPerformance(String id);
 	int insertProfit(ProfitVO vo);
 }

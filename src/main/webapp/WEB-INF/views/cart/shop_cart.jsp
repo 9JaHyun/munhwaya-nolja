@@ -202,7 +202,7 @@ function payCart() {
 			contentType: 'application/json; charset=utf-8',
 	        success : function(data) {
 	                alert("결제에 성공하였습니다.")
-	                location.href="usageHistory.do";
+	                location.href="usageHistoryOfMusic.do";
 	            },
 				error: function(request, status, error){
 	                alert("결제에 실패하였습니다.");

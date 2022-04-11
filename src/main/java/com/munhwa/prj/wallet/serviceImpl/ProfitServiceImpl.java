@@ -15,15 +15,25 @@ public class ProfitServiceImpl implements ProfitService {
 	private ProfitMapper map;
 	
 	@Override
-	public List<ProfitVO> findByMemberId(String memberId, Criteria cri) {
-		return map.selectProfitListMemberId(memberId, cri);
+	public List<ProfitVO> findByMusic(String memberId, Criteria cri) {
+		return map.selectProfitListMusic(memberId, cri);
 	}
 
 	@Override
-	public int getCountByProfitId(String id) {
-		return map.getCountByProfitId(id);
+	public int getCountByMusic(String id) {
+		return map.getCountByMusic(id);
 	}
 
+	@Override
+	public List<ProfitVO> findByPerformance(String memberId, Criteria cri) {
+		return map.selectProfitListPerformance(memberId, cri);
+	}
+
+	@Override
+	public int getCountByPerformance(String id) {
+		return map.getCountByPerformance(id);
+	}
+	
 	@Override
 	public int insertProfit(List<ProfitVO> vo) {
 		int cnt = 0;
@@ -32,7 +42,5 @@ public class ProfitServiceImpl implements ProfitService {
 		}
 		return cnt;
 	}
-
-
 
 }
