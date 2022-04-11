@@ -63,7 +63,7 @@
 												<c:forEach var="music" items="${musicPersonalList}" begin="0" end="19" varStatus="status">
 												<tr class="cart_table_item" style="text-align: center; font-size:medium ;">
 													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
+													<a href="streaming?id=${music.id }"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
 													</td>
 													<td class="product-name">
 														${music.title }

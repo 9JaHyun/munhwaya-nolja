@@ -21,7 +21,6 @@
 			   C.MEMBER_ID
 			FROM CART C, MUSIC M
 			WHERE C.MUSIC_ID = M.ID
-			AND C.MEMBER_ID = #{memberId}
 	</select>
 	
 	<select id="selectCart" resultMap="cartResultMap">

@@ -30,10 +30,24 @@ public class MemberServiceImpl implements MemberService {
 		return map.nickChk(nickname);
 	}
 
+	@Override
+	public int updateInfo(MemberVO vo) {
+		return map.updateInfo(vo);
+	}
+
+	@Override
+	public int updatePassword(MemberVO vo) {
+		return map.updatePassword(vo);
+	}
+
+	@Override
+	public int deleteMember(MemberVO vo) {
+		return map.deleteMember(vo);
+	}
+
 	public MemberVO findById(String id) {
 		return map.selectByMemberId(id);
 	}
-	
 	// 마일리지 충전 22/04/04 류기태
 	@Override
 	public int plusMileage(MemberVO vo) {
@@ -55,23 +69,9 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return cnt;
 	}
-	
 
 	@Override
 	public int updateProfile(MemberVO vo) {
 		return map.updateProfile(vo);
 	}
-
-	@Override
-	public int updatePassword(MemberVO vo) {
-		// TODO Auto-generated method stub
-		return map.updatePassword(vo);
-	}
-
-	@Override
-	public int deleteMember(MemberVO vo) {
-		// TODO Auto-generated method stub
-		return map.deleteMember(vo);
-	}
-
 }

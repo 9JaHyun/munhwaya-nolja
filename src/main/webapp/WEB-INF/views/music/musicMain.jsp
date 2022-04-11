@@ -2,23 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-<!-- <script>
-	function musicListByGenre() {
-		$.ajax({
-			type :'GET',
-			url :'/musicListByGenre/'+genre,
-			dataType :'json',
-			contentType:'application/json;charset=utf-8';,
-			success : function(result) {
-			
-			},
-			error : function(a, b, c) {
-				alert(a + b + c);
-			}
-		})
-	}
-</script> -->
-
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBg.jpg" alt="" style="height: 1500px;">
@@ -72,7 +55,7 @@
 												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
-												<a href="streaming">${music.title }</a>
+												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
 											<span>likes:${music.likeIt}</span>
@@ -90,11 +73,11 @@
 								<ul class="tab-content-items">
 									<c:forEach var="music" items="${musicRapList}" begin="0" end="9">
 										<li class="grid_6">
-											<a class="m-thumbnail" href="steraming">
+											<a class="m-thumbnail" href="steraming?id=${music.id }">
 												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
-												<a href="streaming">${music.title }</a>
+												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
 											<span>likes:${music.likeIt}</span>
@@ -112,11 +95,11 @@
 								<ul class="tab-content-items">
 									<c:forEach var="music" items="${musicDanceList}" begin="0" end="9">
 										<li class="grid_6">
-											<a class="m-thumbnail" href="steraming">
+											<a class="m-thumbnail" href="streaming?id=${music.id }">
 												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
-												<a href="streaming">${music.title }</a>
+												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
 											<span>likes:${music.likeIt}</span>
@@ -134,11 +117,11 @@
 								<ul class="tab-content-items">
 										<c:forEach var="music" items="${musicBalladList}" begin="0" end="9">
 											<li class="grid_6">
-												<a class="m-thumbnail" href="steraming">
+												<a class="m-thumbnail" href="streaming?id=${music.id }">
 													<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 												</a>
 												<h3>
-													<a href="streaming">${music.title }</a>
+													<a href="streaming?id=${music.id }">${music.title }</a>
 												</h3> 
 												<span>${music.artName }</span> 
 												<span>likes:${music.likeIt}</span>
@@ -177,12 +160,12 @@
 											${status.count }위
 										</h4>
 									</span>
-									<a class="m-thumbnail" href="streaming">
+									<a class="m-thumbnail" href="streaming?id=${music.id }">
 										<img style="width:100%; height:100%; object-fit: cover;" 
 											src="resources/images/bg/musicBg3.jpg" alt="#">
 									</a>
 									<h3>
-										<a href="mp3_single_half.html">${music.title }</a>
+										<a href="streaming?id=${music.id }">${music.title }</a>
 									</h3>
 									<span>${music.artName }</span>
 									<span> ${music.likeIt }</span>
@@ -217,7 +200,7 @@
 										<img style="width:100%; height:100%; object-fit: cover; " src="resources/images/bg/musicBg3.jpg" alt="#">
 									</a>
 									<h3>
-										<a href="mp3_single_half.html">${album.albName}</a>
+										<a href="albumInfo?id=${album.id }">${album.albName}</a>
 									</h3> 
 									<span>${album.artName}</span> 
 									<span><fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${album.releaseAt}" /></span> 
@@ -260,7 +243,7 @@
 							<li id="Latest" class="active">
 								<div class="video-grid">
 									<c:forEach var="music" items="${musicPersonalList}" begin="0" end="7">
-										<a href="video_single_wide.html" class="grid_3">
+										<a href="streaming?id=${music.id }" class="grid_3">
 											<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											<span><strong>${music.title }</strong>${music.artName }</span>
 										</a>

@@ -2,7 +2,9 @@ package com.munhwa.prj.config.auth.handler;
 
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.mapper.MemberMapper;
+import com.munhwa.prj.music.vo.MusicVO;
 import java.io.IOException;
+import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -23,9 +25,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
           Authentication authentication) throws IOException {
         String username = ((DefaultOAuth2User) authentication.getPrincipal()).getAttribute("email");
-
-        request.getSession().setAttribute("member",
-              new SessionUser(memberMapper.selectByMemberId(username)));
+        SessionUser sessionUser = new SessionUser(memberMapper.selectByMemberId(username));
+        sessionUser.setCart(new HashMap<Integer, MusicVO>());
+        request.getSession().setAttribute("member", sessionUser);
         log.info("result={}", (DefaultOAuth2User) authentication.getPrincipal());
         response.sendRedirect("http://localhost/prj/");
     }

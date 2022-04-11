@@ -1,5 +1,6 @@
 package com.munhwa.prj.member.mapper;
 
+
 import com.munhwa.prj.member.vo.MemberVO;
 import java.util.Map;
 import org.apache.ibatis.annotations.Param;
@@ -15,9 +16,6 @@ public interface MemberMapper {
 	
 	// 닉네임 중복체크
 	int nickChk(String nickname);
-
-	// 프로필 업데이트
-	int updateProfile(MemberVO vo);
 	
 	// 마일리지 충전 22/04/04 류기태
 	int plusMileage(MemberVO vo);
@@ -36,6 +34,9 @@ public interface MemberMapper {
 	
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
+
+	// 프로필 업데이트
+	int updateProfile(MemberVO vo);
 
 	MemberVO selectByMemberId(@Param("username") String id);
 }

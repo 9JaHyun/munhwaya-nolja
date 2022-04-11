@@ -65,11 +65,9 @@
 								<span style="color: white; font-size:medium;">${selectAlbum.content }</span>
 								<br><br><br><br>
 									<div class="single_variation_wrap" style="text-align:right;">
-											<button class="tbutton medium"><span>전체재생</span></button>
-											<button class="tbutton medium"><span>위시리스트 추가</span></button>
+											<button class="tbutton medium" onclick="playAll()"><span >전체재생</span></button>
+											<button class="tbutton medium"><span data-toggle="modal" data-target="#myModal">위시리스트 추가</span></button>
 											<button class="tbutton medium"><span>공유</span></button>
-											<button class="tbutton medium"><span>구매</span></button>
-											<a href="#"><i class="icon-heart" style="font-size: 30px; margin-left:10px">    </i></a>
 									</div>
 							</div><!-- grid6 -->
 						</div><!-- clearfix -->
@@ -86,7 +84,7 @@
 						<h4> 앨범수록곡 </h4><span class="liner"></span>
 						<div class="products shop clearfix">
 							<div class="grid_12">
-								<form action="#" method="post">
+								<form id="playList" action="streamingList" method="post">
 									<div class="bag_table">
 										<table class="shop_table footable tablet footable-loaded" style="width:100%;">
 											<thead>
@@ -100,11 +98,14 @@
 											</thead>
 											<tbody>
 												<c:forEach var="music" items="${selectMusicByAlbum}">
-													<tr class="cart_table_item" style="text-align: center; font-size: medium;">
+													<tr data-musicid="${music.id }" class="cart_table_item" style="text-align: center; font-size: medium;">
+														<td style="display:none;"><input name="musicIdList" value="${music.id }"></td>
 														<td class="product-thumbnail" style="width:70px;">
-														<a href="#"><img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;"></a>
+															<a href="streaming?id=${music.id }">
+																<img class="img1" src="resources/images/bg/musicBg3.jpg" alt="#" style="margin: 10px 0px 10px 0px;">
+															</a>
 														</td>
-														<td class="product-name" style="vertical-align:middle;">
+														<td  class="product-name" style="vertical-align:middle;">
 															${music.title }
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
@@ -114,13 +115,14 @@
 															${music.likeIt }
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
-															<button class="tbutton medium" style="font-size:10px"><span>mp3</span></button>
+															<button onclick="addCart()" type="button" class="tbutton medium" style="font-size:10px"><span >구매</span></button>
 														</td>
 													</tr>
 												</c:forEach>
 											</tbody>
 										</table>
 									</div><!-- bag table -->
+									<button type="submit" style="display:none;"></button>
 								</form><!-- end form -->
 							</div><!-- grid12 -->
 						</div><!-- products -->
@@ -131,4 +133,96 @@
 		<!-- 수록곡리스트 끝 -->
 	</div>
 	<!-- content끝 -->
+
+<!-- 위시리스트모달 -->
+<div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
+  <div class="modal-dialog ">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white" aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">위시리스트 선택</h4>
+      </div>
+      <div class="modal-body def-block">
+        <c:forEach items="${wishlists}" var="wishlist">
+		<div class="mbf clearfix">
+			<ul>
+				<li>
+					<!-- 위시리스트 이름 -->
+					<div class="toggle-head">
+						<h5 style="margin:0px;">
+							${wishlist.name}
+							<button  class="tbutton small" style="margin-left:90%">
+								<span onclick="addWishList()" data-wishid="${wishlist.id}">선택</span>
+							</button>
+						</h5>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</c:forEach>
+      </div>
+      <div class="modal-footer def-block">
+        <button class="tbutton small" data-dismiss="modal" aria-label="Close"><span>확인</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+	<!-- 위시리스트모달 끝-->
+<script>
+/* 위시리스트 추가 */
+function addWishList() {
+	let wishId = $(event.target).data('wishid')
+	let musicIdList = [];
+	$('.cart_table_item').each (function() {
+		var musicId = $(this).data('musicid')
+		musicIdList.push(musicId)
+	})
+	let params = {
+		"wishId" : wishId,
+		"musicIdList" : musicIdList
+	}
 	
+	$.ajax({
+		url:"addWishList2",
+		type: "POST",
+		contentType:'application/x-www-form-urlencoded;charset=utf-8',
+		traditional:true,
+		data: params,
+		dataType:"text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+		success: function(result) {
+			alert("추가되었습니다");
+		},
+		error : function(){
+			alert("통신실패");
+		}
+	}) 
+}
+
+/* 구매 */
+ function addCart() {
+     var id = $(event.target).parent().parent().parent().data("musicid")
+     var confirm1 = confirm('장바구니에 담으시겠습니까?')
+     if(confirm1) {
+          $.ajax ({
+            url : "cart/test/add",
+            type : "post",
+            data : {"id" : id},                   
+            dataType : "text",
+            success : function(data) {
+               alert("장바구니에 담았습니다.");
+            },
+            error: function(xhr, status, error){
+                   alert("통신실패");
+            }
+         }) 
+         
+      } else {
+         alert("취소")
+      }
+   }
+   
+// 전체재생
+function playAll() {
+	$('#playList').submit();
+}
+</script>	

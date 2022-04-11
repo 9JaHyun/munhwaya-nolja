@@ -20,8 +20,12 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 
 	@Override
-	public int purchaseInsert(PurchaseVO vo) {
-		return map.purchaseInsert(vo);
+	public int purchaseInsert(List<PurchaseVO> vo) {
+		int cnt = 0;
+		for(PurchaseVO purchaseVO : vo) {
+			map.purchaseInsert(purchaseVO);
+		}
+		return cnt;
 	}
 
 	@Override
@@ -33,8 +37,5 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public int purchaseDelete(PurchaseVO vo) {
 		return map.purchaseDelete(vo);
 	}
-
-	
-	
 
 }

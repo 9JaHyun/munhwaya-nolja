@@ -8,22 +8,68 @@
     <result property="mileage" column="mileage"/>
     <result property="type" column="type"/>
     <result property="memberId" column="member_id"/>
+    <collection property="commonCodevo" resultMap="commonResultMap"/>
   </resultMap>
+  
+  <resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
+  	<id property="id" column="id"/>
+  	<result property="name" column="name"/>
+  </resultMap>
+  
+<!--   <select id="selectChargeListByMemberId" parameterType="String" resultMap="chargeResultMap"> -->
+<!--   	select a.id as cartId,  -->
+<!--         a.charge_at,  -->
+<!--         a.mileage,  -->
+<!--         a.type,  -->
+<!--         a.member_id,  -->
+<!--         b.id,  -->
+<!--         b.name -->
+<!-- 	from charge_history a,  -->
+<!-- 		 common_code b -->
+<!-- 	where a.type = b.id -->
+<!-- 	and a.member_id = #{id} -->
+<!--   </select> -->
+  
+  <select id="selectChargeListByMemberId" resultMap="chargeResultMap">
+  	<![CDATA[
+  	select id, charge_at, mileage, name
+    from (select
+    	rownum rn,
+    	a.id, 
+        a.charge_at, 
+        a.mileage, 
+        b.name
+    from charge_history a, 
+		 common_code b
+	where a.type = b.id
+		and rownum<= #{cri.pageNum} * #{cri.amount}
+		and a.member_id = #{memberId}    
+		order by id desc
+    )
+	where rn > (#{cri.pageNum}-1) * #{cri.amount}
+  	]]>
+  	</select>
+  	
+  	<select id="getCountByChargeId" resultType="int">
+  		<![CDATA[
+  		select count(id)
+  		from charge_history
+  		where member_id = #{memberId}
+  		]]>
+  	</select>
+  
 
-  <select id="listCharge" resultMap="chargeResultMap">
-    SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, member_id
-    FROM charge_history
-    ORDER BY id DESC
-  </select>
-
-  <select id="selectCharge" resultMap="chargeResultMap">
-    SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, member_id
-    FROM charge_history
-    WHERE member_id = #{memberId}
-  </select>
-
+<!--   <select id="selectCharge" resultMap="chargeResultMap"> -->
+<!--     SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, member_id -->
+<!--     SELECT id, charge_at, mileage, type, member_id -->
+<!--     FROM charge_history -->
+<!--     WHERE member_id = #{memberId} -->
+<!--   </select> -->
+   <!-- 충전 내역 남기기  -->
   <insert id="insertCharge" parameterType="com.munhwa.prj.charge.vo.ChargeVO">
     INSERT INTO charge_history(id, charge_at, mileage, type, member_id)
     VALUES (charge_history_seq.nextval, SYSDATE, #{mileage}, #{type}, #{memberId})
   </insert>
+  
+
 </mapper>
