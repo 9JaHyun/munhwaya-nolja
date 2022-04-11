@@ -29,12 +29,6 @@
     <link rel="shortcut icon" href="${resources}/images/favicon.ico">
     <link rel="apple-touch-icon" href="${resources}/images/apple-touch-icon.png">
 
-
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=EmulateIE8; IE=EDGE"/>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/font-awesome-ie7.min.css"/>
-    <![endif]-->
 </head>
 <body id="fluidGridSystem">
 <div id="layout" class="full">
@@ -42,6 +36,7 @@
     <tiles:insertAttribute name="body"/>
     <tiles:insertAttribute name="footer"/>
 </div>
+
 
 <script type="text/javascript" src="${resources}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${resources}/js/codevz.js"></script>
@@ -55,6 +50,7 @@
 <script type="text/javascript" src="${resources}/js/countdown.js"></script>
 <script type="text/javascript" src="${resources}/js/jquery.nicescroll.min.js"></script>
 <script type="text/javascript" src="${resources}/js/custom.js"></script>
+
 <script type="text/javascript">
     /* <![CDATA[ */
     $(document).ready(function () {
