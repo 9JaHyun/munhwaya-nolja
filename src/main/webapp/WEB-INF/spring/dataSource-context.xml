@@ -23,6 +23,7 @@
 		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
 		<property name="mapperLocations" value="classpath*:com/munhwa/prj/**/mapper/*-map.xml" />
 	</bean>
+
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactoryBean" />
 	</bean>

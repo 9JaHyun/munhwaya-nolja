@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.munhwa.prj.performance.mapper.PerformanceMapper;
 import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.performance.vo.Criteria;
+import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 
 @Repository("performanceDao")

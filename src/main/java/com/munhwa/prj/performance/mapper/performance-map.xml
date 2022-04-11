@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.munhwa.prj.performance.mapper.PerformanceMapper">
-	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
-		<id property="id" column="id"/>
-		<result property="name" column="name"/>
-		<result property="location" column="location"/>
-		<result property="sdate" column="sdate"/>
-		<result property="edate" column="edate"/>
-		<result property="content" column="content"/>
-		<result property="status" column="status"/>
-		<result property="image" column="image"/>
-		<result property="artistId" column="artist_id"/>
-		<result property="price" column="price"/>
-		<result property="person" column="person"/>
-	</resultMap>
-	
-	<select id="performanceSelectList" resultMap="performanceResultMap">
-		<![CDATA[
+  <resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="location" column="location"/>
+    <result property="sdate" column="sdate"/>
+    <result property="edate" column="edate"/>
+    <result property="content" column="content"/>
+    <result property="status" column="status"/>
+    <result property="image" column="image"/>
+    <result property="artistId" column="artist_id"/>
+    <result property="price" column="price"/>
+    <result property="person" column="person"/>
+  </resultMap>
+
+  <select id="performanceSelectList" resultMap="performanceResultMap">
+    <![CDATA[
 		SELECT	ID
 		,		NAME
 		,		LOCATION
@@ -43,59 +44,111 @@
 		FROM PERFORMANCE P, COMMON_CODE CC
 		WHERE P.STATUS = CC.ID
 		]]>
-		<if test="keyword != null">
-			AND P.NAME LIKE '%'||#{keyword}||'%'
-		</if>
-		ORDER BY P.SDATE DESC
-		)
-		<![CDATA[
+    <if test="keyword != null">
+      AND P.NAME LIKE '%'||#{keyword}||'%'
+    </if>
+    ORDER BY P.SDATE DESC
+    )
+    <![CDATA[
 		WHERE rank > (#{pageNum} -1) * #{amount}
 		AND rank <= #{pageNum} * #{amount}
 		]]>
-	</select>
-	
-	<select id="getTotal" resultType="int">
-    
-        SELECT COUNT(*) FROM PERFORMANCE
-        
+  </select>
+
+  <select id="getTotal" resultType="int">
+
+    SELECT COUNT(*) FROM PERFORMANCE
+
+    <if test="keyword != null">
+      WHERE NAME LIKE '%'||#{keyword}||'%'
+    </if>
+
+  </select>
+
+  <select id="performanceSelect" parameterType="com.munhwa.prj.performance.vo.PerformanceVO"
+    resultMap="performanceResultMap">
+    SELECT p.id
+         , p.name
+         , p.location
+         , p.sdate
+         , p.edate
+         , p.content
+         , p.status
+         , p.image
+         , p.artist_id
+         , p.price
+         , p.person - pp.personal AS person
+    FROM performance p,
+         performance_personal pp
+    WHERE p.id = #{id}
+      AND p.id = pp.id
+  </select>
+
+  <select id="selectPerformancesByFilter"
+    resultType="com.munhwa.prj.performance.vo.PerformanceVO">
+    SELECT ID
+    , NAME
+    , LOCATION
+    , SDATE
+    , EDATE
+    , CONTENT
+    , IMAGE
+    , ARTIST_ID
+    , PRICE
+    , PERSON
+    , STATUS
+    FROM (SELECT rank() over (ORDER BY P.SDATE desc) rank
+    , P.ID
+    , P.NAME
+    , P.LOCATION
+    , P.SDATE
+    , P.EDATE
+    , P.CONTENT
+    , P.IMAGE
+    , P.ARTIST_ID
+    , P.PRICE
+    , P.PERSON
+    , CC.NAME as STATUS
+    FROM PERFORMANCE P, COMMON_CODE CC
+    <where>
+      P.STATUS = CC.ID
+      <if test="key = 'title'">
         <if test="keyword != null">
-        	WHERE NAME LIKE '%'||#{keyword}||'%'
+          AND P.NAME LIKE <![CDATA['%'||#{keyword}||'%']]>
         </if>
-    
-    </select>
-	
-	
-	<select id="performanceSelect" parameterType="com.munhwa.prj.performance.vo.PerformanceVO" resultMap="performanceResultMap">
-		SELECT	P.ID
-		,		P.NAME
-		,		P.LOCATION
-		,		P.SDATE
-		,		P.EDATE
-		,		P.CONTENT
-		,		P.STATUS
-		,		P.IMAGE
-		,		P.ARTIST_ID
-		,		P.PRICE
-		,		P.PERSON - PP.PERSONAL AS PERSON
-		FROM	PERFORMANCE P, PERFORMANCE_PERSONAL PP
-		WHERE   P.ID = #{id}
-		AND		P.ID = PP.ID
-	</select>
-	
-	<insert id="performanceInsert" parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
-		INSERT INTO PERFORMANCE(ID, NAME, LOCATION, SDATE, EDATE, CONTENT, IMAGE, PRICE, ARTIST_ID)
-		VALUES(PERFORMANCE_SEQ.nextval, #{name}, #{location}, #{sdate}, #{edate}, #{content}, #{image}, #{price}, #{artistId})
-	</insert>
-
-
-	
-	<update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
-		<![CDATA[
-			{ call accept_performance (
-				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
-				#{v_per_status, mode=IN, jdbcType=VARCHAR, javaType=string}
-			)}
+      </if>
+      <if test="key = 'status'">
+        <if test="keyword != null">
+          AND P.STATUS LIKE <![CDATA['%'||#{keyword}||'%']]>
+        </if>
+      </if>
+      <if test="key = 'title'">
+        <if test="keyword != null">
+          AND P.NAME LIKE <![CDATA['%'||#{keyword}||'%']]>
+        </if>
+      </if>
+    </where>
+    ORDER BY P.SDATE DESC
+    )
+    <![CDATA[
+		WHERE rank > (#{pageNum} -1) * #{amount}
+		AND rank <= #{pageNum} * #{amount}
 		]]>
+  </select>
+
+  <insert id="performanceInsert" parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
+    INSERT INTO performance(id, name, location, sdate, edate, content, image, price, artist_id)
+    VALUES (performance_seq.nextval, #{name}, #{location}, #{sdate}, #{edate}, #{content}, #{image},
+            #{price}, #{artistId})
+  </insert>
+
+
+  <update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
+<![CDATA[
+    { call accept_performance(
+      #{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_per_status, mode=IN, jdbcType=VARCHAR, javaType=string}
+      )}
+    ]]>
 	</update>
-	
 </mapper>

@@ -5,4 +5,8 @@
   <settings>
     <setting name="jdbcTypeForNull" value="NULL"/>
   </settings>
+
+  <plugins>
+    <plugin interceptor="com.munhwa.prj.common.mybatis.BaseEntityInterceptor"/>
+  </plugins>
 </configuration>

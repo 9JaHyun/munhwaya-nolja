@@ -1,22 +1,23 @@
 package com.munhwa.prj.artist.serviceImpl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.munhwa.prj.artist.web.MessagesDTO;
+import com.munhwa.prj.artist.web.SmsRequest;
+import com.munhwa.prj.artist.web.SmsResponse;
+import com.munhwa.prj.common.service.PropertiesScan;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,13 +25,6 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.munhwa.prj.artist.web.MessagesDTO;
-import com.munhwa.prj.artist.web.SmsRequest;
-import com.munhwa.prj.artist.web.SmsResponse;
-import com.munhwa.prj.common.service.PropertiesScan;
 
 
 

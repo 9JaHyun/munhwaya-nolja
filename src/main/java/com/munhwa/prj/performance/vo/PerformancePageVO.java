@@ -1,5 +1,7 @@
 package com.munhwa.prj.performance.vo;
 
+import com.munhwa.prj.common.vo.Criteria;
+
 public class PerformancePageVO {
 
     /* 시작 페이지 */
