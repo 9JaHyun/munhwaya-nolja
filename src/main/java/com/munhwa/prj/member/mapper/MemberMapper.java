@@ -35,5 +35,8 @@ public interface MemberMapper {
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
 
+	// 프로필 업데이트
+	int updateProfile(MemberVO vo);
+
 	MemberVO selectByMemberId(@Param("username") String id);
 }

@@ -27,4 +27,12 @@ public class PerformanceVO {
 	private int price;
 	private int person;
 
+	
+	public void accpetPerformance() {
+		this.status = "A01";
+	}
+	
+	public void rejectPerformance() {
+		this.status = "A02";
+	}
 }

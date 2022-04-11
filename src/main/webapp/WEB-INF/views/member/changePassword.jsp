@@ -22,7 +22,6 @@
 
 
 <script>
-
     function send() {
         var pw = $("#password").val();
         var pw2 = $("#password2").val();
@@ -46,5 +45,4 @@
             return true;
         }
     }
-
 </script>

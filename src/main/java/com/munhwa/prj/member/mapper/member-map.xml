@@ -13,16 +13,27 @@
 	</resultMap>
 
 	<!-- 마이페이지 회원정보 -->
-  <select id="selectByMemberId" resultType="com.munhwa.prj.member.vo.MemberVO">
-    SELECT id, password, nickname, tel, genre, role, mileage, image
-    FROM member
-    WHERE id = #{username}
-  </select>
+	<select id="selectByMemberId"
+		resultType="com.munhwa.prj.member.vo.MemberVO">
+		SELECT ID, PASSWORD, NICKNAME, TEL, GENRE, ROLE, MILEAGE, ONAME, SNAME
+		FROM MEMBER
+		WHERE ID = #{username}
+	</select>
 
 	<!-- 개인정보 업데이트 -->
 	<update id="updateInfo" parameterType="com.munhwa.prj.member.vo.MemberVO">
 		UPDATE MEMBER
 		SET TEL = #{tel},
+		GENRE = #{genre}
+		WHERE ID = #{id}
+	</update>
+	
+	<!-- 프로필 업데이트 (사진, 닉네임) -->
+	<update id="updateProfile" parameterType="com.munhwa.prj.member.vo.MemberVO">
+		UPDATE MEMBER
+		SET ONAME = #{oname}, 
+			SNAME = #{sname}, 
+			NICKNAME = #{nickname}
 			GENRE = #{genre}
 		WHERE ID = #{id}
 	</update>
@@ -42,8 +53,8 @@
 
   <!-- 회원가입 -->
   <insert id="memberSignup" parameterType="com.munhwa.prj.member.vo.MemberVO">
-    INSERT INTO member (id, password, nickname, tel, genre, mileage, role, image)
-    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{image})
+    INSERT INTO member (id, password, nickname, tel, genre, mileage, role, oname, sname)
+    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{oname}, #{sname})
   </insert>
 
   <!-- 소셜 로그인 시 회원가입 처리 -->
@@ -51,7 +62,7 @@
 	<![CDATA[
     { call saveMember (
       #{v_id, mode=IN, jdbcType=VARCHAR, javaType=string},
-      #{v_password, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_password, mode=IN, jdbcType=VARCHAR, javaType=string},
       #{v_nickname, mode=IN, jdbcType=VARCHAR, javaType=string},
       #{v_tel, mode=IN, jdbcType=VARCHAR, javaType=string},
       #{v_genre, mode=IN, jdbcType=VARCHAR, javaType=string},

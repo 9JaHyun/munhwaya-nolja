@@ -35,4 +35,8 @@
     <put-attribute name="body" value="/WEB-INF/views/artist/{1}.jsp"/>
   </definition>
 
+  <definition name="*-qrcode" extends="qrcodeTemplate">
+    <put-attribute name="body" value="/WEB-INF/views/qrcode/{1}.jsp"/>
+  </definition>
+
 </tiles-definitions>

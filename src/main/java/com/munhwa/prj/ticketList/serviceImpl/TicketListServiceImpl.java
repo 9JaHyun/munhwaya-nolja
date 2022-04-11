@@ -10,25 +10,38 @@ import com.munhwa.prj.ticketList.mapper.TicketListMapper;
 import com.munhwa.prj.ticketList.service.TicketListService;
 import com.munhwa.prj.ticketList.vo.TicketListVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository("ticketListDao")
 public class TicketListServiceImpl implements TicketListService {
 
 	@Autowired
-	private TicketListMapper map;
+	private TicketListMapper mapper;
 	
 	@Override
 	public List<TicketListVO> ticketListSelectList(String id) {
-		return map.ticketListSelectList(id);
+		return mapper.ticketListSelectList(id);
 	}
 
 	@Override
 	public int ticketListInsert(Map<String, Object> paramMap) {
-		return map.ticketListInsert(paramMap);
+		mapper.ticketListInsert(paramMap);
+		return (int) paramMap.get("v_ticket_id");
 	}
 
 	@Override
 	public TicketListVO ticketListSelect(TicketListVO vo) {
-		return map.ticketListSelect(vo);
+		return mapper.ticketListSelect(vo);
+	}
+
+	@Override
+	public int qrcodeUpdate(TicketListVO vo) {
+		return mapper.qrcodeUpdate(vo);
+	}
+
+	@Override
+	public int qrcodeAttendance(int id) {
+		return mapper.qrcodeAttendance(id);
 	}
 
 }
