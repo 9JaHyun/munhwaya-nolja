@@ -25,6 +25,8 @@ import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.entity.UploadFile;
 import com.munhwa.prj.common.service.FileUtils;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -62,13 +64,13 @@ private PromotionRequestService promotionRequestDao;
     	return "artistManagement-artist";
     }
     
-    // 아티스트 정보 수정 폼 호출
+    // 아티스트 정보 신청 폼 호출
     @RequestMapping("/artistInsertForm")
     public String artistInsertForm(){
     	return "artistInsert-artist"; 
     }
     
-    // 아티스트 정보 수정
+    // 아티스트 정보 신청
     @RequestMapping("/artistInsert")
     public String artistInsert(ArtistVO vo, /*RedirectAttributes*/ Model rttr){
     	vo.setMemberId("test1@gmail.com");
@@ -83,6 +85,8 @@ private PromotionRequestService promotionRequestDao;
     	}
     	return "artist/myPageMove";
     }
+    
+
     
     // 회원 -> 아티스트 승급 신청 폼 호출
     @RequestMapping("/artistRequestForm")

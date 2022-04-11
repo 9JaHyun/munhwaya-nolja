@@ -85,9 +85,15 @@
 				alert("작업물 인증 파일을 첨부하세요.");
 				return false;
 			}
-			if(!document.info.identify.value){
+			if(!document.info.phone.value){
 				alert("본인인증을 진행해주세요.");
+				
 				return false;
+			}if(!document.info.phone2.value){
+				alert("인증번호를 입력해주세요.");
+				
+				return false;
+				
 			}else{
 				return true;
 			}
