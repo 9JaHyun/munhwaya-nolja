@@ -136,17 +136,11 @@ public class MemberController {
         if (n != 0) {
             return "redirect:home.do";
         } else {
-        	String message ="아이디 또는 비밀번호가 일치하지 않습니다.";
+        	String message ="비밀번호가 일치하지 않습니다.";
         	attr.addFlashAttribute("message", message);
             return "redirect:dropMember.do";
         }
     }
-    
-    @GetMapping("/test.do")
-    public String test() {
-        return "test-member";
-    }  
-
 
     // 회원가입폼
     @GetMapping("/signupForm.do")
@@ -172,6 +166,25 @@ public class MemberController {
     public String signInForm() {
         return "signIn/signInForm";
     }
+    
+    // 아이디 찾기 페이지
+    @GetMapping("/findId")
+    public String findId() {
+    	return "signup/findId";
+    }
+    
+    // 아이디 찾기 결과
+    @GetMapping("/findIdResult")
+    public String findIdResult() {
+    	return "signup/findIdResult";
+    }
+    
+    // 비밀번호 찾기 페이지
+    @GetMapping("/findPassword")
+    public String findPassword() {
+    	return "signup/findPassword";
+    }
+    
 
     // 아이디 중복체크
     @ResponseBody

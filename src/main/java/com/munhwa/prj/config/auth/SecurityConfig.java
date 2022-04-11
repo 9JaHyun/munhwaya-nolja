@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .and()
               .authorizeRequests(request -> request
                     .antMatchers("/", "/home.do", "/signup.do", "/resources/**", "/css/**",
-                          "/js/**", "/*signup*", "/idChk", "/nickChk").permitAll()
+                          "/js/**", "/*signup*", "/idChk", "/nickChk", "/findId", "/findPassword", "/findIdResult").permitAll()
                     .antMatchers("/member/**").access("hasRole('ROLE_R01')") // member
                     .antMatchers("/artist/**").access("hasRole('ROLE_R02')") // artist
                     .antMatchers("/admin/**").access("hasRole('ROLE_R03')")  // admin
@@ -55,9 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .formLogin(login -> login
                     .loginPage("/signin").permitAll()
                     .defaultSuccessUrl("/", false)
-                    .failureUrl("/signin")
-                    .successHandler(loginSuccessHandler())
-                    .failureHandler(loginFailureHandler()))
+                    .successHandler(loginSuccessHandler()))
+//                    .failureHandler(loginFailureHandler()))
               .logout(logout -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/home.do")

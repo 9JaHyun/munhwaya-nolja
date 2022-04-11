@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <style>
 .js-load {
@@ -156,7 +156,6 @@ function delWishFnc(id) {
 			
 			.done(() => {
 				document.getElementById(id).parentNode.parentNode.parentNode.remove();
-				swal("Hello world!");	
 			});
 		}
 }
