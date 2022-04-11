@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.music.mapper.AlbumMapper;
 import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.music.vo.AlbumVO;
@@ -40,6 +41,11 @@ public class AlbumServiceImpl implements AlbumService{
 	}
 	
 	@Override
+	public List<AlbumVO> albumSelectByTitle(String title, Criteria cri) {
+		return map.albumSelectByTitle(title, cri);
+	}
+	
+	@Override
 	public int albumInsert(AlbumVO vo) {
 		return map.albumInsert(vo);
 	}
@@ -55,8 +61,19 @@ public class AlbumServiceImpl implements AlbumService{
 	}
 
 	@Override
-	public List<AlbumVO> albumSelectListByRelease() {
-		return map.albumSelectListByRelease();
+	public List<AlbumVO> albumSelectListByRelease(Criteria cri) {
+		return map.albumSelectListByRelease(cri);
 	}
+
+	@Override
+	public int getCountByList(int id) {
+		return map.getCountByList(id);
+	}
+
+	@Override
+	public int getCountByList4(String title) {
+		return map.getCountByList4(title);
+	}
+
 
 }

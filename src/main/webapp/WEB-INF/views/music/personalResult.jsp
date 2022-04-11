@@ -4,15 +4,13 @@
 
 <style>
 	.pageInfo {
-   list-style: none;
-   display: inline-block;
-   margin: 10px 0 0 100px;
+  	 list-style: none;
+   	 display: inline-block;
 	}
 	
 	.pageInfo li {
 	   float: left;
 	   font-size: 1px;
-	   margin-left: 10px;
 	   padding: 7px;
 	   font-weight: 500;
 	}
@@ -142,8 +140,9 @@
 			</div><!-- row clearfix -->
 			<!-- 크기지정  post 끝-->
 			<!-- 왼쪽 상단메인 끝 -->
-		<div class="pageInfo_wrap">
-      <div class="pageInfo_area" style="margin-left:100px;">
+<!-- 	페이징 -->
+	<div class="pageInfo_wrap">
+      <div class="pageInfo_area" style="text-align: center;">
          <ul id="pageInfo" class="pageInfo">
             <!-- 이전페이지 버튼 -->
             <c:if test="${pageMaker.prev}">
@@ -164,7 +163,7 @@
          </ul>
       </div>
    </div>
-	</div>
+</div>
 	<!-- content끝 -->
 <form id="moveForm" method="get" action="personalResult">
       <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">

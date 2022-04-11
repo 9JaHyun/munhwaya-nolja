@@ -6,8 +6,8 @@
 		<result property="memberId" column="MEMBER_ID"/>
 	</resultMap>
 	
-	<select id="purchaseSelectList" parameterType="String" resultMap="purchaseResultMap">
-		SELECT *
+	<select id="purchaseSelectList" parameterType="String" resultType="int">
+		SELECT MUSIC_ID
 		FROM PURCHASED_MUSIC
 		WHERE MEMBER_ID = #{id}
 	</select>

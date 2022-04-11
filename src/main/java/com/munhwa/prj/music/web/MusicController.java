@@ -30,7 +30,7 @@ import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.AlbumVO;
 import com.munhwa.prj.music.vo.MusicVO;
-import com.munhwa.prj.music.web.dto.MusicChartDto;
+import com.munhwa.prj.music.vo.etc.MusicChartDto;
 import com.munhwa.prj.wishlist.service.WishlistService;
 
 @Controller
@@ -59,60 +59,85 @@ public class MusicController {
 		model.addAttribute("musicBalladList", musicDAO.musicSelectListByGenre("G01"));
 
 		model.addAttribute("musicChartList", musicDAO.musicSelectList());// 갯수지정
-		model.addAttribute("releaseSoonAlbumList", albumDAO.albumSelectListByRelease());// 갯수지정
+		model.addAttribute("releaseSoonAlbumList", albumDAO.albumSelectListByRelease(cri));// 갯수지정
 		model.addAttribute("musicPersonalList", musicDAO.musicPersonalList(id,cri));
 		
 		return "music/musicMain";
 	}
 
 	@GetMapping("/searchResult")
-	public String searchResult(String title, Model model) {
-		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title));
+	public String searchResult(String title, Model model, Criteria cri) {
+		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title,cri));
+		model.addAttribute("albumSelectListByTitle", albumDAO.albumSelectByTitle(title,cri));
 		model.addAttribute("title", title);
 		return "music/searchResult";
 	}
 
 	@GetMapping("/searchResultMusic")
-	public String searchResultMusic(Model model, String title) {
-		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title));
+	public String searchResultMusic(Model model, String title, Criteria cri) {
+		model.addAttribute("title", title);
+		
+		model.addAttribute("musicSelectListByTitle1", musicDAO.musicSelectByTitle(title,cri));
+		
+		int total = musicDAO.getCountByList3(title);
+	    PageDTO pageMake = new PageDTO(cri, total);
+	    model.addAttribute("pageMaker", pageMake);
+	    
 		return "music/searchResultMusic";
 	}
 
 	@GetMapping("/searchResultAlbum")
-	public String searchResultAlbum(Model model, String title) {
-		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title));
+	public String searchResultAlbum(Model model, String title, Criteria cri) {
+		System.out.println(title);
+		model.addAttribute("title", title);
+		model.addAttribute("albumSelectListByTitle1", albumDAO.albumSelectByTitle(title,cri));
+		
+		int total = albumDAO.getCountByList4(title);
+	    PageDTO pageMake = new PageDTO(cri, total);
+	    model.addAttribute("pageMaker", pageMake);
+	    
 		return "music/searchResultAlbum";
 	}
 
 	@GetMapping("/chart")
 	public String chart(@LoginUser SessionUser user, Model model) {
-//		List<PurchaseVO> list = purchaseDao.purchaseSelectList(user.getId());
-//		해당 회원이 구매한 음원 목록
-//		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
-//		
+		//아이디 넣으면 구매한 음원의 vo LIST 나옴
+		List<MusicVO> list = musicDAO.musicSelectList();
+		
+		//아이디 넣으면 구매한 음원의 아이디 목록 나옴
+		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
+		
+		//차트에 표시할 Dto를 담을 리스트
 		List<MusicChartDto> chartList = new ArrayList<>();
-//		
-//		for(MusicVO vo : list) {
-//			MusicChartDto dto = new MusicChartDto(vo);
-//			int ids = dto.getId();
-//			boolean isPurchased = false;
-//			for(int id : musicList) {
-//				if(vo.getId() == id) {
-//					isPurchased = true;
-//					break;
-//				}
-//			}
-//			dto.setPurchase(isPurchased);
-//			chartList.add(dto);
-//		}
+		
+		//차트의 음원리스트와
+		for(MusicVO vo : list) {
+			MusicChartDto dto = new MusicChartDto(vo); //차트리스트의 음원을 구입여부가있는 vo2에 넣어줌
+			int ids = dto.getId();
+			boolean isPurchased = false;
+			for(int id : musicList) {
+				if(ids == id) {
+					isPurchased = true;
+					break;
+				}
+			}
+			dto.setPurchase(isPurchased);
+			chartList.add(dto);
+		}
 		
 		model.addAttribute("musicChartList", chartList);// 갯수지정
 		return "music/chart";
 	}
 
 	@GetMapping("/releaseSoon")
-	public String releaseSoon(Model model) {
-		model.addAttribute("releaseSoonAlbumList", albumDAO.albumSelectListByRelease());
+	public String releaseSoon(Model model, Criteria cri) {
+		
+		List<AlbumVO> list =  albumDAO.albumSelectListByRelease(cri);
+		model.addAttribute("releaseSoonAlbumList", list);
+		
+		int total = albumDAO.getCountByList(21);
+	    PageDTO pageMake = new PageDTO(cri, total);
+	    model.addAttribute("pageMaker", pageMake);
 		return "music/releaseSoon";
 	}
 
@@ -159,9 +184,9 @@ public class MusicController {
 	@GetMapping("/personalResult")
 	public String personalResult(Model model, @LoginUser SessionUser user, Criteria cri) {
 		String id = user.getId();
-		List<MusicVO> list = musicDAO.musicPersonalList(id,cri);
+		List<MusicVO> list = musicDAO.musicPersonalList(id, cri);
  		model.addAttribute("musicPersonalList", list);
-		  int total = musicDAO.getCountByList(21);
+		  int total = musicDAO.getCountByList(id);
 	      PageDTO pageMake = new PageDTO(cri, total);
 	      model.addAttribute("pageMaker", pageMake);
 		return "music/personalResult";
@@ -187,9 +212,13 @@ public class MusicController {
 
 	// 내가 구매한 음원 목록
 	@GetMapping("/purchase")
-	public String purchase(@LoginUser SessionUser user, Model model) {
+	public String purchase(@LoginUser SessionUser user, Model model, Criteria cri) {
 		String id = user.getId();
-		model.addAttribute("purchasedList", musicDAO.musicSelectListByPurchase(id));
+		model.addAttribute("purchasedList", musicDAO.musicSelectListByPurchase(id,cri));
+		
+		int total = musicDAO.getCountByList2(id);
+	    PageDTO pageMake = new PageDTO(cri, total);
+	    model.addAttribute("pageMaker", pageMake);
 		return "music/purchase";
 	}
 	

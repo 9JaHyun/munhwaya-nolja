@@ -3,6 +3,52 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <style>
+.pageInfo {
+   list-style: none;
+   display: inline-block;
+	}
+	
+	.pageInfo li {
+	   float: left;
+	   font-size: 1px;
+	   padding: 7px;
+	   font-weight: 500;
+	}
+	
+	a:link {
+	   color: white;
+	   text-decoration: none;
+	}
+	
+	a:visited {
+	   color: white;
+	   text-decoration: none;
+	}
+	
+	a:hover {
+	   color: white;
+	   text-decoration: underline;
+	}
+	
+	.focus {
+	   background-color: #cdd5ec;
+	}
+	
+	.search_area {
+	   display: inline-block;
+	   margin-top: 30px;
+	   margin-left: 260px;
+	}
+	
+	.search_area input {
+	   height: 30px;
+	   width: 250px;
+	}
+	
+	.search_area button {
+	   width: 100px;
+	   height: 36px;
+	}
     div, tbody, td, tr, table {
         vertical-align: middle;
         color: white;
@@ -64,7 +110,7 @@
                                     </thead>
                                     <tbody>
                                     <c:forEach var="music" items="${musicChartList}" begin="0"
-                                               end="19" varStatus="status">
+                                               end="14" varStatus="status">
                                         <tr class="cart_table_item"
                                             style="text-align: center; font-size:small ;">
                                             <td>${status.count}</td>
@@ -84,9 +130,16 @@
                                                     ${music.likeIt }
                                             </td>
                                             <td class="product-name">
-                                                <button type="button" class="tbutton medium" onclick="addCart()" style="font-size:10px">
-                                             <span data-musicid="${music.id }">구매</span>
-                                                </button>
+                                            <c:choose>
+	                                            <c:when test="${!music.purchase }">
+	                                                <button type="button" class="tbutton medium" onclick="addCart()" style="font-size:10px">
+	                                             		<span data-musicid="${music.id }">구매</span>
+	                                                </button>
+	                                            </c:when>
+                                            	<c:otherwise>
+                                            		<span>이미 구매하셨습니다.</span>
+                                            	</c:otherwise>
+                                            </c:choose>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -102,7 +155,6 @@
     </div><!-- row clearfix -->
 </div>
 <!-- content끝 -->
-
 <!-- 카트담기 -->
 <script>
     function addCart() {

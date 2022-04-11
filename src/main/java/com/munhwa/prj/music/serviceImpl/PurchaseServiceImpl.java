@@ -15,7 +15,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 	private PurchaseMapper map;
 
 	@Override
-	public List<PurchaseVO> purchaseSelectList(String id) {
+	public List<Integer> purchaseSelectList(String id) {
 		return map.purchaseSelectList(id);
 	}
 

@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.music.vo.MusicVO;
-import com.munhwa.prj.music.vo.SearchVO;
 
 public interface MusicMapper {
 		List<MusicVO> musicSelectList();
@@ -16,11 +15,11 @@ public interface MusicMapper {
   
 		List<MusicVO> musicPersonalList(@Param("id") String id, @Param("cri")Criteria cri);
   
-		List<SearchVO> musicSelectByTitle(String title);
+		List<MusicVO> musicSelectByTitle(@Param("title") String title, @Param("cri")Criteria cri);
   
 		List<MusicVO> musicSelectByAlBum(int id);
   
-		List<MusicVO> musicSelectListByPurchase(String id);
+		List<MusicVO> musicSelectListByPurchase(@Param("id") String id, @Param("cri") Criteria cri);
   
 		List<MusicVO> musicSelectListByWishList(int id);
   
@@ -40,5 +39,10 @@ public interface MusicMapper {
   
 		int musicDelete(MusicVO vo);
 		
-		int getCountByList(int id);
+		int getCountByList(String id);
+		
+		int getCountByList2(String id);
+		
+		int getCountByList3(String title);
+
 }

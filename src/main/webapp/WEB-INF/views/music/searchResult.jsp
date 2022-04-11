@@ -42,9 +42,9 @@
 							<li id="Latest" class="active">
 								<div class="video-grid">
 								<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
-									<a href="streaming?id=${music.musicId }" class="grid_3">
-										<img src="api/picture/${music.picture }" alt="#">
-										<span><strong>${music.musicTitle }</strong>${music.musicArtistName }</span>
+									<a href="streaming?id=${music.id }" class="grid_3">
+										<img src="api/picture/${music.picture}" alt="#">
+										<span><strong>${music.title }</strong>${music.artName}</span>
 									</a>
 								</c:forEach>
 								</div><!-- video grid -->
@@ -70,10 +70,10 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-								<c:forEach var="album" items="${musicSelectListByTitle}" begin="0" end="7">
-									<a class="grid_3" href="albumInfo?id=${album.albumId }">
-										<img src="api/picture/${album.picture }" alt="#">
-										<span><strong>${album.albumTitle }</strong>${album.albumArtistName }</span>
+								<c:forEach var="album" items="${albumSelectListByTitle}" begin="0" end="7">
+									<a class="grid_3" href="albumInfo?id=${album.id }">
+										<img src="api/picture/${album.picture}" alt="#">
+										<span><strong>${album.albName }</strong>${album.artName}</span>
 									</a>
 								<%-- <form action="#" method="post">
 									<input type="hidden" value="${album.albumId }" name="albumId">
@@ -86,5 +86,6 @@
 				</div><!-- posts -->
 			<!-- 왼쪽하단 메인 끝-->	
 		</div>
-	</div>
-		<!-- content끝 -->
+</div>
+<!-- content끝 -->
+
