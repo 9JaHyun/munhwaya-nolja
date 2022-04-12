@@ -1,6 +1,7 @@
 package com.munhwa.prj.member.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,12 +55,6 @@ public class MemberServiceImpl implements MemberService {
 		return map.plusMileage(vo);
 	}
 
-	// 아티스트 마일리지 수익 22/04/05 류기태
-	@Override
-	public int plusMileageOfArtist(MemberVO vo) {
-		return map.plusMileageOfArtist(vo);
-	}
-
 	// 마일리지 사용 22/04/04 류기태
 	@Override
 	public int minusMileage(List<MemberVO> vo) {
@@ -73,5 +68,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateProfile(MemberVO vo) {
 		return map.updateProfile(vo);
+	}
+	
+	// 프로시저 곡 구매 마일리지 22/04/08 류기태 
+	@Override
+	public int updateMileageMusic(Map<String, Object> vo) {
+		return map.updateMileageMusic(vo);
+	}
+	
+	// 프로시저 공연 구매 마일리지 22/04/08 류기태
+	@Override
+	public int updateMileagePerformance(Map<String, Object> vo) {
+		return map.updateMileagePerformance(vo);
 	}
 }

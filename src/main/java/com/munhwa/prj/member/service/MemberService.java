@@ -1,6 +1,7 @@
 package com.munhwa.prj.member.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.munhwa.prj.member.vo.MemberVO;
 
@@ -21,9 +22,6 @@ public interface MemberService {
 	// 마일리지 사용 22/04/04 류기태
 	int minusMileage(List<MemberVO> vo);
 	
-	// 아티스트 마일리지 수익 22/04/05 류기태 
-	int plusMileageOfArtist(MemberVO vo);
-
 	// 개인정보 업데이트
 	int updateInfo(MemberVO vo);
 	
@@ -36,4 +34,10 @@ public interface MemberService {
 	MemberVO findById(String id);
 	
 	int updateProfile(MemberVO vo);
+	
+	// 프로시저 곡 구매 마일리지 22/04/08 류기태 
+	int updateMileageMusic(Map<String,Object> vo);
+	
+	// 프로시저 공연 구매 마일리지 22/04/08 류기태
+	int updateMileagePerformance(Map<String,Object> vo);
 }

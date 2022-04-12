@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div align="right" style="margin-bottom: 50px;">
     <a href="memberChangeInfo.do">회원정보 변경 >&nbsp;</a><a href="changeInfo.do">개인정보 변경 ></a>
     <h4>비밀번호 변경</h4>
@@ -24,7 +23,6 @@
 
 
 <script>
-
     function send() {
         var pw = $("#password1").val();
         var pw2 = $("#password2").val();
@@ -51,5 +49,4 @@
             return true;
         }
     }
-
 </script>

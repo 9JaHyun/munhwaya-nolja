@@ -2,9 +2,7 @@ package com.munhwa.prj.config.auth.handler;
 
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.mapper.MemberMapper;
-import com.munhwa.prj.music.vo.MusicVO;
 import java.io.IOException;
-import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,10 +27,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
           Authentication authentication) throws IOException, ServletException {
         String username = ((User) authentication.getPrincipal()).getUsername();
 
-        SessionUser sessionUser = new SessionUser(memberMapper.selectByMemberId(username));
-        sessionUser.setCart(new HashMap<Integer, MusicVO>());
-
-        request.getSession().setAttribute("member", sessionUser);
+        request.getSession().setAttribute("member", new SessionUser(memberMapper.selectByMemberId(username)));
         response.sendRedirect("home.do");
     }
 }
