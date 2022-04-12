@@ -3,9 +3,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.munhwa.prj.post.mapper.PostMapper">
   <insert id="insertPost">
-    INSERT INTO post (id, title, writer, content, created_at, hit, like_it, member_id,
+    INSERT INTO post (id, title, writer, content, created_at, hit, member_id,
                       file_group_id)
-    VALUES (post_seq.nextval, #{title}, #{writer}, #{content}, #{createdAt}, 0, 0, #{memberId},
+    VALUES (post_seq.nextval, #{title}, #{writer}, #{content}, #{createdAt}, 0, #{memberId},
             #{fileGroupId})
   </insert>
 
@@ -40,20 +40,19 @@
     select *
     from post
     <where>
-      <if test="filter.equal(member)">AND member_id = #{memberId}</if>
-      <if test="filter.equal(nickname)">AND writer = #{writer}</if>
-      <if test="filter.equal(title)">AND title = #{title}</if>
+      <if test="filter.equals('no')"/>
+      <if test="filter.equals('member')">AND member_id = #{memberId}</if>
+      <if test="filter.equals('nickname')">AND writer = #{writer}</if>
+      <if test="filter.equals('title')">AND title = #{title}</if>
     </where>
     <choose>
-      <when test="filter.equal(asc)">
-        <if test="value.equal(hit)">order by hit asc</if>
-        <if test="value.equal(likeIt)">order by like_it asc</if>
-        <if test="value.equal(createdAt)">order by created_at asc</if>
+      <when test="filter.equals('asc')">
+        <if test="value.equals('hit')">order by hit asc</if>
+        <if test="value.equals('createdAt')">order by created_at asc</if>
       </when>
-      <when test="filter.equal(desc)">
-        <if test="value.equal(hit)">order by hit desc</if>
-        <if test="value.equal(likeIt)">order by like_it desc</if>
-        <if test="value.equal(createdAt)">order by created_at desc</if>
+      <when test="filter.equals('desc')">
+        <if test="value.equals('hit')">order by hit desc</if>
+        <if test="value.equals('createdAt')">order by created_at desc</if>
       </when>
       <otherwise>
         order by created_at desc

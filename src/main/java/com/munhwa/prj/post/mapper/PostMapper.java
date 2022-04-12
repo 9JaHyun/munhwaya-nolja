@@ -2,6 +2,7 @@ package com.munhwa.prj.post.mapper;
 
 import com.munhwa.prj.post.vo.PostVO;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface PostMapper {
 
@@ -10,5 +11,5 @@ public interface PostMapper {
     int deletePostById(int id);
     PostVO selectPostById(int id);
     List<PostVO> selectPosts();
-    List<PostVO> selectPostsByFilter(String filter, String value);
+    List<PostVO> selectPostsByFilter(@Param("filter") String filter, @Param("value") String value);
 }

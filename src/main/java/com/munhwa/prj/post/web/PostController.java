@@ -5,21 +5,27 @@ import com.munhwa.prj.post.vo.PostVO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/post")
-    public String findAll() {
-        List<PostVO> list = postService.findAll();
-        return list.toString();
+    @GetMapping("/posts")
+    public String findAll(@RequestParam(name = "filter", defaultValue = "no") String filter,
+          @RequestParam(name = "value", defaultValue = "") String value,
+          @RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
+          @RequestParam(name = "amount", defaultValue = "10") String amount, Model model) {
+        model.addAttribute("posts", postService.findByFilter(filter, value));
+
+        return "post/postList";
     }
 
     @GetMapping("/post/{id}")

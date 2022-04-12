@@ -15,7 +15,6 @@ public class PostVO {
     private String content;
     private Date createdAt;
     private int hit;
-    private int likeIt;
     private String memberId;
     private String fileGroupId;
 }
