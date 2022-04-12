@@ -2,6 +2,8 @@ package com.munhwa.prj.member.mapper;
 
 
 import com.munhwa.prj.member.vo.MemberVO;
+
+import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
@@ -38,5 +40,9 @@ public interface MemberMapper {
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
 
+	// 마이페이지 회원정보
 	MemberVO selectByMemberId(@Param("username") String id);
+	
+	// 아이디 찾기 (계정 리스트)
+	List<MemberVO> findIdList(MemberVO vo);
 }

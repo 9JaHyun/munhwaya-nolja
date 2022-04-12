@@ -51,7 +51,6 @@
 
 <script>
 function delArtistFn(id) {
-
 	$.ajax({
 		url : "deleteLikeArtist.do",
 		data : JSON.stringify({artistId: id}),
@@ -63,7 +62,6 @@ function delArtistFn(id) {
 		document.getElementById(id).parentNode.parentNode.parentNode.remove();
 	})
 	;
-	
 }
 
 

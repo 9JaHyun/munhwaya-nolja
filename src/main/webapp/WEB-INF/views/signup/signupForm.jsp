@@ -19,11 +19,10 @@
 							<input style="width: 470px; margin-bottom: 15px;" type="email"
 								name="id" id="id" placeholder="ID (EMAIL)" required="required" />
 						</div>
-						<button style="margin-bottom: 20px;" 
-							class="tbutton small" id="idChk" name="idChk"
-							value="N" onclick="idChkFn();">
+						<p style="margin-bottom: 20px;" 
+							class="tbutton small" id="idChk" value="N" onclick="idChkFn();">
 							<span>아이디 중복확인</span>
-						</button>
+						</p>
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;" type="password"
 								name="password" id="password"
@@ -41,11 +40,10 @@
 								required="required" />
 
 						</div>
-						<button style="margin-bottom: 20px;" 
-							class="tbutton small" id="nickChk" name="nickChk"
-							value="N" onclick="nickChkFn();">
+						<p style="margin-bottom: 20px;" 
+							class="tbutton small" id="nickChk" value="N" onclick="nickChkFn();">
 							<span>닉네임 중복확인</span>
-						</button>
+						</p>
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;" type="text"
 								name="tel" id="tel" placeholder="TEL" required="required" />
@@ -162,11 +160,11 @@
 	}
 	
 	$("#id").on("change keyup paste", function(){
-		idChk.value = "N";
+		$('#idChk').attr('value', 'N');
 	})
 	
 	$("#nickname").on("change keyup paste", function(){
-		nickChk.value = "N";
+		$('#nickChk').attr('value', 'N');
 	})
 	
 </script>

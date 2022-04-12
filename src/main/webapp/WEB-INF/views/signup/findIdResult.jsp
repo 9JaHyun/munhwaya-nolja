@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <!--Stylesheet-->
@@ -80,14 +82,23 @@ button {
 </div>
 
 <div class="background"></div>
-<form>
-
-	<h5 style="margin-bottom: 60px; text-align: center;">일치하는 아이디가 존재하지 않습니다.</h5>
-	<h5 style="margin-bottom: 60px; text-align: center;">1개의 아이디가 존재합니다.</h5>
-
+<form style="height: auto;">
+	<c:choose>
+		<c:when test="${fn:length(idLists)==0 or idLists==null}">
+			<h5 style="margin: 70px 0px 60px 0px; text-align: center;">일치하는 아이디가 존재하지 않습니다.</h5>
+		</c:when>
+		<c:otherwise>
+			<h4 style="margin: 20px 0px 50px 0px; text-align: center;">${fn:length(idLists)}개의 아이디가 존재합니다.</h4>
+			<c:forEach items="${idLists}" var="idList">
+				<div align="center">
+					<a href="signin">${idList.id}</a><br>
+				</div>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
 
 </form>
-<div align="center" style="margin-bottom: 200px;">
+<div align="center" style="margin-bottom: 200px; margin-top: 20px;">
 	<a href="signin">로그인</a> |
 	<a href="findPassword">비밀번호 찾기</a>
 </div>

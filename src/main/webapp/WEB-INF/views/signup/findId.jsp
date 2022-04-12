@@ -80,7 +80,7 @@ button {
 </div>
 
 <div class="background"></div>
-<form method="post" action="signin">
+<form method="post" action="findIdResult">
 	<h2 style="margin-bottom: 60px; text-align: center;">아이디 찾기</h2>
 
 	<h5 style="margin-bottom: 20px;">TEL</h5>

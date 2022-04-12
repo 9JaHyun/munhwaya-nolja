@@ -1,6 +1,9 @@
 package com.munhwa.prj.member.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,15 +12,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.munhwa.prj.common.entity.UploadFile;
-import com.munhwa.prj.common.entity.UploadFileVO;
 import com.munhwa.prj.common.service.FileUtils;
-import com.munhwa.prj.common.service.UploadFileService;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
@@ -173,18 +178,11 @@ public class MemberController {
     	return "signup/findId";
     }
     
-    // 아이디 찾기 결과
-    @GetMapping("/findIdResult")
-    public String findIdResult() {
-    	return "signup/findIdResult";
-    }
-    
     // 비밀번호 찾기 페이지
     @GetMapping("/findPassword")
     public String findPassword() {
     	return "signup/findPassword";
     }
-    
 
     // 아이디 중복체크
     @ResponseBody
@@ -198,6 +196,24 @@ public class MemberController {
     @PostMapping("/nickChk")
     public int nickChk(String nickname) {
         return memberDao.nickChk(nickname);
+    }
+    
+    // 아이디 찾기 결과
+    @PostMapping("/findIdResult")
+    public String findIdResult(MemberVO vo, Model model) {
+    	model.addAttribute("idLists", memberDao.findIdList(vo));
+    	return "signup/findIdResult";
+    }
+    
+    
+    // 비밀번호 찾기 메일 발송
+    @ResponseBody
+    @RequestMapping(value="/findpw", produces= "application/x-www-form-urlencoded; charset=UTF-8")
+    public String findPwPOST(@ModelAttribute MemberVO member) throws Exception{
+    	if(!memberDao.findPw(member)) {
+    		return "해당되는 아이디가 존재하지 않습니다.";
+    	} 
+    	return "해당 메일로 임시 비밀번호가 전송되었습니다.";
     }
 
 }

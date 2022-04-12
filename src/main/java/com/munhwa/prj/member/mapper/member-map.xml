@@ -10,6 +10,8 @@
 		<result property="tel" column="tel" />
 		<result property="mileage" column="mileage"/>
 		<result property="genre" column="genre" />
+		<result property="sname" column="sname"/>
+		<result property="oname" column="oname"/>
 	</resultMap>
 
 	<!-- 마이페이지 회원정보 -->
@@ -60,21 +62,11 @@
 		WHERE ID = #{id}
 	</delete>
 
-	<select id="deleteMember2"
-		parameterType="com.munhwa.prj.member.vo.MemberVO">
-		SELECT ID, PASSWORD
-		FROM MEMBER
-		WHERE ID = #{id} AND
-		PASSWORD = #{password}
-	</select>
-
 	<!-- 회원가입 -->
 	<insert id="memberSignup"
 		parameterType="com.munhwa.prj.member.vo.MemberVO">
-		INSERT INTO member (id, password, nickname, tel, genre, mileage, role,
-		image)
-		VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role},
-		#{image})
+		INSERT INTO member (id, password, nickname, tel, genre, mileage, role)
+		VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role})
 	</insert>
 
 	<!-- 소셜 로그인 시 회원가입 처리 -->
@@ -132,4 +124,12 @@
 									and b.art_name = c.name
 									and b.title = #{title})
 	</update>
+	
+	<!-- 아이디 찾기 (계정 리스트) -->
+	<select id="findIdList" resultMap="memberResultMap">
+		SELECT ID
+		FROM MEMBER
+		WHERE TEL = #{tel}
+	</select>
+	
 </mapper>

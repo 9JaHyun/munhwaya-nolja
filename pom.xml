@@ -203,6 +203,12 @@
 			<artifactId>javase</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		<!-- 메일 api -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-email</artifactId>
+		    <version>1.5</version>
+		</dependency>
 
 		<!-- Test -->
 		<dependency>

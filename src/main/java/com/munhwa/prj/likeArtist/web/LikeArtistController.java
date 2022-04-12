@@ -28,9 +28,9 @@ public class LikeArtistController {
 	// 좋아요 한 아티스트 삭제
 	@ResponseBody
     @RequestMapping("/deleteLikeArtist.do")
-    public String deleteLikeArtist(@RequestBody ArtistDeleteReqeustDto dto) {
+    public String deleteLikeArtist(@LoginUser SessionUser user, @RequestBody ArtistDeleteReqeustDto dto) {
     	LikeArtistVO vo = new LikeArtistVO();
-    	vo.setMemberId("test1@gmail.com");
+    	vo.setMemberId(user.getId());
     	vo.setArtistId(dto.getArtistId());
     	
     	likeArtistDao.deleteLikeArtist(vo);

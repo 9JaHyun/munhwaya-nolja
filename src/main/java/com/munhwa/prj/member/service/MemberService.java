@@ -2,6 +2,8 @@ package com.munhwa.prj.member.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.munhwa.prj.member.vo.MemberVO;
 
 public interface MemberService {
@@ -33,7 +35,19 @@ public interface MemberService {
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
 
+	// 마이페이지 회원정보
 	MemberVO findById(String id);
 	
+	// 프로필 업데이트
 	int updateProfile(MemberVO vo);
+	
+	// 아이디 찾기 (계정 리스트)
+	List<MemberVO> findIdList(MemberVO vo);
+	
+	//이메일발송
+	public void sendEmail(MemberVO vo, String pw, String div) throws Exception;
+
+	//비밀번호찾기
+	public boolean findPw(MemberVO vo) throws Exception;
+
 }

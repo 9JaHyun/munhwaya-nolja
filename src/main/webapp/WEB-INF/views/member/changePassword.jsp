@@ -32,9 +32,6 @@ function send() {
 	var eng = pw.search(/[a-z]/ig);
 	var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 	
-	alert(pw);
-	alert(pw2);
-	
 	if(pw.length < 8 || pw.length > 20){
 		 alert("비밀번호를 8자리 ~ 20자리 이내로 입력해주세요.");
 		 return false;

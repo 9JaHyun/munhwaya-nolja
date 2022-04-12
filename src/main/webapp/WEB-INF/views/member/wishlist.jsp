@@ -155,7 +155,7 @@ function delWishFnc(id) {
 			})
 			
 			.done(() => {
-				document.getElementById(id).parentNode.parentNode.parentNode.remove();
+				document.getElementById(id).parentNode.parentNode.parentNode.parentNode.remove();
 			});
 		}
 }
