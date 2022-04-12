@@ -1,7 +1,14 @@
 package com.munhwa.prj.member.web;
 
+import com.munhwa.prj.common.entity.UploadFile;
+import com.munhwa.prj.common.service.FileUtils;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.member.vo.Auth;
+import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.news.service.NewsService;
 import java.io.IOException;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,17 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.member.vo.Auth;
-import com.munhwa.prj.member.vo.MemberVO;
-import com.munhwa.prj.news.service.NewsService;
-import com.munhwa.prj.common.entity.UploadFile;
-import com.munhwa.prj.common.entity.UploadFileVO;
-import com.munhwa.prj.common.service.FileUtils;
-import com.munhwa.prj.common.service.UploadFileService;
 
 @Slf4j
 @Controller
@@ -41,10 +37,6 @@ public class MemberController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
-    @Autowired
-    private FileUtils fileUtils;
-    
 
     // 마이페이지 (+ 새소식리스트)
     @PreAuthorize("hasRole('R01')")
@@ -81,23 +73,6 @@ public class MemberController {
     	} else {
     		return "error/404";
     	}	
-    }
-
-    // 프로필 업데이트
-    @PostMapping("updateProfile.do")
-    public String updateProfile(MemberVO vo, MultipartFile file) throws IOException {
-        if (file != null) {
-            UploadFile upload = fileUtils.storeFile(file);
-            vo.setOname(upload.getOriginalFileName());
-            vo.setSname(upload.getStoredFileName());
-
-        }
-        int n = memberDao.updateProfile(vo);
-        if (n != 0) {
-            return "redirect:memberChangeInfo.do";
-        } else {
-            return "error/404";
-        }
     }
 
     // 개인정보 변경 페이지

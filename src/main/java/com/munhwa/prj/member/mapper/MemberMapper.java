@@ -35,9 +35,6 @@ public interface MemberMapper {
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
 
-	// 프로필 업데이트
-	int updateProfile(MemberVO vo);
-
 	MemberVO selectByMemberId(@Param("username") String id);
 	
 	// 프로시저 곡 구매 마일리지 22/04/08 류기태 
