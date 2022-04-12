@@ -74,6 +74,13 @@ a:hover {
 					<c:if test="${pageMaker.cri.amount == 20}">selected</c:if>>20줄
 					보기</option>
 			</select>
+		<form id="dateSelect" action="walletInfoSelect.do" method="post" style="color:white;">
+			시작일&nbsp;&nbsp;
+			<input type="date" id="startDate" name="startDate" style="margin-bottom:0px; margin-right:20px; width:100px;" value="${startDate}">
+			종료일&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="date" id="endDate" name="endDate" style="margin-bottom:0px; width:100px" value="${endDate }">
+			<input type="submit" value="검색" class="tbutton small" style="height:30px; width:50px">
+      	</form>	
 		</div>
 		<table class="table">
 			<thead>
@@ -120,6 +127,8 @@ a:hover {
 	<form id="moveForm" method="get" action="walletInfoSelect.do">
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 		<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+		<input type="hidden" name="startDate" value="${startDate }">
+		<input type="hidden" name="endDate" value="${endDate }">
 		<%-- 		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }"> --%>
 		<%-- 		<input type="hidden" name="type" value="${pageMaker.cri.type }"> --%>
 	</form>
@@ -132,17 +141,18 @@ a:hover {
 <!-- def block -->
 <!-- span8 posts -->
 <script>
-	 function paging(num) {
+	function paging(num) {
 		moveForm.pageNum.value = num;
-		moveForm.submit();
-		
+		moveForm.submit();		
 	};
 	
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href="walletInfoSelect.do?pageNum=1&amount="+sel;
+		var startDate = document.getElementById('startDate').value;
+		var endDate = document.getElementById('endDate').value;
+		location.href="walletInfoSelect.do?pageNum=1&amount="+sel+"&startDate="+startDate+"&endDate="+endDate;
 	}
-
+	 
 
 	
 </script>

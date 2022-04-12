@@ -132,12 +132,16 @@ public class WalletController {
 	
 	// 지갑 정보 상세 페이지
 	@RequestMapping("/walletInfoSelect.do")
-	public String walletInfoSelect(@LoginUser SessionUser user, Model model, Criteria cri) {
+	public String walletInfoSelect(@LoginUser SessionUser user, Model model, Criteria cri, 
+			@RequestParam(value="startDate", required = false) String startDate,
+			@RequestParam(value="endDate", required = false) String endDate) {
 		String memberId = user.getId();
-		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri);
+		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri, startDate, endDate);
 		model.addAttribute("charges", list);
 		model.addAttribute("mileage", user.getMileage());
-		int total = chargeDao.getCountByChargeId(memberId);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		int total = chargeDao.getCountByChargeId(memberId,startDate,endDate);
 	    PageDTO pageMake = new PageDTO(cri, total);
 	    model.addAttribute("pageMaker", pageMake);
 		return "walletInfoSelect-memberWallet";

@@ -16,6 +16,7 @@
   	<result property="name" column="name"/>
   </resultMap>
   
+  
 <!--   <select id="selectChargeListByMemberId" parameterType="String" resultMap="chargeResultMap"> -->
 <!--   	select a.id as cartId,  -->
 <!--         a.charge_at,  -->
@@ -32,7 +33,7 @@
   
   <select id="selectChargeListByMemberId" resultMap="chargeResultMap">
   	<![CDATA[
-  	select id, charge_at, mileage, name
+  		select id, charge_at, mileage, name
     from (select
     	rownum rn,
     	a.id, 
@@ -43,7 +44,12 @@
 		 common_code b
 	where a.type = b.id
 		and rownum<= #{cri.pageNum} * #{cri.amount}
-		and a.member_id = #{memberId}    
+		and a.member_id = #{memberId} 
+	]]>
+	<if test="startDate != null and endDate != null" >
+		and a.charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+	</if>
+	<![CDATA[ 
 		order by id desc
     )
 	where rn > (#{cri.pageNum}-1) * #{cri.amount}
@@ -56,6 +62,9 @@
   		from charge_history
   		where member_id = #{memberId}
   		]]>
+  		<if test="startDate != null and endDate != null">
+  		 and charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+  		</if>
   	</select>
   
 

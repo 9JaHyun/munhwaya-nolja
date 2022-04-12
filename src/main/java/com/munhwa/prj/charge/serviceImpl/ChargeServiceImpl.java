@@ -1,5 +1,6 @@
 package com.munhwa.prj.charge.serviceImpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class ChargeServiceImpl implements ChargeService {
 	private ChargeMapper map;
 	
 	@Override
-	public List<ChargeVO> findByMemberId(String memberId, Criteria cri) {
-		return map.selectChargeListByMemberId(memberId,cri);
+	public List<ChargeVO> findByMemberId(String memberId, Criteria cri, String startDate, String endDate) {
+		return map.selectChargeListByMemberId(memberId,cri,startDate,endDate);
 	}
 
 	@Override
@@ -26,8 +27,8 @@ public class ChargeServiceImpl implements ChargeService {
 	}
 
 	@Override
-	public int getCountByChargeId(String id) {
-		return map.getCountByChargeId(id);
+	public int getCountByChargeId(String id, String startDate, String endDate) {
+		return map.getCountByChargeId(id,startDate,endDate);
 	}
 
 }
