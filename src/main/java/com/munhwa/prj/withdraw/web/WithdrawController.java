@@ -28,7 +28,6 @@ public class WithdrawController {
 
 	private final RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
-    private final String REDIRECT_URI = "http://localhost/prj/auth/openbank/code";
     private final String BASE_URL = "https://testapi.openbanking.or.kr";
     
     public WithdrawController() {
@@ -50,16 +49,15 @@ public class WithdrawController {
 
     public TokenResponseDTO getToken(String code) {
         User user = new User();
-        TokenRequestDTO dto = new TokenRequestDTO(code, user.getClientId(), user.getClientSecret(),
-              REDIRECT_URI, "authorization_code");
+        TokenRequestDTO dto = new TokenRequestDTO(user.getClientId(), user.getClientSecret(),
+              "oob", "client_credentials");
 
         httpHeaders.add("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-        parameters.add("code", dto.getCode());
         parameters.add("client_id", dto.getClientId());
         parameters.add("client_secret", dto.getClientSecret());
-        parameters.add("redirect_uri", dto.getRedirectUri());
+        parameters.add("scope", dto.getScope());
         parameters.add("grant_type", dto.getGrantType());
 
         HttpEntity<MultiValueMap<String, String>> param = new HttpEntity<>(parameters, httpHeaders);
@@ -77,7 +75,7 @@ public class WithdrawController {
         return result;
     }
     
-    public RealNameResponseDTO getRealName() {
-    	
-    }
+//    public RealNameResponseDTO getRealName() {
+//    	
+//    }
 }
