@@ -3,13 +3,25 @@
 
 <script>
 var title1 = '${musicSelect.title}'
-var myPlaylist = [
-	{
+let	fileId = '${musicSelect.fileId}'
+		$.ajax({
+			type: "GET", 
+			url:"getFiles/"+fileId,
+			dataType:"json", 
+			error : function(a, b, c){
+				alert("통신실패");
+			},
+			success: pushList
+		})
+function pushList(result) {
+	let fileName = result.sname
+	var myPlaylist = [
+		{
 		writer: '${musicSelect.writer}',
 		composing: '${musicSelect.composing}',
 		arrangement: '${musicSelect.arrangement}',
 		musicId: '${musicSelect.id}',
-		mp3 : '${musicSelect.fileId}',
+		mp3 : "/prj/api/file/"+fileName,
 		title : '${musicSelect.title}',
 		artist : '${musicSelect.artName}',
 		rating: 5,
@@ -39,6 +51,7 @@ jQuery(document).ready(function () {
 		}
 	})
 })
+}
 </script>
 <script>
 jQuery(document).ready(function(){
@@ -64,7 +77,7 @@ jQuery(document).ready(function(){
 
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 		
 	<!-- content -->
@@ -286,44 +299,4 @@ function result(data) {
              alert("삭제취소")
         }
      }
-   <!-- 구매2 -->
-   function addCart2() {
-	  var confirm1 = confirm('장바구니에 담으시겠습니까?')
-	  var musicId= $(event.target).prev().prev().data("musicid")
-	   if(confirm1) {
-	      	$.ajax ({
-		        url : "cart/test/add",
-		        type : "post",
-		        data : {"id" : musicId},               
-		        dataType : "text",
-		        success :function(data) {
-			        console.log(data);
-			        alert("장바구니에 담았습니다.");
-			        },
-		        error: function(xhr, status, error){
-		        alert("통신실패");
-		        }
-	        }) 
-	        
-	       } else {
-	             alert("구매취소")
-	        }
-	}
-	
-   <!-- 좋아요기능 -->
-   function likeIt() {
-	   var musicId = '${musicSelect.id}'
-	   $.ajax ({
-		   url : "updateLike",
-		   type : "POST",
-		   data : {"musicId" : musicId},
-		   dataType : "text",
-		   success : function(result) {
-		   		alert(result);
-		   },
-		   error: function(a,b,c){
-		   		alert("통신실패")
-		   }
-	   }) 
-   }
   </script>

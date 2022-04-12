@@ -5,7 +5,7 @@
 
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 		
 	<!-- content -->
@@ -63,7 +63,7 @@
 						<a href="searchResultAlbum?title=${title}">
 							<h3>검색결과</h3>
 							<span class="liner"></span> 
-							<h4>수록앨범
+							<h4>앨범
 								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
 							</h4>
 						</a>

@@ -11,18 +11,19 @@ public class MusicChartDto {
 	
 	private int id;
 	private String artName;
-	private int likeIt;
-	// 차트에서 바로 음원 다운로드
+	private int downloadCnt;
 	private String picture;
 	private String title;
+	private String genre;
 	private boolean purchase;
 	
 	public MusicChartDto(MusicVO musicVO) {
 		this.id = musicVO.getId();
 		this.artName = musicVO.getArtName();
-		this.likeIt = musicVO.getLikeIt();
+		this.downloadCnt = musicVO.getDownloadCnt();
 		this.picture = musicVO.getPicture();
 		this.title = musicVO.getTitle();
+		this.genre = musicVO.getGenre();
 		this.purchase = false;
 	}
 }

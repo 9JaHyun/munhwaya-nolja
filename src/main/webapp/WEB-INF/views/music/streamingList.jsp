@@ -385,35 +385,4 @@ function addCart2() {
 	             alert("구매취소")
 	        }
 	}
-	
-//좋아요기능
-function likeIt() {
-	var title=$('#title1').html()
-	var artName=$('#artName1').html()
-	$.ajax ({
-	        url : "musicSelectByArtName",
-	        type : "get",
-	        data : {"title" : title, "artName" : artName},                   
-	        dataType : "json",
-	        success : result2,
-	        error: function(xhr, status, error){
-	        	alert("통신실패");
-	        }
-  }) 
-}
-function result2(result) {
-		var musicId = result.id
-	   $.ajax ({
-		   url : "updateLike",
-		   type : "POST",
-		   data : {"musicId" : musicId},
-		   dataType : "text",
-		   success : function(data) {
-		   		alert(data);
-		   },
-		   error: function(a,b,c){
-		   		alert("통신실패")
-		   }
-	   }) 
-}
 </script>

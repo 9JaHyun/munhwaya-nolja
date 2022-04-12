@@ -67,7 +67,7 @@
 </style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 	<!-- content -->
 	<div class="page-content back_to_up">
@@ -102,7 +102,7 @@
 													<th></th>
 													<th style="width: 300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
-													<th><h4>좋아요</h4></th>
+													<th><h4>장르</h4></th>
 													<th><h4>다운로드</h4></th>
 												</tr>
 											</thead>
@@ -119,7 +119,14 @@
 														${music.artName }
 													</td>
 													<td class="product-name">
-														${music.likeIt }
+														<span>
+															<c:choose>
+						                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+						                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+						                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+						                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+						                                    </c:choose> 
+														</span>
 													</td>
 													<td class="product-name">
 														<button type="button" onclick="addCart()" class="tbutton medium" style="font-size:10px">

@@ -101,8 +101,9 @@ public class MusicController {
 
 	@GetMapping("/chart")
 	public String chart(@LoginUser SessionUser user, Model model) {
+		
 		//아이디 넣으면 구매한 음원의 vo LIST 나옴
-		List<MusicVO> list = musicDAO.musicSelectList();
+		List<MusicVO> list = musicDAO.musicSelectList(/* cri */); //여기서 페이징처리후 다가져온다?  1-10까지검색 => 11-20까지 검색
 		
 		//아이디 넣으면 구매한 음원의 아이디 목록 나옴
 		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
@@ -112,23 +113,29 @@ public class MusicController {
 		
 		//차트의 음원리스트와
 		for(MusicVO vo : list) {
+			
 			MusicChartDto dto = new MusicChartDto(vo); //차트리스트의 음원을 구입여부가있는 vo2에 넣어줌
 			int ids = dto.getId();
 			boolean isPurchased = false;
+			
 			for(int id : musicList) {
 				if(ids == id) {
 					isPurchased = true;
 					break;
 				}
 			}
+			
 			dto.setPurchase(isPurchased);
 			chartList.add(dto);
 		}
+		//chartList 
+		//페이징: 모델  
+		 
 		
 		model.addAttribute("musicChartList", chartList);// 갯수지정
 		return "music/chart";
 	}
-
+	
 	@GetMapping("/releaseSoon")
 	public String releaseSoon(Model model, Criteria cri) {
 		
@@ -146,10 +153,9 @@ public class MusicController {
 		model.addAttribute("selectAlbum", albumDAO.albumSelect(id));
 		model.addAttribute("selectMusicByAlbum", musicDAO.musicSelectByAlBum(id));// list
 		model.addAttribute("wishlists", wishlistDao.wishlistList("test0@gmail.com"));
-
 		return "music/albumInfo";
 	}
-
+	
 	@GetMapping("/streaming")
 	public String streaming(Model model, int id, @LoginUser SessionUser user) {
 		model.addAttribute("musicSelect", musicDAO.musicSelect(id));
@@ -166,7 +172,6 @@ public class MusicController {
 		Map<String, List<Integer>> paramMap = new HashMap<>();
 		paramMap.put("musicIdList", musicIdList);
 		model.addAttribute("musicList", musicDAO.musicSelectListByMusicId(paramMap));
-		
 		
 		model.addAttribute("wishlists", wishlistDao.wishlistList(user.getId()));
 		
@@ -214,9 +219,8 @@ public class MusicController {
 	@GetMapping("/purchase")
 	public String purchase(@LoginUser SessionUser user, Model model, Criteria cri) {
 		String id = user.getId();
-		model.addAttribute("purchasedList", musicDAO.musicSelectListByPurchase(id,cri));
-		
-		int total = musicDAO.getCountByList2(id);
+		model.addAttribute("purchasedList", purchaseDao.purchaseSelectList2(id,cri));
+		int total = purchaseDao.getCountByList5(id);
 	    PageDTO pageMake = new PageDTO(cri, total);
 	    model.addAttribute("pageMaker", pageMake);
 		return "music/purchase";

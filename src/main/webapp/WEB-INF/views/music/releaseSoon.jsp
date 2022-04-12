@@ -53,7 +53,7 @@
 
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 		
 	<!-- content -->
@@ -89,8 +89,18 @@
 								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="11">
 									<a href="albumInfo?id=${album.id }" class="grid_3">
 										<img src="api/picture/${album.picture }" alt="#">
-										<span><strong>${album.albName }</strong>${album.artName }</span>
-										<span style="margin:0px;"><fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${album.releaseAt}" /></span>
+										<span style="margin:0px; font-weight: bold; color:white;">앨범명: ${album.albName }</span>
+										<span style="margin:0px; ">가수: ${album.artName }</span>
+										<span style="margin:0px;">
+											장르: 
+											<c:choose>
+		                                        <c:when test="${album.genre eq 'G01'}">발라드</c:when>
+		                                        <c:when test="${album.genre eq 'G02'}">댄스</c:when>
+		                                        <c:when test="${album.genre eq 'G03'}">랩/힙합</c:when>
+		                                        <c:when test="${album.genre eq 'G04'}">R&B/Soul</c:when>
+		                                    </c:choose> 
+										</span>
+										<span style="margin:0px;">발매일: <fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${album.releaseAt}" /></span>
 									</a>
 								</c:forEach>
 								</div><!-- video grid -->

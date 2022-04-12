@@ -6,7 +6,7 @@
 		<result property="artName" column="ART_NAME"/>
 		<result property="genre" column="GENRE"/>
 		<result property="lyric" column="LYRIC"/>
-		<result property="likeIt" column="LIKE_IT"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
 		<result property="fileId" column="FILE_ID"/>
 		<result property="title" column="TITLE"/>
 		<result property="price" column="PRICE"/>
@@ -21,7 +21,7 @@
 	<select id="musicSelectList" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC
-		ORDER BY LIKE_IT DESC
+		ORDER BY DOWNLOAD_CNT DESC
 	</select>
 	
 	
@@ -29,20 +29,20 @@
 		SELECT *
 		FROM MUSIC
 		WHERE GENRE = #{genre}
-		ORDER BY LIKE_IT DESC
+		ORDER BY DOWNLOAD_CNT DESC
 	</select>
 	
 	<select id="musicPersonalList" resultMap="musicResultMap">
 		<![CDATA[
-		SELECT ID, PICTURE, TITLE, ART_NAME, LIKE_IT
+		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT
 		FROM (SELECT 
         	  ROWNUM AS RN,
-        	  ID, PICTURE, TITLE, ART_NAME, LIKE_IT
+        	  ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT
 			  FROM MUSIC
 			  WHERE GENRE=( SELECT GENRE
 							FROM MEMBER
 							WHERE ID=#{id})
-			  ORDER BY LIKE_IT DESC)
+			  ORDER BY DOWNLOAD_CNT DESC)
 	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
 	     AND RN <= #{cri.pageNum} * #{cri.amount}
  		]]>
@@ -85,7 +85,7 @@
 		SELECT *
 		FROM MUSIC m 
 		WHERE ALBUM_ID = #{id}
-		ORDER BY LIKE_IT DESC
+		ORDER BY DOWNLOAD_CNT DESC
 	</select>
 	
 	<select id="musicSelectListByPurchase" resultMap="musicResultMap">
@@ -148,15 +148,5 @@
 		WHERE TITLE = #{title}
 		AND ART_NAME = #{artName)
 	</select>
-	
-	<update id="updateLike" statementType = "CALLABLE" parameterType="map" >
-		<![CDATA[
-			{ call updatelike (
-			#{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
-			#{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int},
-			#{p_result, mode=OUT, jdbcType=INTEGER, javaType=int}
-			)}
-		]]>
-	</update>
 	
 </mapper>

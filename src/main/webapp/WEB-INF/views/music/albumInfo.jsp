@@ -11,7 +11,7 @@
 
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 		
 	<!-- content -->
@@ -68,7 +68,6 @@
 									<div class="single_variation_wrap" style="text-align:right;">
 											<button class="tbutton medium" onclick="playAll()"><span >전체재생</span></button>
 											<button class="tbutton medium"><span data-toggle="modal" data-target="#myModal">위시리스트 추가</span></button>
-											<button class="tbutton medium"><span>공유</span></button>
 									</div>
 							</div><!-- grid6 -->
 						</div><!-- clearfix -->
@@ -113,7 +112,12 @@
 															${music.artName }
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
-															${music.likeIt }
+															<c:choose>
+		                                                    	<c:when test="${music.genre eq 'G01'}">발라드</c:when>
+		                                                    	<c:when test="${music.genre eq 'G02'}">댄스</c:when>
+		                                                    	<c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+		                                                    	<c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+		                                                    </c:choose> 
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
 															<button onclick="addCart()" type="button" class="tbutton medium" style="font-size:10px"><span >구매</span></button>

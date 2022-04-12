@@ -22,7 +22,6 @@ public interface MusicService {
 	List<MusicVO> musicSelectListByWishList(int id);
 	
 	List<MusicVO> musicSelectListByMusicId(Map<String, List<Integer>> paramMap);
-
 	
 	MusicVO musicSelectByArtName(String title, String artName);
 	

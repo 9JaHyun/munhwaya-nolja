@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
 	.pageInfo {
@@ -66,7 +67,7 @@
 </style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 	<!-- content -->
 	<div class="page-content back_to_up">
@@ -101,6 +102,7 @@
 													<th style="width: 300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
 													<th><h4>결제한 가격</h4></th>
+													<th><h4>결제시기</h4></th>
 													<th><h4>다운로드</h4></th>
 												</tr>
 											<tbody>
@@ -117,6 +119,10 @@
 													</td>
 													<td class="product-name">
 														${music.price}
+													</td>
+													<td class="product-name">
+														<fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${music.createdAt}" />
+														
 													</td>
 													
 													<td class="product-name">

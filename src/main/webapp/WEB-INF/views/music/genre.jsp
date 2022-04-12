@@ -4,7 +4,7 @@
 <!-- layout -->
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 		
 	<!-- content -->
@@ -57,7 +57,14 @@
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+												<c:choose>
+		                                           <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+		                                           <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+		                                           <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+		                                           <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+		                                        </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
@@ -79,7 +86,14 @@
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+												<c:choose>
+		                                            <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+		                                            <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+		                                            <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+		                                            <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+		                                        </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
@@ -101,7 +115,14 @@
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+											<c:choose>
+		                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+		                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+		                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+		                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+		                                    </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
@@ -123,7 +144,14 @@
 													<a href="streaming?id=${music.id }">${music.title }</a>
 												</h3> 
 												<span>${music.artName }</span> 
-												<span>likes:${music.likeIt}</span>
+												<span>
+													<c:choose>
+				                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+				                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+				                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+				                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+				                                    </c:choose> 
+												</span>
 											</li>
 										</c:forEach>
 								</ul>
