@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="artistSelect" resultMap="artistMap" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
-		SELECT * FROM ARTIST WHERE ID = #{id}
+		SELECT * FROM ARTIST WHERE MEMBER_ID = #{memberId}
 	</select>
 	
 	<insert id="artistInsert" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
@@ -31,13 +31,14 @@
 	<update id="artistUpdate" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
 		UPDATE ARTIST
 		<set>
-			<if test="image != null">SET image = #{image},</if>
-			<if test="gender != null">SET gender = #{gender},</if>
-			<if test="genre != null">SET genre = #{genre},</if>
-			<if test="content != null">SET content = #{content},</if>
-			<if test="type !=null">SET type = #{type},</if>
-			<if test="name= != null">SET name = #{name}</if>  
+			<if test="image != null">image = #{image},</if>
+			<if test="gender != null">gender = #{gender},</if>
+			<if test="genre != null">genre = #{genre},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="name != null">name = #{name}</if>  
 		</set>
+		WHERE ID = #{id}
 	</update>
 	
 </mapper>
