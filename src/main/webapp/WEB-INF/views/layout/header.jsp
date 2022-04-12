@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bf76e13e65e181699d60340265d9e67e"></script>
 <header id="header" class="glue">
     <%-- 로그인 버튼--%>
     <div class="row clearfix">
@@ -61,7 +62,6 @@
                             <sec:authorize access="hasRole('ROLE_R03')">
                                 <li><a href="/prj/admin/performanceList">관리자 공연리스트</a></li>
                             </sec:authorize>
-                            <li><a href="kakao">kakao test</a></li>
                         </ul>
                     </li>
                     <li><a href="#">게시판<span class="sub">more templates</span></a>

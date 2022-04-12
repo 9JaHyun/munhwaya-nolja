@@ -47,4 +47,9 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return map.performanceSelectAll();
 	}
 
+	@Override
+	public List<PerformanceVO> adminSelectList(Criteria cri) {
+		return map.adminSelectList(cri);
+	}
+
 }

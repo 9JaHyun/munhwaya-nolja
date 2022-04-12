@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.munhwa.prj.artist.service.ArtistService;
+import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.common.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.likeArtist.service.LikeArtistService;
 import com.munhwa.prj.performance.service.PerformanceService;
 import com.munhwa.prj.performance.vo.Criteria;
 import com.munhwa.prj.performance.vo.PageMakeDTO;
@@ -28,11 +31,11 @@ import com.munhwa.prj.performance.vo.PerformanceVO;
 public class PerformanceController {
 	@Autowired
 	private PerformanceService performanceDao;
+	
+	@Autowired
+	private ArtistService artistDao;
 
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-	// @Autowired
-	// private ArtistService artistDao;
 
 	@Autowired
 	private FileUtils fileUtils;
@@ -41,7 +44,9 @@ public class PerformanceController {
 	public String performance(Model model, Criteria cri) {
 		List<PerformanceVO> list = performanceDao.performanceSelectList(cri);
 
-		List<PerformanceVO> result = list.stream().filter(p -> p.getStatus().equals("승인")).collect(Collectors.toList());
+		List<PerformanceVO> result = list.stream()
+				.filter(p -> p.getStatus().equals("승인"))
+				.collect(Collectors.toList());
 
 		model.addAttribute("performances", result);
 
@@ -63,11 +68,17 @@ public class PerformanceController {
 		// int n = performanceDao.performanceUpdate(paramMap);
 		model.addAttribute("performance", vo);
 		model.addAttribute("mileage", user.getMileage());
+		model.addAttribute("artistname", vo.getArtistName());
 		return "performance/performanceSelect";
 	}
 
 	@RequestMapping("/performanceInsertForm.do")
-	public String performanceInsertForm() {
+	public String performanceInsertForm(@LoginUser SessionUser user, Model model) {
+		ArtistVO artist  = new ArtistVO();
+		artist.setMemberId(user.getId());
+		
+		artist = artistDao.artistSelect(artist);
+		model.addAttribute("artist", artist);
 		return "performance/performanceInsertForm";
 	}
 
@@ -90,12 +101,7 @@ public class PerformanceController {
 
 	// 공연신청
 	@RequestMapping("/performanceInsert.do")
-    public String performanceInsert(PerformanceVO vo, Date date) throws IOException {
-
-    	vo.setArtistId(42);
-//    	fileUtils.storeFile(null)
-    	vo.getImage();
-    	
+    public String performanceInsert(PerformanceVO vo) throws IOException {
     	boolean result = performanceDao.findAll()
     						.stream()
     						.map(PerformanceVO::getSdate)

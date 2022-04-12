@@ -26,6 +26,7 @@ public class PerformanceVO {
 	private int artistId;
 	private int price;
 	private int person;
+	private String artistName;
 
 	
 	public void accpetPerformance() {

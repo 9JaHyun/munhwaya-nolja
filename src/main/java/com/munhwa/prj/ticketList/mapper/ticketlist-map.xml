@@ -84,7 +84,7 @@
 	
 	<update id="qrcodeAttendance" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO" >
 		UPDATE TICKET_LIST
-		SET ATTENDANCE = '참석'
+		SET ATTENDANCE = 'C01'
 		WHERE ID = #{id}
 	</update>
 	

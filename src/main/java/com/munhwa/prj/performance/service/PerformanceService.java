@@ -13,6 +13,8 @@ public interface PerformanceService {
 	/* 게시판 목록(페이징 적용) */
 	List<PerformanceVO> performanceSelectList(Criteria cri);
 	
+	List<PerformanceVO> adminSelectList(Criteria cri);
+	
 	int performanceInsert(PerformanceVO vo);
 	
 	PerformanceVO performanceSelect(PerformanceVO vo);

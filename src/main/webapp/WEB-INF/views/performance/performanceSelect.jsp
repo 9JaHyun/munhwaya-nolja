@@ -42,18 +42,23 @@
 									<h3 style="font-size: 25pt; margin-bottom: 30px;">${performance.name }</h3>
 									<br>
 									<div style="margin-bottom: 10px">
+										<strong style="font-size: 14pt;">아티스트</strong>
+										<span style="margin-left:30px; color:white; font-size:13pt;">${artistname }</span>
+									</div>
+									<br>
+									<div style="margin-bottom: 10px">
 										<strong style="font-size: 14pt;">공연장소</strong>
 										<span style="margin-left:30px; color:white; font-size:13pt;">${performance.location }</span>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
 										<strong style="font-size: 14pt">공연시작일</strong>
-										<span style="margin-left:13px; color:white; font-size:13pt;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performance.sdate }" /></span>
+										<span style="margin-left:13px; color:white; font-size:13pt;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performance.sdate }" /></span>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
 										<strong style="font-size: 14pt">공연종료일</strong>
-										<span style="margin-left:13px; color:white; font-size:13pt;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performance.edate }" /></span>
+										<span style="margin-left:13px; color:white; font-size:13pt;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performance.edate }" /></span>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
@@ -131,12 +136,12 @@
 			<div class="span4 sidebar">
 
 				<div class="def-block widget">
-					<h4>현재시간</h4>
+					<h4>좌석배치도</h4>
 					<span class="liner"></span>
 					<div class="widget-content tags">
 						<ul id="backsoon" class="countdown clearfix">
 							<li style="padding:0px;">
-        						<span id="date" class="date" style="font-size:18pt;"></span>
+        						<span id="date" class="date" style="font-size:17pt;"></span>
 								<span id="time" class="days" style="font-size:18pt;"></span>							
 							</li>
 							<li style="padding:0px;">

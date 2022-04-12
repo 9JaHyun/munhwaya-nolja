@@ -28,7 +28,7 @@ public class AdminController {
 	// 공연 신청 목록
 	@GetMapping("admin/performanceList")
 	public String changePerformanceStatus(Model model, Criteria cri) {
-		List<PerformanceVO> list = performanceService.performanceSelectList(cri);
+		List<PerformanceVO> list = performanceService.adminSelectList(cri);
 		
     	model.addAttribute("performances", list);
     	
