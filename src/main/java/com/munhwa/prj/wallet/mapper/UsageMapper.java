@@ -6,7 +6,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UsageMapper {
-	List<UsageVO> selectUsageListMemberId(@Param("memberId") String memberId, @Param("cri") Criteria cri);
-	int getCountByUsageId(String id);
+	// 곡 구매 내역
+	List<UsageVO> selectUsageListMusic(@Param("memberId") String memberId, @Param("cri") Criteria cri);
+	int getCountByMusic(String id);
+	// 공연 티켓 구매 내역
+	List<UsageVO> selectUsageListPerformance(@Param("memberId") String memberId, @Param("cri") Criteria cri);
+	int getCountByPerformance(String id);
 	int insertUsage(UsageVO usageVO);
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -33,7 +32,6 @@
 		overflow: hidden;
 		border: 0;
 	}
-
 </style>
 
 <div align="right" style="margin-bottom: 30px;">
@@ -78,13 +76,10 @@
 			<button type="button" class="tbutton small" onclick="send();"><span>수정</span></button>
 		</div>
 	</form>
-
 </div>
 
 <script>
 	function setThumbnail(event) {
-
-		// 썸네일 표시
 		var reader = new FileReader();
 		reader.onload = function(event) {
 			var img = document.getElementById('image_container');

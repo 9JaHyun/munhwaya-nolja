@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 public class TicketListController {
-
     @Autowired
     private TicketListService ticketListDao;
 
@@ -92,44 +91,6 @@ public class TicketListController {
         out.println("alert('예매가 완료되었습니다.');");
         out.println("</script>");
         out.flush();
-
-//      Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-//      
-//      List<UsageVO> resultUsageList = new ArrayList<>();
-//     List<ProfitVO> resultProfitByArtist = new ArrayList<>();
-//     Map<String,Object> param = new HashMap<String, Object>();
-//     
-//      UsageVO usageVO = new UsageVO();
-//      usageVO.setMileage(vo.getPerformancevo().getPrice());
-//      usageVO.setUseAt(useDate);
-//      usageVO.setPlace("U02");
-//      usageVO.setMemberId(memberId);
-//      usageVO.setPks(vo.getPerformancevo().getId());
-//     
-//      resultUsageList.add(usageVO);
-//               
-//     ProfitVO profitVO = new ProfitVO();
-//     profitVO.setProfitAt(useDate);
-//     profitVO.setMileage(vo.getPerformancevo().getPrice());
-//     profitVO.setPlace("U02");
-//     profitVO.setId(vo.getPerformancevo().getId());
-//     profitVO.setPks(vo.getPerformancevo().getId());
-//     
-//     resultProfitByArtist.add(profitVO);
-//     
-//     param.put("v_member_id", memberId);
-//     param.put("v_mileage", vo.getPerformancevo().getPrice());
-//     param.put("v_performance_id", vo.getPerformancevo().getId());
-//     
-//     // 사용 내역 남기기
-//     usageDao.insertUsage(resultUsageList);
-//     // 공연 구매 시 아티스트 수익 내역에 찍기
-//     profitDao.insertProfit(resultProfitByArtist);
-//     // 공연 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저
-//     memberDao.updateMileagePerformance(param);
-//     
-//     user.setMileage(user.getMileage()-vo.getPerformancevo().getPrice());
-
         return "home/home"; //메인화면경로 넣어줘야함
     }
 
