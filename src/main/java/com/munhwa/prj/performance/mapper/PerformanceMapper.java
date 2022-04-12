@@ -9,6 +9,8 @@ import com.munhwa.prj.performance.vo.Criteria;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 
 public interface PerformanceMapper {
+	List<PerformanceVO> performanceSelectAll();
+	
 	/* 게시판 목록(페이징 적용) */
 	List<PerformanceVO> performanceSelectList(Criteria cri);
 	

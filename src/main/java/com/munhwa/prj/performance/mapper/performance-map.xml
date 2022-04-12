@@ -14,6 +14,21 @@
 		<result property="price" column="price"/>
 		<result property="person" column="person"/>
 	</resultMap>
+	<select id="performanceSelectAll" resultMap="performanceResultMap">
+		SELECT	ID
+		,		NAME
+		,		LOCATION
+		,		SDATE
+		,		EDATE
+		,		CONTENT
+		,		IMAGE
+		,		ARTIST_ID
+		,		PRICE
+		,		PERSON
+		,		STATUS
+		FROM	PERFORMANCE
+	</select>
+	
 	
 	<select id="performanceSelectList" resultMap="performanceResultMap">
 		<![CDATA[
