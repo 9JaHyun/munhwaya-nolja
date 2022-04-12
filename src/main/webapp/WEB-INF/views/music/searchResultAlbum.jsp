@@ -42,7 +42,7 @@
 							<li id="Latest" class="active">
 								<div class="video-grid">
 								<c:forEach var="album" items="${musicSelectListByTitle}">
-									<a href="albumInfo?id=${album.id }" class="grid_3">
+									<a href="albumInfo?id=${album.albumId }" class="grid_3">
 										<img src="resources/images/bg/musicBg3.jpg" alt="#">
 										<span><strong>${album.albumTitle }</strong>${album.albumArtistName }</span>
 									</a>

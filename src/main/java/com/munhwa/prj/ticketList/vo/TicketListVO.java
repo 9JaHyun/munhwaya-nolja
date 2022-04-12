@@ -13,6 +13,7 @@ public class TicketListVO {
 	private String memberId;
 	private String qrcode;
 	private PerformanceVO performancevo;
+	private String attendance;
 }
 
 

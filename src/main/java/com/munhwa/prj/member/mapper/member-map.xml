@@ -52,22 +52,11 @@
 		WHERE ID = #{id}
 	</delete>
 
-	<select id="deleteMember2"
-		parameterType="com.munhwa.prj.member.vo.MemberVO">
-		SELECT ID, PASSWORD
-		FROM MEMBER
-		WHERE ID = #{id} AND
-		PASSWORD = #{password}
-	</select>
-
-	<!-- 회원가입 -->
-	<insert id="memberSignup"
-		parameterType="com.munhwa.prj.member.vo.MemberVO">
-		INSERT INTO member (id, password, nickname, tel, genre, mileage, role,
-		image)
-		VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role},
-		#{image})
-	</insert>
+  <!-- 회원가입 -->
+  <insert id="memberSignup" parameterType="com.munhwa.prj.member.vo.MemberVO">
+    INSERT INTO member (id, password, nickname, tel, genre, mileage, role, oname, sname)
+    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{oname}, #{sname})
+  </insert>
 
 	<!-- 소셜 로그인 시 회원가입 처리 -->
 	<insert id="memberOAuthSignup" statementType="CALLABLE"

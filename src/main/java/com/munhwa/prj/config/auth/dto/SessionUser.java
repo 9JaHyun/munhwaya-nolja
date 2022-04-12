@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class SessionUser implements Serializable {
-
     private String id;
     private String nickname;
     private String sname;

@@ -23,33 +23,34 @@
 		,		SDATE
 		,		EDATE
 		,		CONTENT
-		,		STATUS
 		,		IMAGE
 		,		ARTIST_ID
 		,		PRICE
 		,		PERSON
-		FROM	(SELECT ROWNUM AS RN
-		,		ID
-		,		NAME
-		,		LOCATION
-		,		SDATE
-		,		EDATE
-		,		CONTENT
 		,		STATUS
-		,		IMAGE
-		,		ARTIST_ID
-		,		PRICE
-		,		PERSON
-		FROM PERFORMANCE 
-		WHERE ROWNUM <= #{pageNum} * #{amount}
+		FROM	(SELECT rank() over (ORDER BY P.SDATE desc) rank
+		,		P.ID
+		,		P.NAME
+		,		P.LOCATION
+		,		P.SDATE
+		,		P.EDATE
+		,		P.CONTENT
+		,		P.IMAGE
+		,		P.ARTIST_ID
+		,		P.PRICE
+		,		P.PERSON
+		,		CC.NAME as STATUS
+		FROM PERFORMANCE P, COMMON_CODE CC
+		WHERE P.STATUS = CC.ID
 		]]>
 		<if test="keyword != null">
-			AND NAME LIKE '%'||#{keyword}||'%'
+			AND P.NAME LIKE '%'||#{keyword}||'%'
 		</if>
-		ORDER BY SDATE DESC
+		ORDER BY P.SDATE DESC
 		)
 		<![CDATA[
-		WHERE RN > (#{pageNum} -1) * #{amount} 
+		WHERE rank > (#{pageNum} -1) * #{amount}
+		AND rank <= #{pageNum} * #{amount}
 		]]>
 	</select>
 	
@@ -91,7 +92,8 @@
 	<update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
 		<![CDATA[
 			{ call accept_performance (
-				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int}
+				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{v_per_status, mode=IN, jdbcType=VARCHAR, javaType=string}
 			)}
 		]]>
 	</update>

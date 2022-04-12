@@ -1,13 +1,14 @@
 package com.munhwa.prj.member.serviceImpl;
 
-import com.munhwa.prj.member.mapper.MemberMapper;
-import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.member.vo.MemberVO;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.munhwa.prj.member.mapper.MemberMapper;
+import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.member.vo.MemberVO;
 
 @Service("memberDao")
 public class MemberServiceImpl implements MemberService {
@@ -48,7 +49,6 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO findById(String id) {
 		return map.selectByMemberId(id);
 	}
-
 	// 마일리지 충전 22/04/04 류기태
 	@Override
 	public int plusMileage(MemberVO vo) {
@@ -64,7 +64,6 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return cnt;
 	}
-	
 
 	@Override
 	public int updateProfile(MemberVO vo) {

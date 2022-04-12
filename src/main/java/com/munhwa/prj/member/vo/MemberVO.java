@@ -16,7 +16,7 @@ public class MemberVO {
 	private int mileage;
 	private String oname;
 	private String sname;
-
+  
 	public MemberVO update(String nickname, String sname) {
 		this.nickname = nickname;
 		this.sname = sname;

@@ -1,16 +1,23 @@
 package com.munhwa.prj.music.web;
 
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.vo.AlbumVO;
 import com.munhwa.prj.music.vo.MusicVO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import com.munhwa.prj.wishlist.service.WishlistService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -19,15 +26,16 @@ public class MusicController {
 	private MusicService musicDAO;
 	@Autowired
 	private AlbumService albumDAO;
+	@Autowired
+	private WishlistService wishlistDao;
 
 	@GetMapping("/musicMain")
-	public String musicMain(Model model, HttpSession session) {
+	public String musicMain(@LoginUser SessionUser user,  Model model) {
 		/*
 		 * Map<Integer, CartVO> map = (Map<Integer, cart>) session.getAttribute("cart");
 		 * map.set(musicVO.getId(), musicVO) session.addAttribue("cart", map)
 		 */
-		session.setAttribute("id", "test0@gmail.com");
-		String id = session.getAttribute("id").toString();
+		String id = user.getId();
 		model.addAttribute("musicRnBList", musicDAO.musicSelectListByGenre("G04"));
 		model.addAttribute("musicRapList", musicDAO.musicSelectListByGenre("G03"));
 		model.addAttribute("musicDanceList", musicDAO.musicSelectListByGenre("G02"));
@@ -49,8 +57,6 @@ public class MusicController {
 
 	@GetMapping("/searchResultMusic")
 	public String searchResultMusic(Model model, String title) {
-		System.out.println(title);
-		System.out.println("타이틀테스트");
 		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title));
 		return "music/searchResultMusic";
 	}
@@ -77,6 +83,8 @@ public class MusicController {
 	public String albumInfo(Model model, int id) {
 		model.addAttribute("selectAlbum", albumDAO.albumSelect(id));
 		model.addAttribute("selectMusicByAlbum", musicDAO.musicSelectByAlBum(id));// list
+		model.addAttribute("wishlists", wishlistDao.wishlistList("test0@gmail.com"));
+
 		return "music/albumInfo";
 	}
 
@@ -84,22 +92,34 @@ public class MusicController {
 	public String streaming(Model model, int id) {
 		model.addAttribute("musicSelect", musicDAO.musicSelect(id));
 		model.addAttribute("AlbumSelectByMusicId", albumDAO.albumSelectByMusicId(id));
+		model.addAttribute("wishlists", wishlistDao.wishlistList("test0@gmail.com"));
 		return "music/streaming";
 	}
-
+	
+	@RequestMapping("/streamingList")
+	public String streamingList(@RequestParam("musicIdList") List<Integer> musicIdList, Model model) {
+		int first = musicIdList.get(0);
+		model.addAttribute("album", albumDAO.albumSelectByMusicId(first));
+		
+		Map<String, List<Integer>> paramMap = new HashMap<>();
+		paramMap.put("musicIdList", musicIdList);
+		model.addAttribute("musicList", musicDAO.musicSelectListByMusicId(paramMap));
+		
+		return "music/streamingList";
+	}
+	
 	@GetMapping("/streamingWishList")
-	public String streamingWishList(Model model, int id) {
+	public String streamingWishList(Model model, @RequestParam int id) {
 		model.addAttribute("musicSelectListByWishList", musicDAO.musicSelectListByWishList(id));
 		model.addAttribute("albumSelectListByWishList", albumDAO.albumSelectListByWishList(id));
 		model.addAttribute("albumSelectByWishList", albumDAO.albumSelectByWishList(id)); // 위시리스트의 첫번째 곡의 앨범정보
 		return "music/streamingWishList";
 	}
+	
 
 	@GetMapping("/personalResult")
-	public String personalResult(Model model, HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		session.setAttribute("id", "test0@gmail.com");
-		String id = session.getAttribute("id").toString();
+	public String personalResult(Model model, @LoginUser SessionUser user) {
+		String id = user.getId();
 
 		model.addAttribute("musicPersonalList", musicDAO.musicPersonalList(id));
 		return "music/personalResult";
@@ -114,15 +134,29 @@ public class MusicController {
 
 		return "music/genre";
 	}
+	
+	@GetMapping("/playAllAlbum")
+	public String playAllAlbum(Model model) {
+		model.addAttribute("musicRnBList", musicDAO.musicSelectListByGenre("G04"));
+		model.addAttribute("musicRapList", musicDAO.musicSelectListByGenre("G03"));
+		model.addAttribute("musicDanceList", musicDAO.musicSelectListByGenre("G02"));
+		model.addAttribute("musicBalladList", musicDAO.musicSelectListByGenre("G01"));
+		return "music/genre";
+	}
 
+	// 내가 구매한 음원 목록
 	@GetMapping("/purchase")
-	public String purchase(Model model, HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		session.setAttribute("id", "test0@gmail.com");
-		String id = session.getAttribute("id").toString();
-
+	public String purchase(@LoginUser SessionUser user, Model model) {
+		String id = user.getId();
 		model.addAttribute("purchasedList", musicDAO.musicSelectListByPurchase(id));
 		return "music/purchase";
+	}
+	
+	@ResponseBody
+	@GetMapping("/musicSelectByArtName")
+	public MusicVO musicSelectByArtName(@RequestParam String title, @RequestParam String artName) {
+		MusicVO vo = musicDAO.musicSelectByArtName(title, artName );
+		return vo;
 	}
 	
 	@ResponseBody
@@ -135,25 +169,29 @@ public class MusicController {
 	
 	@ResponseBody
 	@GetMapping("/albumSelectBymusicId/{musicId}") 
-	public AlbumVO albumSelectBymusicId(@PathVariable int musicId, Model model,HttpServletRequest req) {
+	public AlbumVO albumSelectBymusicId(@PathVariable int musicId, Model model, @LoginUser SessionUser user) {
 		AlbumVO vo = new AlbumVO();
 		vo = albumDAO.albumSelectByMusicId(musicId);
-		String id = req.getParameter("id");
-		System.out.println(id);
+		String id = user.getId();
 		return vo;
 	}
 
-//	@ResponseBody
-//	@PostMapping("/addWishList")
-//	public void addWishList(@RequestBody MusicVO vo, Model model) {
-//		//제목이랑 가수이름으로 musicId를 찾고 그 뮤직아이디를 해당 위시리스트에 넣는다
-//		int musicId = musicDAO.musicIdByTitle(vo);
-//
-//
-//		//int r = musicDAO.insertWishList(musicId);
-//		//System.out.println(title);
-//
-//	}
-	
-
+	@ResponseBody
+	@PostMapping(value = "/updateLike", produces = "application/text; charset=UTF-8")
+	public String updateLike(@RequestParam int musicId, @LoginUser SessionUser user) {
+		Map<String, Object> paramMap = new HashMap<>();
+		String id = user.getId();
+		paramMap.put("v_member_id", id);
+		paramMap.put("v_music_id", musicId);
+		paramMap.put("p_result", 0);
+		
+		musicDAO.updateLike(paramMap);
+		int r = (int) paramMap.get("p_result");
+		
+		if(r==0) {
+			return "좋아요를 취소하셨습니다.";
+		} else {
+			return "좋아요 하셨습니다.";
+		}
+	}
 }

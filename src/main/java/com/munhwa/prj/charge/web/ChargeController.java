@@ -29,11 +29,12 @@ public class ChargeController {
 	@ResponseBody
 	public MemberVO plusMileage(@LoginUser SessionUser user, MemberVO vo, ChargeVO cvo, Model model) {
 		String memberId = user.getId();
+    
 		model.addAttribute("memberId", memberId);
 		vo.setId(memberId);
 		memberDao.plusMileage(vo);
-		System.out.println(vo);
 		chargeDao.insertCharge(cvo);
+    
 		user.setMileage(user.getMileage() + cvo.getMileage());
 		return vo;
 	}

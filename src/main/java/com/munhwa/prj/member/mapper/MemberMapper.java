@@ -31,9 +31,12 @@ public interface MemberMapper {
 	
 	// 비밀번호 업데이트
 	int updatePassword(MemberVO vo);
-	
+
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
+
+	// 프로필 업데이트
+	int updateProfile(MemberVO vo);
 
 	MemberVO selectByMemberId(@Param("username") String id);
 	

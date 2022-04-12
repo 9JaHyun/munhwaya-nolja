@@ -50,11 +50,11 @@
 								<ul class="tab-content-items">
 									<c:forEach var="music" items="${musicRnBList}" begin="0" end="15">
 										<li class="grid_6">
-											<a class="m-thumbnail" href="steraming">
+											<a class="m-thumbnail" href="streaming?id=${music.id }">
 												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
-												<a href="streaming">${music.title }</a>
+												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
 											<span>likes:${music.likeIt}</span>
@@ -73,11 +73,11 @@
 								<ul class="tab-content-items">
 									<c:forEach var="music" items="${musicRapList}" begin="0" end="15">
 										<li class="grid_6">
-											<a class="m-thumbnail" href="steraming">
+											<a class="m-thumbnail" href="streaming?id=${music.id }">
 												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
-												<a href="streaming">${music.title }</a>
+												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
 											<span>likes:${music.likeIt}</span>
@@ -96,11 +96,11 @@
 								<ul class="tab-content-items">
 									<c:forEach var="music" items="${musicDanceList}" begin="0" end="15">
 										<li class="grid_6">
-											<a class="m-thumbnail" href="steraming">
+											<a class="m-thumbnail" href="streaming?id=${music.id }">
 												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
 											</a>
 											<h3>
-												<a href="streaming">${music.title }</a>
+												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
 											<span>likes:${music.likeIt}</span>
@@ -119,11 +119,11 @@
 								<ul class="tab-content-items">
 										<c:forEach var="music" items="${musicBalladList}" begin="0" end="15">
 											<li class="grid_6">
-												<a class="m-thumbnail" href="steraming">
+												<a class="m-thumbnail" href="streaming?id=${music.id }">
 													<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
 												</a>
 												<h3>
-													<a href="streaming">${music.title }</a>
+													<a href="streaming?id=${music.id }">${music.title }</a>
 												</h3> 
 												<span>${music.artName }</span> 
 												<span>likes:${music.likeIt}</span>

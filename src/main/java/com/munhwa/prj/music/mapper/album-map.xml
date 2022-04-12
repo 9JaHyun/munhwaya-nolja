@@ -35,6 +35,7 @@
                                  WHERE WISHLIST_ID=#{id}))
 	</select>
 	
+	
 	<select id="albumSelect" parameterType="int" resultMap="albumResultMap">
 		SELECT *
 		FROM ALBUM
