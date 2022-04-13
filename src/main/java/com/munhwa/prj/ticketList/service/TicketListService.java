@@ -9,4 +9,6 @@ public interface TicketListService {
 	List<TicketListVO> ticketListSelectList(String id);
 	int ticketListInsert(Map<String, Object> paramMap);
 	TicketListVO ticketListSelect(TicketListVO vo);
+	int qrcodeUpdate(TicketListVO vo);
+	int qrcodeAttendance(int id);
 }

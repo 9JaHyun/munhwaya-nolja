@@ -59,7 +59,7 @@ a:hover {
 		<div class="mbf clearfix" style="font-size: 20px;">
 			<div align="center" style="color: white" class="def-block clearfix">
 				현재 보유중인 마일리지&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly"
-					style="height: 15px; margin-top: 5px;">
+					style="height: 15px; margin-top: 5px;" value="${mileage }">
 			</div>
 		</div>
 		<div style="float: right;">
@@ -95,7 +95,7 @@ a:hover {
 		</table>
 	</div>
 	<div class="pageInfo_wrap">
-		<div class="pageInfo_area">
+		<div class="pageInfo_area" style="margin-left:100px;">
 			<ul id="pageInfo" class="pageInfo">
 				<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMaker.prev}">
@@ -128,7 +128,6 @@ a:hover {
 		<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>뒤로가기</span></a>
 	</div>
 </div>
-
 
 <!-- def block -->
 <!-- span8 posts -->

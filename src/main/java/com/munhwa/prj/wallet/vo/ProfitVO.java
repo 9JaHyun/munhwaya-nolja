@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.munhwa.prj.common.vo.CommonCodeVO;
 import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.performance.vo.PerformanceVO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,8 +17,10 @@ public class ProfitVO {
 	private int mileage;
 	private String place;
 	private String memberId;
+	private int pks;
 	
 	private CommonCodeVO commonCodevo;
 	private MusicVO musicvo;
 	private ArtistVO artistvo;
+	private PerformanceVO performancevo;
 }

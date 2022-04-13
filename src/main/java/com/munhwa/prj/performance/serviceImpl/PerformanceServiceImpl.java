@@ -42,4 +42,9 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return map.performanceUpdate(paramMap);
 	}
 
+	@Override
+	public List<PerformanceVO> findAll() {
+		return map.performanceSelectAll();
+	}
+
 }

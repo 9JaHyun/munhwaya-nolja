@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-
+<style>
+	span{
+		color: #D0D0D0;
+	}
+</style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 	
 	<!-- content -->
@@ -52,13 +56,20 @@
 									<c:forEach var="music" items="${musicRnBList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+												<c:choose>
+			                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+			                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+			                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+			                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+			                                    </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
@@ -74,13 +85,20 @@
 									<c:forEach var="music" items="${musicRapList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="steraming?id=${music.id }">
-												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+												<c:choose>
+			                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+			                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+			                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+			                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+			                                    </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
@@ -96,13 +114,20 @@
 									<c:forEach var="music" items="${musicDanceList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+												<c:choose>
+			                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+			                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+			                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+			                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+			                                    </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
@@ -118,13 +143,20 @@
 										<c:forEach var="music" items="${musicBalladList}" begin="0" end="9">
 											<li class="grid_6">
 												<a class="m-thumbnail" href="streaming?id=${music.id }">
-													<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
+													<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
 												</a>
 												<h3>
 													<a href="streaming?id=${music.id }">${music.title }</a>
 												</h3> 
 												<span>${music.artName }</span> 
-												<span>likes:${music.likeIt}</span>
+												<span>
+													<c:choose>
+				                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+				                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+				                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+				                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+				                                    </c:choose> 
+												</span>
 											</li>
 										</c:forEach>
 								</ul>
@@ -162,13 +194,20 @@
 									</span>
 									<a class="m-thumbnail" href="streaming?id=${music.id }">
 										<img style="width:100%; height:100%; object-fit: cover;" 
-											src="resources/images/bg/musicBg3.jpg" alt="#">
+											src="api/picture/${music.picture }" alt="#">
 									</a>
 									<h3>
 										<a href="streaming?id=${music.id }">${music.title }</a>
 									</h3>
 									<span>${music.artName }</span>
-									<span> ${music.likeIt }</span>
+									<span>
+										<c:choose>
+			                                <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+			                                <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+			                                <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+			                                <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+		                                </c:choose> 
+									</span>
 								</li>
 							</c:forEach>	
 							</ul>
@@ -197,7 +236,7 @@
 								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="4">
 								<li>
 									<a class="m-thumbnail" href="albumInfo?id=${album.id }">
-										<img style="width:100%; height:100%; object-fit: cover; " src="resources/images/bg/musicBg3.jpg" alt="#">
+										<img style="width:100%; height:100%; object-fit: cover; " src="api/picture/${album.picture }" alt="#">
 									</a>
 									<h3>
 										<a href="albumInfo?id=${album.id }">${album.albName}</a>
@@ -244,7 +283,7 @@
 								<div class="video-grid">
 									<c:forEach var="music" items="${musicPersonalList}" begin="0" end="7">
 										<a href="streaming?id=${music.id }" class="grid_3">
-											<img style="width:100%; height:100%; object-fit: cover;" src="resources/images/bg/musicBg3.jpg" alt="#">
+											<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
 											<span><strong>${music.title }</strong>${music.artName }</span>
 										</a>
 									</c:forEach>

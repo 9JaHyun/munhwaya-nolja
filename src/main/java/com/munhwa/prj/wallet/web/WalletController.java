@@ -1,30 +1,12 @@
 package com.munhwa.prj.wallet.web;
 
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
 import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.common.vo.PageDTO;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.member.vo.MemberVO;
 import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.music.vo.PurchaseVO;
@@ -32,7 +14,23 @@ import com.munhwa.prj.wallet.service.ProfitService;
 import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.ProfitVO;
 import com.munhwa.prj.wallet.vo.UsageVO;
-
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+//@Slf4j
 @Controller
 public class WalletController {
 	@Autowired
@@ -50,9 +48,8 @@ public class WalletController {
 	@Autowired
 	private PurchaseService purchaseDao;
 	
-	
-//	SimpleDateFormat tranSimpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+	//카트 결제
+	@Transactional
 	@PostMapping("/payCart")
 	@ResponseBody
 	public String payCart(@LoginUser SessionUser user, @RequestBody List<MusicVO> musics) {
@@ -68,9 +65,9 @@ public class WalletController {
 		 */
 		int sum = 0;
 		List<UsageVO> resultUsageList = new ArrayList<>();
-		List<MemberVO> resultListByMember = new ArrayList<>();
 		List<PurchaseVO> resultPurchaseList = new ArrayList<>();
 		List<ProfitVO> resultProfitByArtist = new ArrayList<>();
+		Map<String,Object> param = new HashMap<String, Object>();
 		for(MusicVO music : musics) {
 			sum += music.getPrice();
 			UsageVO usageVO = new UsageVO();
@@ -81,13 +78,7 @@ public class WalletController {
 			usageVO.setPks(music.getId());
 			
 			resultUsageList.add(usageVO);
-			
-			MemberVO memberVO = new MemberVO();
-			memberVO.setId(memberId);
-			memberVO.setMileage(music.getPrice());
-			
-			resultListByMember.add(memberVO);
-            
+			            
 			PurchaseVO purchaseVO = new PurchaseVO();
 			purchaseVO.setMusicId(music.getId());
 			purchaseVO.setMemberId(memberId);
@@ -99,94 +90,85 @@ public class WalletController {
 			profitVO.setMileage(music.getPrice());
 			profitVO.setPlace("U01");
 			profitVO.setId(music.getId());
-			
+			profitVO.setPks(music.getId());
 			
 			resultProfitByArtist.add(profitVO);
-		}
+								
+			param.put("v_member_id", memberId);
+			param.put("v_mileage", music.getPrice());
+			param.put("v_title", music.getTitle());
+		}	
+
+			// 사용내역 남기기 
 			usageDao.insertUsage(resultUsageList);
-			minusMileage(resultListByMember);
-			insertPurchaseMusic(resultPurchaseList);
-			insertProfitHistory(resultProfitByArtist);
-				
-		return "wallet/usageHistory-memberWallet";
+			// 구매한 음원리스트에 담기
+			purchaseDao.purchaseInsert(resultPurchaseList);
+			// 곡 구매시 아티스트 수익 내역에 찍기
+			profitDao.insertProfit(resultProfitByArtist);
+			// 곡 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저 
+			memberDao.updateMileageMusic(param);
+			
+			user.getCart().clear();
+			user.setMileage(user.getMileage()-sum);
+			return "success";
 	}
-	
-	// 곡 구매시 회원 마일리지 차감 
-	public List<MemberVO> minusMileage(@RequestBody List<MemberVO> vo) {
-		memberDao.minusMileage(vo);
-		return vo;
-	}
-	
-	// 구매한 음원에 담기
-	public List<PurchaseVO> insertPurchaseMusic(@RequestBody List<PurchaseVO> vo) {
-		purchaseDao.purchaseInsert(vo);
-		return vo;
-	}
-	
-	// 곡 구매시 아티스트 수익 내역에 찍기
-	public List<ProfitVO> insertProfitHistory(@RequestBody List<ProfitVO> vo) {
-		profitDao.insertProfit(vo);
-		return vo;
-	}
-	
-//	@PostMapping("/payCart")
-//	@ResponseBody
-//	public MemberVO payCart(MemberVO vo, UsageVO uvo,HttpServletRequest req, Model model) {
-//		String memberId = (String) req.getSession().getAttribute("id");
-//		model.addAttribute("memberId", memberId);
-//		vo.setId(memberId);
-//		memberDao.minusMileage(vo);
-//		insertUsage(uvo);
-//		return vo;
-//	}
-//	
-//	public UsageVO insertUsage(UsageVO vo) {
-//		usageDao.insertUsage(vo);
-//		return vo;
-//	}
 	
 	
 	// 마이페이지 지갑 정보 리스트 페이지
 	@GetMapping("/walletInfo.do")
-	public String walletInfo(Model model, HttpServletRequest req) {
-		String memberId = (String) req.getSession().getAttribute("id");
+	public String walletInfo(@LoginUser SessionUser user,  Model model) {
+		String memberId = user.getId();
 		model.addAttribute("memberId", memberId);
+		model.addAttribute("role", user.getRole());
 		return "walletInfo-memberWallet";
 	}
 	
 	// 지갑 정보 상세 페이지
 	@RequestMapping("/walletInfoSelect.do")
-	public String walletInfoSelect(HttpServletRequest req, Model model, Criteria cri) {
-		String memberId = (String) req.getSession().getAttribute("id");
-//		Criteria cri = new Criteria();
-//		String pageNum = req.getParameter("pageNum");
-//		if(pageNum == null) { pageNum = "1";}
-//		int result = Integer.parseInt(pageNum);
-//		cri.setPageNum(result);
+	public String walletInfoSelect(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
 		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri);
-//		list.forEach(charge -> System.out.println(tranSimpleFormat.format(charge.getChargeAt())));
 		model.addAttribute("charges", list);
+		model.addAttribute("mileage", user.getMileage());
 		int total = chargeDao.getCountByChargeId(memberId);
 	    PageDTO pageMake = new PageDTO(cri, total);
 	    model.addAttribute("pageMaker", pageMake);
 		return "walletInfoSelect-memberWallet";
 	}
 	
-	// 마일리지 사용 내역 페이지
-	@GetMapping("/usageHistory.do")
-	public String usageHistory(HttpServletRequest req, Model model, Criteria cri) {
-		String memberId = (String) req.getSession().getAttribute("id");
-		List<UsageVO> list = usageDao.findByMemberId(memberId, cri);
-		model.addAttribute("usages",list);
-		int total = usageDao.getCountByUsageId(memberId);
+	// 마일리지 사용 내역 페이지 (곡 구매)
+	@GetMapping("/usageHistoryOfMusic.do")
+	public String usageHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
+		List<UsageVO> music = usageDao.findByMusic(memberId, cri);
+		model.addAttribute("usages", music);
+		
+		System.out.println("--------------" + music);
+		int total = usageDao.getCountByMusic(memberId);
 		PageDTO pageMake = new PageDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
-		return "usageHistory-memberWallet";
+		return "usageHistoryOfMusic-memberWallet";
+	}
+	
+	// 마일리지 사용 내역 페이지 (공연 티켓 구매)
+	@GetMapping("/usageHistoryOfPerformance.do")
+	public String usageHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
+		List<UsageVO> performance = usageDao.findByPerformance(memberId, cri);
+		model.addAttribute("usages", performance);
+		
+		int total = usageDao.getCountByPerformance(memberId);
+		PageDTO pageMake = new PageDTO(cri, total);
+		model.addAttribute("pageMaker", pageMake);
+		
+		return "usageHistoryOfPerformance-memberWallet"; 
 	}
 	
 	// 마일리지 충전 페이지
 	@GetMapping("/chargeForm.do")
-	public String chargeForm() {
+	public String chargeForm( @LoginUser SessionUser user, Model model) {
+		String memberId = user.getId();
+		model.addAttribute("memberId", memberId);
 		return "chargeForm-memberWallet";
 	}
 	
@@ -196,39 +178,36 @@ public class WalletController {
 		return "withdrawForm-memberWallet";
 	}
 	
-	// 아티스트 수익 내역 페이지
-	@GetMapping("/profitHistory.do")
-	public String profitHistory(HttpServletRequest req, Model model, Criteria cri) {
-		String memberId = (String) req.getSession().getAttribute("id");
-		List<ProfitVO> list = profitDao.findByMemberId(memberId, cri);
-		model.addAttribute("profits", list);
-		int total = profitDao.getCountByProfitId(memberId);
+	// 아티스트 수익 내역 페이지 (곡 수익)
+	@GetMapping("/profitHistoryOfMusic.do")
+	public String profitHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
+		List<ProfitVO> music = profitDao.findByMusic(memberId, cri);
+		model.addAttribute("profits", music);
+		List<ProfitVO> performance = profitDao.findByPerformance(memberId, cri);
+		model.addAttribute("profits2", performance);
+		
+		int total = profitDao.getCountByMusic(memberId);
+		int total2 = profitDao.getCountByPerformance(memberId);
+		PageDTO pageMake = new PageDTO(cri, total);
+		PageDTO pageMake2 = new PageDTO(cri, total2);
+		model.addAttribute("pageMaker", pageMake);
+		model.addAttribute("pageMaker2", pageMake2);
+		return "profitHistoryOfMusic-memberWallet";
+	}
+	
+	// 아티스트 수익 내역 페이지 (공연 수익)
+	@GetMapping("/profitHistoryOfPerformance.do")
+	public String profitHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri) {
+		String memberId = user.getId();
+		List<ProfitVO> performance = profitDao.findByPerformance(memberId, cri);
+		model.addAttribute("profits", performance);
+		
+		int total = profitDao.getCountByPerformance(memberId);
 		PageDTO pageMake = new PageDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
-		return "profitHistory-memberWallet";
+		return "profitHistoryOfPerformance-memberWallet";
 	}
-		
-	// 충전 내역 페이지에 보일수량
-//	@GetMapping("/changeAmout.do")
-//	@ResponseBody 
-//	public String changeAmount(@RequestBody AmountChangeRequestDTO dto, Model model) {
-//		Criteria cri = new Criteria();
-//		cri.setAmount(dto.getAmount());
-//		List<ChargeVO> list = chargeDao.findByMemberId(dto.getMemberId(), cri);
-//		model.addAttribute("charges", list);
-//		return "walletInfoSelect-memberWallet";
-//	}
-	
-	
-//	@RequestMapping("/ticketListSelect.do")
-//	   public String ticketListSelect(HttpServletRequest req, Model model, TicketListVO vo) {
-//	      String memberId = (String) req.getSession().getAttribute("member");
-//	      vo = ticketListDao.ticketListSelect(vo);
-//	      System.out.println(vo);
-//	      model.addAttribute("memberId", memberId);
-//	      model.addAttribute("ticket", vo);
-//	      return "ticketList/ticketListSelect";
-//	   }
 	
 	
 }

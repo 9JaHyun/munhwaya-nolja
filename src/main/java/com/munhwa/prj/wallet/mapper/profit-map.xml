@@ -7,9 +7,11 @@
 		<result property="mileage" column="mileage"/>
 		<result property="place" column="place"/>
 		<result property="memberId" column="member_id"/>
+		<result property="pks" column="pks"/>
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
 		<collection property="musicvo" resultMap="musicResultMap" />
 		<collection property="artistvo" resultMap="artistResultMap" />
+		<collection property="performancevo" resultMap="performanceResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
@@ -22,8 +24,8 @@
 		<result property="artName" column="ART_NAME"/>
 		<result property="genre" column="GENRE"/>
 		<result property="lyric" column="LYRIC"/>
-		<result property="likeIt" column="LIKE_IT"/>
-		<result property="fileName" column="FILE_NAME"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
 		<result property="title" column="TITLE"/>
 		<result property="price" column="PRICE"/>
 		<result property="albumId" column="ALBUM_ID"/>
@@ -44,32 +46,97 @@
 		<result property="name" column="name"/>
     </resultMap>
     
-    <select id="selectProfitListMemberId" resultMap="profitResultMap">
+    <resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="pname"/>
+		<result property="location" column="location"/>
+		<result property="sdate" column="sdate"/>
+		<result property="edate" column="edate"/>
+		<result property="content" column="content"/>
+		<result property="status" column="status"/>
+		<result property="image" column="image"/>
+		<result property="artistId" column="artist_id"/>
+		<result property="price" column="price"/>
+		<result property="person" column="person"/>
+	</resultMap>
+	
+    <!-- 곡 수익 내역 --> 
+    <select id="selectProfitListMusic" resultMap="profitResultMap">
 		<![CDATA[
-			select id, profit_at, mileage, name, 			
+   		select * 
+        from (select
+            dense_rank() over(order by p.profit_at desc, p.member_id, c.name) as rn,
+            p.profit_at,
+            sum(p.mileage) as mileage,
+            c.name,
+            LISTAGG(m.title, ', ') within group(order by m.title) as title
+        from profit_history p,
+        common_code c, 
+        music m
+        where p.place = c.id
+            and p.pks = m.id
+				and p.member_id = #{memberId}
+				and p.place = 'U01'
+	           group by p.profit_at, p.member_id, c.name
+	           order by p.profit_at desc
+                )
+	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
+        ]]>
+    </select>
+    
+    <select id="getCountByMusic" resultType="int">
+    	<![CDATA[
+		select count(id)
+		from profit_history
+		where member_id = #{memberId}
+		and place = 'U01'
 		]]>
-		    
+    </select>
+    
+    <!-- 공연 티켓 수익 내역 -->
+    <select id="selectProfitListPerformance" resultMap="profitResultMap">
+    	<![CDATA[
+    	select * 
+        from (select
+            dense_rank() over(order by p.profit_at desc, p.member_id, c.name) as rn,
+            p.profit_at,
+            sum(p.mileage) as mileage,
+            c.name,
+            LISTAGG(pe.name, ', ') within group(order by pe.name) as pname
+        from profit_history p,
+        common_code c, 
+        performance pe
+        where p.place = c.id
+            and p.pks = pe.id
+				and p.member_id = #{memberId}
+				and p.place = 'U02'
+	           group by p.profit_at, p.member_id, c.name
+	           order by p.profit_at desc
+                )
+	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
+	     ]]>
+    </select>
+    
+    <select id="getCountByPerformance" resultType="int">
+    	<![CDATA[
+		select count(id)
+		from profit_history
+		where member_id = #{memberId}
+		and place = 'U02'
+		]]>
     </select>
     
     <insert id="insertProfit" parameterType="com.munhwa.prj.wallet.vo.ProfitVO">
-<!--     	INSERT INTO profit_history -->
-<!--     							(ID,  -->
-<!-- 								MILEAGE,  -->
-<!-- 								PLACE,  -->
-<!-- 								MEMBER_ID, -->
-<!-- 								PROFIT_AT,) -->
-<!-- 		values(profit_history_seq.nextval,  -->
-<!-- 			   #{mileage},  -->
-<!-- 			   #{place},  -->
-<!-- 			   #{memberId},  -->
-<!-- 			   #{profitAt}) -->
 		insert into profit_history(id, 
 								   profit_at, 
 								   mileage, 
-								   place, 
-								   member_id) 
+								   place,
+								   pks, 
+								   member_id)
 		select profit_history_seq.nextval, 
-		#{profitAt}, #{mileage}, #{place}, a.member_id
+		#{profitAt}, #{mileage}, #{place}, #{pks}, a.member_id
 		from artist a, music m
 		where a.name = m.art_name
 		and m.Id = #{id}

@@ -10,6 +10,7 @@
 		<result property="pks" column="pks"/>
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
 		<collection property="musicvo" resultMap="musicResultMap" />
+		<collection property="performancevo" resultMap="performanceResultMap"/>
 	</resultMap>
 
 	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
@@ -22,8 +23,8 @@
 		<result property="artName" column="ART_NAME"/>
 		<result property="genre" column="GENRE"/>
 		<result property="lyric" column="LYRIC"/>
-		<result property="likeIt" column="LIKE_IT"/>
-		<result property="fileName" column="FILE_NAME"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
 		<result property="title" column="TITLE"/>
 		<result property="price" column="PRICE"/>
 		<result property="albumId" column="ALBUM_ID"/>
@@ -32,12 +33,27 @@
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
 	</resultMap>
-
-	<select id="selectUsageListMemberId" resultMap="usageResultMap">
+	
+	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="pname"/>
+		<result property="location" column="location"/>
+		<result property="sdate" column="sdate"/>
+		<result property="edate" column="edate"/>
+		<result property="content" column="content"/>
+		<result property="status" column="status"/>
+		<result property="image" column="image"/>
+		<result property="artistId" column="artist_id"/>
+		<result property="price" column="price"/>
+		<result property="person" column="person"/>
+	</resultMap>
+	
+	<!-- 곡 구매 내역 -->
+	<select id="selectUsageListMusic" resultMap="usageResultMap">
 		<![CDATA[
 		 select *
 	        from ( select
-	            DENSE_RANK() OVER (ORDER BY u.use_at) as rn,
+	            DENSE_RANK() OVER (ORDER BY u.use_at desc, u.member_id, c.name) as rn,
 				u.use_at,
 	            sum(u.mileage) as mileage,
 	            c.name,
@@ -47,38 +63,58 @@
 	        music m
 			where u.place = c.id
 	            and u.pks = m.id
-				and rownum <= #{cri.pageNum} * #{cri.amount}
 				and u.member_id = #{memberId}
+				and u.place = 'U01'
 	           group by u.use_at, u.member_id, c.name
-	           order by rn desc
+	           order by u.use_at desc
 	     )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
      ]]>
-		<!-- 		<![CDATA[ -->
-		<!-- 		select id, use_at, mileage, name, pks -->
-		<!-- 		from (select -->
-		<!-- 			rownum rn, -->
-		<!-- 			a.id, -->
-		<!-- 			a.use_at, -->
-		<!-- 			a.mileage, -->
-		<!-- 			b.name, -->
-		<!-- 			a.pks -->
-		<!-- 		from usage_history a, -->
-		<!-- 			 common_code b -->
-		<!-- 		where a.place = b.id -->
-		<!-- 			and rownum<= #{cri.pageNum} * #{cri.amount} -->
-		<!-- 			and a.member_id = #{memberId} -->
-		<!-- 			order by rn desc -->
-		<!-- 		) -->
-		<!-- 		where rn > (#{cri.pageNum}-1) * #{cri.amount}      -->
-		<!-- 		]]> -->
 	</select>
 
-	<select id="getCountByUsageId" resultType="int">
+	<select id="getCountByMusic" resultType="int">
   		<![CDATA[
-		select count(id)
+		select count(count(id))
 		from usage_history
 		where member_id = #{memberId}
+		and place = 'U01'
+		group by use_at
+		]]>
+  	</select>
+  	
+  	<!-- 공연 티켓 구매 내역 -->
+  	<select id="selectUsageListPerformance" resultMap="usageResultMap">
+  	 <![CDATA[
+		 select *
+	        from ( select
+	            DENSE_RANK() OVER (ORDER BY u.use_at desc, u.member_id, c.name) as rn,
+				u.use_at,
+	            sum(u.mileage) as mileage,
+	            c.name,
+	            LISTAGG(pe.name, ', ') within group(order by pe.name) as pname
+			from usage_history u,
+	        common_code c,
+	        performance pe
+			where u.place = c.id
+	            and u.pks = pe.id
+				and u.member_id = #{memberId}
+				and u.place = 'U02'
+	           group by u.use_at, u.member_id, c.name
+	           order by u.use_at desc
+	     )
+	      where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
+     ]]>
+  	</select>
+  	
+  	<select id="getCountByPerformance" resultType="int">
+  		<![CDATA[
+		select count(count(id))
+		from usage_history
+		where member_id = #{memberId}
+		and place = 'U02'
+		group by use_at
 		]]>
   	</select>
 

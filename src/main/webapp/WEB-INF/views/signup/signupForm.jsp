@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div class="under_header">
 	<img src="resources/images/assets/signupback.png" alt="#">
@@ -38,7 +37,6 @@
 							<input style="width: 470px; margin-bottom: 15px;" type="text"
 								name="nickname" id="nickname" placeholder="NICKNAME (4자리 이상)"
 								required="required" />
-
 						</div>
 						<p style="margin-bottom: 20px;" 
 							class="tbutton small" id="nickChk" value="N" onclick="nickChkFn();">
@@ -67,7 +65,6 @@
 		</div>
 	</div>
 </div>
-\
 <script>
 	function send() {
 		if(idChk.value == "Y" && nickChk.value == "Y") {
