@@ -129,16 +129,16 @@
     </select>
     
     <insert id="insertProfit" parameterType="com.munhwa.prj.wallet.vo.ProfitVO">
-		insert into profit_history(id, 
-								   profit_at, 
-								   mileage, 
-								   place,
-								   pks, 
-								   member_id)
-		select profit_history_seq.nextval, 
-		#{profitAt}, #{mileage}, #{place}, #{pks}, a.member_id
-		from artist a, music m
-		where a.name = m.art_name
-		and m.Id = #{id}
+	  insert into profit_history(id, 
+                           profit_at, 
+                           mileage, 
+                           place,
+                           pks, 
+                           member_id)
+      select profit_history_seq.nextval, 
+      #{profitAt}, #{mileage}, #{place}, #{pks}, a.member_id
+      from artist a, music m
+      where a.name = m.art_name
+      and m.Id = #{id}
     </insert>
 </mapper>

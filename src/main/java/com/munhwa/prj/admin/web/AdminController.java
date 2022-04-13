@@ -3,17 +3,16 @@ package com.munhwa.prj.admin.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.performance.service.PerformanceService;
 import com.munhwa.prj.performance.vo.Criteria;
 import com.munhwa.prj.performance.vo.PageMakeDTO;
@@ -27,7 +26,7 @@ public class AdminController {
 	
 	// 공연 신청 목록
 	@GetMapping("admin/performanceList")
-	public String changePerformanceStatus(Model model, Criteria cri) {
+	public String changePerformanceStatus(Model model, Criteria cri, PerformanceVO vo) {
 		List<PerformanceVO> list = performanceService.adminSelectList(cri);
 		
     	model.addAttribute("performances", list);

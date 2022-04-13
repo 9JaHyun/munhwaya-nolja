@@ -38,6 +38,6 @@ public interface MemberService {
 	// 프로시저 곡 구매 마일리지 22/04/08 류기태 
 	int updateMileageMusic(Map<String,Object> vo);
 	
-	// 프로시저 공연 구매 마일리지 22/04/08 류기태
+	// 프로시저 공연 구매 마일리지 22/04/08 류기태 04/13 수정
 	int updateMileagePerformance(Map<String,Object> vo);
 }

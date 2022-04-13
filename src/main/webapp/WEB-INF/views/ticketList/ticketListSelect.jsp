@@ -238,8 +238,8 @@ body {
 			</div>
 			<div class="time">
 				<p style="margin:0px;"><fmt:formatDate pattern = "MM월 dd일 HH:mm " value = "${ticket.performancevo.sdate }" /><span>To </span><fmt:formatDate pattern = "HH:mm " value = "${ticket.performancevo.edate }" /></p>
+				<p style="font-size:16pt; margin-top:10px;">관객수 : ${ticket.person }명</p>
 				<p style="margin:0px; color:red; font-size:18pt;">${ticket.attendance }</p>
-				<p>${ticket.performancevo.location }</p>
 			</div>
 			<div class="barcode">
 				<img src="api/picture/qrCodes/${ticket.qrcode}">

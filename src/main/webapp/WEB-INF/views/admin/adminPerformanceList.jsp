@@ -55,9 +55,9 @@
 										<c:forEach items="${performances}" var="performances">
 											<tr >
 												<td style="color:white;">${performances.name }</td>
-												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performances.sdate }" /></td>
-												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performances.edate }" /></td>
-												<td style="color:white;">${performances.artistId }</td>
+												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performances.sdate }" /></td>
+												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performances.edate }" /></td>
+												<td style="color:white;">${performances.artistName }</td>
 												<td class="status" style="color:white;">${performances.status }</td>
 												<td>
 													<button data-pid = "${performances.id }" class="tbutton small success" style="height: 25px; width: 50px;">승인</button>

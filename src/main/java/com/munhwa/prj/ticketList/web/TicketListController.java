@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,14 +85,18 @@ public class TicketListController {
 		model.addAttribute("ticket", vo);
 		return "ticketList/ticketListSelect";
 	}
-
+	
+	@Transactional
 	@RequestMapping("/ticketListInsert.do")
-	public String ticketListInsert(@LoginUser SessionUser user, int id, HttpServletRequest req,
+	public String ticketListInsert(@LoginUser SessionUser user, int id, int person, HttpServletRequest req,
 			HttpServletResponse response) throws WriterException, IOException {
 		String memberId = user.getId();
+		System.out.println("abcde"+person);
+		System.out.println("abcdef"+id);
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("v_member_id", memberId);
 		paramMap.put("v_performance_id", id);
+		paramMap.put("v_person", person);
 
 		int ticketId = ticketListDao.ticketListInsert(paramMap);
 		log.info("ticketId={}", ticketId);
@@ -114,7 +119,7 @@ public class TicketListController {
 		Map<String, Object> param = new HashMap<String, Object>();
 
 		UsageVO usageVO = new UsageVO();
-		usageVO.setMileage(vo.getPerformancevo().getPrice());
+		usageVO.setMileage(vo.getPerformancevo().getPrice() * person);
 		usageVO.setUseAt(useDate);
 		usageVO.setPlace("U02");
 		usageVO.setMemberId(memberId);
@@ -122,19 +127,22 @@ public class TicketListController {
 
 		resultUsageList.add(usageVO);
 
-		ProfitVO profitVO = new ProfitVO();
-		profitVO.setProfitAt(useDate);
-		profitVO.setMileage(vo.getPerformancevo().getPrice());
-		profitVO.setPlace("U02");
-		profitVO.setId(vo.getPerformancevo().getId());
-		profitVO.setPks(vo.getPerformancevo().getId());
+//		ProfitVO profitVO = new ProfitVO();
+//		profitVO.setProfitAt(useDate);
+//		profitVO.setMileage(vo.getPerformancevo().getPrice() * person);
+//		profitVO.setPlace("U02");
+//		profitVO.setPks(vo.getPerformancevo().getId());
 
-		resultProfitByArtist.add(profitVO);
+		
+
+//		resultProfitByArtist.add(profitVO);
 
 		param.put("v_member_id", memberId);
-		param.put("v_mileage", vo.getPerformancevo().getPrice());
+		param.put("v_mileage", vo.getPerformancevo().getPrice() * person);
 		param.put("v_performance_id", vo.getPerformancevo().getId());
-
+		param.put("v_profit_at", useDate);
+		param.put("v_artist_id", vo.getPerformancevo().getArtistId());
+		
 		// 사용 내역 남기기
 		usageDao.insertUsage(resultUsageList);
 //		// 공연 구매 시 아티스트 수익 내역에 찍기
@@ -142,7 +150,7 @@ public class TicketListController {
 //		// 공연 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저
 		memberDao.updateMileagePerformance(param);
 
-		user.setMileage(user.getMileage() - vo.getPerformancevo().getPrice());
+		user.setMileage(user.getMileage() - vo.getPerformancevo().getPrice() * person);
 		
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html; charset=utf-8");
