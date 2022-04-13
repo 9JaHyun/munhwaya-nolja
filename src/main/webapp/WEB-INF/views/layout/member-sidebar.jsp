@@ -33,7 +33,7 @@
                         <c:choose>
 
                             <c:when test="${fn:indexOf(member.sname, 'https://') != -1}">
-                                <img src="${member.sname}" alt="image"
+                                <img src="${artist.image}" alt="image"
                                      style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
                             </c:when>
                             <c:otherwise>

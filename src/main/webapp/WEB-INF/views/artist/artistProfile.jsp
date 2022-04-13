@@ -26,7 +26,9 @@
 
 </style>
 
-
+  <img src="resources/images/artistFile/click.png" alt="image"
+                             style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
+                             
 <div align="right" style="margin-bottom: 50px;">
 	<h4>아티스트 정보 입력</h4>
 		<div class="grid_12 tt" style="margin-top: 70px;">
