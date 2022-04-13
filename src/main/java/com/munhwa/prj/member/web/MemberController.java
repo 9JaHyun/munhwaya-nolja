@@ -37,6 +37,10 @@ public class MemberController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private FileUtils fileUtils;
+    
 
     // 마이페이지 (+ 새소식리스트)
     @PreAuthorize("hasRole('R01')")
@@ -102,7 +106,6 @@ public class MemberController {
     @PostMapping("updatePassword.do")
     public String updatePassword(MemberVO vo, String password1) {
     	vo.setPassword(passwordEncoder.encode(password1));
-
         int n = memberDao.updatePassword(vo);
         if (n != 0) {
             return "redirect:memberChangeInfo.do";
@@ -130,7 +133,6 @@ public class MemberController {
         } else {
             String message = "아이디 또는 비밀번호가 일치하지 않습니다.";
             attr.addFlashAttribute("message", message);
-
             return "redirect:dropMember.do";
         }
     }

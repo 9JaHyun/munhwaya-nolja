@@ -59,7 +59,6 @@
             load('#js-load', '3', '#js-btn-wrap');
         })
     });
-
     function load(id, cnt, btn) {
         var list = id + " .js-load:not(.active)";
         var length = $(list).length;
@@ -72,7 +71,6 @@
         }
         $(list + ":lt(" + total_cnt + ")").addClass("active");
     }
-
     function delMusicFnc(musicId) {
         let query = window.location.search;
         let param = new URLSearchParams(query);

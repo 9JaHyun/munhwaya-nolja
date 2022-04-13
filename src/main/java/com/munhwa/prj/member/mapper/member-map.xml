@@ -57,7 +57,7 @@
     INSERT INTO member (id, password, nickname, tel, genre, mileage, role, oname, sname)
     VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{oname}, #{sname})
   </insert>
-
+  
 	<!-- 소셜 로그인 시 회원가입 처리 -->
 	<insert id="memberOAuthSignup" statementType="CALLABLE"
 		parameterType="map">
@@ -86,8 +86,6 @@
 		FROM member
 		WHERE nickname = #{nickname}
 	</select>
-
-
 
 	<!-- 마일리지 충전 22/04/04 류기태-->
 	<update id="plusMileage" parameterType="com.munhwa.prj.member.vo.MemberVO">

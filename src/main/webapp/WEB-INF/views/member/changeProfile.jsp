@@ -37,7 +37,6 @@
 <div align="right" style="margin-bottom: 30px;">
 	<a href="memberChangeInfo.do">회원정보 변경 ></a>
 	<h4>프로필 변경</h4>
-
 	<form method="post" id="frm" action="updateProfile.do?id=${member.id}" enctype="multipart/form-data">
 		<div align="center" style="margin-top: 80px;">
 			<!-- 변경할 프로필사진 썸네일 -->
@@ -86,16 +85,14 @@
 			img.setAttribute("src", event.target.result);
 		};
 		reader.readAsDataURL(event.target.files[0]);
-
 		// 현재 파일명 -> 변경할 파일명
 		var afterName = event.target.files[0].name;
 		var beforeName = $("#imageName");
 		beforeName.val(afterName);
 
 	}
-
+  
 	function send() {
-
 		var nickname = $("#nickname").val();
 		var originalNick = $('#originalNick').val();
 		var regExp = /\s/g;

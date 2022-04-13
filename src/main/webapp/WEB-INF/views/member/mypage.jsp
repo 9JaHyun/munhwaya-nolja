@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
@@ -89,7 +90,6 @@
 
 <script>
     function delNewsFnc(id) {
-
         $.ajax({
             type : "POST",
             url : "deleteNews.do",
@@ -108,7 +108,7 @@
             load('#js-load', '3', '#js-btn-wrap');
         })
     });
-
+  
     function load(id, cnt, btn) {
         var list = id + " .js-load:not(.active)";
         var length = $(list).length;

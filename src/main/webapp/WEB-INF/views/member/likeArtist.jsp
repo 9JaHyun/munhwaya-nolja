@@ -6,7 +6,6 @@
     .js-load {
         display: none;
     }
-
     .js-load.active {
         display: revert;
     }

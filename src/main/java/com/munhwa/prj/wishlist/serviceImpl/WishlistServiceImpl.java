@@ -45,4 +45,14 @@ public class WishlistServiceImpl implements WishlistService {
 	public int deleteWishlistMusic(int musicId, int wishId) {
 		return map.deleteWishlistMusic(musicId, wishId);
 	}
+
+@Override
+public int createWishList(WishlistVO vo) {
+	return map.createWishList(vo);
+}
+
+@Override
+public int createWishList(Map<String, Object> paramMap) {
+	return map.createWishList(paramMap);
+}
 }
