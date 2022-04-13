@@ -37,10 +37,6 @@ public class MemberController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
-    @Autowired
-    private FileUtils fileUtils;
-    
 
     // 마이페이지 (+ 새소식리스트)
     @PreAuthorize("hasRole('R01')")

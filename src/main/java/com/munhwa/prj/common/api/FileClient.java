@@ -12,9 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,6 +39,7 @@ public class FileClient {
     @GetMapping("/api/file/{filename:.+}")
     public Resource sendFullPath(@PathVariable String filename) throws MalformedURLException {
         return new UrlResource("file:" + fileUtils.getFullPath(filename));
+    }
 
     // 로컬의 사진 파일을 웹에 렌더링 할 때 사용
     @ResponseBody
