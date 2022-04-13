@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <style>
@@ -37,7 +36,8 @@
                                 </p>
                                 <a href="#"
                                    class="notification-close notification-close-success"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
@@ -49,7 +49,8 @@
                                     <c:if test="${news.code eq 'album'}">앨범</c:if>을 등록하셨습니다.
                                 </p>
                                 <a href="#" class="notification-close notification-close-info"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
@@ -61,7 +62,8 @@
                                     <c:if test="${news.code eq 'performance'}">공연</c:if>을 등록하셨습니다.
                                 </p>
                                 <a href="#" class="notification-close notification-close-error"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
@@ -74,7 +76,8 @@
                                 </p>
                                 <a href="#"
                                    class="notification-close notification-close-warning"> <i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:otherwise>
@@ -91,10 +94,10 @@
 <script>
     function delNewsFnc(id) {
         $.ajax({
-            type : "POST",
-            url : "deleteNews.do",
-            data : JSON.stringify({"id": id}),
-            contentType : "application/json"
+            type: "POST",
+            url: "deleteNews.do",
+            data: JSON.stringify({"id": id}),
+            contentType: "application/json"
         })
         .done(() => {
         });
@@ -108,7 +111,7 @@
             load('#js-load', '3', '#js-btn-wrap');
         })
     });
-  
+
     function load(id, cnt, btn) {
         var list = id + " .js-load:not(.active)";
         var length = $(list).length;

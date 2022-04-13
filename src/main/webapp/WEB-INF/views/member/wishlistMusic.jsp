@@ -34,9 +34,8 @@
                 <tr class="js-load">
                     <td><a href="streaming?id=${wishlistMusic.id}">${wishlistMusic.title}</a></td>
                     <td style="padding-right: 30px;">${wishlistMusic.artName}</td>
-                    <td style="padding-right: 20px;"><i class="icon-remove"
-                                                        id="${wishlistMusic.id}"
-                                                        onclick="delMusicFnc(${wishlistMusic.id})"></i>
+                    <td style="padding-right: 20px;"><i class="icon-remove" id="${wishlistMusic.id}"
+                                    onclick="delMusicFnc(${wishlistMusic.id})"></i>
                     </td>
                 </tr>
             </c:forEach>
@@ -49,7 +48,6 @@
     </div>
 </div>
 
-
 <script>
     $(window).on('load', function () {
         // 기본 갯수
@@ -59,6 +57,7 @@
             load('#js-load', '3', '#js-btn-wrap');
         })
     });
+
     function load(id, cnt, btn) {
         var list = id + " .js-load:not(.active)";
         var length = $(list).length;
@@ -71,6 +70,7 @@
         }
         $(list + ":lt(" + total_cnt + ")").addClass("active");
     }
+
     function delMusicFnc(musicId) {
         let query = window.location.search;
         let param = new URLSearchParams(query);

@@ -6,7 +6,6 @@
     <%-- 로그인 버튼--%>
     <div class="row clearfix">
         <div class="little-head">
-
             <sec:authorize access="isAnonymous()">
                 <a href="signupForm.do" class="sign-btn tbutton color3 small"> <span>회원가입</span></a>
                 <a href="signin" class="sign-btn tbutton small"
@@ -33,9 +32,9 @@
     </div>
     <div class="headdown">
         <div class="row clearfix">
-            <div class="logo bottomtip" title="Best and Most Popular Musics">
-                <a href="home.do"><img src="${resources}/images/logo.png"
-                                       alt="Best and Most Popular Musics"></a>
+            <div class="logo bottomtip" title="Catch Cultural Current">
+                <a href="home.do"><img src="${resources}/images/ccc_logo.png"
+                                       alt="Catch Cultural Current"></a>
             </div>
             <%-- 헤더 네비게이션 바 --%>
             <nav>
@@ -52,19 +51,14 @@
                             <li><a href="purchase">내가 구입한 음원</a></li>
                         </ul>
                     </li>
-                    <li><a href="/prj/performance">공연<span class="sub">Photo Gallery</span></a>
+                    <li><a href="performance">공연<span class="sub">Photo
+								Gallery</span></a>
                         <ul>
-                            <sec:authorize access="hasRole('ROLE_R02')">
-                                <li><a href="/prj/performanceInsertForm.do">아티스트 공연 등록 신청</a></li>
-                            </sec:authorize>
-                            <li><a href="/prj/ticketList.do">구매리스트</a></li>
-                            <sec:authorize access="hasRole('ROLE_R03')">
-                                <li><a href="/prj/admin/performanceList">관리자 공연리스트</a></li>
-                            </sec:authorize>
-                            <li><a href="kakao">kakao test</a></li>
+                            <li><a href="performanceInsertForm.do">아티스트 공연 등록 신청</a></li>
+                            <li><a href="ticketList.do">구매리스트</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">게시판<span class="sub">more templates</span></a>
+                    <li><a href="posts">게시판<span class="sub">more templates</span></a>
                         <ul>
                             <li><a href="rtl.html">RTL Support</a></li>
                             <li><a href="events.html">Events</a></li>
