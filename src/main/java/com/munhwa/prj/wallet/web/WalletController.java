@@ -137,38 +137,51 @@ public class WalletController {
 			@RequestParam(value="endDate", required = false) String endDate) {
 		String memberId = user.getId();
 		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri, startDate, endDate);
+		Integer mileage = chargeDao.getCountByMileage(memberId, startDate, endDate);
 		model.addAttribute("charges", list);
 		model.addAttribute("mileage", user.getMileage());
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		int total = chargeDao.getCountByChargeId(memberId,startDate,endDate);
+		model.addAttribute("sumMileage", mileage);
+		Integer total = chargeDao.getCountByChargeId(memberId,startDate,endDate);
 	    PageDTO pageMake = new PageDTO(cri, total);
 	    model.addAttribute("pageMaker", pageMake);
 		return "walletInfoSelect-memberWallet";
 	}
 	
 	// 마일리지 사용 내역 페이지 (곡 구매)
-	@GetMapping("/usageHistoryOfMusic.do")
-	public String usageHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri) {
+	@RequestMapping("/usageHistoryOfMusic.do")
+	public String usageHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri,
+			@RequestParam(value="startDate", required = false) String startDate,
+			@RequestParam(value="endDate", required = false) String endDate) {
 		String memberId = user.getId();
-		List<UsageVO> music = usageDao.findByMusic(memberId, cri);
+		List<UsageVO> music = usageDao.findByMusic(memberId, cri, startDate, endDate);
+		Integer mileage = usageDao.getSumByMusic(memberId, startDate, endDate);
+		model.addAttribute("sumMileage", mileage);
 		model.addAttribute("usages", music);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		
-		System.out.println("--------------" + music);
-		int total = usageDao.getCountByMusic(memberId);
+		Integer total = usageDao.getCountByMusic(memberId, startDate, endDate);
 		PageDTO pageMake = new PageDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
 		return "usageHistoryOfMusic-memberWallet";
 	}
 	
 	// 마일리지 사용 내역 페이지 (공연 티켓 구매)
-	@GetMapping("/usageHistoryOfPerformance.do")
-	public String usageHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri) {
+	@RequestMapping("/usageHistoryOfPerformance.do")
+	public String usageHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri,
+			@RequestParam(value="startDate", required = false) String startDate,
+			@RequestParam(value="endDate", required = false) String endDate) {
 		String memberId = user.getId();
-		List<UsageVO> performance = usageDao.findByPerformance(memberId, cri);
+		List<UsageVO> performance = usageDao.findByPerformance(memberId, cri, startDate, endDate);
+		Integer mileage = usageDao.getSumByPerformance(memberId, startDate, endDate);
+		model.addAttribute("sumMileage", mileage);
 		model.addAttribute("usages", performance);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		
-		int total = usageDao.getCountByPerformance(memberId);
+		Integer total = usageDao.getCountByPerformance(memberId, startDate, endDate);
 		PageDTO pageMake = new PageDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
 		
@@ -191,30 +204,37 @@ public class WalletController {
 	
 	// 아티스트 수익 내역 페이지 (곡 수익)
 	@GetMapping("/profitHistoryOfMusic.do")
-	public String profitHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri) {
+	public String profitHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri,
+			@RequestParam(value="startDate", required = false) String startDate,
+			@RequestParam(value="endDate", required = false) String endDate) {
 		String memberId = user.getId();
-		List<ProfitVO> music = profitDao.findByMusic(memberId, cri);
+		List<ProfitVO> music = profitDao.findByMusic(memberId, cri, startDate, endDate);
+		Integer mileage = profitDao.getSumByMusic(memberId, startDate, endDate);
 		model.addAttribute("profits", music);
-		List<ProfitVO> performance = profitDao.findByPerformance(memberId, cri);
-		model.addAttribute("profits2", performance);
+		model.addAttribute("sumMileage", mileage);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		
-		int total = profitDao.getCountByMusic(memberId);
-		int total2 = profitDao.getCountByPerformance(memberId);
+		Integer total = profitDao.getCountByMusic(memberId, startDate, endDate);
 		PageDTO pageMake = new PageDTO(cri, total);
-		PageDTO pageMake2 = new PageDTO(cri, total2);
 		model.addAttribute("pageMaker", pageMake);
-		model.addAttribute("pageMaker2", pageMake2);
 		return "profitHistoryOfMusic-memberWallet";
 	}
 	
 	// 아티스트 수익 내역 페이지 (공연 수익)
 	@GetMapping("/profitHistoryOfPerformance.do")
-	public String profitHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri) {
+	public String profitHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri,
+			@RequestParam(value="startDate", required = false) String startDate,
+			@RequestParam(value="endDate", required = false) String endDate) {
 		String memberId = user.getId();
-		List<ProfitVO> performance = profitDao.findByPerformance(memberId, cri);
+		List<ProfitVO> performance = profitDao.findByPerformance(memberId, cri, startDate, endDate);
+		Integer mileage = profitDao.getSumByPerformance(memberId, startDate, endDate);
+		model.addAttribute("sumMileage", mileage);
 		model.addAttribute("profits", performance);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		
-		int total = profitDao.getCountByPerformance(memberId);
+		Integer total = profitDao.getCountByPerformance(memberId, startDate, endDate);
 		PageDTO pageMake = new PageDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
 		return "profitHistoryOfPerformance-memberWallet";

@@ -1,6 +1,5 @@
 package com.munhwa.prj.charge.mapper;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +12,9 @@ public interface ChargeMapper {
 	List<ChargeVO> selectChargeListByMemberId(@Param("memberId") String memberId, @Param("cri") Criteria cri, @Param("startDate") String startDate, @Param("endDate") String endDate);
 	
 	// 충전 내역 카운트
-	int getCountByChargeId(@Param("memberId") String id, @Param("startDate") String startDate, @Param("endDate") String endDate);
+	Integer getCountByChargeId(@Param("memberId") String id, @Param("startDate") String startDate, @Param("endDate") String endDate);
 	
+	// 충전 가격 합
+	Integer getCountByMileage(@Param("memberId") String id,  @Param("startDate") String startDate, @Param("endDate") String endDate);
 	int insertCharge(ChargeVO vo);
 }

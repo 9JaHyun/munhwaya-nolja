@@ -15,23 +15,23 @@ public class UsageServiceImpl implements UsageService {
 	private UsageMapper map;
 		
 	@Override
-	public List<UsageVO> findByMusic(String memberId, Criteria cri) {
-		return map.selectUsageListMusic(memberId, cri);
+	public List<UsageVO> findByMusic(String memberId, Criteria cri, String startDate, String endDate) {
+		return map.selectUsageListMusic(memberId, cri, startDate, endDate);
 	}
 
 	@Override
-	public int getCountByMusic(String id) {
-		return map.getCountByMusic(id);
+	public Integer getCountByMusic(String id, String startDate, String endDate) {
+		return map.getCountByMusic(id, startDate, endDate);
 	}
 
 	@Override
-	public List<UsageVO> findByPerformance(String memberId, Criteria cri) {
-		return map.selectUsageListPerformance(memberId, cri);
+	public List<UsageVO> findByPerformance(String memberId, Criteria cri, String startDate, String endDate) {
+		return map.selectUsageListPerformance(memberId, cri, startDate, endDate);
 	}
 
 	@Override
-	public int getCountByPerformance(String id) {
-		return map.getCountByPerformance(id);
+	public Integer getCountByPerformance(String id, String startDate, String endDate) {
+		return map.getCountByPerformance(id, startDate, endDate);
 	}
 
 	@Override
@@ -41,6 +41,16 @@ public class UsageServiceImpl implements UsageService {
 			map.insertUsage(usageVO);
 		}
 		return cnt;
+	}
+
+	@Override
+	public Integer getSumByMusic(String id, String startDate, String endDate) {
+		return map.getSumByMusic(id, startDate, endDate);
+	}
+
+	@Override
+	public Integer getSumByPerformance(String id, String startDate, String endDate) {
+		return map.getSumByPerformance(id, startDate, endDate);
 	}
 
 }

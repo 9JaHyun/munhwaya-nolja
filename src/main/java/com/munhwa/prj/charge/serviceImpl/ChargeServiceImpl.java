@@ -27,8 +27,14 @@ public class ChargeServiceImpl implements ChargeService {
 	}
 
 	@Override
-	public int getCountByChargeId(String id, String startDate, String endDate) {
+	public Integer getCountByMileage(String id, String startDate, String endDate) {
+		return map.getCountByMileage(id, startDate, endDate);
+	}
+
+	@Override
+	public Integer getCountByChargeId(String id, String startDate, String endDate) {
 		return map.getCountByChargeId(id,startDate,endDate);
 	}
+
 
 }

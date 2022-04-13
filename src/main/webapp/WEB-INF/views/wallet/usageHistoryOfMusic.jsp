@@ -68,6 +68,14 @@ a:hover {
 
 </style>
 <!-- <div class="def-block clearfix"> -->
+<%
+response.setHeader("Cache-Control", "no-store");
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+if (request.getProtocol().equals("HTTP/1.1"))
+	response.setHeader("Cache-Control", "no-cache");
+%>
+
 <div align="right" style="margin-bottom: 50px;">
 	<h4>마일리지 사용내역</h4>
 	<div class="mbf clearfix" style="font-size: 20px;"></div>
@@ -86,6 +94,21 @@ a:hover {
 				<c:if test="${pageMaker.cri.amount == 20}">selected</c:if>>20줄
 				보기</option>
 		</select>
+		<form id="dateSelect" action="usageHistoryOfMusic.do" method="post"
+				style="color: white;">
+				시작일&nbsp;&nbsp; <input type="date" id="startDate" name="startDate"
+					style="margin-bottom: 0px; margin-right: 20px; width: 100px;"
+					value="${startDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
+					type="date" id="endDate" name="endDate"
+					style="margin-bottom: 0px; width: 100px" value="${endDate }">
+				<input type="submit" value="검색" class="tbutton small"
+					style="height: 30px; width: 50px">
+			</form>
+			<div style="color: white; margin-top: 10px; margin-bottom: 10px;">
+				기간별 사용액&nbsp;&nbsp;<input type="text" id="sumMileage"
+					value="${sumMileage }" readonly="readonly"
+					style="height: 20px; width: 60px; margin-bottom: 0px;">
+		</div>
 	</div>
 	<table class="table">
 		<thead>
@@ -101,7 +124,7 @@ a:hover {
 				<tr>
 					<td><fmt:formatDate pattern="YYYY년 MM월 dd일 HH시 mm분"
 							value="${usage.useAt}" /></td>
-					<td>${usage.mileage }</td>
+					<td class="listMileage">${usage.mileage }</td>
 					<td>${usage.commonCodevo.name }</td>
 					<td>${usage.musicvo.title }</td>
 				</tr>
@@ -135,8 +158,8 @@ a:hover {
 <form id="moveForm" method="get" action="usageHistoryOfMusic.do">
 	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-	<%-- 		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }"> --%>
-	<%-- 		<input type="hidden" name="type" value="${pageMaker.cri.type }"> --%>
+	<input type="hidden" name="startDate" value="${startDate }"> <input
+			type="hidden" name="endDate" value="${endDate }">
 </form>
 
 
@@ -153,7 +176,19 @@ a:hover {
 	
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href="usageHistoryOfMusic.do?pageNum=1&amount="+sel;
+		var startDate = document.getElementById('startDate').value;
+		var endDate = document.getElementById('endDate').value;
+		location.href="usageHistoryOfMusic.do?pageNum=1&amount="+sel+"&startDate="+startDate+"&endDate="+endDate;
 	}
-
+	
+	var sumMileage = document.getElementById('sumMileage').value;
+	var sumMileage2 = sumMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('sumMileage').value = sumMileage2+'원';
+	
+	for (var i=0; i<document.getElementsByClassName('listMileage').length; i++) {
+	var listMileage = document.getElementsByClassName('listMileage')[i].textContent
+	var listMileage2 = listMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementsByClassName('listMileage')[i].textContent = listMileage2+'원';
+	
+	}
 </script>
