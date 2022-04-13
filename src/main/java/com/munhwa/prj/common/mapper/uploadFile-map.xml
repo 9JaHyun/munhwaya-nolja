@@ -34,4 +34,10 @@
     FROM uploaded_files
     WHERE file_group_id = #{id}
   </select>
+
+  <select id="test" statementType="CALLABLE">
+    { CALL PROCEDURE_NAME(
+      #{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=test}, #{year}, #{term},
+      #{no}) }
+  </select>
 </mapper>

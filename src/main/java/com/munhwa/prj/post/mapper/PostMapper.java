@@ -2,6 +2,7 @@ package com.munhwa.prj.post.mapper;
 
 import com.munhwa.prj.post.vo.PostVO;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface PostMapper {
@@ -16,6 +17,8 @@ public interface PostMapper {
 
     List<PostVO> selectPosts();
 
-    List<PostVO> selectPostsByFilter(@Param("filter") String filter, @Param("value") String value
+    List<PostVO> selectPostsByFilter(@Param("key") String key, @Param("value") String value
           , @Param("pageNum") int pageNum, @Param("amount") int amount);
+
+    int likeIt(Map<String, Object> paramMap);
 }

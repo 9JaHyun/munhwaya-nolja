@@ -9,6 +9,7 @@
     <result property="content" column="content"/>
     <result property="createdAt" column="created_at"/>
     <result property="hit" column="hit"/>
+    <result property="likeIt" column="like_It"/>
     <result property="memberId" column="member_id"/>
     <result property="fileGroupId" column="file_group_id"/>
   </resultMap>
@@ -50,32 +51,62 @@
   <select id="selectPostsByFilter" resultMap="postMap">
     select id, title, content, created_at, hit, member_id, file_group_id, writer, updated_at
     from (select rownum as row_no, temp.*
-          from (select *
-                from post
-                <where>
-                  <if test="filter.equals('no')"/>
-                  <if test="filter.equals('member')">AND member_id LIKE '%'||#{value}||'%'</if>
-                  <if test="filter.equals('nickname')">AND writer LIKE '%'||#{value}||'%'</if>
-                  <if test="filter.equals('title')">AND title LIKE '%'||#{value}||'%'</if>
-                </where>
-                <choose>
-                  <when test="filter.equals('asc')">
-                    <if test="value.equals('hit')">order by hit asc</if>
-                    <if test="value.equals('createdAt')">order by created_at asc</if>
-                  </when>
-                  <when test="filter.equals('desc')">
-                    <if test="value.equals('hit')">order by hit desc</if>
-                    <if test="value.equals('createdAt')">order by created_at desc</if>
-                  </when>
-                  <otherwise>
-                    order by created_at desc
-                  </otherwise>
-                </choose>
-          ) temp
-        ) last
+    from (select *
+    from post
+    <where>
+      <if test="key.equals('no')"/>
+      <if test="key.equals('member')">AND member_id LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('nickname')">AND writer LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('title')">AND title LIKE '%'||#{value}||'%'</if>
+    </where>
+    order by created_at desc
+    ) temp
+    ) last
     <![CDATA[
           WHERE last.row_no > (#{pageNum} -1) * #{amount}
           AND last.row_no <= #{pageNum} * #{amount}
     ]]>
   </select>
+
+  <select id="selectRecPost" resultMap="postMap">
+    select id, title, content, created_at, hit, member_id, file_group_id, writer, updated_at
+    from (select rownum as row_no, temp.*
+    from (select *
+    from post
+    <where>
+      <if test="key.equals('no')"/>
+      <if test="key.equals('member')">AND member_id LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('nickname')">AND writer LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('title')">AND title LIKE '%'||#{value}||'%'</if>
+    </where>
+    <choose>
+      <when test="key.equals('asc')">
+        <if test="value.equals('hit')">order by hit asc</if>
+        <if test="value.equals('createdAt')">order by created_at asc</if>
+      </when>
+      <when test="key.equals('desc')">
+        <if test="value.equals('hit')">order by hit desc</if>
+        <if test="value.equals('likeIt')">order by likeIt asc</if>
+        <if test="value.equals('createdAt')">order by created_at desc</if>
+      </when>
+      <otherwise>
+        order by created_at desc
+      </otherwise>
+    </choose>
+    ) temp
+    ) last
+    <![CDATA[
+          WHERE last.row_no > (#{pageNum} -1) * #{amount}
+          AND last.row_no <= #{pageNum} * #{amount}
+    ]]>
+  </select>
+
+  <update id="likeIt" statementType="CALLABLE" parameterType="map">
+		<![CDATA[
+    { call accept_performance(
+      #{v_post_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_member_ids, mode=IN, jdbcType=VARCHAR, javaType=string}
+      )}
+    ]]>
+	</update>
 </mapper>

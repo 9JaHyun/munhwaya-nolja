@@ -11,4 +11,12 @@ public class UploadFileVO {
     private String sname;
     private String fileGroupId;
     private String extension;
+
+    public UploadFileVO() {
+    }
+
+    public UploadFileVO(String oname, String sname) {
+        this.oname = oname;
+        this.sname = sname;
+    }
 }

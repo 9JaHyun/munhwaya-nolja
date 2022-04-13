@@ -4,6 +4,7 @@ import com.munhwa.prj.post.mapper.PostMapper;
 import com.munhwa.prj.post.service.PostService;
 import com.munhwa.prj.post.vo.PostVO;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public int deleteById(int id) {
         return mapper.deletePostById(id);
+    }
+
+    @Override
+    public int likeIt(Map<String, Object> paramMap) {
+        return mapper.likeIt(paramMap);
     }
 
     @Override

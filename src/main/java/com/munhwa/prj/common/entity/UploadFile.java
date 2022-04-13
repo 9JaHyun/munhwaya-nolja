@@ -17,4 +17,8 @@ public class UploadFile {
         this.originalFileName = originalFileName;
         this.storedFileName = storedFileName;
     }
+
+    public UploadFileVO toEntity(){
+        UploadFileVO vo = new UploadFileVO(originalFileName, storedFileName);
+    }
 }
