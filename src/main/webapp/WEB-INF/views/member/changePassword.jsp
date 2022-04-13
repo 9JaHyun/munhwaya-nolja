@@ -45,6 +45,7 @@ function send() {
 		 alert("비밀번호가 서로 일치하지 않습니다.");
 		 return false;
 		}else {
+		 alert("수정 완료되었습니다.");
 		 return true;	
 		}
 	}

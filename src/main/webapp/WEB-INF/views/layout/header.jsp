@@ -36,9 +36,9 @@
 	</div>
 	<div class="headdown">
 		<div class="row clearfix">
-			<div class="logo bottomtip" title="Best and Most Popular Musics">
-				<a href="home.do"><img src="${resources}/images/logo.png"
-					alt="Best and Most Popular Musics"></a>
+			<div class="logo bottomtip" title="Catch Cultural Current">
+				<a href="home.do"><img src="${resources}/images/ccc_logo.png"
+					alt="Catch Cultural Current"></a>
 			</div>
 			<%-- 헤더 네비게이션 바 --%>
 			<nav>

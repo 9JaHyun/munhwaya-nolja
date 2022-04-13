@@ -29,9 +29,17 @@
 			</c:if>
 				<c:forEach items="${likeArtists}" var="likeArtist">
 					<tr class="js-load">
-						<td style="padding-left: 30px;"><img
-							src="resources/music/1.jpg" alt="album cover"
-							style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
+						<td style="padding-left: 30px;">
+							 <c:choose>
+								<c:when test="${likeArtist.image eq null}">
+									<img src="resources/images/basic_profile.png" alt="image"
+									style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
+								 </c:when>
+								<c:otherwise>
+									<img src="${likeArtist.image}" alt="image"
+									style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
+								</c:otherwise>
+							</c:choose>
 						</td>
 						<td style="text-align: center; padding: 22px 110px 0px 0px;"><a>${likeArtist.name}</a></td>
 						<!-- 좋아요 한 아티스트 삭제 버튼 -->

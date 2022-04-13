@@ -59,7 +59,7 @@ public class MemberController {
 
     // 회원정보 변경 페이지
     @GetMapping("/memberChangeInfo.do")
-    public String memberChangeInfo(@LoginUser SessionUser sessionUser) {
+    public String memberChangeInfo(@LoginUser SessionUser sessionUser, Model model) {
         return "memberChangeInfo-member";
     }
 

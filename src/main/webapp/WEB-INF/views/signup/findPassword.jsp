@@ -84,9 +84,9 @@ button {
 	<h2 style="margin-bottom: 60px; text-align: center;">비밀번호 찾기</h2>
 
 	<h5 style="margin-bottom: 20px;">ID</h5>
-	<input type="text" id="id" name="id"
+	<input type="email" id="id" name="id"
 		style="height: 50px; width: 100%; margin-bottom: 30px;"
-		placeholder="ID" required autofocus>
+		placeholder="ID(EMAIL)" required autofocus>
 
 	<button type="button" id="findBtn">Find</button>
 

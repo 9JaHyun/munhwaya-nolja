@@ -9,7 +9,7 @@
 <!-- sidebar -->
 <div class="span4 sidebar">
 	<div class="def-block widget">
-		<h4>${member.nickname}</h4>
+			<h4>${member.nickname}</h4>		
 		<div style="float: right;">
 			<a style="color: #FF0078;">
 				<div style="float: right;">
@@ -23,26 +23,25 @@
 			<!-- 프로필 이미지 -->
 			<div align="center" style="margin-top: 35px;">
 				<c:choose>
+					
 					<c:when test="${member.sname eq null}">
-
 						<img src="resources/images/basic_profile.png" alt="image"
 							style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
 					</c:when>
 
 					<c:otherwise>
 						<c:choose>
-
 							<c:when test="${fn:indexOf(member.sname, 'https://') != -1}">
 								<img src="${member.sname}" alt="image"
 									style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
 							</c:when>
 							<c:otherwise>
-
 								<img src="api/picture/${member.sname}" alt="image"
 									style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
 							</c:otherwise>
 						</c:choose>
 					</c:otherwise>
+					
 				</c:choose>
 			</div>
 

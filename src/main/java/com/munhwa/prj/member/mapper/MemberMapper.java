@@ -37,6 +37,9 @@ public interface MemberMapper {
 	// 비밀번호 업데이트
 	int updatePassword(MemberVO vo);
 	
+	// 비밀번호 찾기 시 회원 권한 변경
+	int updatePassword2(MemberVO vo);
+	
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
 

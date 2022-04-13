@@ -158,7 +158,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		vo.setPassword(passwordEncoder.encode(pw));
 		// 비밀번호 변경
-		map.updatePassword(vo);
+		map.updatePassword2(vo);
 		// 비밀번호 변경 메일 발송
 		sendEmail(vo, pw, "findpw");
 		return true;
