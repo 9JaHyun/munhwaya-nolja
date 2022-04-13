@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostVO> findByFilter(String filter, String value) {
-        return mapper.selectPostsByFilter(filter, value);
+    public List<PostVO> findByFilter(String filter, String value, int pageNum, int amount) {
+        return mapper.selectPostsByFilter(filter, value, pageNum, amount);
     }
 }

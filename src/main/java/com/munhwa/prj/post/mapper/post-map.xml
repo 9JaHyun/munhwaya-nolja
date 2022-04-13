@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.munhwa.prj.post.mapper.PostMapper">
+  <resultMap type="com.munhwa.prj.post.vo.PostVO" id="postMap">
+    <id property="id" column="id"/>
+    <result property="title" column="title"/>
+    <result property="writer" column="writer"/>
+    <result property="content" column="content"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="hit" column="hit"/>
+    <result property="memberId" column="member_id"/>
+    <result property="fileGroupId" column="file_group_id"/>
+  </resultMap>
+
   <insert id="insertPost">
     INSERT INTO post (id, title, writer, content, created_at, hit, member_id,
                       file_group_id)
@@ -24,39 +35,47 @@
     WHERE id = #{id}
   </delete>
 
-  <select id="selectPosts" resultType="com.munhwa.prj.post.vo.PostVO">
+  <select id="selectPosts" resultMap="postMap">
     SELECT *
     FROM post
     ORDER BY created_at DESC
   </select>
 
-  <select id="selectPostById" resultType="com.munhwa.prj.post.vo.PostVO">
+  <select id="selectPostById" resultMap="postMap">
     SELECT *
     FROM post
     WHERE id = #{id}
   </select>
 
-  <select id="selectPostsByFilter" resultType="com.munhwa.prj.post.vo.PostVO">
-    select *
-    from post
-    <where>
-      <if test="filter.equals('no')"/>
-      <if test="filter.equals('member')">AND member_id = #{memberId}</if>
-      <if test="filter.equals('nickname')">AND writer = #{writer}</if>
-      <if test="filter.equals('title')">AND title = #{title}</if>
-    </where>
-    <choose>
-      <when test="filter.equals('asc')">
-        <if test="value.equals('hit')">order by hit asc</if>
-        <if test="value.equals('createdAt')">order by created_at asc</if>
-      </when>
-      <when test="filter.equals('desc')">
-        <if test="value.equals('hit')">order by hit desc</if>
-        <if test="value.equals('createdAt')">order by created_at desc</if>
-      </when>
-      <otherwise>
-        order by created_at desc
-      </otherwise>
-    </choose>
+  <select id="selectPostsByFilter" resultMap="postMap">
+    select id, title, content, created_at, hit, member_id, file_group_id, writer, updated_at
+    from (select rownum as row_no, temp.*
+          from (select *
+                from post
+                <where>
+                  <if test="filter.equals('no')"/>
+                  <if test="filter.equals('member')">AND member_id LIKE '%'||#{value}||'%'</if>
+                  <if test="filter.equals('nickname')">AND writer LIKE '%'||#{value}||'%'</if>
+                  <if test="filter.equals('title')">AND title LIKE '%'||#{value}||'%'</if>
+                </where>
+                <choose>
+                  <when test="filter.equals('asc')">
+                    <if test="value.equals('hit')">order by hit asc</if>
+                    <if test="value.equals('createdAt')">order by created_at asc</if>
+                  </when>
+                  <when test="filter.equals('desc')">
+                    <if test="value.equals('hit')">order by hit desc</if>
+                    <if test="value.equals('createdAt')">order by created_at desc</if>
+                  </when>
+                  <otherwise>
+                    order by created_at desc
+                  </otherwise>
+                </choose>
+          ) temp
+        ) last
+    <![CDATA[
+          WHERE last.row_no > (#{pageNum} -1) * #{amount}
+          AND last.row_no <= #{pageNum} * #{amount}
+    ]]>
   </select>
 </mapper>

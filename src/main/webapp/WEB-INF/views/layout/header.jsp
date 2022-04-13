@@ -64,9 +64,8 @@
                             <li><a href="kakao">kakao test</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">게시판<span class="sub">more templates</span></a>
+                    <li><a href="posts">게시판<span class="sub">more templates</span></a>
                         <ul>
-                            <li><a href="rtl.html">RTL Support</a></li>
                             <li><a href="events.html">Events</a></li>
                         </ul>
                     </li>

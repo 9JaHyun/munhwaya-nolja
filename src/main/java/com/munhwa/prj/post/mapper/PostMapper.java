@@ -7,9 +7,15 @@ import org.apache.ibatis.annotations.Param;
 public interface PostMapper {
 
     int insertPost(PostVO vo);
+
     int updatePost(PostVO vo);
+
     int deletePostById(int id);
+
     PostVO selectPostById(int id);
+
     List<PostVO> selectPosts();
-    List<PostVO> selectPostsByFilter(@Param("filter") String filter, @Param("value") String value);
+
+    List<PostVO> selectPostsByFilter(@Param("filter") String filter, @Param("value") String value
+          , @Param("pageNum") int pageNum, @Param("amount") int amount);
 }

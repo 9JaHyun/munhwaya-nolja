@@ -9,5 +9,5 @@ public interface PostService {
     int deleteById(int id);
     PostVO findById(int id);
     List<PostVO> findAll();
-    List<PostVO> findByFilter(String filter, String value);
+    List<PostVO> findByFilter(String filter, String value, int pageNum, int amount);
 }
