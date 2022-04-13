@@ -210,41 +210,45 @@ jQuery(document).ready(function(){
 })
 
 <!-- 구매1 -->
-   function addCart() {
+function addCart() {
 	   var title=$('#title1').html()
 	   var artName=$('#artName1').html()
-      	$.ajax ({
+	$.ajax ({
 	        url : "musicSelectByArtName",
 	        type : "get",
 	        data : {"title" : title, "artName" : artName},                   
-	        dataType : "json",
+	        dataType : "json", 
 	        success : result1,
 	        error: function(xhr, status, error){
 	        	alert("통신실패");
 	        }
-        }) 
-   }
-   function result1(result) {
-   	  var confirm1 = confirm('장바구니에 담으시겠습니까?')
-	  var id = result.id
+  }) 
+}
+function result1(result) {
+	  if(result.purchased == 1) {
+		  alert('이미 구매한 곡입니다.')
+	  } else {
+		  	var confirm1 = confirm('장바구니에 담으시겠습니까?')
+	  		var id = result.id
 	  
-	   if(confirm1) {
-      	$.ajax ({
-	        url : "cart/test/add",
-	        type : "post",
-	        data : {"id" : id},                   
-	        dataType : "text",
-	        success : function(data) {
-	        console.log(data);
-	        alert("장바구니에 담았습니다.");
-	        },
-	        error: function(xhr, status, error){
-	        	alert("통신실패");
-	        }
-        }) 
-       } else {
-             alert("구매취소")
-        }
-   }
-   
+	   		if(confirm1) {
+				$.ajax ({
+				        url : "cart/test/add",
+				        type : "post",
+				        data : {"id" : id},                   
+				        dataType : "text",
+				        success : function(data) {
+				        console.log(data);
+				        alert("장바구니에 담았습니다.");
+				        },
+				        error: function(xhr, status, error){
+				        	alert("통신실패");
+				        }
+			     }) 
+		    } else {
+		          alert("구매취소")
+		     }
+	  }
+}
+
 </script>

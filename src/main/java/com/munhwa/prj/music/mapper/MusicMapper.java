@@ -9,7 +9,7 @@ import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.music.vo.MusicVO;
 
 public interface MusicMapper {
-		List<MusicVO> musicSelectList();
+		List<MusicVO> musicSelectList(@Param("cri")Criteria cri);
   
 		List<MusicVO> musicSelectListByGenre(String genre);
   

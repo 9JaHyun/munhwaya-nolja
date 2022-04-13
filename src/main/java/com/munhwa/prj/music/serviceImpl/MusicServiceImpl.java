@@ -17,8 +17,8 @@ public class MusicServiceImpl implements MusicService{
 	private MusicMapper map;
 
 	@Override
-	public List<MusicVO> musicSelectList() {
-		return map.musicSelectList();
+	public List<MusicVO> musicSelectList(Criteria cri) {
+		return map.musicSelectList(cri);
 	}
 
 	@Override

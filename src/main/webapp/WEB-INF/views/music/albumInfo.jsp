@@ -120,7 +120,16 @@
 		                                                    </c:choose> 
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
-															<button onclick="addCart()" type="button" class="tbutton medium" style="font-size:10px"><span >구매</span></button>
+															<c:choose>
+					                                            <c:when test="${!music.purchase }">
+					                                                <button type="button" class="tbutton medium" onclick="addCart()" style="font-size:10px">
+					                                             		<span data-musicid="${music.id }">구매</span>
+					                                                </button>
+					                                            </c:when>
+				                                            	<c:otherwise>
+				                                            		<span>이미 구매하셨습니다.</span>
+				                                            	</c:otherwise>
+				                                            </c:choose>
 														</td>
 													</tr>
 												</c:forEach>

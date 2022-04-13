@@ -399,7 +399,7 @@
                         '        </div>' +
 						'			<p class="single_variation_wrap" style="text-align:right; vertical-align:middle;">' +
 						'					<button id="b1" class="tbutton small" data-toggle="modal" data-target="#myModal"><span id="s1" >위시리스트 추가</span></button>' +
-						'					<button class="tbutton small" onclick="addCart()"><span>구매</span></button>' +
+						'					<button id="b2" class="tbutton small" onclick="addCart()"><span>구매</span></button>' +
 						'			</p>' +	
                         '        <div class="player-controls" style="width:93%">' +
                         '            <div class="main">' +

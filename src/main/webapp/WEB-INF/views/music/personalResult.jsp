@@ -30,7 +30,7 @@
 	   text-decoration: underline;
 	}
 	
-	.active {
+	.focus {
 	   background-color: #cdd5ec;
 	}
 	
@@ -110,7 +110,11 @@
 												<c:forEach var="music" items="${musicPersonalList}" begin="0" end="19" varStatus="status">
 												<tr class="cart_table_item" style="text-align: center; font-size:medium ;">
 													<td class="product-thumbnail" style="width:70px;">
-													<a href="streaming?id=${music.id }"><img class="img1" src="api/picture/${music.picture }" alt="#" style="margin: 10px 0px 10px 0px;"></a>
+														<a href="streaming?id=${music.id }"><img class="img1" 
+																							 	src="api/picture/${music.picture }" 
+																								alt="#" 
+																								style="margin: 10px 0px 10px 0px;">
+														</a>
 													</td>
 													<td class="product-name">
 														${music.title }
@@ -129,9 +133,16 @@
 														</span>
 													</td>
 													<td class="product-name">
-														<button type="button" onclick="addCart()" class="tbutton medium" style="font-size:10px">
-															<span  data-musicid="${music.id }">구매</span>
-														</button>
+														 <c:choose>
+				                                            <c:when test="${!music.purchase }">
+				                                                <button type="button" class="tbutton medium" onclick="addCart()" style="font-size:10px">
+				                                             		<span data-musicid="${music.id }">구매</span>
+				                                                </button>
+				                                            </c:when>
+			                                            	<c:otherwise>
+			                                            		<span>이미 구매하셨습니다.</span>
+			                                            	</c:otherwise>
+                                            			 </c:choose>
 													</td>
 												</tr>
 												</c:forEach>
@@ -159,7 +170,7 @@
             <!-- 각 번호 페이지 버튼 -->
             <c:forEach var="num" begin="${pageMaker.startPage}"
                end="${pageMaker.endPage}">
-               <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":""}"><a
+               <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "focus":""}"><a
                   href="#" onclick="paging(${num})">${num}</a></li>
             </c:forEach>
             <!-- 다음페이지 버튼 -->
@@ -208,11 +219,4 @@
         
      };
      
-     function selChange() {
-        var sel = document.getElementById('cntPerPage').value;
-        location.href="personalResult?pageNum=1&amount="+sel;
-     }
-
-
-        
 </script>

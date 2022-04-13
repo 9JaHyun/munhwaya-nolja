@@ -64,8 +64,9 @@ jQuery(document).ready(function(){
 <style>
 	xmp {
 		color: white;
-		font-size: 20px;
+		font-size: 15px;
 		text-align: center;
+		line-height: 10px;
 	}
 	.single_variation_wrap > i{
 		 color: white;
@@ -77,7 +78,7 @@ jQuery(document).ready(function(){
 
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="min-height : 2000px;">
 	</div>
 		
 	<!-- content -->
@@ -124,7 +125,6 @@ ${musicSelect.lyric }
 				</div><!-- span8 posts -->
 			</div><!-- row clearfix -->
 		<!-- 가사 끝 -->
-		
 		<!-- 수록앨범 -->
 		<div class="row row-fluid clearfix mbf">
 			<div class="posts">
@@ -147,14 +147,11 @@ ${musicSelect.lyric }
 			<!-- 왼쪽하단 메인 끝-->	
 		</div>
 		<!-- 수록앨범 끝 -->
-		
 	</div>
 	<!-- content끝 -->
-
-
 <!-- ================================================================ -->
-<!-- 위시리스트 추가 -->
 <script>
+<!-- 위시리스트 추가 -->
 function addWishList(e) {
 	let query = window.location.search;
 	let param = new URLSearchParams(query);
@@ -277,26 +274,31 @@ function result(data) {
 							'</div>')	
 }
    <!-- 구매1 -->
-   function addCart() {
+ function addCart() {
 	  var id = '${musicSelect.id}'
-	  var confirm1 = confirm('장바구니에 담으시겠습니까?')
 	  
-      if(confirm1) {
-      	$.ajax ({
-	        url : "cart/test/add",
-	        type : "post",
-	        data : {"id" : id},                   
-	        dataType : "text",
-	        success : function(data) {
-	        console.log(data);
-	        alert("장바구니에 담았습니다.");
-	        },
-	        error: function(xhr, status, error){
-	        alert("통신실패");
+	  if('${buyButton}' == '2') {
+		  var confirm1 = confirm('장바구니에 담으시겠습니까?')
+	  
+	      if(confirm1) {
+	      	$.ajax ({
+		        url : "cart/test/add",
+		        type : "post",
+		        data : {"id" : id},                   
+		        dataType : "text",
+		        success : function(data) {
+		        console.log(data);
+		        alert("장바구니에 담았습니다.");
+		        },
+		        error: function(xhr, status, error){
+		        alert("통신실패");
+		        }
+	        }) 
+	       } else {
+	             alert("삭제취소")
 	        }
-        }) 
-       } else {
-             alert("삭제취소")
-        }
-     }
+	  } else {
+		  alert("이미 구매한 곡입니다.")
+	  }
+  }
   </script>

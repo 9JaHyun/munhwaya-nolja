@@ -3,10 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <style>
-.pageInfo {
-   list-style: none;
-   display: inline-block;
-	}
+	.pageInfo {
+	   list-style: none;
+	   display: inline-block;
+		}
 	
 	.pageInfo li {
 	   float: left;
@@ -116,9 +116,10 @@
                                             <td>${status.count}</td>
                                             <td class="product-thumbnail" style="width:70px;">
                                                 <a href="#"><img class="img1"
-                                                                 src="resources/images/bg/musicBg3.jpg"
+                                                                 src="api/picture/${music.picture }"
                                                                  alt="#"
-                                                                 style="margin: 10px 0px 10px 0px; width:100%; height:100%; object-fit: cover;"></a>
+                                                                 style="margin: 10px 0px 10px 0px; width:100%; height:100%; object-fit: cover;">
+                                                </a>
                                             </td>
                                             <td class="product-name">
                                                     ${music.title }
@@ -158,9 +159,37 @@
             </div><!-- def block -->
         </div><!-- span8 posts -->
     </div><!-- row clearfix -->
+    <div class="pageInfo_wrap">
+      <div class="pageInfo_area" style="text-align: center;">
+         <ul id="pageInfo" class="pageInfo">
+            <!-- 이전페이지 버튼 -->
+            <c:if test="${pageMaker.prev}">
+               <li class="pageInfo_btn previous"><a href="#"
+                  onclick="paging(${pageMaker.startPage-1})">Previous</a></li>
+            </c:if>
+            <!-- 각 번호 페이지 버튼 -->
+            <c:forEach var="num" begin="${pageMaker.startPage}"
+               end="${pageMaker.endPage}">
+               <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "focus":""}"><a
+                  href="#" onclick="paging(${num})">${num}</a></li>
+            </c:forEach>
+            <!-- 다음페이지 버튼 -->
+            <c:if test="${pageMaker.next}">
+               <li class="pageInfo_btn next"><a href="#"
+                  onclick="paging(${pageMaker.endPage + 1})">Next</a></li>
+            </c:if>
+         </ul>
+      </div>
+   </div>
 </div>
 <!-- content끝 -->
 <!-- 카트담기 -->
+<form id="moveForm" method="get" action="chart">
+      <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+      <input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+      <%--       <input type="hidden" name="keyword" value="${pageMaker.cri.keyword }"> --%>
+      <%--       <input type="hidden" name="type" value="${pageMaker.cri.type }"> --%>
+   </form>
 <script>
     function addCart() {
         var id = $(event.target).data("musicid")
@@ -185,4 +214,8 @@
             alert("삭제취소")
         }
     }
+    function paging(num) {
+        moveForm.pageNum.value = num;
+        moveForm.submit();
+     };
 </script>

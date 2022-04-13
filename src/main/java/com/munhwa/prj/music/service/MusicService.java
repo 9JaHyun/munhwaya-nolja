@@ -7,7 +7,7 @@ import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.music.vo.MusicVO;
 
 public interface MusicService {
-	List<MusicVO> musicSelectList();
+	List<MusicVO> musicSelectList(Criteria cri);
 	
 	List<MusicVO> musicSelectListByGenre(String genre);
 	

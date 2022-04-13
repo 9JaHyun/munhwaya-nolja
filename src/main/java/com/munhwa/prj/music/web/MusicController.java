@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +59,7 @@ public class MusicController {
 		model.addAttribute("musicDanceList", musicDAO.musicSelectListByGenre("G02"));
 		model.addAttribute("musicBalladList", musicDAO.musicSelectListByGenre("G01"));
 
-		model.addAttribute("musicChartList", musicDAO.musicSelectList());// 갯수지정
+		model.addAttribute("musicChartList", musicDAO.musicSelectList(cri));// 갯수지정
 		model.addAttribute("releaseSoonAlbumList", albumDAO.albumSelectListByRelease(cri));// 갯수지정
 		model.addAttribute("musicPersonalList", musicDAO.musicPersonalList(id,cri));
 		
@@ -74,10 +75,31 @@ public class MusicController {
 	}
 
 	@GetMapping("/searchResultMusic")
-	public String searchResultMusic(Model model, String title, Criteria cri) {
+	public String searchResultMusic(@LoginUser SessionUser user, Model model, String title, Criteria cri) {
 		model.addAttribute("title", title);
 		
-		model.addAttribute("musicSelectListByTitle1", musicDAO.musicSelectByTitle(title,cri));
+		List<MusicVO> list = musicDAO.musicSelectByTitle(title,cri);
+		
+		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
+		
+		List<MusicChartDto> chartList = new ArrayList<>();
+		
+		for(MusicVO vo : list) {
+			
+			MusicChartDto dto = new MusicChartDto(vo); 
+			int ids = dto.getId();
+			boolean isPurchased = false;
+			
+			for(int id : musicList) {
+				if(ids == id) {
+					isPurchased = true;
+					break;
+				}
+			}
+			dto.setPurchase(isPurchased);
+			chartList.add(dto);//구입여부가 들어잇는 vo2를 jsp에 표시할 리스트모델에 담음
+		}
+		model.addAttribute("musicSelectListByTitle1", chartList);
 		
 		int total = musicDAO.getCountByList3(title);
 	    PageDTO pageMake = new PageDTO(cri, total);
@@ -100,10 +122,10 @@ public class MusicController {
 	}
 
 	@GetMapping("/chart")
-	public String chart(@LoginUser SessionUser user, Model model) {
+	public String chart(@LoginUser SessionUser user, Model model, Criteria cri) {
 		
-		//아이디 넣으면 구매한 음원의 vo LIST 나옴
-		List<MusicVO> list = musicDAO.musicSelectList(/* cri */); //여기서 페이징처리후 다가져온다?  1-10까지검색 => 11-20까지 검색
+		//원래 차트에 표시될 음원의 리스트
+		List<MusicVO> list = musicDAO.musicSelectList(cri); //여기서 페이징처리후 다가져온다?  1-10까지검색 => 11-20까지 검색
 		
 		//아이디 넣으면 구매한 음원의 아이디 목록 나옴
 		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
@@ -111,7 +133,7 @@ public class MusicController {
 		//차트에 표시할 Dto를 담을 리스트
 		List<MusicChartDto> chartList = new ArrayList<>();
 		
-		//차트의 음원리스트와
+		//차트의 음원리스트와 
 		for(MusicVO vo : list) {
 			
 			MusicChartDto dto = new MusicChartDto(vo); //차트리스트의 음원을 구입여부가있는 vo2에 넣어줌
@@ -124,14 +146,13 @@ public class MusicController {
 					break;
 				}
 			}
-			
 			dto.setPurchase(isPurchased);
 			chartList.add(dto);
 		}
-		//chartList 
-		//페이징: 모델  
-		 
-		
+		int total = 50;
+	    PageDTO pageMake = new PageDTO(cri, total);
+	    model.addAttribute("pageMaker", pageMake);
+	    
 		model.addAttribute("musicChartList", chartList);// 갯수지정
 		return "music/chart";
 	}
@@ -142,23 +163,64 @@ public class MusicController {
 		List<AlbumVO> list =  albumDAO.albumSelectListByRelease(cri);
 		model.addAttribute("releaseSoonAlbumList", list);
 		
-		int total = albumDAO.getCountByList(21);
+		int total = 20;
 	    PageDTO pageMake = new PageDTO(cri, total);
 	    model.addAttribute("pageMaker", pageMake);
 		return "music/releaseSoon";
 	}
 
 	@GetMapping("/albumInfo")
-	public String albumInfo(Model model, int id) {
+	public String albumInfo(@LoginUser SessionUser user, Model model, int id) {
+		
+		//원래 차트에 표시될 음원의 리스트
+		List<MusicVO> list =  musicDAO.musicSelectByAlBum(id); 
+				
+		//아이디 넣으면 구매한 음원의 아이디 목록 나옴
+		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
+				
+		//차트에 표시할 Dto를 담을 리스트
+		List<MusicChartDto> chartList = new ArrayList<>();
+				
+		//차트의 음원리스트와 
+		for(MusicVO vo : list) {
+					
+			MusicChartDto dto = new MusicChartDto(vo); //차트리스트의 음원을 구입여부가있는 vo2에 넣어줌
+			int ids = dto.getId();
+			boolean isPurchased = false;
+					
+			for(int id1 : musicList) {
+				if(ids == id1) {
+				isPurchased = true;
+				break;
+				}
+			}
+				dto.setPurchase(isPurchased);
+				chartList.add(dto);
+				}
+		
 		model.addAttribute("selectAlbum", albumDAO.albumSelect(id));
-		model.addAttribute("selectMusicByAlbum", musicDAO.musicSelectByAlBum(id));// list
-		model.addAttribute("wishlists", wishlistDao.wishlistList("test0@gmail.com"));
+		model.addAttribute("selectMusicByAlbum",chartList);
+		model.addAttribute("wishlists", wishlistDao.wishlistList(user.getId()));
 		return "music/albumInfo";
 	}
 	
 	@GetMapping("/streaming")
 	public String streaming(Model model, int id, @LoginUser SessionUser user) {
-		model.addAttribute("musicSelect", musicDAO.musicSelect(id));
+		
+		MusicVO vo = musicDAO.musicSelect(id);
+		
+		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
+		
+		for(int id1 : musicList) {
+			if(id == id1) {
+				model.addAttribute("buyButton", '1');
+				break;
+			} else {
+				model.addAttribute("buyButton", '2');
+			}
+		}
+		
+		model.addAttribute("musicSelect", vo);
 		model.addAttribute("AlbumSelectByMusicId", albumDAO.albumSelectByMusicId(id));
 		model.addAttribute("wishlists", wishlistDao.wishlistList(user.getId()));
 		return "music/streaming";
@@ -188,12 +250,35 @@ public class MusicController {
 	
 	@GetMapping("/personalResult")
 	public String personalResult(Model model, @LoginUser SessionUser user, Criteria cri) {
-		String id = user.getId();
-		List<MusicVO> list = musicDAO.musicPersonalList(id, cri);
- 		model.addAttribute("musicPersonalList", list);
-		  int total = musicDAO.getCountByList(id);
-	      PageDTO pageMake = new PageDTO(cri, total);
-	      model.addAttribute("pageMaker", pageMake);
+				
+		List<MusicVO> list = musicDAO.musicPersonalList(user.getId(), cri);
+		
+		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
+		
+		List<MusicChartDto> chartList = new ArrayList<>();
+		
+		for(MusicVO vo : list) {
+			
+			MusicChartDto dto = new MusicChartDto(vo); 
+			int ids = dto.getId();
+			boolean isPurchased = false;
+			
+			for(int id : musicList) {
+				if(ids == id) {
+					isPurchased = true;
+					break;
+				}
+			}
+			dto.setPurchase(isPurchased);
+			chartList.add(dto);//구입여부가 들어잇는 vo2를 jsp에 표시할 리스트모델에 담음
+		}
+		
+ 		model.addAttribute("musicPersonalList", chartList);
+ 		
+		int total = musicDAO.getCountByList(user.getId());
+	    PageDTO pageMake = new PageDTO(cri, total);
+	    model.addAttribute("pageMaker", pageMake);
+	    
 		return "music/personalResult";
 	}
 
@@ -228,8 +313,19 @@ public class MusicController {
 	
 	@ResponseBody
 	@GetMapping("/musicSelectByArtName")
-	public MusicVO musicSelectByArtName(@RequestParam String title, @RequestParam String artName) {
-		return musicDAO.musicSelectByArtName(title, artName );
+	public Map<String, Object> musicSelectByArtName(@LoginUser SessionUser user, @RequestParam String title, @RequestParam String artName) {
+		Map<String, Object> map = new HashMap<>();
+		MusicVO vo = musicDAO.musicSelectByArtName(title, artName );
+		int id = vo.getId();
+		map.put("id", id);
+		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
+		for (int ids :  musicList) {
+			if(id == ids) {
+				map.put("purchased", 1);
+				break;
+			}
+		}
+		return map;
 	}
 	
 	@ResponseBody
