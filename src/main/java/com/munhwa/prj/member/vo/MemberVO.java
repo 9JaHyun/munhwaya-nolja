@@ -16,10 +16,7 @@ public class MemberVO {
 	private int mileage;
 	private String oname;
 	private String sname;
-<<<<<<< HEAD
 	private int pwChanged;
-=======
->>>>>>> develop
 
 	public MemberVO update(String nickname, String sname) {
 		this.nickname = nickname;

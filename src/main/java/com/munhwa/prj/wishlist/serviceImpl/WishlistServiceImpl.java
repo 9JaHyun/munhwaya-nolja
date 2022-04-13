@@ -1,15 +1,12 @@
 package com.munhwa.prj.wishlist.serviceImpl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.munhwa.prj.wishlist.mapper.WishlistMapper;
 import com.munhwa.prj.wishlist.service.WishlistService;
-import com.munhwa.prj.wishlist.vo.WishlistMusicVO;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
+import java.util.List;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 @Repository("wishlistDao")
 public class WishlistServiceImpl implements WishlistService {
@@ -50,5 +47,10 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public int createWishList(Map<String, Object> paramMap) {
         return map.createWishList(paramMap);
+    }
+
+    @Override
+    public int addWishlist(WishlistVO vo) {
+        return map.addWishlist(vo);
     }
 }

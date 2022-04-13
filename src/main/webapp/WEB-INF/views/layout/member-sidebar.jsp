@@ -49,7 +49,7 @@
             </div>
             <!-- 충전버튼 -->
             <div align="right">
-                <a href="#" class="tbutton small"><span>충전</span></a>
+                <a href="chargeForm.do" class="tbutton small"><span>충전</span></a>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 package com.munhwa.prj.member.web;
 
+import com.munhwa.prj.common.code.Genre;
 import com.munhwa.prj.common.entity.UploadFile;
 import com.munhwa.prj.common.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
@@ -62,12 +63,21 @@ public class MemberController {
 
     // 프로필 업데이트
     @PostMapping("updateProfile.do")
-    public String updateProfile(MemberVO vo, MultipartFile file) throws IOException {
+    public String updateProfile(@LoginUser SessionUser user,  MemberVO vo, MultipartFile file) throws IOException {
         if (file != null && file.getSize() != 0) {
             UploadFile upload = fileUtils.storeFile(file);
-            vo.setOname(upload.getOriginalFileName());
-            vo.setSname(upload.getStoredFileName());
+            String oname = upload.getOriginalFileName();
+            String sname = upload.getStoredFileName();
+            vo.setOname(oname);
+            vo.setSname(sname);
+            user.setSname(sname);
+            user.setOname(oname);
         }
+
+        if (vo.getNickname() != null) {
+            user.setNickname(vo.getNickname());
+        }
+
         int n = memberDao.updateProfile(vo);
         if (n != 0) {
             return "redirect:memberChangeInfo.do";
@@ -84,8 +94,17 @@ public class MemberController {
 
     // 개인정보 업데이트
     @PostMapping("updateInfo.do")
-    public String updateInfo(MemberVO vo) {
+    public String updateInfo(@LoginUser SessionUser user,  MemberVO vo) {
         int n = memberDao.updateInfo(vo);
+
+        if (vo.getGenre() != null) {
+            user.setGenre(Genre.valueOf(vo.getGenre()));
+        }
+
+        if (vo.getGenre() != null) {
+            user.setTel(vo.getTel());
+        }
+
         if (n != 0) {
             return "redirect:memberChangeInfo.do";
         } else {
