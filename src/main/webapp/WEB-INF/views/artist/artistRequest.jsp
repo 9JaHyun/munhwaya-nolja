@@ -104,28 +104,36 @@ label {
 	// 		}
 	// // 		$(document).function chk_request(){
 
-	function chk_request() {
-		if (!document.info.artwork.value) {
-			alert("작업물 내용을 입력하세요.");
-			return false;
-		}
-		if (!document.info.file.value) {
-			alert("작업물 인증 파일을 첨부하세요.");
-			return false;
-		}
-		if (!document.info.phone2.value) {
-			alert("본인인증을 진행해주세요.");
-			return false;
-		} else {
-			return true;
-		}
-	}
-	/* if(document.info.file.value){
-		alert("아티스트 승급 신청을 요청했습니다.");
-	return true;
-	}	*/
-	// 				return true;
-	/* 		function smsrequest() {
+
+		<!-- 유효성 검사-->
+		function chk_request(){
+			
+			if(!document.info.artwork.value){
+				alert("작업물 내용을 입력하세요.");
+				return false;
+			}
+			if(!document.info.file.value){
+				alert("작업물 인증 파일을 첨부하세요.");
+				return false;
+			}
+			if(!document.info.phone.value){
+				alert("본인인증을 진행해주세요.");
+				
+				return false;
+			}if(!document.info.phone2.value){
+				alert("인증번호를 입력해주세요.");
+				
+				return false;
+				
+			}else{
+				return true;
+			}
+
+			
+			
+			
+			
+			/* 		function smsrequest() {
 	 console.log('request');
 	 $.ajax({
 	 url: 'user/sms',
