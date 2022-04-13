@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/member/**").access("hasRole('ROLE_R01')") // member
                     .antMatchers("/artist/**").access("hasRole('ROLE_R02')") // artist
                     .antMatchers("/admin/**").access("hasRole('ROLE_R03')")  // admin
+                    .antMatchers("/ticketCheck/**").permitAll()
                     .anyRequest().authenticated()
               )
               .formLogin(login -> login

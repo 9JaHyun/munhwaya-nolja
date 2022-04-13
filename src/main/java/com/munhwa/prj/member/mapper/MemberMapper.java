@@ -26,17 +26,20 @@ public interface MemberMapper {
 	// 마일리지 사용 22/04/04 류기태
 	int minusMileage(MemberVO vo);
 	
-	// 아티스트 마일리지 수익 22/04/05 류기태 
-	int plusMileageOfArtist(MemberVO vo);
-
 	// 개인정보 업데이트
 	int updateInfo(MemberVO vo);
 	
 	// 비밀번호 업데이트
 	int updatePassword(MemberVO vo);
-	
+
 	// 회원탈퇴
 	int deleteMember(MemberVO vo);
 
 	MemberVO selectByMemberId(@Param("username") String id);
+	
+	// 프로시저 곡 구매 마일리지 22/04/08 류기태 
+	int updateMileageMusic(Map<String,Object> vo);
+	
+	// 프로시저 공연 구매 마일리지 22/04/08 류기태
+	int updateMileagePerformance(Map<String,Object> vo);
 }

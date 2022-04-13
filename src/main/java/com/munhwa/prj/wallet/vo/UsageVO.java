@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.munhwa.prj.common.vo.CommonCodeVO;
 import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.performance.vo.PerformanceVO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +22,5 @@ public class UsageVO {
 	
 	private CommonCodeVO commonCodevo;
 	private MusicVO musicvo;
+	private PerformanceVO performancevo;
 }

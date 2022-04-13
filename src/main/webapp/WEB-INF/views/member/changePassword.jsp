@@ -24,32 +24,27 @@
 
 
 <script>
+    function send() {
+        var pw = $("#password").val();
+        var pw2 = $("#password2").val();
+        var num = pw.search(/[0-9]/g);
+        var eng = pw.search(/[a-z]/ig);
+        var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-function send() {
-	var pw = $("#password1").val();
-	var pw2 = $("#password2").val();
-	var num = pw.search(/[0-9]/g);
-	var eng = pw.search(/[a-z]/ig);
-	var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-	
-	alert(pw);
-	alert(pw2);
-	
-	if(pw.length < 8 || pw.length > 20){
-		 alert("비밀번호를 8자리 ~ 20자리 이내로 입력해주세요.");
-		 return false;
-		}else if(pw.search(/\s/) != -1){
-		 alert("비밀번호를 공백 없이 입력해주세요.");
-		 return false;
-		}else if(num < 0 || eng < 0 || spe < 0 ){
-		 alert("비밀번호를 영문, 숫자, 특수문자를 포함하여 입력해주세요.");
-		 return false;
-		}else if(pw != pw2) {
-		 alert("비밀번호가 서로 일치하지 않습니다.");
-		 return false;
-		}else {
-		 return true;	
-		}
-	}
-
+        if (pw.length < 8 || pw.length > 20) {
+            alert("비밀번호를 8자리 ~ 20자리 이내로 입력해주세요.");
+            return false;
+        } else if (pw.search(/\s/) != -1) {
+            alert("비밀번호를 공백 없이 입력해주세요.");
+            return false;
+        } else if (num < 0 || eng < 0 || spe < 0) {
+            alert("비밀번호를 영문, 숫자, 특수문자를 포함하여 입력해주세요.");
+            return false;
+        } else if (pw != pw2) {
+            alert("비밀번호가 서로 일치하지 않습니다.");
+            return false;
+        } else {
+            return true;
+        }
+    }
 </script>

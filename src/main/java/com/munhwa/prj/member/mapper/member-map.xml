@@ -52,30 +52,19 @@
 		WHERE ID = #{id}
 	</delete>
 
-	<select id="deleteMember2"
-		parameterType="com.munhwa.prj.member.vo.MemberVO">
-		SELECT ID, PASSWORD
-		FROM MEMBER
-		WHERE ID = #{id} AND
-		PASSWORD = #{password}
-	</select>
-
-	<!-- 회원가입 -->
-	<insert id="memberSignup"
-		parameterType="com.munhwa.prj.member.vo.MemberVO">
-		INSERT INTO member (id, password, nickname, tel, genre, mileage, role,
-		image)
-		VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role},
-		#{image})
-	</insert>
-
+  <!-- 회원가입 -->
+  <insert id="memberSignup" parameterType="com.munhwa.prj.member.vo.MemberVO">
+    INSERT INTO member (id, password, nickname, tel, genre, mileage, role, oname, sname)
+    VALUES (#{id}, #{password}, #{nickname}, #{tel}, #{genre}, 0, #{role}, #{oname}, #{sname})
+  </insert>
+  
 	<!-- 소셜 로그인 시 회원가입 처리 -->
 	<insert id="memberOAuthSignup" statementType="CALLABLE"
 		parameterType="map">
 	<![CDATA[
     { call saveMember (
       #{v_id, mode=IN, jdbcType=VARCHAR, javaType=string},
-      #{v_password, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_password, mode=IN, jdbcType=VARCHAR, javaType=string},
       #{v_nickname, mode=IN, jdbcType=VARCHAR, javaType=string},
       #{v_tel, mode=IN, jdbcType=VARCHAR, javaType=string},
       #{v_genre, mode=IN, jdbcType=VARCHAR, javaType=string},
@@ -98,8 +87,6 @@
 		WHERE nickname = #{nickname}
 	</select>
 
-
-
 	<!-- 마일리지 충전 22/04/04 류기태-->
 	<update id="plusMileage" parameterType="com.munhwa.prj.member.vo.MemberVO">
 		update member
@@ -114,14 +101,24 @@
 		where id = #{id}
 	</update>
 
-	<!-- 아티스트 마일리지 수익 22/04/05 류기태 -->
-	<update id="plusMileageOfArtist" parameterType="com.munhwa.prj.member.vo.MemberVO">
-		update member
-		set mileage = mileage + #{mileage}
-		where id = (select a.id
-								from member a, music b, artist c
-								where a.id = c.member_id
-									and b.art_name = c.name
-									and b.title = #{title})
+	<!-- 아티스트 음원 수익 22/04/08 류기태 -->
+	<update id="updateMileageMusic" parameterType="map" statementType="CALLABLE">
+	<![CDATA[
+    { call mileage_usage_music (
+      #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_title, mode=IN, jdbcType=VARCHAR, javaType=string}
+      )}
+    ]]>
+	</update>
+	
+	<update id="updateMileagePerformance" parameterType="map" statementType="CALLABLE">
+	<![CDATA[
+    { call mileage_usage_performance (
+      #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_performance_id, mode=IN, jdbcType=INTEGER, javaType=int}
+      )}
+    ]]>
 	</update>
 </mapper>

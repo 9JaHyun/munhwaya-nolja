@@ -1,18 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div align="right" style="margin-bottom: 50px;">
-	<a href="memberChangeInfo.do">회원정보 변경 ></a>
-	<h4>개인정보 변경</h4>
-	<!-- 비밀번호 변경 페이지 -->
-	<div class="grid_12 tt" style="margin-top: 70px;">
-		<ul class="forum-items" style="text-align: left;">
-			<li><i class="icon-comment-alt"></i> <a href="changePassword.do">비밀번호 변경</a>
-				<div class="topic-time">비밀번호를 변경합니다.</div></li>
-		</ul>
-	</div>
+    <a href="memberChangeInfo.do">회원정보 변경 >&nbsp;</a><a href="changeInfo.do">개인정보 변경 ></a>
+    <h4>비밀번호 변경</h4>
+    <div class="grid_12 tt" style="margin-top: 70px;">
+        <ul class="forum-items" style="text-align: left;">
+            <li><i class="icon-ok"></i><a>새로운 비밀번호를 입력해주세요.</a></li>
+        </ul>
+    </div>
 </div>
+
 <!-- 수정폼 -->
 <form method="post" id="frm" action="updateInfo.do?id=${member.id}" onsubmit="return send()">
 	<div class="grid_12 tt"

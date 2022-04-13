@@ -21,7 +21,7 @@ import com.munhwa.prj.wishlist.vo.WishlistVO;
 
 @Controller
 public class WishlistController {
-	
+
 	@Autowired
 	private WishlistService wishlistDao;
 

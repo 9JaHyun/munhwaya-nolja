@@ -16,9 +16,9 @@ public class PerformanceVO {
 	private String name;
 	private String location;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date sdate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date edate;
 	private String content;
 	private String status;
@@ -27,4 +27,12 @@ public class PerformanceVO {
 	private int price;
 	private int person;
 
+	
+	public void accpetPerformance() {
+		this.status = "A01";
+	}
+	
+	public void rejectPerformance() {
+		this.status = "A02";
+	}
 }

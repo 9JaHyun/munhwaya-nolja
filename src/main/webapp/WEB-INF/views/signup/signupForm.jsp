@@ -38,7 +38,6 @@
 							<input style="width: 470px; margin-bottom: 30px;"
 							type="text" name="nickname" id="nickname"
 								placeholder="NICKNAME (4자리 이상)" required="required" />
-
 						</div>
 						<div>
 							<input style="width: 470px; margin-bottom: 30px;"

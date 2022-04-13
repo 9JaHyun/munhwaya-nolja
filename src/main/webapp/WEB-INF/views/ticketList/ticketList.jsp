@@ -4,7 +4,7 @@
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <div id="layout" class="full">
     <div class="under_header">
-        <img src="${resources}/images/assets/breadcrumbs10.png" alt="#">
+        <img src="${resources}/images/assets/breadcrumbs1.png" alt="#">
     </div><!-- under header -->
 
     <div class="page-content back_to_up">
@@ -30,7 +30,7 @@
 <%--                                 <img class="product_img_hover" src="${resources}/images/assets/shop/${ticketList.qrcode}" alt=""><!-- featured thumbnail hover --> --%>
  								<div class="product_inner"><br>
                                     <h3> &nbsp;&nbsp;&nbsp;&nbsp;<a> ${ticketLists.performancevo.name } </a> </h3>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${ticketLists.performancevo.sdate }" /><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate pattern = "MM월 dd일 HH시 MM분" value = "${ticketLists.performancevo.sdate }" /><br>
 <%--                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>${ticketList.performancevo.edate }</a> --%>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>${ticketLists.performancevo.location }</a>
                                 </div><br>
