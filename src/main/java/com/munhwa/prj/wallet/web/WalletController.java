@@ -96,8 +96,8 @@ public class WalletController {
 			profitVO.setProfitAt(useDate);
 			profitVO.setMileage(music.getPrice());
 			profitVO.setPlace("U01");
-			profitVO.setId(music.getId());
 			profitVO.setPks(music.getId());
+			profitVO.getMusicvo().setId(music.getId());
 			
 			resultProfitByArtist.add(profitVO);
 								
