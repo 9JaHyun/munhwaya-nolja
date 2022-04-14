@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<jsp:useBean id="now" class="java.util.Date"/>
+<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate"/>
 <style>
     #boardTbl > thead > tr > th {
         font-size: 13pt;
@@ -37,23 +40,15 @@
                         <tbody id="posts">
                         <c:forEach items="${posts}" var="post">
                             <tr>
-                                <td hidden>${post.id}</td>
+                                <td style="color:white;" hidden>${post.id}</td>
                                 <td style="color:white;">${post.title}</td>
                                 <td style="color:white;">${post.writer}</td>
-                                <c:choose>
-                                    <c:when test="${now > post.createdAt}}">
-                                        <td style="color:white;">
-                                            <fmt:formatDate pattern="MM-dd" value="${post.createdAt}"/>
-                                        </td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td style="color:white;">
-                                            <fmt:formatDate pattern="HH:mm" value="${post.createdAt}"/>
-                                        </td>
-                                    </c:otherwise>
-                                </c:choose>
-
-
+                                <c:if test="${post.createdAt < nowDate}}">
+                                    asd
+                                </c:if>
+                                <td style="color:white;"><fmt:formatDate
+                                        pattern="MM월 dd일 HH시 mm분"
+                                        value="${post.createdAt}"/></td>
                                 <td style="color:white;">${post.hit}</td>
                             </tr>
                         </c:forEach>
@@ -115,18 +110,13 @@
 </div>
 
 <div>
-    <form id="moveForm" method="get" action="post">
+    <form id="moveForm" method="get" action="/prj/admin/performanceList">
         <input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
         <input type="hidden" name="amount" value="${pageMake.cri.amount }">
         <input type="hidden" name="keyword" value="${pageMake.cri.keyword }">
     </form>
-    <form id="postForm" hidden action="post" method="get">
-        <input type="hidden" name="id">
-    </form>
 </div>
+
 <script>
-    $('#posts').on('click', function (e) {
-        postForm.id.value = e.target.parentNode.firstElementChild.innerHTML;
-        postForm.submit();
-    })
+
 </script>

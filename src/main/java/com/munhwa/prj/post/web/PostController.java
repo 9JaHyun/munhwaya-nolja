@@ -10,6 +10,7 @@ import com.munhwa.prj.post.vo.PostVO;
 import com.munhwa.prj.post.web.dto.PostUpdateRequestDto;
 import com.munhwa.prj.post.web.dto.PostingRequestDto;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class PostController {
           @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
           @RequestParam(name = "amount", defaultValue = "10") int amount, Model model) {
         model.addAttribute("posts", postService.findByFilter(key, value, pageNum, amount));
+        model.addAttribute("now", new Date());
 
         return "post/postList";
     }
@@ -51,16 +53,6 @@ public class PostController {
     @GetMapping("/posting")
     public String postingForm() {
         return "post/postingForm";
-    }
-
-    @GetMapping("/postingTest")
-    public void posting(@LoginUser SessionUser user) {
-        PostVO postVO = new PostVO();
-        postVO.setTitle("title");
-        postVO.setMemberId(user.getId());
-        postVO.setContent("123");
-        postVO.setWriter(user.getNickname());
-        postService.save(postVO);
     }
 
     @PostMapping("/posting")
@@ -74,7 +66,6 @@ public class PostController {
                 uploadFileService.save(uploadFile, "post", postId);
             });
         }
-        PostVO postVO = dto.toEntity();
 
         return "post/postList";
     }
