@@ -8,11 +8,12 @@
 		<result property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="memberId" column="member_id" />
+		<result property="image" column="image"/>
 	</resultMap>
 
 	<!-- 좋아요 한 아티스트 리스트 -->
 	<select id="likeArtistList" resultMap="likeArtistResultMap">
-		SELECT A.NAME, A.ID, L.MEMBER_ID
+		SELECT A.NAME, A.ID, L.MEMBER_ID, A.IMAGE
 		FROM LIKE_ARTIST L
 		JOIN ARTIST A
 		ON L.ARTIST_ID = A.ID

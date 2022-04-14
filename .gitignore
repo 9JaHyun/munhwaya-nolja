@@ -103,4 +103,4 @@ fabric.properties
 
 
 ## security
-src/main/resources/config/db.properties
+src/main/resources/config/

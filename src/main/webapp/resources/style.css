@@ -491,13 +491,12 @@ textarea {
 	margin: 0 20px 0 0;
 }
 .social a {
-	float: left;
 	text-align: center;
 	margin: 0 4px 0;
 	width: 26px;
 	height: 26px;
 	border-radius: 2px;
-	color: #ddd;
+	color: #fff;
 	-webkit-transition: all 0.2s ease;
 	transition: all 0.2s ease;
 }

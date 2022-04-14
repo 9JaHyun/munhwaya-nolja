@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <style>
     .js-load {
@@ -139,6 +139,15 @@
         $(list + ":lt(" + total_cnt + ")").addClass("active");
     }
 
+    $(window).on('load', function () {
+        // 기본 갯수
+        load('#js-load', '4');
+        $("#js-btn-wrap .button").on("click", function () {
+            // 증가 갯수
+            load('#js-load', '3', '#js-btn-wrap');
+        })
+    });
+
     function delWishFnc(id) {
         var wname = $(event.target).parent().parent().next().children().children().data("wname");
         if (!confirm("[" + wname + '] 삭제하시겠습니까?')) {
@@ -150,8 +159,7 @@
                 contentType: "application/json"
             })
             .done(() => {
-                document.getElementById(id).parentNode.parentNode.parentNode.remove();
-                swal("Hello world!");
+                document.getElementById(id).parentNode.parentNode.parentNode.parentNode.remove();
             });
         }
     }

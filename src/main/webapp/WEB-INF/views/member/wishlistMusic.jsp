@@ -34,9 +34,8 @@
                 <tr class="js-load">
                     <td><a href="streaming?id=${wishlistMusic.id}">${wishlistMusic.title}</a></td>
                     <td style="padding-right: 30px;">${wishlistMusic.artName}</td>
-                    <td style="padding-right: 20px;"><i class="icon-remove"
-                                                        id="${wishlistMusic.id}"
-                                                        onclick="delMusicFnc(${wishlistMusic.id})"></i>
+                    <td style="padding-right: 20px;"><i class="icon-remove" id="${wishlistMusic.id}"
+                                    onclick="delMusicFnc(${wishlistMusic.id})"></i>
                     </td>
                 </tr>
             </c:forEach>
@@ -48,7 +47,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     $(window).on('load', function () {

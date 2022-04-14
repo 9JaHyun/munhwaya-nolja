@@ -25,18 +25,18 @@
 	<resultMap type="com.munhwa.prj.music.vo.MusicVO"
 		id="musicResultMap">
 		<id property="id" column="ID" />
-		<result property="artName" column="ART_NAME" />
-		<result property="genre" column="GENRE" />
-		<result property="lyric" column="LYRIC" />
-		<result property="downloadCnt" column="DOWNLOAD_CNT" />
-		<result property="fileId" column="FILE_ID" />
-		<result property="title" column="TITLE" />
-		<result property="price" column="PRICE" />
-		<result property="albumId" column="ALBUM_ID" />
-		<result property="time" column="TIME" />
-		<result property="writer" column="WRITER" />
-		<result property="composing" column="COMPOSING" />
-		<result property="arrangement" column="ARRANGEMENT" />
+		<result property="artName" column="ART_NAME"/>
+		<result property="genre" column="GENRE"/>
+		<result property="lyric" column="LYRIC"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="price" column="PRICE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="time" column="TIME"/>
+		<result property="writer" column="WRITER"/>
+		<result property="composing" column="COMPOSING"/>
+		<result property="arrangement" column="ARRANGEMENT"/>
 	</resultMap>
 
 	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO"

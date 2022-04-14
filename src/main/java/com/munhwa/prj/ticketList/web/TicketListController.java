@@ -143,7 +143,7 @@ public class TicketListController {
         try (DatagramSocket r = new DatagramSocket()) {
             r.connect(InetAddress.getByName("8.8.8.8"), 10002);
             String t = req.getRequestURI();
-            qrURI = r.getLocalAddress().getHostAddress() + "/prj/ticketCheck/" + ticketId;
+            qrURI = r.getLocalAddress().getHostAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (SocketException e1) {

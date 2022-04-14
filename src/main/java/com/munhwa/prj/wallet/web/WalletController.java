@@ -1,5 +1,19 @@
 package com.munhwa.prj.wallet.web;
 
+import com.munhwa.prj.charge.service.ChargeService;
+import com.munhwa.prj.charge.vo.ChargeVO;
+import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.vo.PageDTO;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.music.service.PurchaseService;
+import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.music.vo.PurchaseVO;
+import com.munhwa.prj.wallet.service.ProfitService;
+import com.munhwa.prj.wallet.service.UsageService;
+import com.munhwa.prj.wallet.vo.ProfitVO;
+import com.munhwa.prj.wallet.vo.UsageVO;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -7,7 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,27 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.munhwa.prj.charge.service.ChargeService;
-import com.munhwa.prj.charge.vo.ChargeVO;
-import com.munhwa.prj.common.vo.Criteria;
-import com.munhwa.prj.common.vo.PageDTO;
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.member.vo.MemberVO;
-import com.munhwa.prj.music.service.PurchaseService;
-import com.munhwa.prj.music.vo.MusicVO;
-import com.munhwa.prj.music.vo.PurchaseVO;
-import com.munhwa.prj.wallet.service.ProfitService;
-import com.munhwa.prj.wallet.service.UsageService;
-import com.munhwa.prj.wallet.vo.ProfitVO;
-import com.munhwa.prj.wallet.vo.UsageVO;
-
-import lombok.extern.slf4j.Slf4j;
 //@Slf4j
 @Controller
 public class WalletController {
