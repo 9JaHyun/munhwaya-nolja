@@ -24,55 +24,57 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class WithdrawController {
 
-//	private final RestTemplate restTemplate;
-//    private final HttpHeaders httpHeaders;
-//    private final String BASE_URL = "https://testapi.openbanking.or.kr";
-//    
-//    public WithdrawController() {
-//        this.restTemplate = new RestTemplate();
-//        this.httpHeaders = new HttpHeaders();
-//    }
-//
-//    @GetMapping("/withdraw")
-//    public String testIndex() {
-//        return "withdraw/withdraw";
-//    }
-//
-//    @ResponseBody
-//    @GetMapping("/auth/openbank/code")
-//    public void receive(@ModelAttribute CodeResponseDTO responseDTO) {
-//        log.info("getCode! ={}", responseDTO.toString());
-//        getToken(responseDTO.getCode());
-//    }
-//
-//    public TokenResponseDTO getToken(String code) {
-//        User user = new User();
-//        TokenRequestDTO dto = new TokenRequestDTO(user.getClientId(), user.getClientSecret(),
-//              "oob", "client_credentials");
-//
-//        httpHeaders.add("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-//
-//        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-//        parameters.add("client_id", dto.getClientId());
-//        parameters.add("client_secret", dto.getClientSecret());
-//        parameters.add("scope", dto.getScope());
-//        parameters.add("grant_type", dto.getGrantType());
-//
-//        HttpEntity<MultiValueMap<String, String>> param = new HttpEntity<>(parameters, httpHeaders);
-//
-//        //Http 요청하기 - post 방식으로
-//        TokenResponseDTO result = restTemplate.exchange(
-//                BASE_URL + "/oauth/2.0/token",
-//                HttpMethod.POST, param, TokenResponseDTO.class).getBody();
-//        System.out.println(result);
-//        
-//        httpHeaders.add("authorization_code", result.getAccess_token());
-//       
-//      
-//         
-//        return result;
-//    }
-    
+	private final RestTemplate restTemplate;
+    private final HttpHeaders httpHeaders;
+    //private final String BASE_URL = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?" + 
+    private final String BASE_URL = "https://testapi.openbanking.or.kr";
+
+
+    public WithdrawController() {
+        this.restTemplate = new RestTemplate();
+        this.httpHeaders = new HttpHeaders();
+    }
+
+    @GetMapping("/withdraw")
+    public String testIndex() {
+        return "withdraw/withdraw";
+    }
+
+    @ResponseBody
+    @GetMapping("/auth/openbank/code")
+    public void receive(@ModelAttribute CodeResponseDTO responseDTO) {
+        log.info("getCode! ={}", responseDTO.toString());
+        getToken(responseDTO.getCode());
+    }
+
+    public TokenResponseDTO getToken(String code) {
+        User user = new User();
+        TokenRequestDTO dto = new TokenRequestDTO(user.getClientId(), user.getClientSecret(),
+              "oob", "client_credentials");
+
+        httpHeaders.add("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("client_id", dto.getClientId());
+        parameters.add("client_secret", dto.getClientSecret());
+        parameters.add("scope", dto.getScope());
+        parameters.add("grant_type", dto.getGrantType());
+
+        HttpEntity<MultiValueMap<String, String>> param = new HttpEntity<>(parameters, httpHeaders);
+
+        //Http 요청하기 - post 방식으로
+        TokenResponseDTO result = restTemplate.exchange(
+                BASE_URL + "/oauth/2.0/token",
+                HttpMethod.POST, param, TokenResponseDTO.class).getBody();
+        System.out.println(result);
+        
+        httpHeaders.add("authorization_code", result.getAccess_token());
+       
+      
+         
+        return result;
+    }
+
 //    @RequestMapping("/auth/openbank/callback")
 //    @ResponseBody
 //    public String getToken(TokenRequestDTO tokenDto,Model model) {

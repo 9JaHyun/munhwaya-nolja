@@ -28,14 +28,14 @@ public class HomeController {
         return "shop/shop_cart.artist";
     }
     
-    @Value("${openbank.access-token}")
-    private String access_token ="";
-    @Value("${openbank.client-id}")
-    private String clientId ="";
-    @GetMapping("/")
-    public String home(Model model){
-        model.addAttribute("clientId", clientId);
-        model.addAttribute("access_token",access_token);
-        return "home/home";
-    }
+//    @Value("${openbank.access-token}")
+//    private String access_token ="";
+//    @Value("${openbank.client-id}")
+//    private String clientId ="";
+//    @GetMapping("/")
+//    public String home(Model model){
+//        model.addAttribute("clientId", clientId);
+//        model.addAttribute("access_token",access_token);
+//        return "home/home";
+//    }
 }

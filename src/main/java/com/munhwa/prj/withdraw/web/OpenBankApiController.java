@@ -51,11 +51,11 @@ public class OpenBankApiController {
      * grant_type
      */
     @Value("${openbank.useCode}")
-    private String useCode;
+    private String useCode="M202200536";
     @Value("${openbank.client-id}")
-    private String clientId;
+    private String clientId="12ce99f4-e774-4231-ab01-e287c5d279fc";
     @Value("${openbank.client-secret}")
-    private String client_secret ="";
+    private String client_secret ="b45a8f6b-a958-4b21-8f7d-03f85c3e0214";
 
     @Value("${openbank.access-token}")
     private String access_token;

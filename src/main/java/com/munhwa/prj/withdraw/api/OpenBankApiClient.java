@@ -33,12 +33,12 @@ public class OpenBankApiClient {
     private final OpenBankutil openBankutil;
     private final HttpHeaders httpHeaders;
     private final RestTemplate restTemplate;
-    @Value("${openbank.useCode}")
-    private String useCode; // 핀테크번호+U -> 거래고유번호 생성기
-    @Value("${openbank.client-id}")
-    private String clientId;
-    @Value("${openbank.client-secret}")
-    private String client_secret;
+    //@Value("${openbank.useCode}")
+    private String useCode="M202200536"; // 핀테크번호+U -> 거래고유번호 생성기
+    //@Value("${openbank.client-id}")
+    private String clientId="12ce99f4-e774-4231-ab01-e287c5d279fc";
+    //@Value("${openbank.client-secret}")
+    private String client_secret="b45a8f6b-a958-4b21-8f7d-03f85c3e0214";
 
     private String redirect_uri = "http://localhost:8080/auth/openbank/callback";
     private String base_url = "https://testapi.openbanking.or.kr/v2.0";
