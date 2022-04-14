@@ -116,7 +116,7 @@ function pushList(result) {
 					composing: '${music.composing}',
 					arrangement: '${music.arrangement}',
 					musicId: '${music.id}',
-					mp3 : "/prj/api/file/"+fileName,
+					mp3 : "${pageContext.request.contextPath}"+fileName,
 					title : '${music.title}',
 					artist : '${music.artName}',
 					rating: 5,

@@ -21,7 +21,7 @@ function pushList(result) {
 		composing: '${musicSelect.composing}',
 		arrangement: '${musicSelect.arrangement}',
 		musicId: '${musicSelect.id}',
-		mp3 : "/prj/api/file/"+fileName,
+		mp3 : "${pageContext.request.contextPath}/api/file/"+fileName,
 		title : '${musicSelect.title}',
 		artist : '${musicSelect.artName}',
 		rating: 5,
