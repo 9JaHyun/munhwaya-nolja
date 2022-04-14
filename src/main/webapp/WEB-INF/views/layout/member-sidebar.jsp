@@ -75,8 +75,9 @@
                     </c:when>
                     <c:otherwise>
                         <li><a href="artistManagement"><i class="icon-caret-right"></i>아티스트 관리</a></li>
-                        <li><a href="artistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 등록/수정</a>
+                        <li><a href="artistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 등록</a>
                         <li><a href="artistDetail"><i class="icon-caret-right"></i>아티스트 정보 상세페이지</a></li>
+                        <li><a href="changeArtistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 변경</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

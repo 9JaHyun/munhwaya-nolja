@@ -6,6 +6,7 @@ import java.lang.reflect.Member;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Random;
 
 import javax.websocket.Session;
@@ -90,6 +91,7 @@ public class ArtistController {
 	// 회원 -> 아티스트 승급 신청 폼 호출
 	@RequestMapping("/artistRequestForm")
 	public String artistRequestForm() {
+		
 		return "artistRequest-artist";
 	}
 
@@ -119,33 +121,76 @@ public class ArtistController {
 		return "artistProfile-artist";
 	}
 
-	// 아티스트 프로필 등록, 수정
+	// 아티스트 프로필 등록
 	@RequestMapping("/artistProfile") 
 	public String artistProfile(@LoginUser SessionUser user, ArtistVO vo, /* RedirectAttributes */ Model rttr) {
 		vo.setMemberId(user.getId());
 		ArtistVO findArtist = artistDao.artistSelect(vo);
 		// 검색
 		System.out.println("vo : " + vo);
-
-		if (findArtist == null) {
-			int pro = artistDao.artistInsert(vo);
-				if(pro != 0) {
-					rttr.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
-				}else {
+		
+		int pro = artistDao.artistInsert(findArtist);
+			if(pro != 0) {
+				rttr.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
+			}else {
 					rttr.addAttribute("message", "입력 실패하셨습니다.");
-				}
-		} else {
-			vo.setId(findArtist.getId());
-				int file = artistDao.artistUpdate(vo);
-					if(file != 0) {			
-						rttr.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
-					}else {
-						rttr.addAttribute("message", "입력 실패하셨습니다.");
-					}
-
-		}
-					return "artist/myPageMove";
+			}
+			
+			return "artist/myPageMove";
 	}
+	
+    // 아티스트 정보 수정 폼 호출
+    @RequestMapping("/changeArtistProfileForm")
+    public String changeArtistProfileForm(@LoginUser SessionUser user, Model rttr) {
+    	ArtistVO artist = new ArtistVO();
+    	artist.setMemberId(user.getId());
+    	//String memeberId = user.getNickname();
+    	artist = artistDao.artistSelect(artist);
+    	
+    	rttr.addAttribute("artist", artist);
+    	return "changeArtistProfile-artist";
+    }
+    
+//    // 아티스트 정보 수정
+//    @RequestMapping("changeArtistProfile")
+//    public String changeArtistProfile(@LoginUser SessionUser user, ArtistVO vo, /* RedirectAttributes */ Model rttr) {
+//    	vo.setMemberId(user.getId());
+//    	//String memeberId = user.getNickname();
+//    	vo = artistDao.artistSelect(vo);
+//    	
+//    	rttr.addAttribute(vo);
+//    	vo.setMemberId(user.getId());
+//    		vo.getName();
+//    		vo.getImage();
+//    		vo.getGender();
+//    		vo.getType();
+//    		vo.getGenre();
+//    		vo.getContent();
+//    		ArtistVO findArtist = artistDao.artistSelect(vo);
+//    		// 검색
+//    		System.out.println("vo : " + vo);
+//    		
+//    		rttr.add
+//    				int file = artistDao.artistUpdate(findArtist);
+//    					if(file != 0) {			
+//    						rttr.addAttribute("message", "아티스트 정보 수정이 완료되었습니다.");
+//    					}else {
+//    						rttr.addAttribute("message", "입력 실패하셨습니다.");
+//    					}
+
+    	
+//    	return "mypage.do-artist";
+//    }
+    
+//    		if (findArtist == null) {
+//    			int pro = artistDao.artistInsert(vo);
+//    				if(pro != 0) {
+//    					rttr.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
+//    				}else {
+//    					rttr.addAttribute("message", "입력 실패하셨습니다.");
+//    				}
+//    		} else {
+//    			vo.setId(findArtist.getId());
 		
 	// 아티스트 승급페이지 본인인증
 	@RestController
@@ -195,12 +240,7 @@ public class ArtistController {
 		
 	}
 }
-//    // 아티스트 정보 수정 폼 호출
-//    @RequestMapping("artistUpdateForm")
-//    public String artistUpdateForm() {
-//    	
-//    	return "artistUpdate-artist";
-//    }
+
 //    // 아티스트 정보 수정
 //    @RequestMapping("/artistUpdate")
 //    public String artistUpdate(ArtistVO vo, Model model) {
