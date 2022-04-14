@@ -23,4 +23,8 @@ public class UsageVO {
 	private CommonCodeVO commonCodevo;
 	private MusicVO musicvo;
 	private PerformanceVO performancevo;
+	
+	public UsageVO() {
+		
+	}
 }

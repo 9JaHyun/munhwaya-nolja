@@ -197,7 +197,7 @@
         var confirm1 = confirm('장바구니에 담으시겠습니까?')
         if (confirm1) {
             $.ajax({
-                url: "cart/test/add",
+                url: "cart/add",
                 type: "post",
                 data: {"id": id},
                 dataType: "text",
@@ -206,12 +206,12 @@
                     alert("장바구니에 담았습니다.");
                 },
                 error: function (xhr, status, error) {
-                    alert("통신실패");
+                    alert("이미 장바구니에 담겨있습니다.");
                 }
             })
 
         } else {
-            alert("삭제취소")
+            alert("취소하셨습니다.")
         }
     }
     function paging(num) {

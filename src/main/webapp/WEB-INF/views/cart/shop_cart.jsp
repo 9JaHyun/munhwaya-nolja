@@ -109,7 +109,7 @@ tr {
                             <tbody>
                             <tr class="cart-subtotal">
                                 <th><strong>보유중인 마일리지 </strong></th>
-                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;${mileage}</span></strong></td>
+                                <td><strong><span class="amount" id="sessionMileage">&nbsp;&nbsp;&nbsp;${mileage}</span></strong></td>
                             </tr>
                             <tr class="total">
                                 <th><strong>총 가격</strong></th>
@@ -120,7 +120,7 @@ tr {
                           
                             <tr class="total">
                                 <th><strong>잔여 마일리지</strong></th>
-                                <td><strong>&nbsp;&nbsp;&nbsp;<span class="amount" id="minusMileage"></span></strong></td>
+                                <td>&nbsp;&nbsp;&nbsp;<strong><span class="amount" id="minusMileage"></span></strong></td>
                             </tr>
                             </tbody>
                         </table>
@@ -151,10 +151,16 @@ function itemTotal() {
 		sum += parseInt(document.getElementsByClassName("price")[i].innerHTML)
 		
 	}
-	var summ = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(sum);
-	document.getElementById("itemTotalPrice").innerHTML = ssum;
+	document.getElementById("itemTotalPrice").innerHTML = sum;
 	document.getElementById("minusMileage").innerHTML = parseInt(${mileage}) - parseInt(document.getElementById("itemTotalPrice").innerHTML);
-/*  $("#totalPrice").val(sum); */	 
+	
+	var sumMileage = document.getElementById('itemTotalPrice').innerHTML;
+	var sumMileage2 = sumMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('itemTotalPrice').innerHTML = sumMileage2+'원';
+	
+	var minusMileage = document.getElementById('minusMileage').innerHTML;
+	var minusMileage2 = minusMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('minusMileage').innerHTML = minusMileage2+'원';
 }
 
 
@@ -195,8 +201,8 @@ function payCart() {
 	
 	var title = td.eq(1).text().trim(); 
 	var artName = td.eq(2).text().trim(); 
-	var price = td.eq(3).text().trim();
-	var id = td.eq(5).find("input").val();
+	var price = td.eq(4).text().trim();
+	var id = td.eq(6).find("input").val();
 	
 	obj["title"] = title;
 	obj["artName"] = artName;
@@ -221,4 +227,15 @@ function payCart() {
 	        });
   
     }}
+
+	var sessionMileage = document.getElementById('sessionMileage').textContent
+	var sessionMileage2 = sessionMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('sessionMileage').textContent = sessionMileage2+'원';
+
+	for (var i=0; i<document.getElementsByClassName('price').length; i++) {
+	var listMileage = document.getElementsByClassName('price')[i].textContent
+	var listMileage2 = listMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementsByClassName('price')[i].textContent = listMileage2+'원';
+
+	}
 </script>

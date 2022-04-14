@@ -45,7 +45,7 @@
 
             <!-- 마일리지 -->
             <div align="right" style="margin: 20px 0px 10px 0px;">
-                <a>보유 마일리지 : ${member.mileage} 원</a>
+            <div style="font-size:12px; color:white;">보유 마일리지 : <a id="sidebarMileage">${member.mileage}</a></div>
             </div>
             <!-- 충전버튼 -->
             <div align="right">
@@ -81,3 +81,9 @@
         </div>
     </div>
 </div>
+
+<script>
+	var sidebarMileage = document.getElementById('sidebarMileage').innerHTML;
+	var sidebarMileage2 = sidebarMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('sidebarMileage').innerHTML = sidebarMileage2+'원';
+</script>

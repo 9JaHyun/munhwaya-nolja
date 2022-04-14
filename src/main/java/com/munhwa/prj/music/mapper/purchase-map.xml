@@ -56,7 +56,7 @@
 	</select>
 	
 	<insert id="purchaseInsert" parameterType="com.munhwa.prj.music.vo.PurchaseVO">
-		INSERT INTO PURCHASED_MUSIC
+		INSERT INTO PURCHASED_MUSIC(music_id,member_id)
 		VALUES(#{musicId},
 			   #{memberId})
 	</insert>
