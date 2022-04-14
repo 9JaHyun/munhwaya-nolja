@@ -17,6 +17,14 @@
     <h4>새소식</h4>
 </div>
 
+<c:if test="${not empty news1}">
+	<div align="right" style="margin-bottom: 25px;">
+		<button class="tbutton small" onclick="location.href='deleteNewsAll.do'">
+		   	<span>전체삭제</span>
+		</button>
+	</div>
+</c:if>
+
 <div align="center">
     <div id="js-load">
         <div class="mbf clearfix">
@@ -99,7 +107,7 @@
             data: JSON.stringify({"id": id}),
             contentType: "application/json"
         })
-        .done(() => {
+        .done(() => {  	
         });
     }
 

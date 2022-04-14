@@ -1,16 +1,7 @@
 package com.munhwa.prj.member.web;
 
-import com.munhwa.prj.common.code.Genre;
-import com.munhwa.prj.common.entity.UploadFile;
-import com.munhwa.prj.common.service.FileUtils;
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.member.vo.Auth;
-import com.munhwa.prj.member.vo.MemberVO;
-import com.munhwa.prj.news.service.NewsService;
 import java.io.IOException;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +16,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.munhwa.prj.artist.service.ArtistService;
+import com.munhwa.prj.artist.vo.ArtistVO;
+import com.munhwa.prj.common.code.Genre;
+import com.munhwa.prj.common.entity.UploadFile;
+import com.munhwa.prj.common.service.FileUtils;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.member.vo.Auth;
+import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.news.service.NewsService;
+
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Controller
 public class MemberController {
@@ -34,6 +39,9 @@ public class MemberController {
 
     @Autowired
     private NewsService newsDao;
+    
+    @Autowired
+    private ArtistService artistDao;
 
     @Autowired
     private FileUtils fileUtils;
@@ -51,7 +59,9 @@ public class MemberController {
 
     // 회원정보 변경 페이지
     @GetMapping("/memberChangeInfo.do")
-    public String memberChangeInfo(@LoginUser SessionUser sessionUser) {
+    public String memberChangeInfo(@LoginUser SessionUser sessionUser, ArtistVO vo, Model model) {
+    	vo.setMemberId(sessionUser.getId());
+    	model.addAttribute("artists", artistDao.artistContent(vo));
         return "memberChangeInfo-member";
     }
 

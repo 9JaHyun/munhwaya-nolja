@@ -38,5 +38,10 @@ private ArtistMapper map;
 		// TODO Auto-generated method stub
 		return map.artistUpdate(vo);
 	}
+
+	@Override
+	public ArtistVO artistContent(ArtistVO vo) {
+		return map.artistContent(vo);
+	}
 	
 }

@@ -12,9 +12,17 @@
                         <a href="changeProfile.do">프로필 변경</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="changeArtistProfile" onclick="artistFn()">프로필 변경</a>
+                    	 <c:choose>
+                    		<c:when test="${artists.content eq null}">
+                    			<a href="#">프로필 등록</a>
+                    		</c:when>
+                    		<c:otherwise>
+                    			<a href="#">프로필 수정</a>
+                    		</c:otherwise>
+                    	</c:choose>
                     </c:otherwise>
-                </c:choose>
+                </c:choose>                
+
                 <div class="topic-time">프로필 이미지와 닉네임을 변경합니다.</div>
             </li>
             <li>
@@ -30,9 +38,3 @@
         </ul>
     </div>
 </div>
-
-<script>
-    function artistFn() {
-        alert('아티스트 프로필 변경 페이지로 이동합니다.');
-    }
-</script>

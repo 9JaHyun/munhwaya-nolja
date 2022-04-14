@@ -40,4 +40,10 @@
 		</set>
 	</update>
 	
+	<select id="artistContent" resultMap="artistMap" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+		SELECT CONTENT
+		FROM ARTIST
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+	
 </mapper>

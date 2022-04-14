@@ -26,4 +26,10 @@
 		WHERE ID = #{id}
 	</delete>
 
+	<!-- 새소식 전체삭제 -->
+	<delete id="deleteNewsAll" parameterType="com.munhwa.prj.news.vo.NewsVO">
+		DELETE FROM NEWS
+		WHERE MEMBER_ID = #{memberId}
+	</delete>
+
 </mapper>
