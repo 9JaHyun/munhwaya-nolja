@@ -19,13 +19,14 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public String save(UploadFile file, String type) {
+    public String save(UploadFile file, String type, int id) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("v_oname", file.getOriginalFileName());
         paramMap.put("v_sname", file.getStoredFileName());
-        paramMap.put("v_proc_type", type);
+        paramMap.put("v_id", id);
+        paramMap.put("v_type", type);
         mapper.insertUploadFile(paramMap);
-        return (String) paramMap.get("v_group_id");
+        return type + "-" + id;
     }
 
     @Override

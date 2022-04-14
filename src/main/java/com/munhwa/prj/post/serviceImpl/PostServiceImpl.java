@@ -6,8 +6,10 @@ import com.munhwa.prj.post.vo.PostVO;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PostServiceImpl implements PostService {
@@ -16,7 +18,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int save(PostVO vo) {
-        return mapper.insertPost(vo);
+        mapper.insertPost(vo);
+        return vo.getId();
     }
 
     @Override
@@ -36,6 +39,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostVO findById(int id) {
+        mapper.hitUpById(id);
         return mapper.selectPostById(id);
     }
 

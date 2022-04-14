@@ -39,6 +39,9 @@ public class CartController {
 		MusicVO vo = musicDAO.musicSelect(id);
 
 		Map<Integer, MusicVO> cart = user.getCart();
+		if(cart.containsKey(vo.getId())){
+			return ResponseEntity.badRequest().body("이미 장바구니에 존재합니다.");
+		}
 		cart.put(vo.getId(), vo);
 		user.setCart(cart);
 //		log.info("id={}", vo.getId());

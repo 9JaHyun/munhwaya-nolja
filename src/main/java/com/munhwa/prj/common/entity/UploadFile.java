@@ -19,6 +19,6 @@ public class UploadFile {
     }
 
     public UploadFileVO toEntity(){
-        UploadFileVO vo = new UploadFileVO(originalFileName, storedFileName);
+        return new UploadFileVO(originalFileName, storedFileName);
     }
 }

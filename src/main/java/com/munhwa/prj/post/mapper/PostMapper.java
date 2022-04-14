@@ -13,6 +13,8 @@ public interface PostMapper {
 
     int deletePostById(int id);
 
+    int hitUpById(int id);
+
     PostVO selectPostById(int id);
 
     List<PostVO> selectPosts();

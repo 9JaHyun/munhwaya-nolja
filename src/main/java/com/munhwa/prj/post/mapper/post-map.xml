@@ -14,14 +14,13 @@
     <result property="fileGroupId" column="file_group_id"/>
   </resultMap>
 
-  <insert id="insertPost" useGeneratedKeys="true" keyProperty="id">
-    <selectKey keyProperty="id" resultType="int">
-      SELECT post_seq.nextval
+  <insert id="insertPost">
+    INSERT INTO post(id, title, content, created_at, hit, member_id, writer, like_it)
+    VALUES (post_seq.nextval, #{title}, #{content}, sysdate, 0, #{memberId}, #{writer}, 0)
+    <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+      SELECT post_seq.currval
+      FROM dual
     </selectKey>
-    INSERT INTO post (id, title, writer, content, created_at, hit, member_id,
-                      file_group_id)
-    VALUES (#{id}, #{title}, #{writer}, #{content}, #{createdAt}, 0, #{memberId},
-            #{fileGroupId})
   </insert>
 
   <update id="updatePost">
@@ -50,6 +49,12 @@
     FROM post
     WHERE id = #{id}
   </select>
+
+  <update id="hitUpById">
+    UPDATE post
+    SET hit = hit + 1
+    WHERE id = #{id}
+  </update>
 
   <select id="selectPostsByFilter" resultMap="postMap">
     select id, title, content, created_at, hit, member_id, file_group_id, writer, updated_at
@@ -108,7 +113,7 @@
 		<![CDATA[
     { call accept_performance(
       #{v_post_id, mode=IN, jdbcType=INTEGER, javaType=int},
-      #{v_member_ids, mode=IN, jdbcType=VARCHAR, javaType=string}
+      #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string}
       )}
     ]]>
 	</update>

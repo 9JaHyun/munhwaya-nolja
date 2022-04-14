@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 public class PostingRequestDto {
 
+    private String id;
     private String title;
     private String writer;
     private String content;
