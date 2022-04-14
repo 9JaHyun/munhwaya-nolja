@@ -23,4 +23,5 @@ public class ProfitVO {
 	private MusicVO musicvo;
 	private ArtistVO artistvo;
 	private PerformanceVO performancevo;
+	
 }
