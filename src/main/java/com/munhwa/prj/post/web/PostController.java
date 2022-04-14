@@ -6,6 +6,7 @@ import com.munhwa.prj.common.service.UploadFileService;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.post.service.PostService;
+import com.munhwa.prj.post.vo.PostVO;
 import com.munhwa.prj.post.web.dto.PostUpdateRequestDto;
 import com.munhwa.prj.post.web.dto.PostingRequestDto;
 import java.io.IOException;
@@ -55,15 +56,16 @@ public class PostController {
     @PostMapping("/posting")
     public String posting(PostingRequestDto dto) throws IOException {
         List<MultipartFile> files = dto.getUploadFile();
+        String postId;
         if (files != null && files.size() != 0) {
             List<UploadFile> uploadFiles = fileUtils.storeFiles(files);
-            uploadFiles.stream()
-                  .map(UploadFile::toEntity)
-                  .forEach(vo -> {
-                      vo.setFileGroupId("post");
-                      uploadFileService.save(vo);
-                  });
+            uploadFiles.forEach(uploadFile -> {
+                postId = uploadFileService.save(uploadFile, "post");
+            });
         }
+        PostVO postVO = dto.toEntity();
+        postVO.setFileGroupId();
+
         return "post/postList";
     }
 

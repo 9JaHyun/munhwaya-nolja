@@ -14,10 +14,13 @@
     <result property="fileGroupId" column="file_group_id"/>
   </resultMap>
 
-  <insert id="insertPost">
+  <insert id="insertPost" useGeneratedKeys="true" keyProperty="id">
+    <selectKey keyProperty="id" resultType="int">
+      SELECT post_seq.nextval
+    </selectKey>
     INSERT INTO post (id, title, writer, content, created_at, hit, member_id,
                       file_group_id)
-    VALUES (post_seq.nextval, #{title}, #{writer}, #{content}, #{createdAt}, 0, #{memberId},
+    VALUES (#{id}, #{title}, #{writer}, #{content}, #{createdAt}, 0, #{memberId},
             #{fileGroupId})
   </insert>
 

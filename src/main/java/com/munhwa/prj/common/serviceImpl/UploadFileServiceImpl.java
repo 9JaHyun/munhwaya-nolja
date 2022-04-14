@@ -1,9 +1,12 @@
 package com.munhwa.prj.common.serviceImpl;
 
+import com.munhwa.prj.common.entity.UploadFile;
 import com.munhwa.prj.common.entity.UploadFileVO;
 import com.munhwa.prj.common.mapper.UploadFileMapper;
 import com.munhwa.prj.common.service.UploadFileService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,8 +19,13 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public int save(UploadFileVO vo) {
-        return mapper.insertUploadFile(vo);
+    public String save(UploadFile file, String type) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("v_oname", file.getOriginalFileName());
+        paramMap.put("v_sname", file.getStoredFileName());
+        paramMap.put("v_proc_type", type);
+        mapper.insertUploadFile(paramMap);
+        return (String) paramMap.get("v_group_id");
     }
 
     @Override

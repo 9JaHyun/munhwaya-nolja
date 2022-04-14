@@ -1,10 +1,11 @@
 package com.munhwa.prj.common.service;
 
+import com.munhwa.prj.common.entity.UploadFile;
 import com.munhwa.prj.common.entity.UploadFileVO;
 import java.util.List;
 
 public interface UploadFileService {
-    int save(UploadFileVO vo);
+    String save(UploadFile vo, String type);
 
     int change(UploadFileVO vo);
 

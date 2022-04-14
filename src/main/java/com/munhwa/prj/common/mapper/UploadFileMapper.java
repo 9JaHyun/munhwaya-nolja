@@ -2,10 +2,11 @@ package com.munhwa.prj.common.mapper;
 
 import com.munhwa.prj.common.entity.UploadFileVO;
 import java.util.List;
+import java.util.Map;
 
 public interface UploadFileMapper {
 
-    int insertUploadFile(UploadFileVO vo);
+    int insertUploadFile(Map<String, Object> paramMap);
 
     int updateUploadFile(UploadFileVO vo);
 
