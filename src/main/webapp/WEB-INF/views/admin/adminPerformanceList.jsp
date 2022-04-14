@@ -73,7 +73,7 @@
 					</div>
 					<!-- gridfull -->
 					<div class="pagination-tt clearfix"
-						style="margin-left: auto; margin-left: auto; margin-top: 30px; width: 520px;">
+						style="margin-left: auto; margin-top: 30px; width: 520px;">
 						<ul>
 							<!-- 이전페이지 버튼 -->
 							<c:if test="${pageMake.prev}">
@@ -82,7 +82,7 @@
 							<!-- 각 번호 페이지 버튼 -->
 							<c:forEach var="num" begin="${pageMake.startPage}"
 								end="${pageMake.endPage}">
-								<li><a href="#" onclick="paging(${num})" class="deactive">${num}</a></li>
+								<li style="border:1px solid white; margin-left:5px;"><a href="#" onclick="paging(${num})" class="deactive">${num}</a></li>
 							</c:forEach>
 							<!-- 다음페이지 버튼 -->
 							<c:if test="${pageMake.next}">

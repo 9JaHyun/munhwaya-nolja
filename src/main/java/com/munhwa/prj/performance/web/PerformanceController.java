@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.artist.service.ArtistService;
@@ -21,7 +22,6 @@ import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.common.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.likeArtist.service.LikeArtistService;
 import com.munhwa.prj.performance.service.PerformanceService;
 import com.munhwa.prj.performance.vo.Criteria;
 import com.munhwa.prj.performance.vo.PageMakeDTO;
@@ -41,7 +41,8 @@ public class PerformanceController {
 	private FileUtils fileUtils;
 
 	@GetMapping("/performance")
-	public String performance(Model model, Criteria cri) {
+	public String performance(Model model, Criteria cri, 
+			@RequestParam(value = "filter", defaultValue = "A01") String filter) {
 		List<PerformanceVO> list = performanceDao.performanceSelectList(cri);
 
 		List<PerformanceVO> result = list.stream()
@@ -50,7 +51,7 @@ public class PerformanceController {
 
 		model.addAttribute("performances", result);
 
-		int total = performanceDao.getTotal(cri);
+		int total = performanceDao.getTotal(cri, filter);
 
 		PageMakeDTO pageMake = new PageMakeDTO(cri, total);
 

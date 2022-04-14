@@ -33,8 +33,8 @@ public class PerformanceServiceImpl implements PerformanceService {
 	}
 
 	@Override
-	public int getTotal(Criteria cri) {
-		return map.getTotal(cri);
+	public int getTotal(Criteria cri, String filter) {
+		return map.getTotal(cri, filter);
 	}
 
 	@Override

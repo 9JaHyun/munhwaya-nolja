@@ -122,13 +122,21 @@
 	</select>
 	
 	<select id="getTotal" resultType="int">
-    
         SELECT COUNT(*) FROM PERFORMANCE
-        
-        <if test="keyword != null">
-        	WHERE NAME LIKE '%'||#{keyword}||'%'
+        <where>
+        <if test="cri.keyword != null">
+        	AND NAME LIKE '%'||#{cri.keyword}||'%'
         </if>
-    
+        <if test="filter != null and filter.equals('A01')">
+        	AND STATUS = 'A01'
+        </if>
+        <if test="filter != null and filter.equals('A02')">
+        	AND STATUS = 'A02'
+        </if>
+        <if test="filter != null and filter.equals('A03')">
+        	AND STATUS = 'A03'
+        </if>
+        </where>
     </select>
 	
 	
@@ -143,6 +151,7 @@
 		,		P.IMAGE
 		,		P.ARTIST_ID
 		,		P.PRICE
+		,		PP.PERSONAL
 		,		A.NAME as artist_name
 		,		P.PERSON - PP.PERSONAL AS PERSON
 		FROM	PERFORMANCE P, PERFORMANCE_PERSONAL PP, ARTIST A

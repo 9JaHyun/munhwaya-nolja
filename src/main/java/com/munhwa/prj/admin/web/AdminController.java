@@ -26,12 +26,12 @@ public class AdminController {
 	
 	// 공연 신청 목록
 	@GetMapping("admin/performanceList")
-	public String changePerformanceStatus(Model model, Criteria cri, PerformanceVO vo) {
+	public String changePerformanceStatus(Model model, Criteria cri, PerformanceVO vo, String filter) {
 		List<PerformanceVO> list = performanceService.adminSelectList(cri);
 		
     	model.addAttribute("performances", list);
     	
-    	int total = performanceService.getTotal(cri);
+    	int total = performanceService.getTotal(cri,filter);
     	
     	PageMakeDTO pageMake = new PageMakeDTO(cri, total);
     	

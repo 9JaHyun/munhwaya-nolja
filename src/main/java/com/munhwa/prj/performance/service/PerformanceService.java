@@ -20,7 +20,7 @@ public interface PerformanceService {
 	PerformanceVO performanceSelect(PerformanceVO vo);
 	
 	/* 게시판 총 갯수 */
-    public int getTotal(Criteria cri);
+    public int getTotal(Criteria cri, String filter);
     
     int performanceUpdate(Map<String, Object> paramMap);
 	
