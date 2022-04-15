@@ -62,7 +62,7 @@ public class MemberController {
     @GetMapping("/memberChangeInfo.do")
     public String memberChangeInfo(@LoginUser SessionUser sessionUser, ArtistVO vo, Model model) {
     	vo.setMemberId(sessionUser.getId());
-    	model.addAttribute("artists", artistDao.artistContent(vo));
+    	model.addAttribute("artists", artistDao.findByMemberId(vo));
         return "memberChangeInfo-member";
     }
 

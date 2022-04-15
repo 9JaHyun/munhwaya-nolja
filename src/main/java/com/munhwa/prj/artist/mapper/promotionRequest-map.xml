@@ -10,7 +10,6 @@
 		<result property="fileGroupId" column="file_group_id"/>
 	</resultMap>
 
-
 	<select id="promotionRequestSelectList" resultMap="requestMap">
 		SELECT * FROM PROMOTION_REQUEST ORDER BY DESC
 	</select>

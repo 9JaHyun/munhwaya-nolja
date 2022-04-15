@@ -68,7 +68,6 @@ public class SmsServiceImpl {
         											// HMAC 암호화 알고리즘은 HmacSHA256 사용
 
         HttpEntity<String> body = new HttpEntity<>(jsonBody,headers);
-        System.out.println(body.toString());
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         SmsResponse smsResponse = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+URLEncoder.encode(this.serviceId, "UTF-8")+"/messages"), body, SmsResponse.class);

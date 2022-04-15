@@ -6,9 +6,9 @@ import com.munhwa.prj.artist.vo.ArtistVO;
 
 public interface ArtistService {
 
-	List<ArtistVO> artistSelectList();
-	ArtistVO artistSelect(ArtistVO vo);
-	int artistInsert(ArtistVO vo);
-	int artistUpdate(ArtistVO vo);
-	int nameChk(String name);
+	List<ArtistVO> findAll();
+	ArtistVO findByMemberId(String memberId);
+	int save(ArtistVO vo);
+	int update(ArtistVO vo);
+	int chkNick(String name);
 }
