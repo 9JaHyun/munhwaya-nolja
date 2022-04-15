@@ -62,8 +62,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:small; width: 1000px; height: 60px; " value=""
+						<input id="title" name="title" type="text"
+							style="font-size:small; width: 1000px; height: 60px;"
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -89,7 +89,7 @@
 								<c:forEach var="album" items="${albumSelectListByTitle1}">
 									
 									<a href="albumInfo?id=${album.id }" class="grid_3">
-										<img src="api/picture/${album.picture }" alt="#">
+										<img src="api/picture/${album.picture }" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
 										<span><strong>${album.albName }</strong>${album.artName }</span>
 									</a>
 								</c:forEach>

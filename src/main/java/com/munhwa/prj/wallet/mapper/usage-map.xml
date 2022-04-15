@@ -14,7 +14,8 @@
 		<collection property="performancevo" resultMap="performanceResultMap" />
 	</resultMap>
 
-	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
+	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO"
+		id="commonResultMap">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 	</resultMap>

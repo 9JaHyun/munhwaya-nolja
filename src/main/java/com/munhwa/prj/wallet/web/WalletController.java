@@ -1,5 +1,24 @@
 package com.munhwa.prj.wallet.web;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
 import com.munhwa.prj.common.vo.Criteria;
@@ -14,22 +33,6 @@ import com.munhwa.prj.wallet.service.ProfitService;
 import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.ProfitVO;
 import com.munhwa.prj.wallet.vo.UsageVO;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 //@Slf4j
 @Controller
 public class WalletController {
@@ -90,7 +93,8 @@ public class WalletController {
 			profitVO.setMileage(music.getPrice());
 			profitVO.setPlace("U01");
 			profitVO.setPks(music.getId());
-			profitVO.getMusicvo().setId(music.getId());
+			profitVO.setId(music.getId());
+			profitVO.setBuyer(memberId);
 			
 			resultProfitByArtist.add(profitVO);
 								
@@ -233,5 +237,8 @@ public class WalletController {
 		return "profitHistoryOfPerformance-memberWallet";
 	}
 	
-	
+//	@RequestMapping("/refund")
+//	public String refundUsage(@LoginUser SessionUser user, Model model) {
+//		
+//	}
 }

@@ -17,15 +17,14 @@
 		<result property="arrangement" column="ARRANGEMENT"/>
 		<result property="picture" column="PICTURE"/>
 	</resultMap>
-
+	
 	<select id="musicSelectList" resultMap="musicResultMap">
 		<![CDATA[
 		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE
 		FROM (	SELECT
-				ROWNUM AS RN,
+				RANK() OVER (ORDER BY DOWNLOAD_CNT DESC) AS RN,
 				TITLE, ART_NAME, GENRE, ID, PICTURE
-				FROM MUSIC
-				ORDER BY DOWNLOAD_CNT DESC)
+				FROM MUSIC )
 	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
 	     AND RN <= #{cri.pageNum} * #{cri.amount}
  		]]>
@@ -42,13 +41,12 @@
 		<![CDATA[
 		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT
 		FROM (SELECT 
-        	  ROWNUM AS RN,
+        	  RANK() OVER (ORDER BY DOWNLOAD_CNT DESC) AS RN,
         	  ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT
 			  FROM MUSIC
 			  WHERE GENRE=( SELECT GENRE
 							FROM MEMBER
-							WHERE ID=#{id})
-			  ORDER BY DOWNLOAD_CNT DESC)
+							WHERE ID=#{id}))
 	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
 	     AND RN <= #{cri.pageNum} * #{cri.amount}
  		]]>
@@ -154,5 +152,14 @@
 		WHERE TITLE = #{title}
 		AND ART_NAME = #{artName)
 	</select>
+	
+	<update id="statusUpdate" statementType = "CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call STATUSUPDATE (
+			#{V_MUSIC_ID, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{V_MEMBER_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+			)}
+		]]>
+	</update>
 	
 </mapper>

@@ -15,8 +15,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px; " value=""
+						<input  id="title" name="title" type="text"
+							style="font-size:x-small; width: 1000px; height: 60px;"
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -51,7 +51,7 @@
 									<c:forEach var="music" items="${musicRnBList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="api/picture/${music.picture }" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :65px; min-height:65px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -80,7 +80,7 @@
 									<c:forEach var="music" items="${musicRapList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="api/picture/${music.picture }" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :65px; min-height:65px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -109,7 +109,7 @@
 									<c:forEach var="music" items="${musicDanceList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="api/picture/${music.picture }" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :65px; min-height:65px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -138,7 +138,7 @@
 										<c:forEach var="music" items="${musicBalladList}" begin="0" end="15">
 											<li class="grid_6">
 												<a class="m-thumbnail" href="streaming?id=${music.id }">
-													<img style="width:60; height:60;" src="api/picture/${music.picture }" alt="#">
+													<img style="max-width:65px; min-width:65px; max-height :65px; min-height:65px;" src="api/picture/${music.picture }" alt="#">
 												</a>
 												<h3>
 													<a href="streaming?id=${music.id }">${music.title }</a>

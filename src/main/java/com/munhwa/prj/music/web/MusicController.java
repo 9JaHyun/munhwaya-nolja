@@ -340,22 +340,6 @@ public class MusicController {
 		return albumDAO.albumSelectByMusicId(musicId);
 	}
 
-	@ResponseBody
-	@PostMapping(value = "/updateLike", produces = "application/text; charset=UTF-8")
-	public String updateLike(@RequestParam int musicId, @LoginUser SessionUser user) {
-		Map<String, Object> paramMap = new HashMap<>();
-		String id = user.getId();
-		paramMap.put("v_member_id", id);
-		paramMap.put("v_music_id", musicId);
-		paramMap.put("p_result", 0);
-		musicDAO.updateLike(paramMap);
-		int r = (int) paramMap.get("p_result");
-		if(r==0) {
-			return "좋아요를 취소하셨습니다.";
-		} else {
-			return "좋아요 하셨습니다.";
-		}
-	}
 	
 	@ResponseBody
 	@PostMapping("/upload")
@@ -374,6 +358,16 @@ public class MusicController {
 	public UploadFileVO getFileSname(@PathVariable int fileId) {
 		UploadFileVO vo = uploadService.findById(fileId);
 		return vo;
+	}
+	
+	@ResponseBody
+	@PostMapping("/statusUpdate")
+	public void statusUpdate(@RequestParam int musicId, @LoginUser SessionUser user) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("V_MUSIC_ID", musicId);
+		map.put("V_MEMBER_ID", user.getId());
+		
+		musicDAO.statusUpdate(map);
 	}
 	
 	@GetMapping("/chicken")

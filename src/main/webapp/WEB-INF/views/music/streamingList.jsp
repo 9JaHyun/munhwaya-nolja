@@ -5,20 +5,29 @@
 <style>
 	xmp {
 		color: white;
-		font-size: 20px;
+		font-size: 15px;
 		text-align: center;
+		line-height: 10px;
 	}
 	
 	.single_variation_wrap > i{
 		 color: white;
 	}
+	
 	.single_variation_wrap > i:hover{
 		 color: #FF0078;
+	}
+	
+	.highlight{
+		max-width:180px; 
+		min-width:180px; 
+		max-height :180px; 
+		min-height:180px;
 	}
 </style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 2000px;">
 	</div>
 	
 <!-- content -->
@@ -29,8 +38,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:small; width: 1000px; height: 60px; " value=""
+						<input id="title" name="title" type="text"
+							style="font-size:small; width: 1000px; height: 60px; "
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -77,7 +86,7 @@ ${musicList[0].lyric}
 							<li id="Latest" class="active">
 								<div class="video-grid">
 									<a href="albumInfo?id=${album.id }" class="grid_3">
-										<img id="albImg" src="api/picture/${album.picture }" alt="#">
+										<img id="albImg" src="api/picture/${album.picture }" alt="#" style="max-width:180px; min-width:180px; max-height :180px; min-height:180px;">
 										<span><strong id="albName"> ${album.albName }</strong><span id="artName">${album.artName }</span></span>
 									</a>
 								</div><!-- video grid -->
@@ -348,7 +357,7 @@ function result1(result) {
 	  
 	   		if(confirm1) {
    				$.ajax ({
-				        url : "cart/test/add",
+				        url : "cart/add",
 				        type : "post",
 				        data : {"id" : id},                   
 				        dataType : "text",
@@ -357,7 +366,7 @@ function result1(result) {
 				        alert("장바구니에 담았습니다.");
 				        },
 				        error: function(xhr, status, error){
-				        	alert("통신실패");
+				        	alert("이미 장바구니에 담겨있습니다.");
 				        }
 			     }) 
 		    } else {
@@ -366,27 +375,4 @@ function result1(result) {
 	  }
 }
 
-//구매2
-function addCart2() {
-	var confirm1 = confirm('장바구니에 담으시겠습니까?')
-	  var musicId= $(event.target).prev().prev().data("musicid")
-	   if(confirm1) {
-	      	$.ajax ({
-		        url : "cart/test/add",
-		        type : "post",
-		        data : {"id" : musicId},               
-		        dataType : "text",
-		        success :function(data) {
-			        console.log(data);
-			        alert("장바구니에 담았습니다.");
-			        },
-		        error: function(xhr, status, error){
-		        alert("통신실패");
-		        }
-	        }) 
-	        
-	       } else {
-	             alert("구매취소")
-	        }
-	}
 </script>

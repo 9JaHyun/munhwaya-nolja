@@ -17,7 +17,7 @@
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
 						<input  id="title" name="title" type="text"
-							style="font-size:small; width: 1000px; height: 60px; " value=""
+							style="font-size:small; width: 1000px; height: 60px; "
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -43,7 +43,7 @@
 								<div class="video-grid">
 								<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
 									<a href="streaming?id=${music.id }" class="grid_3">
-										<img src="api/picture/${music.picture}" alt="#">
+										<img src="api/picture/${music.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
 										<span><strong>${music.title }</strong>${music.artName}</span>
 									</a>
 								</c:forEach>
@@ -72,7 +72,7 @@
 								<div class="video-grid">
 								<c:forEach var="album" items="${albumSelectListByTitle}" begin="0" end="7">
 									<a class="grid_3" href="albumInfo?id=${album.id }">
-										<img src="api/picture/${album.picture}" alt="#">
+										<img src="api/picture/${album.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
 										<span><strong>${album.albName }</strong>${album.artName}</span>
 									</a>
 								<%-- <form action="#" method="post">

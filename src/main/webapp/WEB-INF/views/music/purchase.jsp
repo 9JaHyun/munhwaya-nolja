@@ -58,12 +58,6 @@
 	tr {
 	margin-bottom: 100px;
 	}
-	
-  	.img1 {
-  		width: 80px;
-  		height: 80px;
-  		object-fit: cover;
-	}
 </style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
@@ -77,8 +71,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px; " value=""
+						<input id="title" name="title" type="text"
+							style="font-size:x-small; width: 1000px; height: 60px; "
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -109,7 +103,7 @@
 											<c:forEach var="music" items="${purchasedList}">
 												<tr class="cart_table_item" style="text-align: center; font-size:medium;">
 													<td class="product-thumbnail" style="width:70px;">
-													<a href="#"><img class="img1" src="api/picture/${music.picture }" alt="#" style="margin: 10px 0px 10px 0px;"></a>
+													<a href="#"><img src="api/picture/${music.picture }" alt="#" style="max-width:70px; min-width:70px; max-height :75px; min-height:75px; margin: 10px 0px 10px 0px;"></a>
 													</td>
 													<td class="product-name">
 														${music.title}
@@ -118,7 +112,7 @@
 														${music.artName}
 													</td>
 													<td class="product-name">
-														${music.price}
+														${music.price}원
 													</td>
 													<td class="product-name">
 														<fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${music.createdAt}" />
@@ -126,7 +120,7 @@
 													</td>
 													
 													<td class="product-name">
-														<button type="button" onclick="location.href='api/attach/${music.fileId}'" class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
+														<button type="button"  onclick="location.href='api/attach/${music.fileId}'; statusUpdate()" class="tbutton medium" style="font-size:10px"><span data-musicid="${music.id }">다운로드</span></button>
 													</td>
 												</tr>		
 											</c:forEach>
@@ -176,5 +170,26 @@ function paging(num) {
     moveForm.pageNum.value = num;
     moveForm.submit();
  };
- 
+//  다운로드 여부 업뎃
+ function statusUpdate() {
+	//클릭한 곳의 뮤직 데이터 속성 가져오기
+	let musicId = $(event.target).data("musicid")
+	//뮤직아이디 주고 그음원의 status 변경
+	 $.ajax({
+			type: "POST", //요청 메소드 방식
+			url:"statusUpdate",
+			data: {"musicId" : musicId},
+			dataType:"text",
+			success: function(result) {
+				
+			},
+			error : function(){
+				alert("통신실패");
+			}
+		})	
+	
+	
+	
+	
+ }
 </script>

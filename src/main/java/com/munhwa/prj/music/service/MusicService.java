@@ -29,7 +29,7 @@ public interface MusicService {
 	
 	int musicIdByTitle(MusicVO vo);
 	
-	int updateLike(Map<String, Object> paramMap);
+	int statusUpdate(Map<String, Object> paramMap);
 	
 	int musicInsert(MusicVO vo);
 	
