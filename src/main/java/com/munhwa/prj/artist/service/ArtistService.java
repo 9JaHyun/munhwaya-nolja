@@ -10,6 +10,5 @@ public interface ArtistService {
 	ArtistVO artistSelect(ArtistVO vo);
 	int artistInsert(ArtistVO vo);
 	int artistUpdate(ArtistVO vo);
-	ArtistVO artistContent(ArtistVO vo);
-
+	int nameChk(String name);
 }

@@ -18,32 +18,30 @@
 	</select>
 	
 	<select id="artistSelect" resultMap="artistMap" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
-		SELECT * FROM ARTIST WHERE member_ID = #{memberId}
+		SELECT * FROM ARTIST WHERE MEMBER_ID = #{memberId}
 	</select>
 	
 	<insert id="artistInsert" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
-
-	INSERT INTO ARTIST(ID, IMAGE, GENDER, GENRE, CONTENT, TYPE, NAME, member_id)
-	VALUES(artist_seq.nextval, #{image}, #{gender}, #{genre}, #{content}, #{type}, #{name}, #{memberId})
-	
+    INSERT INTO ARTIST(ID, IMAGE, GENDER, GENRE, CONTENT, TYPE, NAME, member_id)
+    VALUES(artist_seq.nextval, #{image}, #{gender}, #{genre}, #{content}, #{type}, #{name}, #{memberId})
 	</insert>
 	
 	<update id="artistUpdate" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
 		UPDATE ARTIST
 		<set>
-			<if test="image != null">SET image = #{image},</if>
-			<if test="gender != null">SET gender = #{gender},</if>
-			<if test="genre != null">SET genre = #{genre},</if>
-			<if test="content != null">SET content = #{content},</if>
-			<if test="type !=null">SET type = #{type},</if>
-			<if test="name= != null">SET name = #{name}</if>  
+			<if test="image != null">image = #{image},</if>
+			<if test="gender != null">gender = #{gender},</if>
+			<if test="genre != null">genre = #{genre},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="name != null">name = #{name}</if>  
 		</set>
+		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
-	<select id="artistContent" resultMap="artistMap" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
-		SELECT CONTENT
-		FROM ARTIST
-		WHERE MEMBER_ID = #{memberId}
+	<select id="nameChk" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM ARTIST
+		WHERE NAME = #{name}
 	</select>
 	
 </mapper>

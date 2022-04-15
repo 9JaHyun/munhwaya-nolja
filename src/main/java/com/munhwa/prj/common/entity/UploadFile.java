@@ -11,7 +11,7 @@ import lombok.Data;
 public class UploadFile {
 
     private String originalFileName;
-    private String storedFileName;
+    private String storedFileName; 
 
     public UploadFile(String originalFileName, String storedFileName) {
         this.originalFileName = originalFileName;

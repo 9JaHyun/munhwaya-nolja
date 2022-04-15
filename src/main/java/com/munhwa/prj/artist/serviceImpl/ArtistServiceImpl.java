@@ -40,8 +40,9 @@ private ArtistMapper map;
 	}
 
 	@Override
-	public ArtistVO artistContent(ArtistVO vo) {
-		return map.artistContent(vo);
+	public int nameChk(String name) {
+		// TODO Auto-generated method stub
+		return map.nameChk(name);
 	}
 	
 }
