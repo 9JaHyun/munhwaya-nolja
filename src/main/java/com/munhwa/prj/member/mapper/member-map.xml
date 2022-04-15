@@ -34,12 +34,8 @@
 	<update id="updateProfile" parameterType="com.munhwa.prj.member.vo.MemberVO">
 		UPDATE MEMBER
 		<set>
-			<if test="oname != null">
-				ONAME = #{oname},
-			</if>
-			<if test="sname != null">
-				SNAME = #{sname},
-			</if>
+			ONAME = #{oname},
+			SNAME = #{sname},
 			<if test="nickname != null">
 				NICKNAME = #{nickname},
 			</if>

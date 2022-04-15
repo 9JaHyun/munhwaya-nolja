@@ -42,6 +42,10 @@
     <form method="post" id="frm" action="updateProfile.do?id=${member.id}"
           enctype="multipart/form-data">
         <div align="center" style="margin-top: 80px;">
+        		<!-- 프로필사진 삭제 버튼 -->
+        		<div align="center" style="position: absolute; right: 362px; top: 275px;" >
+	            	<p onclick="basicImgFn()" class="tbutton color2 small"><span>삭제</span></p>
+	            </div>	
             <!-- 변경할 프로필사진 썸네일 -->
             <c:choose>
                 <c:when test="${member.sname eq null}">
@@ -76,6 +80,7 @@
             <input type="hidden" id="originalNick" name="originalNick" value="${member.nickname}">
             <a>닉네임 : </a><input type="text" id="nickname" name="nickname"
                                 value="${member.nickname}">
+			<input type="hidden" name="basicImgInput">
         </div>
         <div align="right">
             <button type="button" class="tbutton small" onclick="send();"><span>수정</span></button>
@@ -101,6 +106,7 @@
         var nickname = $("#nickname").val();
         var originalNick = $('#originalNick').val();
         var regExp = /\s/g;
+  
         if (nickname.length > 0 && !nickname.match(regExp)) {
             $.ajax({
                 url: "nickChk",
@@ -109,7 +115,7 @@
                 data: {"nickname": nickname},
                 success: function (data) {
                     if (nickname == originalNick) {
-                        alert("수정 완료되었습니다.");
+                    	alert("수정 완료되었습니다.");
                         frm.submit();
                     } else if (data == 0) {
                         alert("수정 완료되었습니다.");
@@ -123,4 +129,12 @@
             alert('적절하지 않은 닉네임 양식입니다.');
         }
     }
+    
+    function basicImgFn() {
+    	var basicImg = "resources/images/basic_profile.png";
+     	$("#image_container").attr("src", basicImg);
+     	frm.basicImgInput.value = "basic";
+     	frm.file.value = null;
+     	$("#imageName").val("기본이미지");
+	}
 </script>

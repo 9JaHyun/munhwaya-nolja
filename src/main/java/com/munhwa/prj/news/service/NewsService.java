@@ -12,5 +12,8 @@ public interface NewsService {
 	
 	// 새소식 삭제
 	int deleteNews(NewsVO vo);
+	
+	// 새소식 전체삭제
+	int deleteNewsAll(NewsVO vo);
 
 }
