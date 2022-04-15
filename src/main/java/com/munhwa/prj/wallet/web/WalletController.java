@@ -94,6 +94,7 @@ public class WalletController {
 			profitVO.setPlace("U01");
 			profitVO.setPks(music.getId());
 			profitVO.setId(music.getId());
+			profitVO.setBuyer(memberId);
 			
 			resultProfitByArtist.add(profitVO);
 								
@@ -236,5 +237,8 @@ public class WalletController {
 		return "profitHistoryOfPerformance-memberWallet";
 	}
 	
-	
+//	@RequestMapping("/refund")
+//	public String refundUsage(@LoginUser SessionUser user, Model model) {
+//		
+//	}
 }

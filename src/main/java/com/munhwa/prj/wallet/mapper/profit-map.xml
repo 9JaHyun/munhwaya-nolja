@@ -8,6 +8,8 @@
 		<result property="place" column="place"/>
 		<result property="memberId" column="member_id"/>
 		<result property="pks" column="pks"/>
+		<result property="refund" column="refund"/>
+		<result property="buyer" column="buyer"/>
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
 		<collection property="musicvo" resultMap="musicResultMap" />
 		<collection property="artistvo" resultMap="artistResultMap" />
@@ -227,10 +229,12 @@
 								   profit_at, 
 								   mileage, 
 								   place,
-								   pks, 
-								   member_id)
+								   pks,
+								   buyer, 
+								   member_id
+								   )
 		select profit_history_seq.nextval, 
-		#{profitAt}, #{mileage}, #{place}, #{pks}, a.member_id
+		#{profitAt}, #{mileage}, #{place}, #{pks}, #{buyer}, a.member_id
 		from artist a, music m
 		where a.name = m.art_name
 		and m.Id = #{id}

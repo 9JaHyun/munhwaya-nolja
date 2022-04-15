@@ -9,6 +9,7 @@
 		<result property="place" column="place" />
 		<result property="memberId" column="member_id" />
 		<result property="pks" column="pks" />
+		<result property="refund" column="refund"/>
 		<collection property="commonCodevo"
 			resultMap="commonResultMap" />
 		<collection property="musicvo" resultMap="musicResultMap" />

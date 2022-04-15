@@ -282,7 +282,7 @@ function result(data) {
 	  
 	      if(confirm1) {
 	      	$.ajax ({
-		        url : "cart/test/add",
+		        url : "cart/add",
 		        type : "post",
 		        data : {"id" : id},                   
 		        dataType : "text",

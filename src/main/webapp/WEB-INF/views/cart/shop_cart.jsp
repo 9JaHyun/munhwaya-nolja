@@ -202,11 +202,12 @@ function payCart() {
 	var title = td.eq(1).text().trim(); 
 	var artName = td.eq(2).text().trim(); 
 	var price = td.eq(4).text().trim();
+	var price2 = price.substring(0, price.length - 1);
 	var id = td.eq(6).find("input").val();
 	
 	obj["title"] = title;
 	obj["artName"] = artName;
-	obj["price"] = price;
+	obj["price"] = price2;
 	obj["id"] = id;
 	
 	list.push(obj);
