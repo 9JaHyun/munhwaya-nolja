@@ -34,7 +34,7 @@ public class CartController {
 	}
 
 	@RequestMapping("/cart/add")
-	   public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam int id) {
+	public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam int id) {
 	      MusicVO vo = musicDAO.musicSelect(id);
 
 	      Map<Integer, MusicVO> cart = user.getCart();
@@ -46,7 +46,7 @@ public class CartController {
 //	      log.info("id={}", vo.getId());
 
 	      return ResponseEntity.ok().body("");
-	   }
+	}
 	
 	@PostMapping("/deleteCart")
 	@ResponseBody

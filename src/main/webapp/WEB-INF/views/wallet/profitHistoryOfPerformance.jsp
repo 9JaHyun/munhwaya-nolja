@@ -28,12 +28,8 @@ a:visited {
 }
 
 a:hover {
-	color: white;
+	color: #FF0078;
 	text-decoration: underline;
-}
-
-.active {
-	background-color: #cdd5ec;
 }
 
 .search_area {
@@ -122,23 +118,23 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	</table>
 </div>
 <div class="pageInfo_wrap">
-	<div class="pageInfo_area" style="margin-left: 100px;">
+	<div class="pageInfo_area" style="margin-left:auto; margin-top:30px; width:410px;">
 		<ul id="pageInfo" class="pageInfo">
 			<!-- 이전페이지 버튼 -->
 			<c:if test="${pageMaker.prev}">
 				<li class="pageInfo_btn previous"><a href="#"
-					onclick="paging(${pageMaker.startPage-1})">Previous</a></li>
+					onclick="paging(${pageMaker.startPage-1})" style="border : 1px solid white; padding:5px 5px;">Previous</a></li>
 			</c:if>
 			<!-- 각 번호 페이지 버튼 -->
 			<c:forEach var="num" begin="${pageMaker.startPage}"
 				end="${pageMaker.endPage}">
 				<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
-					href="#" onclick="paging(${num})">${num}</a></li>
+					href="#" onclick="paging(${num})" style="border : 1px solid white; padding:5px 5px;">${num}</a></li>
 			</c:forEach>
 			<!-- 다음페이지 버튼 -->
 			<c:if test="${pageMaker.next}">
 				<li class="pageInfo_btn next"><a href="#"
-					onclick="paging(${pageMaker.endPage + 1})">Next</a></li>
+					onclick="paging(${pageMaker.endPage + 1})" style="border : 1px solid white; padding:5px 5px;">Next</a></li>
 			</c:if>
 		</ul>
 	</div>

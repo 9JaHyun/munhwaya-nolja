@@ -223,7 +223,7 @@
             })
 
         } else {
-            alert("삭제취소")
+            alert("취소하셨습니다.")
         }
     }
     function paging(num) {
