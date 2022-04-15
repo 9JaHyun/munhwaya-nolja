@@ -1,50 +1,52 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div class="under_header">
 	<img src="resources/images/assets/signupback.png" alt="#">
 </div>
 <div class="page-content back_to_up">
 	<div class="row row-fluid clearfix mbf">
-		<div class="def-block clearfix" style="margin-bottom: 200px;">
-			<h4>회원가입</h4>
+		<div class="def-block clearfix" style="height: 600px;">
+			<h4 style="font-size: 30px;">Sign Up</h4>
 			<span class="liner"></span>
 			<div class="grid_6 mt">
-					<div style="margin-bottom: 20px;">
-						<button class="tbutton color2 small" 
-						id="idChk" name="idChk" value="N" onclick="idChkFn();"><span>아이디 중복확인</span></button>
-						<button class="tbutton color2 small"
-						id="nickChk" name="nickChk" value="N" onclick="nickChkFn();"><span>닉네임 중복확인</span></button> 
-					</div>
-				<form method="post" id="frm" action="signup.do" onsubmit="return send()">
+				<div style="margin-bottom: 20px;"></div>
+				<!-- 회원가입폼 -->
+				<form method="post" id="frm" action="signup.do"
+					onsubmit="return send()">
 					<div class="clearfix">
 						<div>
-							<input style="width: 470px; margin-bottom: 30px;" 
-							type="email" name="id" id="id"
-								placeholder="ID (EMAIL)" required="required" />
+							<input style="width: 470px; margin-bottom: 15px;" type="email"
+								name="id" id="id" placeholder="ID (EMAIL)" required="required" />
 						</div>
-						
+						<p style="margin-bottom: 20px;" 
+							class="tbutton small" id="idChk" value="N" onclick="idChkFn();">
+							<span>아이디 중복확인</span>
+						</p>
 						<div>
-							<input style="width: 470px; margin-bottom: 30px;"
-							type="password" name="password" id="password"
-								placeholder="PASSWORD (영문, 숫자, 특수문자를 포함한 8~20자리)" required="required" />
-						</div>
-						<div>
-							<input style="width: 470px; margin-bottom: 30px;"
-							type="password" name="password2" id="password2"
-								placeholder="PASSWORD CHECK" required="required" />
+							<input style="width: 470px; margin-bottom: 30px;" type="password"
+								name="password" id="password"
+								placeholder="PASSWORD (영문, 숫자, 특수문자를 포함한 8~20자리)"
+								required="required" />
 						</div>
 						<div>
-							<input style="width: 470px; margin-bottom: 30px;"
-							type="text" name="nickname" id="nickname"
-								placeholder="NICKNAME (4자리 이상)" required="required" />
+							<input style="width: 470px; margin-bottom: 30px;" type="password"
+								name="password2" id="password2" placeholder="PASSWORD CHECK"
+								required="required" />
 						</div>
 						<div>
-							<input style="width: 470px; margin-bottom: 30px;"
-							type="text" name="tel" id="tel"
-								placeholder="TEL" required="required" />
+							<input style="width: 470px; margin-bottom: 15px;" type="text"
+								name="nickname" id="nickname" placeholder="NICKNAME (4자리 이상)"
+								required="required" />
 						</div>
-						
+						<p style="margin-bottom: 20px;" 
+							class="tbutton small" id="nickChk" value="N" onclick="nickChkFn();">
+							<span>닉네임 중복확인</span>
+						</p>
+						<div>
+							<input style="width: 470px; margin-bottom: 30px;" type="text"
+								name="tel" id="tel" placeholder="TEL" required="required" />
+						</div>
+
 						<select id="genre" name="genre">
 							<option disabled selected="selected">관심장르</option>
 							<option value="G01">발라드</option>
@@ -52,22 +54,17 @@
 							<option value="G03">랩/힙합</option>
 							<option value="G04">R&B/Soul</option>
 						</select>
-						
-
 					</div>
-					<input style="padding: 5px 10px 5px 10px;" 
-					type="submit" value="가입" class="sign-btn tbutton small"/>
-
+					<!-- 가입 버튼 -->
+					<input style="padding: 5px 10px 5px 10px;" type="submit" value="가입"
+						class="sign-btn tbutton small" />
 				</form>
-				<!-- end form -->
 			</div>
-			<img src="resources/images/assets/signupimg.png" alt="signup-img" 
-			style="float: left; width: 449px; height: 341px; margin: 40px 0px 40px 40px;">
+			<img src="resources/images/assets/signupimg.png" alt="signup-img"
+				style="float: left; width: 449px; height: 341px; margin: 40px 0px 40px 40px;">
 		</div>
 	</div>
 </div>
-<!-- end page content -->
-
 <script>
 	function send() {
 		if(idChk.value == "Y" && nickChk.value == "Y") {
@@ -160,11 +157,11 @@
 	}
 	
 	$("#id").on("change keyup paste", function(){
-		idChk.value = "N";
+		$('#idChk').attr('value', 'N');
 	})
 	
 	$("#nickname").on("change keyup paste", function(){
-		nickChk.value = "N";
+		$('#nickChk').attr('value', 'N');
 	})
 	
 </script>

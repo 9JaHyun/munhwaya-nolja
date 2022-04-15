@@ -123,11 +123,6 @@ function requestPayKaKao() {
 	<div align="right" style="margin-bottom: 50px;">
 		<h4>마일리지 충전</h4>
 		<div>
-<!-- 			<div class="def-block clearfix" align="center" -->
-<!-- 				style="color: white; font-size: 20px; margin-top: 50px;"> -->
-<!-- 				현재 보유중인 마일리지<input type="text" id="mileage" name="mileage" -->
-<!-- 					style="height: 15px; margin-top: 5px; margin-left: 20px;" required="required"> -->
-<!-- 			</div> -->
 			<div class="def-block clearfix" align="center"
 				style="color: white; font-size: 20px;">
 				충전 할 마일리지<input type="text" id="mileage" name="mileage"
@@ -143,21 +138,20 @@ function requestPayKaKao() {
 					<option value="imp00514439">카드 결제(KG 이니시스)</option>
 				</select>
 			</div>
-			<!-- 		<div align="center" -->
-			<!-- 			style="color: white; font-size: 20px; margin-bottom: 100px; margin-top: 50px;"> -->
-			<!-- 			충전 수단</div> -->
-			<button onclick="requestPayKaKao()" style="margin-left: 30px"
-				id="kakaoPay" value="imp66890146">
-				<img src="${path}/resources/images/payment/kakaopay.png" style="width:150px; height:75px;">
-			</button>
-			<button onclick="requestPaySmilePay()" style="margin-left: 30px"
-				id="smilePay" value="imp04405403">
-				<img src="${path}/resources/images/payment/smilepay.png" style="width:150px; height:75px;">
-			</button>
-			<button onclick="requestPayCard()" style="margin-left: 30px"
-				id="smilePay" value="imp00514439">
-				<img src="${path}/resources/images/payment/kginicis.jpg" style="width:150px; height:75px;">
-			</button>
+			<div id="paylist" align="center">
+<!-- 			<button onclick="requestPayKaKao()" style="margin-left: 30px" -->
+<!-- 				id="kakaoPay" value="imp66890146"> -->
+<%-- 				<img src="${path}/resources/images/payment/kakaopay.png" style="width:150px; height:75px;"> --%>
+<!-- 			</button> -->
+<!-- 			<button onclick="requestPaySmilePay()" style="margin-left: 30px" -->
+<!-- 				id="smilePay" value="imp04405403"> -->
+<%-- 				<img src="${path}/resources/images/payment/smilepay.png" style="width:150px; height:75px;"> --%>
+<!-- 			</button> -->
+<!-- 			<button onclick="requestPayCard()" style="margin-left: 30px" -->
+<!-- 				id="smilePay" value="imp00514439"> -->
+<%-- 				<img src="${path}/resources/images/payment/kginicis.jpg" style="width:150px; height:75px;"> --%>
+<!-- 			</button> -->
+			</div>
 		</div>
 		<div align="right">
 			<a href="walletInfo.do" class="tbutton small"
@@ -171,12 +165,34 @@ function payChange() {
 	var value = document.getElementById('pay').value
 	if (value == 'imp66890146') {
 		IMP.init('imp66890146');
-// 		requestPayKaKao();
+		$('#kakaoPay').remove();
+		$('#smilePay').remove();
+		$('#kgInicis').remove();
+		
+		var btn = $("<button>").attr('id','kakaoPay').attr('onclick', 'requestPayKaKao()').attr('style','margin-left: 30px');
+		var kakaoPay = $('<img>').attr('src','${path}/resources/images/payment/kakaopay.png').attr('style','width:150px; height:75px;');
+		btn.append(kakaoPay);
+		$('#paylist').append(btn);
 	} else if (value == 'imp04405403') {
 		IMP.init('imp04405403');
-// 		requestPaySmilePay();
+		$('#kakaoPay').remove();
+		$('#smilePay').remove();
+		$('#kgInicis').remove();
+		
+		var btn2 = $("<button>").attr('id','smilePay').attr('onclick', 'requestPaySmilePay()').attr('style','margin-left: 30px');
+		var smilePay = $('<img>').attr('src','${path}/resources/images/payment/smilepay.png').attr('style','width:150px; height:75px;');
+		btn2.append(smilePay);
+		$('#paylist').append(btn2);
 	} else if (value == 'imp00514439') {
 		IMP.init('imp00514439');
+		$('#kakaoPay').remove();
+		$('#smilePay').remove();
+		$('#kgInicis').remove();
+		
+		var btn3 = $("<button>").attr('id','kgInicis').attr('onclick', 'requestPayCard()').attr('style','margin-left: 30px');
+		var kgInicis = $('<img>').attr('src','${path}/resources/images/payment/kginicis.jpg').attr('style','width:150px; height:75px;');
+		btn3.append(kgInicis);
+		$('#paylist').append(btn3);
 	}
 	}	
 </script>

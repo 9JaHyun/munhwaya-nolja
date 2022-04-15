@@ -102,7 +102,7 @@
 <!-- end layout -->
 
 <div>
-	<form id="moveForm" method="get" action="/prj/admin/performanceList">
+	<form id="moveForm" method="get" action="performanceList">
 		<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
 		<input type="hidden" name="amount" value="${pageMake.cri.amount }">
 		<input type="hidden" name="keyword" value="${pageMake.cri.keyword }">

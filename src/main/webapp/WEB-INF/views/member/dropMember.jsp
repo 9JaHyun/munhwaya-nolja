@@ -27,6 +27,7 @@
 
 <script>
     function delMemFn() {
+
         if (!confirm('정말 탈퇴하시겠습니까?')) {
             return false;
         } else {

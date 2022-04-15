@@ -9,6 +9,7 @@ public class LikeArtistVO {
 	private int artistId;
 	private int id;
 	private String memberId;
+	private String image;
 	
 
 }
