@@ -139,15 +139,6 @@
         $(list + ":lt(" + total_cnt + ")").addClass("active");
     }
 
-    $(window).on('load', function () {
-        // 기본 갯수
-        load('#js-load', '4');
-        $("#js-btn-wrap .button").on("click", function () {
-            // 증가 갯수
-            load('#js-load', '3', '#js-btn-wrap');
-        })
-    });
-
     function delWishFnc(id) {
         var wname = $(event.target).parent().parent().next().children().children().data("wname");
         if (!confirm("[" + wname + '] 삭제하시겠습니까?')) {

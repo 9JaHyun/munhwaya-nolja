@@ -73,7 +73,7 @@
 
     $(window).on('load', function () {
         // 기본 갯수
-        load('#js-load', '6');
+        load('#js-load', '9');
         $("#js-btn-wrap .button").on("click", function () {
             // 증가 갯수
             load('#js-load', '3', '#js-btn-wrap');
