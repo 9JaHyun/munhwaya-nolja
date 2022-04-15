@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.munhwa.prj.wallet.mapper.UsageMapper">
-	<resultMap type="com.munhwa.prj.wallet.vo.UsageVO"
-		id="usageResultMap">
+	<resultMap type="com.munhwa.prj.wallet.vo.UsageVO" id="usageResultMap">
 		<id property="id" column="id" />
 		<result property="useAt" column="use_at" />
 		<result property="mileage" column="mileage" />
 		<result property="place" column="place" />
 		<result property="memberId" column="member_id" />
 		<result property="pks" column="pks" />
-		<collection property="commonCodevo"
-			resultMap="commonResultMap" />
+		<result property="refund" column="refund"/>
+		<collection property="commonCodevo" resultMap="commonResultMap" />
 		<collection property="musicvo" resultMap="musicResultMap" />
-		<collection property="performancevo"
-			resultMap="performanceResultMap" />
+		<collection property="performancevo" resultMap="performanceResultMap" />
 	</resultMap>
 
-	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO"
-		id="commonResultMap">
+	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 	</resultMap>

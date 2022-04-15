@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bf76e13e65e181699d60340265d9e67e"></script>
 <header id="header" class="glue">
     <%-- 로그인 버튼--%>
     <div class="row clearfix">
@@ -54,8 +55,13 @@
                     <li><a href="performance">공연<span class="sub">Photo
 								Gallery</span></a>
                         <ul>
-                            <li><a href="performanceInsertForm.do">아티스트 공연 등록 신청</a></li>
-                            <li><a href="ticketList.do">구매리스트</a></li>
+                            <sec:authorize access="hasRole('ROLE_R02')">
+                                <li><a href="/prj/performanceInsertForm.do">아티스트 공연 등록 신청</a></li>
+                            </sec:authorize>
+                            <li><a href="/prj/ticketList.do">구매리스트</a></li>
+                            <sec:authorize access="hasRole('ROLE_R03')">
+                                <li><a href="/prj/admin/performanceList">관리자 공연리스트</a></li>
+                            </sec:authorize>
                         </ul>
                     </li>
                     <li><a href="posts">게시판<span class="sub">more templates</span></a>

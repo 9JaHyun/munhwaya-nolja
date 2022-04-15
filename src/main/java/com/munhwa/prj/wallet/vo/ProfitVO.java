@@ -18,10 +18,11 @@ public class ProfitVO {
 	private String place;
 	private String memberId;
 	private int pks;
+	private String refund;
+	private String buyer;
 	
 	private CommonCodeVO commonCodevo;
 	private MusicVO musicvo;
 	private ArtistVO artistvo;
 	private PerformanceVO performancevo;
-	
 }

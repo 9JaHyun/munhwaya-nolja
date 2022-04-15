@@ -19,8 +19,10 @@ public class UsageVO {
 	private String place;
 	private String memberId;
 	private int pks;
+	private String refund;
 	
 	private CommonCodeVO commonCodevo;
 	private MusicVO musicvo;
 	private PerformanceVO performancevo;
+	
 }

@@ -55,9 +55,9 @@
 										<c:forEach items="${performances}" var="performances">
 											<tr >
 												<td style="color:white;">${performances.name }</td>
-												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performances.sdate }" /></td>
-												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performances.edate }" /></td>
-												<td style="color:white;">${performances.artistId }</td>
+												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performances.sdate }" /></td>
+												<td style="color:white;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performances.edate }" /></td>
+												<td style="color:white;">${performances.artistName }</td>
 												<td class="status" style="color:white;">${performances.status }</td>
 												<td>
 													<button data-pid = "${performances.id }" class="tbutton small success" style="height: 25px; width: 50px;">승인</button>
@@ -73,7 +73,7 @@
 					</div>
 					<!-- gridfull -->
 					<div class="pagination-tt clearfix"
-						style="margin-left: auto; margin-left: auto; margin-top: 30px; width: 520px;">
+						style="margin-left: auto; margin-top: 30px; width: 520px;">
 						<ul>
 							<!-- 이전페이지 버튼 -->
 							<c:if test="${pageMake.prev}">
@@ -82,7 +82,7 @@
 							<!-- 각 번호 페이지 버튼 -->
 							<c:forEach var="num" begin="${pageMake.startPage}"
 								end="${pageMake.endPage}">
-								<li><a href="#" onclick="paging(${num})" class="deactive">${num}</a></li>
+								<li style="border:1px solid white; margin-left:5px;"><a href="#" onclick="paging(${num})" class="deactive">${num}</a></li>
 							</c:forEach>
 							<!-- 다음페이지 버튼 -->
 							<c:if test="${pageMake.next}">

@@ -9,6 +9,10 @@ public interface TicketListMapper {
 	List<TicketListVO> ticketListSelectList(String id);
 	Map<String, Object> ticketListInsert(Map<String, Object> paramMap);
 	TicketListVO ticketListSelect(TicketListVO vo);
+	int ticketListDelete(Map<String, Object> paramMap);
+	
 	int qrcodeUpdate(TicketListVO vo);
-	int qrcodeAttendance(int id);
+
+	
+	int qrcodeAttendance(Map<String, Object> paramMapt);
 }

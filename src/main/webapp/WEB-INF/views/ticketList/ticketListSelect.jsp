@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bf76e13e65e181699d60340265d9e67e"></script>
 <style>
 * {
 	margin: 0;
@@ -207,10 +208,8 @@ body {
 					<span class="liner"></span>
 					<div class="ticket">
 	<div class="left">
-		<div class="image">
-			<div>
-				<img src="api/picture/${ticket.performancevo.image}" style="height:320px; width:300px;">
-			</div>
+		<div class="image" style="height:370px; width:280px;">
+			<img src="api/picture/${ticket.performancevo.image}" style="height:370px; width:280px;">
 		</div>
 		<div class="ticket-info">
 			<p class="date">
@@ -219,11 +218,11 @@ body {
 				<span><fmt:formatDate pattern = "yyyy" value = "${ticket.performancevo.sdate }" /></span>
 			</p>
 			<div class="show-name">
-				<h1>${ticket.performancevo.name }</h1>
+				<span>${ticket.performancevo.name }</span>
 				<h2>Olivia Rodrigo</h2>
 			</div>
 			<div class="time">
-				<p><fmt:formatDate pattern = "MM월 dd일 HH:MM " value = "${ticket.performancevo.sdate }" /><span>To </span><fmt:formatDate pattern = "HH:MM " value = "${ticket.performancevo.edate }" /></p>
+				<p><fmt:formatDate pattern = "MM월 dd일 HH:mm " value = "${ticket.performancevo.sdate }" /><span>To </span><fmt:formatDate pattern = "HH:mm " value = "${ticket.performancevo.edate }" /></p>
 				<p>${ticket.performancevo.location }</p>
 			</div>
 			<p class="location"><span>YEDAM CONCERT</span>
@@ -231,20 +230,16 @@ body {
 			</p>
 		</div>
 	</div>
-	<div class="right">
-		<p class="admit-one" style="margin-top:30px;">
-			<span>YEDAM</span>
-			<span>YEDAM</span>
-			<span>YEDAM</span>
-		</p>
-		<div class="right-info-container" style="margin-top:40px; margin-left:30px;">
+	<div class="right" style="width:240px;">
+		
+		<div class="right-info-container" style="margin-top:20px; margin-right:20px; height:350px;">
 			<div class="show-name">
 				<h1>${ticket.performancevo.name }</h1>
 			</div>
 			<div class="time">
-				<p style="margin:0px;"><fmt:formatDate pattern = "MM월 dd일 HH:MM " value = "${ticket.performancevo.sdate }" /><span>To </span><fmt:formatDate pattern = "HH:MM " value = "${ticket.performancevo.edate }" /></p>
+				<p style="margin:0px;"><fmt:formatDate pattern = "MM월 dd일 HH:mm " value = "${ticket.performancevo.sdate }" /><span>To </span><fmt:formatDate pattern = "HH:mm " value = "${ticket.performancevo.edate }" /></p>
+				<p style="font-size:16pt; margin-top:10px;">관객수 : ${ticket.person }명</p>
 				<p style="margin:0px; color:red; font-size:18pt;">${ticket.attendance }</p>
-				<p>${ticket.performancevo.location }</p>
 			</div>
 			<div class="barcode">
 				<img src="api/picture/qrCodes/${ticket.qrcode}">
@@ -254,7 +249,41 @@ body {
 </div>
 				</div>
 				<!-- row clearfix -->
+				<div class="def-block" style="width: 140%; background-Color: black; margin-top:50px;">
+					<h4>오시는길</h4>
+					<span class="liner"></span>
+					<div>
+						<div id="map" style="width:450px;height:400px; float:left;"></div>
+						<div style="float:right; margin-top:50px;">
+							<h2>1호선 <span style="color:#FFD700;">중앙로역</span> 1번출구<br><br> 약 200M(도보3분)</h2><br><br><br><br><br><br>
+							<strong style="font-size:18pt;">예담 소극장</strong><br><br>
+							<strong style="margin-bottom:15px;">ADD &nbsp;&nbsp;&nbsp;| 대구광역시 중구 남일동 중앙대로 403</strong><br>
+							<strong>TEL &nbsp;&nbsp;&nbsp;&nbsp;| 053-421-2460</strong><br>
+							<strong>EMAIL | ask@yedam.ac</strong>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- end page content -->
 		</div>
 		<!-- end layout -->
+<script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(35.869083704286574, 128.59330299446304),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+		
+		// 마커가 표시될 위치
+        var markerPosition  = new kakao.maps.LatLng(35.869083704286574, 128.59330299446304);
+		 
+     	// 마커 생성
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+     	
+     	// 마커가 지도 위에 표시되도록 설정
+        marker.setMap(map);
+</script>
