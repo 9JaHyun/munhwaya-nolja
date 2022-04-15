@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.munhwa.prj.wallet.mapper.UsageMapper">
-	<resultMap type="com.munhwa.prj.wallet.vo.UsageVO" id="usageResultMap">
-		<id property="id" column="id"/>
-		<result property="useAt" column="use_at"/>
-		<result property="mileage" column="mileage"/>
-		<result property="place" column="place"/>
-		<result property="memberId" column="member_id"/>
-		<result property="pks" column="pks"/>
-		<collection property="commonCodevo" resultMap="commonResultMap"/>
+	<resultMap type="com.munhwa.prj.wallet.vo.UsageVO"
+		id="usageResultMap">
+		<id property="id" column="id" />
+		<result property="useAt" column="use_at" />
+		<result property="mileage" column="mileage" />
+		<result property="place" column="place" />
+		<result property="memberId" column="member_id" />
+		<result property="pks" column="pks" />
+		<result property="refund" column="refund"/>
+		<collection property="commonCodevo"
+			resultMap="commonResultMap" />
 		<collection property="musicvo" resultMap="musicResultMap" />
-		<collection property="performancevo" resultMap="performanceResultMap"/>
+		<collection property="performancevo"
+			resultMap="performanceResultMap" />
 	</resultMap>
 
-	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
-		<id property="id" column="id"/>
-		<result property="name" column="name"/>
+	<resultMap type="com.munhwa.prj.common.vo.CommonCodeVO"
+		id="commonResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
 	</resultMap>
 
-	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
+	<resultMap type="com.munhwa.prj.music.vo.MusicVO"
+		id="musicResultMap">
 		<id property="id" column="ID" />
 		<result property="artName" column="ART_NAME"/>
 		<result property="genre" column="GENRE"/>
@@ -33,21 +39,22 @@
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
 	</resultMap>
-	
-	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
-		<id property="id" column="id"/>
-		<result property="name" column="pname"/>
-		<result property="location" column="location"/>
-		<result property="sdate" column="sdate"/>
-		<result property="edate" column="edate"/>
-		<result property="content" column="content"/>
-		<result property="status" column="status"/>
-		<result property="image" column="image"/>
-		<result property="artistId" column="artist_id"/>
-		<result property="price" column="price"/>
-		<result property="person" column="person"/>
+
+	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO"
+		id="performanceResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="pname" />
+		<result property="location" column="location" />
+		<result property="sdate" column="sdate" />
+		<result property="edate" column="edate" />
+		<result property="content" column="content" />
+		<result property="status" column="status" />
+		<result property="image" column="image" />
+		<result property="artistId" column="artist_id" />
+		<result property="price" column="price" />
+		<result property="person" column="person" />
 	</resultMap>
-	
+
 	<!-- 곡 구매 내역 -->
 	<select id="selectUsageListMusic" resultMap="usageResultMap">
 		<![CDATA[
@@ -65,6 +72,20 @@
 	            and u.pks = m.id
 				and u.member_id = #{memberId}
 				and u.place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and u.use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and u.use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[ 
 	           group by u.use_at, u.member_id, c.name
 	           order by u.use_at desc
 	     )
@@ -79,12 +100,51 @@
 		from usage_history
 		where member_id = #{memberId}
 		and place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[
 		group by use_at
 		]]>
-  	</select>
-  	
-  	<!-- 공연 티켓 구매 내역 -->
-  	<select id="selectUsageListPerformance" resultMap="usageResultMap">
+	</select>
+
+	<select id="getSumByMusic" resultType="int">
+		<![CDATA[
+		select sum(sum(mileage))
+		from usage_history
+		where member_id = #{memberId}
+		and place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[
+		group by use_at
+		]]>
+	</select>
+
+	<!-- 공연 티켓 구매 내역 -->
+	<select id="selectUsageListPerformance"
+		resultMap="usageResultMap">
   	 <![CDATA[
 		 select *
 	        from ( select
@@ -100,37 +160,90 @@
 	            and u.pks = pe.id
 				and u.member_id = #{memberId}
 				and u.place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and u.use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and u.use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[	
 	           group by u.use_at, u.member_id, c.name
 	           order by u.use_at desc
 	     )
 	      where rn> (#{cri.pageNum}-1) * #{cri.amount}
 	     and rn <= #{cri.pageNum} * #{cri.amount}
      ]]>
-  	</select>
-  	
-  	<select id="getCountByPerformance" resultType="int">
+	</select>
+
+	<select id="getCountByPerformance" resultType="int">
   		<![CDATA[
 		select count(count(id))
 		from usage_history
 		where member_id = #{memberId}
 		and place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[
 		group by use_at
 		]]>
-  	</select>
+	</select>
 
-	<insert id="insertUsage" parameterType="com.munhwa.prj.wallet.vo.UsageVO">
+	<select id="getSumByPerformance" resultType="int">
+		<![CDATA[
+		select sum(sum(mileage))
+		from usage_history
+		where member_id = #{memberId}
+		and place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[
+		group by use_at
+		]]>
+	</select>
+
+	<insert id="insertUsage"
+		parameterType="com.munhwa.prj.wallet.vo.UsageVO">
 		INSERT INTO USAGE_HISTORY
 		(ID,
-		 MILEAGE,
-		 PLACE,
-		 MEMBER_ID,
-		 USE_AT,
-		 PKS)
+		MILEAGE,
+		PLACE,
+		MEMBER_ID,
+		USE_AT,
+		PKS)
 		VALUES(usage_history_seq.nextval,
-					 #{mileage},
-					 #{place},
-					 #{memberId},
-					 #{useAt},
-					 #{pks})
+		#{mileage},
+		#{place},
+		#{memberId},
+		#{useAt},
+		#{pks})
 	</insert>
 </mapper>

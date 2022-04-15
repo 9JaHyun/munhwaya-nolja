@@ -112,7 +112,7 @@
 														${music.artName}
 													</td>
 													<td class="product-name">
-														${music.price}
+														${music.price}원
 													</td>
 													<td class="product-name">
 														<fmt:formatDate pattern = "YYYY년 MM월 dd일" value = "${music.createdAt}" />
@@ -120,7 +120,7 @@
 													</td>
 													
 													<td class="product-name">
-														<button type="button" onclick="location.href='api/attach/${music.fileId}'" class="tbutton medium" style="font-size:10px"><span>다운로드</span></button>
+														<button type="button"  onclick="location.href='api/attach/${music.fileId}'; statusUpdate()" class="tbutton medium" style="font-size:10px"><span data-musicid="${music.id }">다운로드</span></button>
 													</td>
 												</tr>		
 											</c:forEach>
@@ -170,5 +170,26 @@ function paging(num) {
     moveForm.pageNum.value = num;
     moveForm.submit();
  };
- 
+//  다운로드 여부 업뎃
+ function statusUpdate() {
+	//클릭한 곳의 뮤직 데이터 속성 가져오기
+	let musicId = $(event.target).data("musicid")
+	//뮤직아이디 주고 그음원의 status 변경
+	 $.ajax({
+			type: "POST", //요청 메소드 방식
+			url:"statusUpdate",
+			data: {"musicId" : musicId},
+			dataType:"text",
+			success: function(result) {
+				
+			},
+			error : function(){
+				alert("통신실패");
+			}
+		})	
+	
+	
+	
+	
+ }
 </script>

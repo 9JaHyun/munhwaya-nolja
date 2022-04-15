@@ -17,7 +17,7 @@
 		<result property="arrangement" column="ARRANGEMENT"/>
 		<result property="picture" column="PICTURE"/>
 	</resultMap>
-
+	
 	<select id="musicSelectList" resultMap="musicResultMap">
 		<![CDATA[
 		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE
@@ -152,5 +152,14 @@
 		WHERE TITLE = #{title}
 		AND ART_NAME = #{artName)
 	</select>
+	
+	<update id="statusUpdate" statementType = "CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call STATUSUPDATE (
+			#{V_MUSIC_ID, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{V_MEMBER_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+			)}
+		]]>
+	</update>
 	
 </mapper>

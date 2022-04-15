@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class PurchaseVO2 {
+	private int id;
 	private String picture;
 	private String title;
 	private String artName;
