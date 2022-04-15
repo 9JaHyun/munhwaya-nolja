@@ -33,17 +33,20 @@ public class CartController {
 		return "cart/shop_cart";
 	}
 
-	@RequestMapping("/cart/test/add")
-	public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam int id) {
-		MusicVO vo = musicDAO.musicSelect(id);
+	@RequestMapping("/cart/add")
+	   public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam int id) {
+	      MusicVO vo = musicDAO.musicSelect(id);
 
-		Map<Integer, MusicVO> cart = user.getCart();
-		cart.put(vo.getId(), vo);
-		user.setCart(cart);
-//		log.info("id={}", vo.getId());
+	      Map<Integer, MusicVO> cart = user.getCart();
+	      if(cart.containsKey(vo.getId()) ) {
+	         return ResponseEntity.badRequest().body("");
+	      }
+	      cart.put(vo.getId(), vo);
+	      user.setCart(cart);
+//	      log.info("id={}", vo.getId());
 
-		return ResponseEntity.ok().body("추가 완료");
-	}
+	      return ResponseEntity.ok().body("");
+	   }
 	
 	@PostMapping("/deleteCart")
 	@ResponseBody
