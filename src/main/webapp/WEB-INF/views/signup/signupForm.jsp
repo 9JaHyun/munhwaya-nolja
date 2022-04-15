@@ -97,7 +97,7 @@ button {
 		style="height: 50px; width: 100%; margin-bottom: 30px;">
 	<!-- 아이디 중복확인-->	
 	<div align="right" style="position: absolute; top: 168px; right: 45px;">
-		<p class="tbutton small" id="idChk" value="N" onclick="idChkFn();" style="border-radius: 4px;">
+		<p class="tbutton small" id="chkId" value="N" onclick="chkIdFn();" style="border-radius: 4px;">
 			<span>중복확인</span>
 		</p>	
 	</div>
@@ -115,7 +115,7 @@ button {
 		style="height: 50px; width: 100%; margin-bottom: 30px;">
 	<!-- 닉네임 중복확인 -->
 	<div align="right" style="position: absolute; top: 479px; right: 45px;">
-		<p class="tbutton small" id="nickChk" value="N" onclick="nickChkFn();" style="border-radius: 4px;">
+		<p class="tbutton small" id="chkNick" value="N" onclick="chkNickFn();" style="border-radius: 4px;">
 			<span>중복확인</span>
 		</p>	
 	</div>
@@ -145,7 +145,7 @@ button {
 
 <script>
 function send() {
-	if(idChk.value == "Y" && nickChk.value == "Y") {
+	if(chkId.value == "Y" && chkNick.value == "Y") {
 		
 		var pw = frm.password.value;
 		var pw2 = frm.password2.value;
@@ -186,21 +186,21 @@ function send() {
 	}
 }
 
-function idChkFn() {
+function chkIdFn() {
 	var id = $("#id").val();
 	var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	if (id.match(regExp) != null){
 	$.ajax({
-		url : "idChk",
+		url : "chkId",
 		type : "POST",
 		dataType : "JSON",
 		data : {"id" : id},
 		success : function(data) {
 			if(data === 1) {
-				$("#idChk").attr("value", "N");
+				$("#chkId").attr("value", "N");
 				alert("중복된 아이디입니다.");
 			} else if (data === 0) {
-				$("#idChk").attr("value", "Y");
+				$("#chkId").attr("value", "Y");
 				alert("사용 가능한 아이디입니다.")
 			}
 		}
@@ -210,21 +210,21 @@ function idChkFn() {
 	}
 }
 
-function nickChkFn() {
+function chkNickFn() {
 	var nickname = $("#nickname").val();
 	var regExp = /\s/g;
 	if (nickname.length > 0 && !nickname.match(regExp)) {
 		$.ajax({
-			url : "nickChk",
+			url : "chkNick",
 			type : "POST",
 			dataType : "JSON",
 			data : {"nickname" : nickname},
 			success : function(data) {
 				if(data == 1) {
-					$("#nickChk").attr("value", "N");
+					$("#chkNick").attr("value", "N");
 					alert("중복된 닉네임입니다.");
 				} else if (data == 0) {
-					$("#nickChk").attr("value", "Y");
+					$("#chkNick").attr("value", "Y");
 					alert("사용 가능한 닉네임입니다.")
 				}
 			}
@@ -235,11 +235,11 @@ function nickChkFn() {
 }
 
 $("#id").on("change keyup paste", function(){
-	$('#idChk').attr('value', 'N');
+	$('#chkId').attr('value', 'N');
 })
 
 $("#nickname").on("change keyup paste", function(){
-	$('#nickChk').attr('value', 'N');
+	$('#chkNick').attr('value', 'N');
 })
 
 </script>

@@ -1,6 +1,5 @@
 package com.munhwa.prj.charge.serviceImpl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.munhwa.prj.charge.mapper.ChargeMapper;
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
-import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.entity.Criteria;
 
 @Service("chargeDao")
 public class ChargeServiceImpl implements ChargeService {

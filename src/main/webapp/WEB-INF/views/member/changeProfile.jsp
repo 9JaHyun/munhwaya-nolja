@@ -109,7 +109,7 @@
   
         if (nickname.length > 0 && !nickname.match(regExp)) {
             $.ajax({
-                url: "nickChk",
+                url: "chkNick",
                 type: "POST",
                 dataType: "JSON",
                 data: {"nickname": nickname},

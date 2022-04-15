@@ -10,15 +10,15 @@ import org.apache.ibatis.annotations.Param;
 public interface MemberMapper {
 
     // 회원가입
-    int memberSignup(MemberVO memberVO);
+    int insertMember(MemberVO memberVO);
 
-    int memberOAuthSignup(Map<String, String> map);
+    int insertMemberByProc(Map<String, String> map);
 
     // 아이디 중복체크
-    int idChk(String id);
+    int chkId(String id);
 
     // 닉네임 중복체크
-    int nickChk(String nickname);
+    int chkNick(String nickname);
 
     // 프로필 업데이트
     int updateProfile(MemberVO vo);

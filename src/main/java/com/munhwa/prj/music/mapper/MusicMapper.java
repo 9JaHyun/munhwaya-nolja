@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.entity.Criteria;
 import com.munhwa.prj.music.vo.MusicVO;
 
 public interface MusicMapper {

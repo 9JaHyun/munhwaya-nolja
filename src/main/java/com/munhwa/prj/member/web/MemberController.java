@@ -1,8 +1,17 @@
 package com.munhwa.prj.member.web;
 
+import com.munhwa.prj.artist.service.ArtistService;
+import com.munhwa.prj.artist.vo.ArtistVO;
+import com.munhwa.prj.common.code.Genre;
+import com.munhwa.prj.common.entity.UploadFile;
+import com.munhwa.prj.common.service.FileUtils;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.member.vo.Auth;
+import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.news.service.NewsService;
 import java.io.IOException;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,44 +26,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.munhwa.prj.artist.service.ArtistService;
-import com.munhwa.prj.artist.vo.ArtistVO;
-import com.munhwa.prj.common.code.Genre;
-import com.munhwa.prj.common.entity.UploadFile;
-import com.munhwa.prj.common.service.FileUtils;
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.member.vo.Auth;
-import com.munhwa.prj.member.vo.MemberVO;
-import com.munhwa.prj.news.service.NewsService;
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 public class MemberController {
 
-    @Autowired
-    private MemberService memberDao;
+    private final MemberService memberService;
+    private final NewsService newsService;
+    private final ArtistService artistService;
+    private final FileUtils fileUtils;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private NewsService newsDao;
-    
-    @Autowired
-    private ArtistService artistDao;
-
-    @Autowired
-    private FileUtils fileUtils;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public MemberController(MemberService memberService,
+          NewsService newsService, ArtistService artistService,
+          FileUtils fileUtils,
+          PasswordEncoder passwordEncoder) {
+        this.memberService = memberService;
+        this.newsService = newsService;
+        this.artistService = artistService;
+        this.fileUtils = fileUtils;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     // 마이페이지 (+ 새소식리스트)
     @PreAuthorize("hasRole('R01')")
     @GetMapping("/mypage.do")
     public String mypage(@LoginUser SessionUser sessionUser, Model model) {
-        model.addAttribute("news1", newsDao.newsList(sessionUser.getId()));
+        model.addAttribute("news1", newsService.newsList(sessionUser.getId()));
         return "mypage-member";
     }
 
@@ -62,7 +58,7 @@ public class MemberController {
     @GetMapping("/memberChangeInfo.do")
     public String memberChangeInfo(@LoginUser SessionUser sessionUser, ArtistVO vo, Model model) {
     	vo.setMemberId(sessionUser.getId());
-    	model.addAttribute("artists", artistDao.artistContent(vo));
+    	model.addAttribute("artists", artistService.artistSelect(vo));
         return "memberChangeInfo-member";
     }
 
@@ -105,7 +101,7 @@ public class MemberController {
             user.setNickname(vo.getNickname());
         }
 
-        int n = memberDao.updateProfile(vo);
+        int n = memberService.updateProfile(vo);
         if (n != 0) {
             return "redirect:changeProfile.do";
         } else {
@@ -122,7 +118,7 @@ public class MemberController {
     // 개인정보 업데이트
     @PostMapping("updateInfo.do")
     public String updateInfo(@LoginUser SessionUser user,  MemberVO vo) {
-        int n = memberDao.updateInfo(vo);
+        int n = memberService.updateInfo(vo);
 
         if (vo.getGenre() != null) {
             user.setGenre(Genre.valueOf(vo.getGenre()));
@@ -149,7 +145,7 @@ public class MemberController {
     @PostMapping("updatePassword.do")
     public String updatePassword(MemberVO vo, String password1) {
         vo.setPassword(passwordEncoder.encode(password1));
-        int n = memberDao.updatePassword(vo);
+        int n = memberService.updatePassword(vo);
         if (n != 0) {
             return "redirect:memberChangeInfo.do";
         } else {
@@ -168,7 +164,7 @@ public class MemberController {
     public String deleteMember(RedirectAttributes attr, MemberVO vo, @LoginUser SessionUser user) {
         int n = 0;
         if (passwordEncoder.matches(vo.getPassword(), user.getPassword())) {
-            n = memberDao.deleteMember(vo);
+            n = memberService.deleteMember(vo);
             SecurityContextHolder.clearContext();
         }
         if (n != 0) {
@@ -191,7 +187,7 @@ public class MemberController {
     public String memberSignup(MemberVO vo) {
         vo.setPassword(passwordEncoder.encode(vo.getPassword()));
         vo.setRole(Auth.R01.toString());
-        int n = memberDao.memberSignup(vo);
+        int n = memberService.signup(vo);
         if (n != 0) {
             return "redirect:home.do";
         } else {
@@ -219,22 +215,22 @@ public class MemberController {
 
     // 아이디 중복체크
     @ResponseBody
-    @PostMapping("/idChk")
-    public int idChk(String id) {
-        return memberDao.idChk(id);
+    @PostMapping("/chkId")
+    public int chkId(String id) {
+        return memberService.chkId(id);
     }
 
     // 닉네임 중복체크
     @ResponseBody
-    @PostMapping("/nickChk")
-    public int nickChk(String nickname) {
-        return memberDao.nickChk(nickname);
+    @PostMapping("/chkNick")
+    public int chkNick(String nickname) {
+        return memberService.chkNick(nickname);
     }
 
     // 아이디 찾기 결과
     @PostMapping("/findIdResult")
     public String findIdResult(MemberVO vo, Model model) {
-        model.addAttribute("idLists", memberDao.findIdList(vo));
+        model.addAttribute("idLists", memberService.findIdList(vo));
         return "signup/findIdResult";
     }
 
@@ -242,7 +238,7 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/findpw", produces = "application/x-www-form-urlencoded; charset=UTF-8")
     public String findPwPOST(@ModelAttribute MemberVO member) throws Exception {
-        if (!memberDao.findPw(member)) {
+        if (!memberService.findPw(member)) {
             return "해당되는 아이디가 존재하지 않습니다.";
         }
         return "해당 메일로 임시 비밀번호가 전송되었습니다.";

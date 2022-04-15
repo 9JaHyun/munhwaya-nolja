@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
 
     private final PasswordEncoder passwordEncoder;
-
     private final MemberMapper map;
 
     private String email;
@@ -31,18 +30,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int memberSignup(MemberVO vo) {
-        return map.memberSignup(vo);
+    public int signup(MemberVO vo) {
+        return map.insertMember(vo);
     }
 
     @Override
-    public int idChk(String id) {
-        return map.idChk(id);
+    public int chkId(String id) {
+        return map.chkId(id);
     }
 
     @Override
-    public int nickChk(String nickname) {
-        return map.nickChk(nickname);
+    public int chkNick(String nickname) {
+        return map.chkNick(nickname);
     }
 
     @Override

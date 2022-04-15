@@ -58,7 +58,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
               .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
               .orElse(attributes.toEntity());
 
-        memberMapper.memberOAuthSignup(toMap(memberVO));
+        memberMapper.insertMemberByProc(toMap(memberVO));
 
         // update 수정
         return memberVO;

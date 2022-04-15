@@ -1,4 +1,4 @@
-package com.munhwa.prj.common.vo;
+package com.munhwa.prj.common.entity;
 
 import lombok.Data;
 

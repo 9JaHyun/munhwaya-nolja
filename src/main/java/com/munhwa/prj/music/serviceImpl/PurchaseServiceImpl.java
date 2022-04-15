@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.entity.Criteria;
 import com.munhwa.prj.music.mapper.PurchaseMapper;
 import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.PurchaseVO;
