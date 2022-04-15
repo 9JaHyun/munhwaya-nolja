@@ -18,6 +18,11 @@
     <put-attribute name="body" value=""/>
     <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp"/>
   </definition>
+  
+    <definition name="qrcodeTemplate" template="/WEB-INF/views/layout/empty.jsp">
+    <put-attribute name="body" value=""/>
+  </definition>
+  
 
   <definition name="*/*" extends="template">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
@@ -35,8 +40,6 @@
     <put-attribute name="body" value="/WEB-INF/views/artist/{1}.jsp"/>
   </definition>
   
-
-
   <definition name="*-qrcode" extends="qrcodeTemplate">
     <put-attribute name="body" value="/WEB-INF/views/qrcode/{1}.jsp"/>
   </definition>

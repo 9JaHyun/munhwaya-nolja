@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="artistSelect" resultMap="artistMap" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
-		SELECT * FROM ARTIST WHERE ID = #{id}
+		SELECT * FROM ARTIST WHERE member_ID = #{memberId}
 	</select>
 	
 	<insert id="artistInsert" parameterType="com.munhwa.prj.artist.vo.ArtistVO">

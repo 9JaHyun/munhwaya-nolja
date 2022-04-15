@@ -9,7 +9,7 @@
 		<c:choose>
 		<c:when test="${role == 'R01'}"> 
 			<li><i class="icon-comment-alt"></i> <a
-				href="walletInfoSelect.do">상세 지갑 정보</a>
+				href="walletInfoSelect.do">마일리지 충전 내역</a>
 				<div class="topic-time">현재 보유한 마일리지와 충전내역을 조회합니다.</div></li>
 			<li><i class="icon-comment-alt"></i> <a href="usageHistoryOfMusic.do">마일리지
 					사용 내역</a>
@@ -23,7 +23,7 @@
 		</c:when>
 		<c:otherwise>
 			<li><i class="icon-comment-alt"></i> <a
-				href="walletInfoSelect.do">상세 지갑 정보</a>
+				href="walletInfoSelect.do">마일리지 충전 내역</a>
 				<div class="topic-time">현재 보유한 마일리지와 충전내역을 조회합니다.</div></li>
 			<li><i class="icon-comment-alt"></i> <a href="usageHistoryOfMusic.do">마일리지
 					사용 내역</a>

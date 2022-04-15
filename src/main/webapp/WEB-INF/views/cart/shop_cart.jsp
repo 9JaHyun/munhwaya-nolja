@@ -47,6 +47,7 @@ tr {
                                             </th>
                                             <th class="product-song">곡 제목</th>
                                             <th class="product-name">아티스트</th>
+                                            <th class="product-genre">장르</th>
                                             <th class="product-subtotal">가격</th>
                                             <th class="product-remove">삭제</th>
                                         </tr>
@@ -64,7 +65,16 @@ tr {
                                         	<td class="product-name" style="text-align:center;">
 												<div class="artName" id="artName">${cart.value.artName }</div>	                                        	
 											</td>
-
+											<td class="product-name" style="text-align:center;">
+												<div class="genre" id="genre">
+												 <c:choose>
+                                                       <c:when test="${cart.value.genre eq 'G01'}">발라드</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G02'}">댄스</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G03'}">랩/힙합</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G04'}">R&B/Soul</c:when>
+                                                 </c:choose> 
+												</div>
+											</td>
                                             <td class="product-name" style="text-align:center;">
                                                 <div class="price" id="price">${cart.value.price}</div>
                                             </td>
@@ -141,8 +151,8 @@ function itemTotal() {
 		sum += parseInt(document.getElementsByClassName("price")[i].innerHTML)
 		
 	}
-// 	var summ = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(sum);
-	document.getElementById("itemTotalPrice").innerHTML = sum;
+	var summ = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(sum);
+	document.getElementById("itemTotalPrice").innerHTML = ssum;
 	document.getElementById("minusMileage").innerHTML = parseInt(${mileage}) - parseInt(document.getElementById("itemTotalPrice").innerHTML);
 /*  $("#totalPrice").val(sum); */	 
 }
@@ -175,6 +185,7 @@ function deleteCart(n) {
 function payCart() {
  	if(${mileage} < document.getElementById("itemTotalPrice").innerHTML) {
 	alert("잔액이 부족합니다.")		
+	location.href="chargeForm.do";
 } else {
 	let list = [];
 	$("img[name='carts']").each(function(i){
