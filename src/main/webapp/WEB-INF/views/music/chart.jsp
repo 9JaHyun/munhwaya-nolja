@@ -58,11 +58,6 @@
         margin-bottom: 100px;
     }
 
-    .img1 {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-    }
 </style>
 <!--(배경이미지) -->
 <div class="under_header" style="height:70px">
@@ -76,8 +71,8 @@
         <div class="little-head row">
             <div class="search">
                 <form action="searchResult" id="search" method="get">
-                    <input id="id" name="id" type="text"
-                           style="font-size:x-small; width: 1000px; height: 60px; " value=""
+					<input id="title" name="title" type="text"
+                           style="font-size:x-small; width: 1000px; height: 60px; "
                            placeholder="노래명, 앨범명 입력">
                     <button type="submit" style="margin-top:15px; margin-right:10px;">
                         <i class="icon-search" style="font-size: 25px;"></i>
@@ -110,15 +105,32 @@
                                     </thead>
                                     <tbody>
                                     <c:forEach var="music" items="${musicChartList}" begin="0"
-                                               end="14" varStatus="status">
+                                               end="9" varStatus="status">
                                         <tr class="cart_table_item"
                                             style="text-align: center; font-size:small ;">
-                                            <td>${status.count}</td>
+                                            	<td>
+	                                            <c:choose>
+	                                            	<c:when test="${pageMaker.cri.pageNum eq 1}">
+	                                            		${status.count}
+	                                            	</c:when>
+	                                            	<c:when test="${pageMaker.cri.pageNum  eq 2}">
+	                                            		${status.count+10}
+	                                            	</c:when>
+	                                            	<c:when test="${pageMaker.cri.pageNum eq 3}">
+	                                            		${status.count+20}
+	                                            	</c:when>
+	                                            	<c:when test="${pageMaker.cri.pageNum eq 4}">
+	                                            		${status.count+30}
+	                                            	</c:when>
+	                                            	<c:when test="${pageMaker.cri.pageNum eq 5}">
+	                                            		${status.count+40}
+	                                            	</c:when>
+	                                            </c:choose>
+                                            </td>
                                             <td class="product-thumbnail" style="width:70px;">
-                                                <a href="#"><img class="img1"
-                                                                 src="api/picture/${music.picture }"
+                                                <a href="streaming?id=${music.id }"><img src="api/picture/${music.picture }"
                                                                  alt="#"
-                                                                 style="margin: 10px 0px 10px 0px; width:100%; height:100%; object-fit: cover;">
+                                                                 style="max-width:80px; min-width:80px; max-height :90px; min-height:90px; margin: 10px 0px 10px 0px;">
                                                 </a>
                                             </td>
                                             <td class="product-name">

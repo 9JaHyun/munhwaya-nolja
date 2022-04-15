@@ -74,6 +74,12 @@ jQuery(document).ready(function(){
 	.single_variation_wrap > i:hover{
 		 color: #FF0078;
 	}
+	.highlight{
+		max-width:180px; 
+		min-width:180px; 
+		max-height :180px; 
+		min-height:180px;
+	}
 </style>
 
 	<!--(배경이미지) -->
@@ -89,8 +95,8 @@ jQuery(document).ready(function(){
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:small; width: 1000px; height: 60px; " value=""
+						<input id="title" name="title" type="text"
+							style="font-size:small; width: 1000px; height: 60px;"
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -136,7 +142,7 @@ ${musicSelect.lyric }
 							<li id="Latest" class="active">
 								<div class="video-grid">
 									<a href="albumInfo?id=${AlbumSelectByMusicId.id }" class="grid_3">
-										<img src="api/picture/${AlbumSelectByMusicId.picture }" alt="#">
+										<img src="api/picture/${AlbumSelectByMusicId.picture }" alt="#" style="max-width:180px; min-width:180px; max-height :180px; min-height:180px;">
 										<span><strong>${AlbumSelectByMusicId.albName }</strong>${AlbumSelectByMusicId.artName }</span>
 									</a>
 								</div><!-- video grid -->
@@ -291,7 +297,7 @@ function result(data) {
 		        alert("장바구니에 담았습니다.");
 		        },
 		        error: function(xhr, status, error){
-		        alert("통신실패");
+		        alert("이미 장바구니에 담겨있습니다.");
 		        }
 	        }) 
 	       } else {

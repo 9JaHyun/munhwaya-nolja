@@ -82,11 +82,6 @@ public class MusicServiceImpl implements MusicService{
 	}
 
 	@Override
-	public int updateLike(Map<String, Object> paramMap) {
-		return map.updateLike(paramMap);
-	}
-
-	@Override
 	public List<MusicVO> musicSelectListByMusicId(Map<String, List<Integer>> paramMap) {
 		return map.musicSelectListByMusicId(paramMap);
 	}
@@ -104,6 +99,11 @@ public class MusicServiceImpl implements MusicService{
 	@Override
 	public int getCountByList3(String title) {
 		return map.getCountByList3(title);
+	}
+
+	@Override
+	public int statusUpdate(Map<String, Object> paramMap) {
+		return map.statusUpdate(paramMap);
 	}
 
 

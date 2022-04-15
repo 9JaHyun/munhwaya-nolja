@@ -56,7 +56,7 @@
 									<c:forEach var="music" items="${musicRnBList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :70px; min-height:70px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -85,7 +85,7 @@
 									<c:forEach var="music" items="${musicRapList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="steraming?id=${music.id }">
-												<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :70px; min-height:70px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -114,7 +114,7 @@
 									<c:forEach var="music" items="${musicDanceList}" begin="0" end="9">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :70px; min-height:70px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
@@ -143,7 +143,7 @@
 										<c:forEach var="music" items="${musicBalladList}" begin="0" end="9">
 											<li class="grid_6">
 												<a class="m-thumbnail" href="streaming?id=${music.id }">
-													<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
+													<img style="max-width:65px; min-width:65px; max-height :70px; min-height:70px;" src="api/picture/${music.picture }" alt="#">
 												</a>
 												<h3>
 													<a href="streaming?id=${music.id }">${music.title }</a>
@@ -193,7 +193,7 @@
 										</h4>
 									</span>
 									<a class="m-thumbnail" href="streaming?id=${music.id }">
-										<img style="width:100%; height:100%; object-fit: cover;" 
+										<img style="max-width:65px; min-width:65px; max-height :70px; min-height:70px;" 
 											src="api/picture/${music.picture }" alt="#">
 									</a>
 									<h3>
@@ -236,7 +236,7 @@
 								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="4">
 								<li>
 									<a class="m-thumbnail" href="albumInfo?id=${album.id }">
-										<img style="width:100%; height:100%; object-fit: cover; " src="api/picture/${album.picture }" alt="#">
+										<img style="max-width:65px; min-width:65px; max-height :70px; min-height:70px;" src="api/picture/${album.picture }" alt="#">
 									</a>
 									<h3>
 										<a href="albumInfo?id=${album.id }">${album.albName}</a>
@@ -283,7 +283,7 @@
 								<div class="video-grid">
 									<c:forEach var="music" items="${musicPersonalList}" begin="0" end="7">
 										<a href="streaming?id=${music.id }" class="grid_3">
-											<img style="width:100%; height:100%; object-fit: cover;" src="api/picture/${music.picture }" alt="#">
+											<img style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;" src="api/picture/${music.picture }" alt="#">
 											<span><strong>${music.title }</strong>${music.artName }</span>
 										</a>
 									</c:forEach>

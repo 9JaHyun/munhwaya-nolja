@@ -57,12 +57,6 @@
 	tr {
 	margin-bottom: 100px;
 	}
-	
-  	.img1 {
-  		width: 80px;
-  		height: 80px;
-  		object-fit: cover;
-	}
 </style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
@@ -76,8 +70,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:small; width: 1000px; height: 60px; " value=""
+						<input id="title" name="title" type="text"
+							style="font-size:small; width: 1000px; height: 60px; "
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -108,7 +102,7 @@
 												<c:forEach var="music" items="${musicSelectListByTitle1}">
 												<tr class="cart_table_item" style="text-align: center; font-size:medium;">
 													<td class="product-thumbnail" style="width:70px;">
-													<a href="streaming?id=${music.id }"><img class="img1" src="api/picture/${music.picture }" alt="#" style="margin: 10px 0px 10px 0px;"></a>
+													<a href="streaming?id=${music.id }"><img src="api/picture/${music.picture }" alt="#" style="max-width:70px; min-width:70px; max-height :80px; min-height:80px; margin: 10px 0px 10px 0px;"></a>
 													</td>
 													<td class="product-name">
 														${music.title}
@@ -183,7 +177,7 @@
         var confirm1 = confirm('장바구니에 담으시겠습니까?')
         if (confirm1) {
             $.ajax({
-                url: "cart/test/add",
+                url: "cart/add",
                 type: "post",
                 data: {"id": id},
                 dataType: "text",
@@ -192,7 +186,7 @@
                     alert("장바구니에 담았습니다.");
                 },
                 error: function (xhr, status, error) {
-                    alert("통신실패");
+                    alert("이미 장바구니에 담겨있습니다.");
                 }
             })
 

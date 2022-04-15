@@ -35,17 +35,17 @@ public class CartController {
 
 	@RequestMapping("/cart/add")
 	public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam int id) {
-		MusicVO vo = musicDAO.musicSelect(id);
+	      MusicVO vo = musicDAO.musicSelect(id);
 
-		Map<Integer, MusicVO> cart = user.getCart();
-		if(cart.containsKey(vo.getId()) ) {
-			return ResponseEntity.badRequest().body("");
-		}
-		cart.put(vo.getId(), vo);
-		user.setCart(cart);
-//		log.info("id={}", vo.getId());
+	      Map<Integer, MusicVO> cart = user.getCart();
+	      if(cart.containsKey(vo.getId()) ) {
+	         return ResponseEntity.badRequest().body("");
+	      }
+	      cart.put(vo.getId(), vo);
+	      user.setCart(cart);
+//	      log.info("id={}", vo.getId());
 
-		return ResponseEntity.ok().body("");
+	      return ResponseEntity.ok().body("");
 	}
 	
 	@PostMapping("/deleteCart")

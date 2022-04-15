@@ -13,12 +13,14 @@ public interface PerformanceService {
 	/* 게시판 목록(페이징 적용) */
 	List<PerformanceVO> performanceSelectList(Criteria cri);
 	
+	List<PerformanceVO> adminSelectList(Criteria cri);
+	
 	int performanceInsert(PerformanceVO vo);
 	
 	PerformanceVO performanceSelect(PerformanceVO vo);
 	
 	/* 게시판 총 갯수 */
-    public int getTotal(Criteria cri);
+    public int getTotal(Criteria cri, String filter);
     
     int performanceUpdate(Map<String, Object> paramMap);
 	

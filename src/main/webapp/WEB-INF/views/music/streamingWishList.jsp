@@ -4,8 +4,9 @@
 <style>
 	xmp {
 		color: white;
-		font-size: 20px;
+		font-size: 15px;
 		text-align: center;
+		line-height: 10px;
 	}
 	#b1, #s1 {
 		visibility:hidden;
@@ -16,10 +17,16 @@
 	.single_variation_wrap > i:hover{
 		 color: #FF0078;
 	}
+	.highlight{
+		max-width:180px; 
+		min-width:180px; 
+		max-height :180px; 
+		min-height:180px;
+	}
 </style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 2000px;">
 	</div>
 	
 <!-- content -->
@@ -30,8 +37,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:small; width: 1000px; height: 60px; " value=""
+						<input id="title" name="title" type="text"
+							style="font-size:small; width: 1000px; height: 60px;"
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -78,7 +85,7 @@ ${musicSelectListByWishList[0].lyric}
 							<li id="Latest" class="active">
 								<div class="video-grid">
 									<a href="albumInfo?id=${albumSelectByWishList.id }" class="grid_3">
-										<img id="albImg" src="api/picture/${albumSelectByWishList.picture }" alt="#">
+										<img id="albImg" src="api/picture/${albumSelectByWishList.picture }" alt="#" style="max-width:180px; min-width:180px; max-height :180px; min-height:180px;">
 										<span><strong id="albName"> ${albumSelectByWishList.albName }</strong><span id="artName">${albumSelectByWishList.artName }</span></span>
 									</a>
 								</div><!-- video grid -->
@@ -94,40 +101,41 @@ ${musicSelectListByWishList[0].lyric}
 
 <script>
 //파일아이디로 sname가져오기
-var myPlaylist = []
-let fileId = 0;
-
-<c:forEach items="${musicSelectListByWishList}" var = "music">
-	fileId = '${music.fileId}'
-	$.ajax({
-		type: "GET", 
-		url:"getFiles/"+fileId,
-		dataType:"json", 
-		error : function(a, b, c){
-			alert("통신실패");
-		},
-		success: pushList
-	})
-function pushList(result) {
-	let fileName = result.sname
-	console.log(fileName)
-	myPlaylist.push({
-					writer: '${music.writer}',
-					composing: '${music.composing}',
-					arrangement: '${music.arrangement}',
-					musicId: '${music.id}',
-					mp3 : "${pageContext.request.contextPath}"+fileName,
-					title : '${music.title}',
-					artist : '${music.artName}',
-					rating: 5,
-					buy:'#',
-					price:'',
-					duration : '${music.time}',
-					cover:'api/picture/${music.picture }'
-					})
-	} 
-</c:forEach>
 jQuery(document).ready(function () {
+	var myPlaylist = []
+	let fileId = 0;
+	
+	<c:forEach items="${musicSelectListByWishList}" var = "music">
+		fileId = '${music.fileId}'
+		$.ajax({
+			type: "GET", 
+			async: false,
+			url:"getFiles/"+fileId,
+			dataType:"json", 
+			error : function(a, b, c){
+				alert("통신실패");
+			},
+			success: function (result) {
+						let fileName = result.sname
+						console.log(fileName)
+						myPlaylist.push({
+										writer: '${music.writer}',
+										composing: '${music.composing}',
+										arrangement: '${music.arrangement}',
+										musicId: '${music.id}',
+										mp3 : "/prj/api/file/"+fileName,
+										title : '${music.title}',
+										artist : '${music.artName}',
+										rating: 5,
+										buy:'#',
+										price:'',
+										duration : '${music.time}',
+										cover:'api/picture/${music.picture }'
+										})
+						}
+		})
+	</c:forEach>
+		
 	$('.music-player-list').ttwMusicPlayer(myPlaylist, {
 		currencySymbol: '',
 		buyText:'구매',
@@ -233,7 +241,7 @@ function result1(result) {
 	  
 	   		if(confirm1) {
 				$.ajax ({
-				        url : "cart/test/add",
+				        url : "cart/add",
 				        type : "post",
 				        data : {"id" : id},                   
 				        dataType : "text",
@@ -242,7 +250,7 @@ function result1(result) {
 				        alert("장바구니에 담았습니다.");
 				        },
 				        error: function(xhr, status, error){
-				        	alert("통신실패");
+				        	alert("이미 장바구니에 담겨있습니다.");
 				        }
 			     }) 
 		    } else {
