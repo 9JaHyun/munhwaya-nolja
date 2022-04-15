@@ -11,9 +11,6 @@
             "scope=login inquiry transfer&" +
             "state=b80BLsfigm9OokPTjy03elbJqRHOfGSY&" +
             "auth_type=0"
-       $.ajax({
-    	   
-       });
     }
     
     function testRealName() {

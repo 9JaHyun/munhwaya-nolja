@@ -4,12 +4,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,9 +24,8 @@ public class WithdrawController {
 
 	private final RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
-    //private final String BASE_URL = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?" + 
+    private final String REDIRECT_URI = "http://localhost/prj/auth/openbank/code";
     private final String BASE_URL = "https://testapi.openbanking.or.kr";
-
 
     public WithdrawController() {
         this.restTemplate = new RestTemplate();
@@ -49,15 +46,16 @@ public class WithdrawController {
 
     public TokenResponseDTO getToken(String code) {
         User user = new User();
-        TokenRequestDTO dto = new TokenRequestDTO(user.getClientId(), user.getClientSecret(),
-              "oob", "client_credentials");
+        TokenRequestDTO dto = new TokenRequestDTO(code, user.getClientId(), user.getClientSecret(),
+              REDIRECT_URI, "authorization_code");
 
         httpHeaders.add("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("code", dto.getCode());
         parameters.add("client_id", dto.getClientId());
         parameters.add("client_secret", dto.getClientSecret());
-        parameters.add("scope", dto.getScope());
+        parameters.add("redirect_uri", dto.getRedirectUri());
         parameters.add("grant_type", dto.getGrantType());
 
         HttpEntity<MultiValueMap<String, String>> param = new HttpEntity<>(parameters, httpHeaders);
@@ -66,18 +64,8 @@ public class WithdrawController {
         TokenResponseDTO result = restTemplate.exchange(
                 BASE_URL + "/oauth/2.0/token",
                 HttpMethod.POST, param, TokenResponseDTO.class).getBody();
-        System.out.println(result);
-        
-        httpHeaders.add("authorization_code", result.getAccess_token());
-       
-      
-         
+        System.out.println("----------"+result.getAccess_token());
+
         return result;
     }
-
-//    @RequestMapping("/auth/openbank/callback")
-//    @ResponseBody
-//    public String getToken(TokenRequestDTO tokenDto,Model model) {
-//    	TokenResponseDTO token = 
-//    }
 }

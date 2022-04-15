@@ -50,15 +50,15 @@ public class OpenBankApiController {
 
      * grant_type
      */
-    @Value("${openbank.useCode}")
+    //@Value("${openbank.useCode}")
     private String useCode="M202200536";
-    @Value("${openbank.client-id}")
+    //@Value("${openbank.client-id}")
     private String clientId="12ce99f4-e774-4231-ab01-e287c5d279fc";
-    @Value("${openbank.client-secret}")
+    //@Value("${openbank.client-secret}")
     private String client_secret ="b45a8f6b-a958-4b21-8f7d-03f85c3e0214";
 
-    @Value("${openbank.access-token}")
-    private String access_token;
+    //@Value("${openbank.access-token}")
+    private String access_token= "";
     private String redirect_uri = "http://localhost:8080/auth/openbank/callback";
     private final OpenBankService openBankService;
     /**
@@ -71,7 +71,7 @@ public class OpenBankApiController {
         BankReponseToken token = openBankService.requestToken(bankRequestToken);
         model.addAttribute("bankReponseToken",token);
         log.info("bankReponseToken={}", token);
-        return "v1/bank";
+        return "withdraw/bank";
     }
 
     /**
@@ -87,7 +87,7 @@ public class OpenBankApiController {
         model.addAttribute("bankAccounts",account);
         model.addAttribute("useCode",useCode);
         model.addAttribute("access_token",access_token);
-        return "v1/accountList";
+        return "withdraw/accountList";
     }
 
     /**
@@ -96,7 +96,7 @@ public class OpenBankApiController {
     @GetMapping("/balance")
     public String searchBalance(String access_token, BankBalanceRequestDto bankBalanceRequestDto, Model model){
         model.addAttribute("accountBalance", openBankService.findBalance(access_token,bankBalanceRequestDto));
-        return "v1/balance";
+        return "withdraw/balance";
     }
 
     /**
@@ -111,7 +111,7 @@ public class OpenBankApiController {
         //계좌번호 마스킹된값 제거(계좌번호 보여주는건 계약된 사용자만가능(그래서 마스킹된 3자리 잘라서 보내주고 클라이언트에서 3자리 더해줌
         model.addAttribute("token", access_token);
         model.addAttribute("transferForm",new AccountTransferRequestDto(openBankutil.getRandomNumber(bank_tran_id),fintech_use_num,req_client_name,openBankutil.trimAccountNum(account_num, account_num.length()),openBankutil.trimAccountNum(account_num, account_num.length())));
-        return "v1/transferForm";
+        return "withdraw/transferForm";
     }
     @PostMapping("/transfer")
     public @ResponseBody AccountTransferResponseDto transfer(String access_token,AccountTransferRequestDto accountTransferRequestDto){

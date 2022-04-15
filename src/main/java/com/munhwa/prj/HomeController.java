@@ -31,11 +31,11 @@ public class HomeController {
 //    @Value("${openbank.access-token}")
 //    private String access_token ="";
 //    @Value("${openbank.client-id}")
-//    private String clientId ="";
+//    private String clientId ="12ce99f4-e774-4231-ab01-e287c5d279fc";
 //    @GetMapping("/")
 //    public String home(Model model){
 //        model.addAttribute("clientId", clientId);
 //        model.addAttribute("access_token",access_token);
-//        return "home/home";
+//        return "withdraw/home";
 //    }
 }
