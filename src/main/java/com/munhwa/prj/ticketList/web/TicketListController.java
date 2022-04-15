@@ -112,10 +112,10 @@ public class TicketListController {
 		vo.setPerformancevo(performance);
 		ticketListDao.qrcodeUpdate(vo);
 
+
 		Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 
 		List<UsageVO> resultUsageList = new ArrayList<>();
-		List<ProfitVO> resultProfitByArtist = new ArrayList<>();
 		Map<String, Object> param = new HashMap<String, Object>();
 
 		UsageVO usageVO = new UsageVO();
@@ -123,30 +123,19 @@ public class TicketListController {
 		usageVO.setUseAt(useDate);
 		usageVO.setPlace("U02");
 		usageVO.setMemberId(memberId);
-		usageVO.setPks(vo.getPerformancevo().getId());
+		usageVO.setPks(vo.getId());
 
 		resultUsageList.add(usageVO);
 
-//		ProfitVO profitVO = new ProfitVO();
-//		profitVO.setProfitAt(useDate);
-//		profitVO.setMileage(vo.getPerformancevo().getPrice() * person);
-//		profitVO.setPlace("U02");
-//		profitVO.setPks(vo.getPerformancevo().getId());
-
-		
-
-//		resultProfitByArtist.add(profitVO);
-
 		param.put("v_member_id", memberId);
 		param.put("v_mileage", vo.getPerformancevo().getPrice() * person);
-		param.put("v_performance_id", vo.getPerformancevo().getId());
+		param.put("v_ticket_list_id", vo.getId());
 		param.put("v_profit_at", useDate);
 		param.put("v_artist_id", vo.getPerformancevo().getArtistId());
 		
 		// 사용 내역 남기기
 		usageDao.insertUsage(resultUsageList);
-//		// 공연 구매 시 아티스트 수익 내역에 찍기
-		profitDao.insertProfit(resultProfitByArtist);
+
 //		// 공연 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저
 		memberDao.updateMileagePerformance(param);
 
@@ -233,7 +222,12 @@ public class TicketListController {
 		if (now.after(edate)) {
 			return "qrcode/qrcodeError";
 		} else {
-			ticketListDao.qrcodeAttendance(ticketId);
+			Map<String, Object> paramMapt = new HashMap<>();
+			paramMapt.put("v_tic_id", ticketId);
+			paramMapt.put("v_pro_pks", ticketId);
+			paramMapt.put("v_tic_attendance", vo.getAttendance());
+			paramMapt.put("v_pro_buyer", vo.getMemberId());
+			ticketListDao.qrcodeAttendance(paramMapt);
 			return "qrcodeDetail-qrcode";
 		}
 	}

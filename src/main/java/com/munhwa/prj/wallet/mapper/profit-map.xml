@@ -8,6 +8,8 @@
 		<result property="place" column="place"/>
 		<result property="memberId" column="member_id"/>
 		<result property="pks" column="pks"/>
+		<result property="refund" column="refund"/>
+		<result property="buyer" column="buyer"/>
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
 		<collection property="musicvo" resultMap="musicResultMap" />
 		<collection property="artistvo" resultMap="artistResultMap" />
@@ -24,8 +26,8 @@
 		<result property="artName" column="ART_NAME"/>
 		<result property="genre" column="GENRE"/>
 		<result property="lyric" column="LYRIC"/>
-		<result property="likeIt" column="LIKE_IT"/>
-		<result property="fileName" column="FILE_NAME"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
 		<result property="title" column="TITLE"/>
 		<result property="price" column="PRICE"/>
 		<result property="albumId" column="ALBUM_ID"/>
@@ -77,6 +79,20 @@
             and p.pks = m.id
 				and p.member_id = #{memberId}
 				and p.place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and p.profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and p.profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[
 	           group by p.profit_at, p.member_id, c.name
 	           order by p.profit_at desc
                 )
@@ -92,6 +108,39 @@
 		where member_id = #{memberId}
 		and place = 'U01'
 		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+    </select>
+    
+    <select id="getSumByMusic" resultType="int">
+    	<![CDATA[
+		select sum(mileage)
+		from profit_history
+		where member_id = #{memberId}
+		and place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
     </select>
     
     <!-- 공연 티켓 수익 내역 -->
@@ -111,6 +160,20 @@
             and p.pks = pe.id
 				and p.member_id = #{memberId}
 				and p.place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and p.profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and p.profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[
 	           group by p.profit_at, p.member_id, c.name
 	           order by p.profit_at desc
                 )
@@ -126,19 +189,54 @@
 		where member_id = #{memberId}
 		and place = 'U02'
 		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+    </select>
+    
+    <select id="getSumByPerformance" resultType="int">
+    	<![CDATA[
+		select sum(mileage)
+		from profit_history
+		where member_id = #{memberId}
+		and place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
     </select>
     
     <insert id="insertProfit" parameterType="com.munhwa.prj.wallet.vo.ProfitVO">
-	  insert into profit_history(id, 
-                           profit_at, 
-                           mileage, 
-                           place,
-                           pks, 
-                           member_id)
-      select profit_history_seq.nextval, 
-      #{profitAt}, #{mileage}, #{place}, #{pks}, a.member_id
-      from artist a, music m
-      where a.name = m.art_name
-      and m.Id = #{id}
+		insert into profit_history(id, 
+								   profit_at, 
+								   mileage, 
+								   place,
+								   pks,
+								   buyer, 
+								   member_id
+								   )
+		select profit_history_seq.nextval, 
+		#{profitAt}, #{mileage}, #{place}, #{pks}, #{buyer}, a.member_id
+		from artist a, music m
+		where a.name = m.art_name
+		and m.Id = #{id}
     </insert>
 </mapper>

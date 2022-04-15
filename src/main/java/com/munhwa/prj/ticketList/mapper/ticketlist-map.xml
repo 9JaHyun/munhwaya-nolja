@@ -56,6 +56,7 @@
 		P.LOCATION,
 		P.IMAGE,
 		T.PERSON,
+		T.MEMBER_ID,
 		T.QRCODE,
 		CC.NAME as ATTENDANCE
 		FROM TICKET_LIST T,
@@ -85,10 +86,15 @@
 		WHERE ID = #{id}
 	</update>
 	
-	<update id="qrcodeAttendance" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO" >
-		UPDATE TICKET_LIST
-		SET ATTENDANCE = 'C01'
-		WHERE ID = #{id}
+	<update id="qrcodeAttendance" statementType="CALLABLE" parameterType="map">
+	<![CDATA[
+		call USE_TICKET (
+                #{v_tic_id, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{v_pro_pks, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{v_tic_attendance, mode=IN, jdbcType=VARCHAR, javaType=string},
+                #{v_pro_buyer, mode=IN, jdbcType=VARCHAR, javaType=string}
+            )
+	]]>
 	</update>
 	
 </mapper>

@@ -114,13 +114,13 @@
     ]]>
 	</update>
 	
-	<!-- 공연 판매 마일리지 업데이트 및 수익내역 찍기 22/04/13 류기태 추가수정 -->
+	<!-- 공연 판매 마일리지 업데이트 및 수익내역 찍기 22/04/15 류기태 추가수정 -->
 	<update id="updateMileagePerformance" parameterType="map" statementType="CALLABLE">
 	<![CDATA[
     { call mileage_usage_performance (
       #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
       #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},
-      #{v_performance_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_ticket_list_id, mode=IN, jdbcType=INTEGER, javaType=int},
       #{v_profit_at, mode=IN, jdbcType=DATE, javaType=date},
       #{v_artist_id, mode=IN, jdbcType=INTEGER, javaType=int}
       )}

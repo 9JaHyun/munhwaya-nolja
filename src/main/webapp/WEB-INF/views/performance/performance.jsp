@@ -40,7 +40,7 @@
                                 <div class="product_inner" style="margin-bottom:5px;">
                                     <h3>${performances.name }</h3>
                                     <strong> <fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${performances.sdate }" /> ~ 
-                                    <fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${performances.edate }" /> </strong><br>
+                                    <fmt:formatDate pattern = "HH시 mm분" value = "${performances.edate }" /> </strong><br>
                                     <strong class="listMileage">${performances.price }</strong>
                                 </div>
                             </div><!-- product -->
