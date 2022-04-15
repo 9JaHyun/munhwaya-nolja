@@ -2,16 +2,11 @@ package com.munhwa.prj.artist.web;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Member;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Random;
 
-import javax.websocket.Session;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.service.PromotionRequestService;
 import com.munhwa.prj.artist.serviceImpl.SmsServiceImpl;
@@ -88,33 +84,9 @@ public class ArtistController {
 //		return "artist/myPageMove";
 //	}
 
-	// 회원 -> 아티스트 승급 신청 폼 호출
-	@RequestMapping("/artistRequestForm")
-	public String artistRequestForm() {
-		
-		return "artistRequest-artist";
-	}
+	
 
-	// 아티스트 승급 신청
-	@RequestMapping("/artistRequest")
-	public String artistRequest(@LoginUser SessionUser user, PromotionRequestVO vo, Model model, MultipartFile file) throws IOException {
-		if(file != null && file.getSize() != 0) {
-			UploadFile uploadFile = fileUtils.storeFile(file); // common.entity패키지 확인하면 있음
-			vo.setFileGroupId(uploadFile.getStoredFileName()); // getStoredFileName : 사진 저장 경로
-		}
-		//ArtistVO vo = new ArtistVO();
-		vo.setMemberId(user.getId());
-		//vo.setMemberId("mjerrami@about.me"); // 임시
-		vo.setIdentify(null);
-		vo.setStatus("A03");
-		int req = promotionRequestDao.promotionRequestInsert(vo);
-		model.addAttribute("message", "아티스트 승급 신청을 요청했습니다.\r\n운영자로부터의 응답시까지 대기바랍니다.");
-		System.out.println(vo);
-
-		return "artist/myPageMove";
-	}
-
-	// 아티스트 정보 등록 폼 호출
+	// 아티스트 프로필 등록 폼 호출
 	@RequestMapping("/artistProfileForm")
 	public String artistProfileForm() {
 
@@ -144,13 +116,31 @@ public class ArtistController {
     public String changeArtistProfileForm(@LoginUser SessionUser user, Model rttr) {
     	ArtistVO artist = new ArtistVO();
     	artist.setMemberId(user.getId());
-    	//String memeberId = user.getNickname();
     	artist = artistDao.artistSelect(artist);
     	
     	rttr.addAttribute("artist", artist);
     	return "changeArtistProfile-artist";
     }
     
+    @PostMapping("/changeArtistProfile")
+    public String changeArtistProfile(@LoginUser SessionUser user, ArtistChangeRequestDto dto) throws IOException {
+    	ArtistVO artist = dto.toEntity();
+    	UploadFile file = fileUtils.storeFile(dto.getImage());
+    	artist.setMemberId(user.getId());
+    	artist.setImage(file.getStoredFileName());
+    
+    	artistDao.artistUpdate(artist);
+    	return "redirect:mypage.do";
+    }
+    
+//    // 활동명 중복체크
+//    @ResponseBody
+//    @PostMapping("/nameChk")
+//    public int nameChk(String name) {
+//    	
+//        return artistDao.nameChk(name);
+//    }
+
 //    // 아티스트 정보 수정
 //    @RequestMapping("changeArtistProfile")
 //    public String changeArtistProfile(@LoginUser SessionUser user, ArtistVO vo, /* RedirectAttributes */ Model rttr) {
@@ -192,6 +182,33 @@ public class ArtistController {
 //    		} else {
 //    			vo.setId(findArtist.getId());
 		
+    
+    // 회원 -> 아티스트 승급 신청 폼 호출
+ 	@RequestMapping("/artistRequestForm")
+ 	public String artistRequestForm() {
+ 		
+ 		return "artistRequest-artist";
+ 	}
+
+ 	// 아티스트 승급 신청
+ 	@RequestMapping("/artistRequest")
+ 	public String artistRequest(@LoginUser SessionUser user, PromotionRequestVO vo, Model model, MultipartFile file) throws IOException {
+ 		if(file != null && file.getSize() != 0) {
+ 			UploadFile uploadFile = fileUtils.storeFile(file); // common.entity패키지 확인하면 있음
+ 			vo.setFileGroupId(uploadFile.getStoredFileName()); // getStoredFileName : 사진 저장 경로
+ 		}
+ 		//ArtistVO vo = new ArtistVO();
+ 		vo.setMemberId(user.getId());
+ 		//vo.setMemberId("mjerrami@about.me"); // 임시
+ 		vo.setIdentify(null);
+ 		vo.setStatus("A03");
+ 		int req = promotionRequestDao.promotionRequestInsert(vo);
+ 		model.addAttribute("message", "아티스트 승급 신청을 요청했습니다.\r\n운영자로부터의 응답시까지 대기바랍니다.");
+ 		System.out.println(vo);
+
+ 		return "artist/myPageMove";
+ 	}
+    
 	// 아티스트 승급페이지 본인인증
 	@RestController
 	@RequiredArgsConstructor

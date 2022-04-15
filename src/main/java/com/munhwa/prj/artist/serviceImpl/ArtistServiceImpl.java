@@ -38,5 +38,11 @@ private ArtistMapper map;
 		// TODO Auto-generated method stub
 		return map.artistUpdate(vo);
 	}
+
+	@Override
+	public int nameChk(String name) {
+		// TODO Auto-generated method stub
+		return map.nameChk(name);
+	}
 	
 }

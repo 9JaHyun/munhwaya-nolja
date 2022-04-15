@@ -38,7 +38,12 @@
 			<if test="type != null">type = #{type},</if>
 			<if test="name != null">name = #{name}</if>  
 		</set>
-		WHERE ID = #{id}
+		WHERE MEMBER_ID = #{memberId}
 	</update>
+	
+	<select id="nameChk" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM ARTIST
+		WHERE NAME = #{name}
+	</select>
 	
 </mapper>

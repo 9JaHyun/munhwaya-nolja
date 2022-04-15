@@ -9,4 +9,5 @@ public interface ArtistMapper {
 	ArtistVO artistSelect(ArtistVO vo);
 	int artistInsert(ArtistVO vo);
 	int artistUpdate(ArtistVO vo);
+	int nameChk(String name);
 }
