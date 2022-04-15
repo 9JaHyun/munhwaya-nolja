@@ -1,11 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-=======
->>>>>>> 4c027fc5cefc2f5cbf5741fab8bc5821f0b069b2
 <style>
     .js-load {
         display: none;
@@ -20,6 +16,14 @@
 <div align="right" style="margin-bottom: 50px;">
     <h4>새소식</h4>
 </div>
+
+<c:if test="${not empty news1}">
+	<div align="right" style="margin-bottom: 25px;">
+		<button class="tbutton small" onclick="location.href='deleteNewsAll.do'">
+		   	<span>전체삭제</span>
+		</button>
+	</div>
+</c:if>
 
 <div align="center">
     <div id="js-load">
@@ -40,7 +44,8 @@
                                 </p>
                                 <a href="#"
                                    class="notification-close notification-close-success"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
@@ -52,7 +57,8 @@
                                     <c:if test="${news.code eq 'album'}">앨범</c:if>을 등록하셨습니다.
                                 </p>
                                 <a href="#" class="notification-close notification-close-info"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
@@ -64,7 +70,8 @@
                                     <c:if test="${news.code eq 'performance'}">공연</c:if>을 등록하셨습니다.
                                 </p>
                                 <a href="#" class="notification-close notification-close-error"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
@@ -77,7 +84,8 @@
                                 </p>
                                 <a href="#"
                                    class="notification-close notification-close-warning"> <i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:otherwise>
@@ -93,20 +101,19 @@
 
 <script>
     function delNewsFnc(id) {
-
         $.ajax({
-            type : "POST",
-            url : "deleteNews.do",
-            data : JSON.stringify({"id": id}),
-            contentType : "application/json"
+            type: "POST",
+            url: "deleteNews.do",
+            data: JSON.stringify({"id": id}),
+            contentType: "application/json"
         })
-        .done(() => {
+        .done(() => {  	
         });
     }
 
     $(window).on('load', function () {
         // 기본 갯수
-        load('#js-load', '5');
+        load('#js-load', '7');
         $("#js-btn-wrap .button").on("click", function () {
             // 증가 갯수
             load('#js-load', '3', '#js-btn-wrap');

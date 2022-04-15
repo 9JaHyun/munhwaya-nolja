@@ -26,4 +26,9 @@ public class NewsServiceImpl implements NewsService {
 		return map.deleteNews(vo);
 	}
 
+	@Override
+	public int deleteNewsAll(NewsVO vo) {
+		return map.deleteNewsAll(vo);
+	}
+
 }

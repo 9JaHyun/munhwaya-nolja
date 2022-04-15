@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
@@ -12,6 +11,7 @@
         display: revert;
     }
 </style>
+
 
 <div align="right" style="margin-bottom: 50px;">
     <a href="wishlist.do">위시리스트 ></a>
@@ -34,9 +34,8 @@
                 <tr class="js-load">
                     <td><a href="streaming?id=${wishlistMusic.id}">${wishlistMusic.title}</a></td>
                     <td style="padding-right: 30px;">${wishlistMusic.artName}</td>
-                    <td style="padding-right: 20px;"><i class="icon-remove"
-                                                        id="${wishlistMusic.id}"
-                                                        onclick="delMusicFnc(${wishlistMusic.id})"></i>
+                    <td style="padding-right: 20px;"><i class="icon-remove" id="${wishlistMusic.id}"
+                                    onclick="delMusicFnc(${wishlistMusic.id})"></i>
                     </td>
                 </tr>
             </c:forEach>
@@ -49,9 +48,7 @@
     </div>
 </div>
 
-
 <script>
-
     $(window).on('load', function () {
         // 기본 갯수
         load('#js-load', '7');
@@ -75,7 +72,6 @@
     }
 
     function delMusicFnc(musicId) {
-
         let query = window.location.search;
         let param = new URLSearchParams(query);
         let wishId = param.get('id');

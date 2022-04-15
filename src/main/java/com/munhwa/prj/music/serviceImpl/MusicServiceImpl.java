@@ -6,10 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.munhwa.prj.common.vo.Criteria;
 import com.munhwa.prj.music.mapper.MusicMapper;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.vo.MusicVO;
-import com.munhwa.prj.music.vo.SearchVO;
 
 @Repository("musicDAO")
 public class MusicServiceImpl implements MusicService{
@@ -17,8 +17,8 @@ public class MusicServiceImpl implements MusicService{
 	private MusicMapper map;
 
 	@Override
-	public List<MusicVO> musicSelectList() {
-		return map.musicSelectList();
+	public List<MusicVO> musicSelectList(Criteria cri) {
+		return map.musicSelectList(cri);
 	}
 
 	@Override
@@ -27,13 +27,13 @@ public class MusicServiceImpl implements MusicService{
 	}
 	
 	@Override
-	public List<MusicVO> musicPersonalList(String id) {
-		return map.musicPersonalList(id);
+	public List<MusicVO> musicPersonalList(String id, Criteria cri) {
+		return map.musicPersonalList(id,cri);
 	}
 	
 	@Override
-	public List<SearchVO> musicSelectByTitle(String title) {
-		return map.musicSelectByTitle(title);
+	public List<MusicVO> musicSelectByTitle(String title, Criteria cri) {
+		return map.musicSelectByTitle(title, cri);
 	}
 	
 	@Override
@@ -42,8 +42,8 @@ public class MusicServiceImpl implements MusicService{
 	}
 	
 	@Override
-	public List<MusicVO> musicSelectListByPurchase(String id) {
-		return map.musicSelectListByPurchase(id);
+	public List<MusicVO> musicSelectListByPurchase(String id, Criteria cri) {
+		return map.musicSelectListByPurchase(id,cri);
 	}
 	
 	@Override
@@ -82,13 +82,28 @@ public class MusicServiceImpl implements MusicService{
 	}
 
 	@Override
-	public int updateLike(Map<String, Object> paramMap) {
-		return map.updateLike(paramMap);
+	public List<MusicVO> musicSelectListByMusicId(Map<String, List<Integer>> paramMap) {
+		return map.musicSelectListByMusicId(paramMap);
 	}
 
 	@Override
-	public List<MusicVO> musicSelectListByMusicId(Map<String, List<Integer>> paramMap) {
-		return map.musicSelectListByMusicId(paramMap);
+	public int getCountByList(String id) {
+		return map.getCountByList(id);
+	}
+
+	@Override
+	public int getCountByList2(String id) {
+		return map.getCountByList2(id);
+	}
+
+	@Override
+	public int getCountByList3(String title) {
+		return map.getCountByList3(title);
+	}
+
+	@Override
+	public int statusUpdate(Map<String, Object> paramMap) {
+		return map.statusUpdate(paramMap);
 	}
 
 

@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="security"
-           uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <!-- sidebar -->
 <div class="span4 sidebar">
@@ -23,36 +21,35 @@
             <!-- 프로필 이미지 -->
             <div align="center" style="margin-top: 35px;">
                 <c:choose>
-                    <c:when test="${member.sname eq null}">
 
+                    <c:when test="${member.sname eq null}">
                         <img src="resources/images/basic_profile.png" alt="image"
                              style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
                     </c:when>
 
                     <c:otherwise>
                         <c:choose>
-
                             <c:when test="${fn:indexOf(member.sname, 'https://') != -1}">
                                 <img src="${artist.image}" alt="image"
                                      style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
                             </c:when>
                             <c:otherwise>
-
                                 <img src="api/picture/${member.sname}" alt="image"
                                      style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;">
                             </c:otherwise>
                         </c:choose>
                     </c:otherwise>
+
                 </c:choose>
             </div>
 
             <!-- 마일리지 -->
             <div align="right" style="margin: 20px 0px 10px 0px;">
-                <a>보유 마일리지 : ${member.mileage} 원</a>
+            <div style="font-size:12px; color:white;">보유 마일리지 : <a id="sidebarMileage">${member.mileage}</a></div>
             </div>
             <!-- 충전버튼 -->
             <div align="right">
-                <a href="#" class="tbutton small"><span>충전</span></a>
+                <a href="chargeForm.do" class="tbutton small"><span>충전</span></a>
             </div>
         </div>
     </div>
@@ -84,3 +81,9 @@
         </div>
     </div>
 </div>
+
+<script>
+	var sidebarMileage = document.getElementById('sidebarMileage').innerHTML;
+	var sidebarMileage2 = sidebarMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('sidebarMileage').innerHTML = sidebarMileage2+'원';
+</script>

@@ -16,9 +16,9 @@ public class PerformanceVO {
 	private String name;
 	private String location;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date sdate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date edate;
 	private String content;
 	private String status;
@@ -26,6 +26,8 @@ public class PerformanceVO {
 	private int artistId;
 	private int price;
 	private int person;
+	private String artistName;
+	private PerformancePersonalVO performancepersonalvo;
 
 	
 	public void accpetPerformance() {

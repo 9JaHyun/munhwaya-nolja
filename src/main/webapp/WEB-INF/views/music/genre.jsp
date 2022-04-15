@@ -4,7 +4,7 @@
 <!-- layout -->
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 		
 	<!-- content -->
@@ -15,8 +15,8 @@
 			<div class="little-head row">
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
-						<input  id="id" name="id" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px; " value=""
+						<input  id="title" name="title" type="text"
+							style="font-size:x-small; width: 1000px; height: 60px;"
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -51,17 +51,23 @@
 									<c:forEach var="music" items="${musicRnBList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :65px; min-height:65px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+												<c:choose>
+		                                           <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+		                                           <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+		                                           <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+		                                           <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+		                                        </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -74,17 +80,23 @@
 									<c:forEach var="music" items="${musicRapList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :65px; min-height:65px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+												<c:choose>
+		                                            <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+		                                            <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+		                                            <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+		                                            <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+		                                        </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -97,17 +109,23 @@
 									<c:forEach var="music" items="${musicDanceList}" begin="0" end="15">
 										<li class="grid_6">
 											<a class="m-thumbnail" href="streaming?id=${music.id }">
-												<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+												<img style="max-width:65px; min-width:65px; max-height :65px; min-height:65px;" src="api/picture/${music.picture }" alt="#">
 											</a>
 											<h3>
 												<a href="streaming?id=${music.id }">${music.title }</a>
 											</h3> 
 											<span>${music.artName }</span> 
-											<span>likes:${music.likeIt}</span>
+											<span>
+											<c:choose>
+		                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+		                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+		                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+		                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+		                                    </c:choose> 
+											</span>
 										</li>
 									</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- latest -->
 						</li>
@@ -120,17 +138,23 @@
 										<c:forEach var="music" items="${musicBalladList}" begin="0" end="15">
 											<li class="grid_6">
 												<a class="m-thumbnail" href="streaming?id=${music.id }">
-													<img style="width:60; height:60;" src="resources/images/bg/musicBg3.jpg" alt="#">
+													<img style="max-width:65px; min-width:65px; max-height :65px; min-height:65px;" src="api/picture/${music.picture }" alt="#">
 												</a>
 												<h3>
 													<a href="streaming?id=${music.id }">${music.title }</a>
 												</h3> 
 												<span>${music.artName }</span> 
-												<span>likes:${music.likeIt}</span>
+												<span>
+													<c:choose>
+				                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+				                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+				                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+				                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+				                                    </c:choose> 
+												</span>
 											</li>
 										</c:forEach>
 								</ul>
-								<a href="news_single.html" class="Rmore tbutton small"><span>더보기</span></a>
 							</div>
 							<!-- news -->
 						</li>

@@ -172,12 +172,12 @@
     </div>
 
     <%-- 뉴스 --%>
-    <div class="row row-fluid clearfix mbf">
+<%--     <div class="row row-fluid clearfix mbf">
         <div class="span8">
             <div class="def-block">
                 <h4> Latest News </h4><span class="liner"></span>
 
-                <%-- 뉴스 샘플--%>
+                뉴스 샘플
                 <div class="news row-fluid animtt" data-gen="fadeUp" style="opacity:0;">
                     <div class="span5"><img class="four-radius"
                                             src="${resources}/images/assets/news1.jpg" alt="#">
@@ -200,7 +200,7 @@
             </div>
         </div>
 
-        <%-- 이벤트 위젯 --%>
+        이벤트 위젯
         <div class="span4">
             <div class="def-block widget animtt" data-gen="fadeUp" style="opacity:0;">
                 <h4> Events </h4><span class="liner"></span>
@@ -257,14 +257,14 @@
                 </div>
             </div>
 
-            <%-- 인기 트랙 --%>
+            인기 트랙
             <div class="def-block widget animtt" data-gen="fadeUp" style="opacity:0;">
                 <h4> Popular Tracks </h4><span class="liner"></span>
                 <div class="widget-content row-fluid">
                     <div class="scroll-mp3" style="height: 220px;">
                         <div class="content">
                             <ul class="tab-content-items">
-                                <%-- 인기곡 양식 --%>
+                                인기곡 양식
                                 <li class="clearfix">
                                     <a class="m-thumbnail" href="mp3_single_half.html"><img
                                             width="50" height="50"
@@ -281,6 +281,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --%>
 </div>
 

@@ -39,22 +39,22 @@
 <%--                                 <img class="product_img_hover" src="${resources}/images/assets/shop/${performances.image}" alt=""> --%>
                                 <div class="product_inner" style="margin-bottom:5px;">
                                     <h3>${performances.name }</h3>
-                                    <strong> <fmt:formatDate pattern = "MM월 dd일 HH시 MM분" value = "${performances.sdate }" /> ~ 
-                                    <fmt:formatDate pattern = "MM월 dd일 HH시 MM분" value = "${performances.edate }" /> </strong>
+                                    <strong> <fmt:formatDate pattern = "MM월 dd일 HH시 mm분" value = "${performances.sdate }" /> ~ 
+                                    <fmt:formatDate pattern = "HH시 mm분" value = "${performances.edate }" /> </strong><br>
+                                    <strong class="listMileage">${performances.price }</strong>
                                 </div>
                             </div><!-- product -->
                             </c:forEach>
                         </div><!-- products -->
                     </div><!-- gridfull -->
-                    <div class="pagination-tt clearfix" style="margin-left: auto; margin-left: auto; margin-top:30px; width: 520px;">
-        					<ul>
+                    <div class="pagination-tt clearfix" style="margin-left: auto; margin-top:30px; width: 520px;">
         					<!-- 이전페이지 버튼 -->
                 			<c:if test="${pageMake.prev}">
                     			<li><a href="${pageMake.startPage-1}">Previous</a></li>
                 			</c:if>
  			    			<!-- 각 번호 페이지 버튼 -->
                 			<c:forEach var="num" begin="${pageMake.startPage}" end="${pageMake.endPage}">
-                    			<li><a onclick="paging(${num})" class="deactive">${num}</a></li>
+                    			<li style="border:1px solid white; margin-left:5px;"><a onclick="paging(${num})" class="deactive">${num}</a></li>
                 			</c:forEach>
                 			<!-- 다음페이지 버튼 -->
                 			<c:if test="${pageMake.next}">
@@ -106,4 +106,14 @@
         moveForm.pageNum.value = 1;
         moveForm.submit();
     });
+    
+//     var sumMileage = document.getElementById('sumMileage').value;
+//     var sumMileage2 = sumMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+//     document.getElementById('sumMileage').value = sumMileage2+'원';
+    
+    for (var i=0; i<document.getElementsByClassName('listMileage').length; i++) {
+    var listMileage = document.getElementsByClassName('listMileage')[i].innerHTML
+    var listMileage2 = listMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    document.getElementsByClassName('listMileage')[i].innerHTML = listMileage2+'원';
+    }
 </script>

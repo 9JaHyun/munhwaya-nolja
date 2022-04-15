@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div align="right" style="margin-bottom: 50px;">
     <a href="memberChangeInfo.do">회원정보 변경 ></a>
@@ -28,6 +27,7 @@
 
 <script>
     function delMemFn() {
+
         if (!confirm('정말 탈퇴하시겠습니까?')) {
             return false;
         } else {

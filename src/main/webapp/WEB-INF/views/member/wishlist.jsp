@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <style>
     .js-load {
@@ -118,7 +117,6 @@
 </form>
 
 <script>
-
     $(window).on('load', function () {
         // 기본 갯수
         load('#js-load', '4');
@@ -152,8 +150,7 @@
                 contentType: "application/json"
             })
             .done(() => {
-                document.getElementById(id).parentNode.parentNode.parentNode.remove();
-                swal("Hello world!");
+                document.getElementById(id).parentNode.parentNode.parentNode.parentNode.remove();
             });
         }
     }

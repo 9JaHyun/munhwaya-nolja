@@ -40,8 +40,13 @@ public class TicketListServiceImpl implements TicketListService {
 	}
 
 	@Override
-	public int qrcodeAttendance(int id) {
-		return mapper.qrcodeAttendance(id);
+	public int qrcodeAttendance(Map<String, Object> paramMapt) {
+		return mapper.qrcodeAttendance(paramMapt);
+	}
+
+	@Override
+	public int ticketListDelete(Map<String, Object> paramMap) {
+		return mapper.ticketListDelete(paramMap);
 	}
 
 }

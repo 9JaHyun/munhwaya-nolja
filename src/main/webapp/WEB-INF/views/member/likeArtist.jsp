@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
@@ -28,9 +27,17 @@
             </c:if>
             <c:forEach items="${likeArtists}" var="likeArtist">
                 <tr class="js-load">
-                    <td style="padding-left: 30px;"><img
-                            src="resources/music/1.jpg" alt="album cover"
-                            style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
+                    <td style="padding-left: 30px;">
+                        <c:choose>
+                            <c:when test="${likeArtist.image eq null}">
+                                <img src="resources/images/basic_profile.png" alt="image"
+                                     style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${likeArtist.image}" alt="image"
+                                     style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
+                            </c:otherwise>
+                        </c:choose>
                     </td>
                     <td style="text-align: center; padding: 22px 110px 0px 0px;">
                         <a>${likeArtist.name}</a></td>
@@ -51,21 +58,22 @@
 
 <script>
     function delArtistFn(id) {
-
         $.ajax({
             url: "deleteLikeArtist.do",
             data: JSON.stringify({artistId: id}),
             type: "POST",
             contentType: "application/json"
         })
+
         .done(() => {
             document.getElementById(id).parentNode.parentNode.parentNode.remove();
-        });
+        })
+        ;
     }
 
     $(window).on('load', function () {
         // 기본 갯수
-        load('#js-load', '6');
+        load('#js-load', '9');
         $("#js-btn-wrap .button").on("click", function () {
             // 증가 갯수
             load('#js-load', '3', '#js-btn-wrap');

@@ -14,6 +14,7 @@ public class TicketListVO {
 	private String qrcode;
 	private PerformanceVO performancevo;
 	private String attendance;
+	private int person;
 }
 
 

@@ -5,7 +5,7 @@
 
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 		
 	<!-- content -->
@@ -17,7 +17,7 @@
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
 						<input  id="title" name="title" type="text"
-							style="font-size:small; width: 1000px; height: 60px; " value=""
+							style="font-size:small; width: 1000px; height: 60px; "
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -42,9 +42,9 @@
 							<li id="Latest" class="active">
 								<div class="video-grid">
 								<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
-									<a href="streaming?id=${music.musicId }" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>${music.musicTitle }</strong>${music.musicArtistName }</span>
+									<a href="streaming?id=${music.id }" class="grid_3">
+										<img src="api/picture/${music.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
+										<span><strong>${music.title }</strong>${music.artName}</span>
 									</a>
 								</c:forEach>
 								</div><!-- video grid -->
@@ -63,17 +63,17 @@
 						<a href="searchResultAlbum?title=${title}">
 							<h3>검색결과</h3>
 							<span class="liner"></span> 
-							<h4>수록앨범
+							<h4>앨범
 								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
 							</h4>
 						</a>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-								<c:forEach var="album" items="${musicSelectListByTitle}" begin="0" end="7">
-									<a class="grid_3" href="albumInfo?id=${album.albumId }">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>${album.albumTitle }</strong>${album.albumArtistName }</span>
+								<c:forEach var="album" items="${albumSelectListByTitle}" begin="0" end="7">
+									<a class="grid_3" href="albumInfo?id=${album.id }">
+										<img src="api/picture/${album.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
+										<span><strong>${album.albName }</strong>${album.artName}</span>
 									</a>
 								<%-- <form action="#" method="post">
 									<input type="hidden" value="${album.albumId }" name="albumId">
@@ -86,5 +86,6 @@
 				</div><!-- posts -->
 			<!-- 왼쪽하단 메인 끝-->	
 		</div>
-	</div>
-		<!-- content끝 -->
+</div>
+<!-- content끝 -->
+

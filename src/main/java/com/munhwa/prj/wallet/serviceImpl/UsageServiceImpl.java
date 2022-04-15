@@ -15,15 +15,24 @@ public class UsageServiceImpl implements UsageService {
 	private UsageMapper map;
 		
 	@Override
-	public List<UsageVO> findByMemberId(String memberId, Criteria cri) {
-		return map.selectUsageListMemberId(memberId,cri);
+	public List<UsageVO> findByMusic(String memberId, Criteria cri, String startDate, String endDate) {
+		return map.selectUsageListMusic(memberId, cri, startDate, endDate);
 	}
 
 	@Override
-	public int getCountByUsageId(String id) {
-		return map.getCountByUsageId(id);
+	public Integer getCountByMusic(String id, String startDate, String endDate) {
+		return map.getCountByMusic(id, startDate, endDate);
 	}
 
+	@Override
+	public List<UsageVO> findByPerformance(String memberId, Criteria cri, String startDate, String endDate) {
+		return map.selectUsageListPerformance(memberId, cri, startDate, endDate);
+	}
+
+	@Override
+	public Integer getCountByPerformance(String id, String startDate, String endDate) {
+		return map.getCountByPerformance(id, startDate, endDate);
+	}
 
 	@Override
 	public int insertUsage(List<UsageVO> vo) {
@@ -33,4 +42,15 @@ public class UsageServiceImpl implements UsageService {
 		}
 		return cnt;
 	}
+
+	@Override
+	public Integer getSumByMusic(String id, String startDate, String endDate) {
+		return map.getSumByMusic(id, startDate, endDate);
+	}
+
+	@Override
+	public Integer getSumByPerformance(String id, String startDate, String endDate) {
+		return map.getSumByPerformance(id, startDate, endDate);
+	}
+
 }

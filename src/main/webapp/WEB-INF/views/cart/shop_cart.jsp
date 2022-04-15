@@ -3,20 +3,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="resources" value="${pageContext.request.contextPath}/resources"/>
 <script src="./scripts/jquery-3.2.1.min.js"></script>
+<style>
+td {
+	vertical-align: middle; 
+}
+
+tr {
+	margin-bottom:20px;
+}
+</style>
 <div id="layout" class="full">
 
     <div class="under_header">
-        <img src="${resources}/images/assets/breadcrumbs10.png" alt="#">
+        <img src="${resources}/images/assets/breadcrumbs1.png" alt="#">
     </div><!-- under header -->
 
     <div class="page-content back_to_up">
         <div class="row clearfix mb">
             <div class="breadcrumbIn">
                 <ul>
-                    <li><a href="index.html" class="toptip" title="Homepage"> <i
+                    <li><a href="home.do" class="toptip" title="Homepage"> <i
                             class="icon-home"></i> </a></li>
-                    <li><a href="shop.html"> Shop </a></li>
-                    <li> SHOPPING BAG</li>
+                    <li><a href="chart"> 차트 순위 </a></li>
+                    <li>쇼핑 카트</li>
                 </ul>
             </div><!-- breadcrumb -->
         </div>
@@ -30,34 +39,43 @@
                         <div class="grid_12">
                             <form action="#" method="post">
                                 <div class="bag_table">
-                                    <table class="shop_table footable tablet footable-loaded" style="width:100%"
+                                    <table id="cartTable"class="shop_table footable tablet footable-loaded" style="width:100%"
                                            cellspacing="0">
                                         <thead>
-                                        <tr>
-                                            <th data-hide="phone" class="product-thumbnail">&nbsp;
+                                        <tr style="height:50px; color:white;">
+                                            <th data-hide="phone" class="product-thumbnail" style="width:100px;">&nbsp;
                                             </th>
-                                            <th class="product-song">노래</th>
+                                            <th class="product-song">곡 제목</th>
                                             <th class="product-name">아티스트</th>
+                                            <th class="product-genre">장르</th>
                                             <th class="product-subtotal">가격</th>
-                                            <th class="product-remove">&nbsp;</th>
+                                            <th class="product-remove">삭제</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${carts }" var="cart">
-                                        <tr class="cart_table_item">
+                                        <tr class="cart_table_item" style="height:50px; color:white;">
                                             <td class="product-thumbnail" >
-                                                <a href="#"><img src="images/assets/shop/thumb2.jpg"
-                                                                 alt="#" name="carts"></a>
+                                                <a href="#"><img src="resources/images/bg/musicBg3.jpg"
+                                                                 alt="#" name="carts"  style="width:100px; height:100px; object-fit: cover;"></a>
                                             </td>
-                                            <td class="product-name">
+                                            <td class="product-name" style="text-align:center;">
                                                 <div class="title" id="title">${cart.value.title}</div>
-                                                <br><br>
                                             </td>
-                                        	<td class="product-name">
+                                        	<td class="product-name" style="text-align:center;">
 												<div class="artName" id="artName">${cart.value.artName }</div>	                                        	
 											</td>
-
-                                            <td class="product-name">
+											<td class="product-name" style="text-align:center;">
+												<div class="genre" id="genre">
+												 <c:choose>
+                                                       <c:when test="${cart.value.genre eq 'G01'}">발라드</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G02'}">댄스</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G03'}">랩/힙합</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G04'}">R&B/Soul</c:when>
+                                                 </c:choose> 
+												</div>
+											</td>
+                                            <td class="product-name" style="text-align:center;">
                                                 <div class="price" id="price">${cart.value.price}</div>
                                             </td>
 
@@ -91,7 +109,7 @@
                             <tbody>
                             <tr class="cart-subtotal">
                                 <th><strong>보유중인 마일리지 </strong></th>
-                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;${cart.musicvo.price }[0]</span></strong></td>
+                                <td><strong><span class="amount" id="sessionMileage">&nbsp;&nbsp;&nbsp;${mileage}</span></strong></td>
                             </tr>
                             <tr class="total">
                                 <th><strong>총 가격</strong></th>
@@ -102,7 +120,7 @@
                           
                             <tr class="total">
                                 <th><strong>잔여 마일리지</strong></th>
-                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;0</span></strong></td>
+                                <td>&nbsp;&nbsp;&nbsp;<strong><span class="amount" id="minusMileage"></span></strong></td>
                             </tr>
                             </tbody>
                         </table>
@@ -116,12 +134,6 @@
     </div><!-- end page content -->
 </div>
 
-<!-- <form id="frm" name="frm"> -->
-<!-- 	<input type="hidden" name="mileage" id="mileage"> -->
-<!-- 	<input type="hidden" name="memberId" id="memberId" value="test0@gmail.com"> -->
-<!-- 	<input type="hidden" name="pks" id="pks" value="1">  -->
-<!-- 	<input type="hidden" name="place" id="place" value="U01"> -->
-<!-- </form> -->
 <script>
 
 $(document).ready(function(){
@@ -139,10 +151,16 @@ function itemTotal() {
 		sum += parseInt(document.getElementsByClassName("price")[i].innerHTML)
 		
 	}
-// 	var summ = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(sum);
 	document.getElementById("itemTotalPrice").innerHTML = sum;
-	document.getElementById("mileage").value = sum;
-	$("#totalPrice").val(sum);
+	document.getElementById("minusMileage").innerHTML = parseInt(${mileage}) - parseInt(document.getElementById("itemTotalPrice").innerHTML);
+	
+	var sumMileage = document.getElementById('itemTotalPrice').innerHTML;
+	var sumMileage2 = sumMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('itemTotalPrice').innerHTML = sumMileage2+'원';
+	
+	var minusMileage = document.getElementById('minusMileage').innerHTML;
+	var minusMileage2 = minusMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('minusMileage').innerHTML = minusMileage2+'원';
 }
 
 
@@ -171,8 +189,11 @@ function deleteCart(n) {
 }
 
 function payCart() {
+ 	if(${mileage} < document.getElementById("itemTotalPrice").innerHTML) {
+	alert("잔액이 부족합니다.")		
+	location.href="chargeForm.do";
+} else {
 	let list = [];
-	
 	$("img[name='carts']").each(function(i){
 	var tr = $(this).parent().parent().parent();
 	var td = $(tr).children();
@@ -180,12 +201,13 @@ function payCart() {
 	
 	var title = td.eq(1).text().trim(); 
 	var artName = td.eq(2).text().trim(); 
-	var price = td.eq(3).text().trim();
-	var id = td.eq(5).find("input").val();
+	var price = td.eq(4).text().trim();
+	var price2 = price.substring(0, price.length - 1);
+	var id = td.eq(6).find("input").val();
 	
 	obj["title"] = title;
 	obj["artName"] = artName;
-	obj["price"] = price;
+	obj["price"] = price2;
 	obj["id"] = id;
 	
 	list.push(obj);
@@ -198,28 +220,23 @@ function payCart() {
 			contentType: 'application/json; charset=utf-8',
 	        success : function(data) {
 	                alert("결제에 성공하였습니다.")
-	                location.href="chargeForm";
+	                location.href="usageHistoryOfMusic.do";
 	            },
 				error: function(request, status, error){
 	                alert("결제에 실패하였습니다.");
 	            }
 	        });
   
-// 	var formValues = $("form[name=frm]").serialize();
-	
-// 	$.ajax({
-// 		url : "payCart",
-// 		type : "post",
-// 		data : formValues,
-// 		async : false,
-// 		dataType : "text",
-//         success : function(data) {
-//                 alert("결제에 성공하였습니다.")
-//                 location.href="chargeForm";
-//             },
-// 			error: function(xhr, status, error){
-//                 alert(error);
-//             }
-//         });
-    }
+    }}
+
+	var sessionMileage = document.getElementById('sessionMileage').textContent
+	var sessionMileage2 = sessionMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('sessionMileage').textContent = sessionMileage2+'원';
+
+	for (var i=0; i<document.getElementsByClassName('price').length; i++) {
+	var listMileage = document.getElementsByClassName('price')[i].textContent
+	var listMileage2 = listMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementsByClassName('price')[i].textContent = listMileage2+'원';
+
+	}
 </script>

@@ -42,28 +42,28 @@
 									<h3 style="font-size: 25pt; margin-bottom: 30px;">${performance.name }</h3>
 									<br>
 									<div style="margin-bottom: 10px">
+										<strong style="font-size: 14pt;">아티스트</strong>
+										<span style="margin-left:30px; color:white; font-size:13pt;">${artistname }</span>
+									</div>
+									<br>
+									<div style="margin-bottom: 10px">
 										<strong style="font-size: 14pt;">공연장소</strong>
 										<span style="margin-left:30px; color:white; font-size:13pt;">${performance.location }</span>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
 										<strong style="font-size: 14pt">공연시작일</strong>
-										<span style="margin-left:13px; color:white; font-size:13pt;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performance.sdate }" /></span>
+										<span style="margin-left:13px; color:white; font-size:13pt;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performance.sdate }" /></span>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
 										<strong style="font-size: 14pt">공연종료일</strong>
-										<span style="margin-left:13px; color:white; font-size:13pt;"><fmt:formatDate pattern="MM월 dd일 HH시 MM분" value="${performance.edate }" /></span>
+										<span style="margin-left:13px; color:white; font-size:13pt;"><fmt:formatDate pattern="MM월 dd일 HH시 mm분" value="${performance.edate }" /></span>
 									</div>
 									<br>
 									<div style="margin-bottom: 10px">
 										<strong style="font-size: 14pt;">공연가격</strong>
-										<span style="margin-left:30px; color:white; font-size:13pt;">${performance.price }원</span>
-									</div>
-									<br>
-									<div style="margin-bottom: 10px">
-										<strong style="font-size: 14pt;">관람등급</strong>
-										<span style="margin-left:30px; color:white; font-size:13pt;">전체이용가</span>
+										<span id="Mileage" style="margin-left:30px; color:white; font-size:13pt;">${performance.price }</span>
 									</div>
 								</div>
 								<!-- grid6 -->
@@ -104,19 +104,37 @@
 							<tbody>
 								<tr class="cart-subtotal">
 									<th><strong>보유중인 마일리지</strong></th>
-									<td><span style="margin-left:10px; color:white; font-size:13pt;">${mileage }원</span></td>
+									<td><span class="sumMileage" style="margin-left:10px; color:white; font-size:13pt;">${mileage }</span></td>
 								</tr>
 								<tr class="total">
-									<th><strong>공연 가격</strong></th>
-									<td><span style="margin-left:10px; color:white; font-size:13pt;">${performance.price }원</span></td>
+									<th><strong>결제 금액</strong></th>
+									<td><span class="sumMileage" id="price"style="margin-left:10px; color:white; font-size:13pt;">${performance.price }</span></td>
 								</tr>
-
 								<tr class="total">
 									<th><strong>잔여 마일리지</strong></th>
-									<td><span style="margin-left:10px; color:white; font-size:13pt;">${mileage - performance.price }원</span></td>
+									<td><span class="sumMileage" id="mileage" style="margin-left:10px; color:white; font-size:13pt;">${mileage }</span></td>
 								</tr>
 							</tbody>
 						</table>
+						<br><br><br>
+						<h4>티켓수량</h4>
+						<span class="liner"></span>
+						<select id="option" style="width:275px; margin-bottom:20px;" onchange="changeMileage(this.value)">
+						<c:choose >
+						<c:when test="${performance.performancepersonalvo.personal > 45}">
+							<c:forEach var="i" begin="1" end="${50 - performance.performancepersonalvo.personal}">
+								<option value="${i}">${i}매</option>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="i" begin="1" end="5">
+								<option value="${i}">${i}매</option>
+							</c:forEach>
+						</c:otherwise>
+						</c:choose>
+						</select>
+						
+						<span class="liner"></span>
 						<button onclick="ticketListInsert(${performance.id})"
 							type="button" class="tbutton mt medium" name="update_cart" style="width:275px;">
 							<span>구매하기</span>
@@ -136,7 +154,7 @@
 					<div class="widget-content tags">
 						<ul id="backsoon" class="countdown clearfix">
 							<li style="padding:0px;">
-        						<span id="date" class="date" style="font-size:18pt;"></span>
+        						<span id="date" class="date" style="font-size:17pt;"></span>
 								<span id="time" class="days" style="font-size:18pt;"></span>							
 							</li>
 							<li style="padding:0px;">
@@ -156,11 +174,23 @@
 <div>
 	<form id = "ticketFrm" action="ticketListInsert.do" method="get">
 		<input type="hidden" id="id" name="id">
+		<input type="hidden" id="person" name="person">
 	</form>
 </div>
 <script type="text/javascript">
+	
+	function changeMileage(value) {
+		let price = '${performance.price }' * value 
+		$("#price").html(price + '원')
+		let mileage = '${mileage}' - price
+		$("#mileage").html(mileage + '원')
+	}
+
 	function ticketListInsert(n) {
 		ticketFrm.id.value = n;
+		var num = $('#option').val();
+		console.log(num);
+		ticketFrm.person.value = num;
 		ticketFrm.submit();
 	}
 	
@@ -186,4 +216,14 @@
 	    setClock();
 	    setInterval(setClock,1000); //1초마다 setClock 함수 실행
 	}
+	
+ var sumMileage = document.getElementById('Mileage').innerHTML;
+ var sumMileage2 = sumMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+ document.getElementById('Mileage').innerHTML = sumMileage2+'원';
+ 
+ for (var i=0; i<document.getElementsByClassName('sumMileage').length; i++) {
+	    var listMileage = document.getElementsByClassName('sumMileage')[i].innerHTML
+	    var listMileage2 = listMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	    document.getElementsByClassName('sumMileage')[i].innerHTML = listMileage2+'원';
+	    }
 </script>

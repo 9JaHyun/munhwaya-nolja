@@ -1,9 +1,9 @@
 package com.munhwa.prj.config.auth.dto;
 
+import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.common.code.Genre;
 import com.munhwa.prj.member.vo.Auth;
 import com.munhwa.prj.member.vo.MemberVO;
-import com.munhwa.prj.music.vo.MusicVO;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;

@@ -15,20 +15,25 @@ public class ProfitServiceImpl implements ProfitService {
 	private ProfitMapper map;
 	
 	@Override
-	public List<ProfitVO> findByMemberId(String memberId, Criteria cri) {
-		return map.selectProfitListMemberId(memberId, cri);
+	public List<ProfitVO> findByMusic(String memberId, Criteria cri, String startDate, String endDate) {
+		return map.selectProfitListMusic(memberId, cri, startDate, endDate);
 	}
 
 	@Override
-	public ProfitVO selectProfit(ProfitVO vo) {
-		return map.selectProfit(vo);
+	public Integer getCountByMusic(String id, String startDate, String endDate) {
+		return map.getCountByMusic(id, startDate, endDate);
+	}
+
+	@Override
+	public List<ProfitVO> findByPerformance(String memberId, Criteria cri, String startDate, String endDate) {
+		return map.selectProfitListPerformance(memberId, cri, startDate, endDate);
+	}
+
+	@Override
+	public Integer getCountByPerformance(String id, String startDate, String endDate) {
+		return map.getCountByPerformance(id, startDate, endDate);
 	}
 	
-	@Override
-	public int getCountByProfitId(String id) {
-		return map.getCountByProfitId(id);
-	}
-
 	@Override
 	public int insertProfit(List<ProfitVO> vo) {
 		int cnt = 0;
@@ -38,6 +43,14 @@ public class ProfitServiceImpl implements ProfitService {
 		return cnt;
 	}
 
+	@Override
+	public Integer getSumByMusic(String id, String startDate, String endDate) {
+		return map.getSumByMusic(id, startDate, endDate);
+	}
 
+	@Override
+	public Integer getSumByPerformance(String id, String startDate, String endDate) {
+		return map.getSumByPerformance(id, startDate, endDate);
+	}
 
 }

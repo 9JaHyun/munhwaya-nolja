@@ -20,4 +20,5 @@ public class ChargeVO {
 	private String memberId;
 	
 	private CommonCodeVO commonCodevo;
+	
 }
