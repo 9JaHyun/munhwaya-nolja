@@ -5,9 +5,14 @@ import java.util.List;
 import com.munhwa.prj.artist.vo.ArtistVO;
 
 public interface ArtistMapper {
-	List<ArtistVO> artistSelectList();
-	ArtistVO artistSelect(ArtistVO vo);
-	int artistInsert(ArtistVO vo);
-	int artistUpdate(ArtistVO vo);
-	int nameChk(String name);
+
+    List<ArtistVO> selectArtistList();
+
+    ArtistVO selectArtistByMemberId(String memberId);
+
+    int insertArtist(ArtistVO vo);
+
+    int updateArtist(ArtistVO vo);
+
+    int chkName(String name);
 }

@@ -78,7 +78,7 @@ public class PerformanceController {
 		ArtistVO artist  = new ArtistVO();
 		artist.setMemberId(user.getId());
 		
-		artist = artistDao.artistSelect(artist);
+		artist = artistDao.findByMemberId(artist);
 		model.addAttribute("artist", artist);
 		return "performance/performanceInsertForm";
 	}

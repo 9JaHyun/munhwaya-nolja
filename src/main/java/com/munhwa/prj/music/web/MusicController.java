@@ -109,7 +109,6 @@ public class MusicController {
 
 	@GetMapping("/searchResultAlbum")
 	public String searchResultAlbum(Model model, String title, Criteria cri) {
-		System.out.println(title);
 		model.addAttribute("title", title);
 		model.addAttribute("albumSelectListByTitle1", albumDAO.albumSelectByTitle(title,cri));
 		

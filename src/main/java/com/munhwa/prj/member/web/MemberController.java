@@ -56,9 +56,8 @@ public class MemberController {
 
     // 회원정보 변경 페이지
     @GetMapping("/memberChangeInfo.do")
-    public String memberChangeInfo(@LoginUser SessionUser sessionUser, ArtistVO vo, Model model) {
-    	vo.setMemberId(sessionUser.getId());
-    	model.addAttribute("artists", artistService.artistSelect(vo));
+    public String memberChangeInfo(@LoginUser SessionUser user, Model model) {
+    	model.addAttribute("artists", artistService.findByMemberId(user.getId()));
         return "memberChangeInfo-member";
     }
 
