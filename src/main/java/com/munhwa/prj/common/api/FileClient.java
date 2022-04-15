@@ -52,8 +52,7 @@ public class FileClient {
     @GetMapping("/api/attach/{itemId}")
     public ResponseEntity<Resource> downloadAttach(@PathVariable int itemId)
           throws MalformedURLException, UnsupportedEncodingException {
-    	System.out.println(itemId);
-        UploadFileVO file = uploadFileService.findById(itemId);  
+        UploadFileVO file = uploadFileService.findById(itemId);
         String originalFileName = file.getOname();
         String storeFileName = file.getSname();
 

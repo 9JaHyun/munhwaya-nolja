@@ -96,10 +96,8 @@ public class WishlistController {
     // 마이페이지 - 위시리스트 추가
     @PostMapping("addWishlist.do")
     public String addWishlist(@LoginUser SessionUser sessionUser, WishlistVO vo) {
-
         String memberId = sessionUser.getId();
         vo.setMemberId(memberId);
-        System.out.println(vo.getId());
         wishlistDao.addWishlist(vo);
         return "redirect:wishlist.do";
     }

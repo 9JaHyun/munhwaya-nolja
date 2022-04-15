@@ -1,21 +1,5 @@
 package com.munhwa.prj.artist.web;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
 import com.munhwa.prj.artist.service.ArtistService;
@@ -27,8 +11,20 @@ import com.munhwa.prj.common.entity.UploadFile;
 import com.munhwa.prj.common.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
-
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /*
  * 작성자:차주연
@@ -38,21 +34,22 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class ArtistController {
 
-	@Autowired
-	private ArtistService artistDao;
-	@Autowired
-	private FileUtils fileUtils;
+	private final ArtistService artistDao;
+	private final FileUtils fileUtils;
+	private final PromotionRequestService promotionRequestDao;
 
-	@Autowired
-	private PromotionRequestService promotionRequestDao;
+	public ArtistController(ArtistService artistDao, FileUtils fileUtils,
+		PromotionRequestService promotionRequestDao) {
+		this.artistDao = artistDao;
+		this.fileUtils = fileUtils;
+		this.promotionRequestDao = promotionRequestDao;
+	}
 
 	// 아티스트 상세정보
 	@RequestMapping("/artistDetail")
 	public String artistDetail(@LoginUser SessionUser user, Model model) {
-		ArtistVO vo = new ArtistVO();
-		vo.setMemberId(user.getId());
-		vo = artistDao.artistSelect(vo);
-		model.addAttribute("artist", vo);
+		ArtistVO artist = artistDao.findByMemberId(user.getId());
+		model.addAttribute("artist", artist);
 		return "artist/artistDetail";
 	}
 
@@ -95,17 +92,14 @@ public class ArtistController {
 
 	// 아티스트 프로필 등록
 	@RequestMapping("/artistProfile") 
-	public String artistProfile(@LoginUser SessionUser user, ArtistVO vo, /* RedirectAttributes */ Model rttr) {
+	public String artistProfile(@LoginUser SessionUser user, ArtistVO vo, Model model) {
 		vo.setMemberId(user.getId());
-		ArtistVO findArtist = artistDao.artistSelect(vo);
-		// 검색
-		System.out.println("vo : " + vo);
-		
-		int pro = artistDao.artistInsert(findArtist);
+
+		int pro = artistDao.save(vo);
 			if(pro != 0) {
-				rttr.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
+				model.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
 			}else {
-					rttr.addAttribute("message", "입력 실패하셨습니다.");
+					model.addAttribute("message", "입력 실패하셨습니다.");
 			}
 			
 			return "artist/myPageMove";
@@ -113,12 +107,10 @@ public class ArtistController {
 	
     // 아티스트 정보 수정 폼 호출
     @RequestMapping("/changeArtistProfileForm")
-    public String changeArtistProfileForm(@LoginUser SessionUser user, Model rttr) {
-    	ArtistVO artist = new ArtistVO();
-    	artist.setMemberId(user.getId());
-    	artist = artistDao.artistSelect(artist);
-    	
-    	rttr.addAttribute("artist", artist);
+    public String changeArtistProfileForm(@LoginUser SessionUser user, Model model) {
+		ArtistVO artist = artistDao.findByMemberId(user.getId());
+
+		model.addAttribute("artist", artist);
     	return "changeArtistProfile-artist";
     }
     
@@ -129,7 +121,7 @@ public class ArtistController {
     	artist.setMemberId(user.getId());
     	artist.setImage(file.getStoredFileName());
     
-    	artistDao.artistUpdate(artist);
+    	artistDao.update(artist);
     	return "redirect:mypage.do";
     }
     
@@ -204,7 +196,6 @@ public class ArtistController {
  		vo.setStatus("A03");
  		int req = promotionRequestDao.promotionRequestInsert(vo);
  		model.addAttribute("message", "아티스트 승급 신청을 요청했습니다.\r\n운영자로부터의 응답시까지 대기바랍니다.");
- 		System.out.println(vo);
 
  		return "artist/myPageMove";
  	}
@@ -213,7 +204,6 @@ public class ArtistController {
 	@RestController
 	@RequiredArgsConstructor
 	class SmsController {
-						
 	private final SmsServiceImpl smsServiceImpl;
 						
 	@PostMapping("/user/sms")
@@ -251,10 +241,8 @@ public class ArtistController {
 				ranNum = Integer.toString(createNum); // 1자리 난수를 String으로 형변환
 				resultNum += ranNum; // 생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
 			}
-							
 			return resultNum;
 	}
-		
 	}
 }
 

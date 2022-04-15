@@ -13,20 +13,20 @@
 		<result property="name" column="name"/>
 	</resultMap>
 
-	<select id="artistSelectList" resultMap="artistMap">  
+	<select id="selectArtistList" resultMap="artistMap">
 		SELECT * FROM ARTIST ORDER BY DESC
 	</select>
 	
-	<select id="artistSelect" resultMap="artistMap" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+	<select id="selectArtistByMemberId" resultMap="artistMap">
 		SELECT * FROM ARTIST WHERE MEMBER_ID = #{memberId}
 	</select>
 	
-	<insert id="artistInsert" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+	<insert id="insertArtist" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
     INSERT INTO ARTIST(ID, IMAGE, GENDER, GENRE, CONTENT, TYPE, NAME, member_id)
     VALUES(artist_seq.nextval, #{image}, #{gender}, #{genre}, #{content}, #{type}, #{name}, #{memberId})
 	</insert>
 	
-	<update id="artistUpdate" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+	<update id="updateArtist" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
 		UPDATE ARTIST
 		<set>
 			<if test="image != null">image = #{image},</if>
@@ -39,7 +39,7 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
-	<select id="nameChk" resultType="int" parameterType="String">
+	<select id="chkName" resultType="int" parameterType="String">
 		SELECT COUNT(*) FROM ARTIST
 		WHERE NAME = #{name}
 	</select>

@@ -16,33 +16,33 @@ public class ArtistServiceImpl implements ArtistService {
 private ArtistMapper map;
 	
 	@Override
-	public List<ArtistVO> artistSelectList() {
+	public List<ArtistVO> findAll() {
 		// TODO Auto-generated method stub
-		return map.artistSelectList();
+		return map.selectArtistList();
 	}
 
 	@Override
-	public ArtistVO artistSelect(ArtistVO vo) {
+	public ArtistVO findByMemberId(String memberId) {
 		// TODO Auto-generated method stub
-		return map.artistSelect(vo);
+		return map.selectArtistByMemberId(memberId);
 	}
 
 	@Override
-	public int artistInsert(ArtistVO vo) {
+	public int save(ArtistVO vo) {
 		// TODO Auto-generated method stub
-		return map.artistInsert(vo);
+		return map.insertArtist(vo);
 	}
 
 	@Override
-	public int artistUpdate(ArtistVO vo) {
+	public int update(ArtistVO vo) {
 		// TODO Auto-generated method stub
-		return map.artistUpdate(vo);
+		return map.updateArtist(vo);
 	}
 
 	@Override
-	public int nameChk(String name) {
+	public int chkNick(String name) {
 		// TODO Auto-generated method stub
-		return map.nameChk(name);
+		return map.chkName(name);
 	}
 	
 }
