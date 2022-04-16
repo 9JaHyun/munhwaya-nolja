@@ -1,4 +1,4 @@
-package com.munhwa.prj.common.service;
+package com.munhwa.prj.common.propertyScan.service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,6 +1,6 @@
-package com.munhwa.prj.common.service;
+package com.munhwa.prj.common.file.service;
 
-import com.munhwa.prj.common.entity.UploadFile;
+import com.munhwa.prj.common.file.entity.UploadFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtistVO;
-import com.munhwa.prj.common.service.FileUtils;
+import com.munhwa.prj.common.file.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.performance.service.PerformanceService;
@@ -75,10 +75,7 @@ public class PerformanceController {
 
 	@RequestMapping("/performanceInsertForm.do")
 	public String performanceInsertForm(@LoginUser SessionUser user, Model model) {
-		ArtistVO artist  = new ArtistVO();
-		artist.setMemberId(user.getId());
-		
-		artist = artistDao.findByMemberId(artist);
+		ArtistVO artist = artistDao.findByMemberId(user.getId());
 		model.addAttribute("artist", artist);
 		return "performance/performanceInsertForm";
 	}

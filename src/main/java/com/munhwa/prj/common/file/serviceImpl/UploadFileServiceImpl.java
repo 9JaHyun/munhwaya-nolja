@@ -1,8 +1,8 @@
-package com.munhwa.prj.common.serviceImpl;
+package com.munhwa.prj.common.file.serviceImpl;
 
-import com.munhwa.prj.common.entity.UploadFileVO;
-import com.munhwa.prj.common.mapper.UploadFileMapper;
-import com.munhwa.prj.common.service.UploadFileService;
+import com.munhwa.prj.common.file.entity.UploadFileVO;
+import com.munhwa.prj.common.file.mapper.UploadFileMapper;
+import com.munhwa.prj.common.file.service.UploadFileService;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

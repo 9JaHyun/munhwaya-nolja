@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.music.vo.PurchaseVO;
 import com.munhwa.prj.music.vo.PurchaseVO2;
 

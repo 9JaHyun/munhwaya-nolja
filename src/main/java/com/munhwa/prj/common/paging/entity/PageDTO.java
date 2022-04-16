@@ -1,4 +1,4 @@
-package com.munhwa.prj.common.vo;
+package com.munhwa.prj.common.paging.entity;
 
 import lombok.Data;
 

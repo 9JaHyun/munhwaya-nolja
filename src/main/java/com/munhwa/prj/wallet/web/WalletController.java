@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
-import com.munhwa.prj.common.vo.Criteria;
-import com.munhwa.prj.common.vo.PageDTO;
+import com.munhwa.prj.common.paging.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.service.MemberService;

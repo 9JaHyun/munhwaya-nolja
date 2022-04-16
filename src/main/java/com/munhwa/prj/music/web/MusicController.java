@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.munhwa.prj.common.entity.UploadFile;
-import com.munhwa.prj.common.entity.UploadFileVO;
-import com.munhwa.prj.common.service.FileUtils;
-import com.munhwa.prj.common.service.UploadFileService;
-import com.munhwa.prj.common.vo.Criteria;
-import com.munhwa.prj.common.vo.PageDTO;
+import com.munhwa.prj.common.file.entity.UploadFile;
+import com.munhwa.prj.common.file.entity.UploadFileVO;
+import com.munhwa.prj.common.file.service.FileUtils;
+import com.munhwa.prj.common.file.service.UploadFileService;
+import com.munhwa.prj.common.paging.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.music.service.AlbumService;

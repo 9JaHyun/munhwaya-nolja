@@ -1,12 +1,9 @@
 package com.munhwa.prj.charge.service;
 
-import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.munhwa.prj.charge.vo.ChargeVO;
-import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 
 public interface ChargeService {
 	// 상세 지갑 정보 

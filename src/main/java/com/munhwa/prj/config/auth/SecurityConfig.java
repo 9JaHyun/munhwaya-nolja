@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .and()
               .authorizeRequests(request -> request
                     .antMatchers("/", "/home.do", "/signup.do", "/resources/**", "/css/**",
-                          "/js/**", "/*signup*", "/idChk", "/nickChk", "/findId", "/findPassword", "/findIdResult"
+                          "/js/**", "/*signup*", "/chkId", "/chkNick", "/findId", "/findPassword", "/findIdResult"
                           ,"/findpw").permitAll()
                     .antMatchers("/member/**").access("hasRole('ROLE_R01')") // member
                     .antMatchers("/artist/**").access("hasRole('ROLE_R02')") // artist

@@ -2,7 +2,7 @@ package com.munhwa.prj.wallet.vo;
 
 import java.util.Date;
 
-import com.munhwa.prj.common.vo.CommonCodeVO;
+import com.munhwa.prj.common.code.entity.CommonCodeVO;
 import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 

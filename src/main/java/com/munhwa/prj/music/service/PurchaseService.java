@@ -2,7 +2,7 @@ package com.munhwa.prj.music.service;
 
 import java.util.List;
 
-import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.music.vo.PurchaseVO;
 import com.munhwa.prj.music.vo.PurchaseVO2;
 

@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.munhwa.prj.common.vo.CommonCodeVO;
+import com.munhwa.prj.common.code.entity.CommonCodeVO;
 
 import lombok.Getter;
 import lombok.Setter;

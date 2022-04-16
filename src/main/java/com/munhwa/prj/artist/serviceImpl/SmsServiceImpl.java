@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.munhwa.prj.artist.web.MessagesDTO;
 import com.munhwa.prj.artist.web.SmsRequest;
 import com.munhwa.prj.artist.web.SmsResponse;
-import com.munhwa.prj.common.service.PropertiesScan;
+import com.munhwa.prj.common.propertyScan.service.PropertiesScan;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
