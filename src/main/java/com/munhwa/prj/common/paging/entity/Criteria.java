@@ -1,4 +1,4 @@
-package com.munhwa.prj.common.entity;
+package com.munhwa.prj.common.paging.entity;
 
 import lombok.Getter;
 import lombok.Setter;

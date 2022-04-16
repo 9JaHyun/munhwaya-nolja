@@ -13,7 +13,7 @@
 			resultMap="commonResultMap" />
 	</resultMap>
 
-	<resultMap type="com.munhwa.prj.common.entity.CommonCodeVO"
+	<resultMap type="com.munhwa.prj.common.code.entity.CommonCodeVO"
 		id="commonResultMap">
 		<id property="id" column="id" />
 		<result property="name" column="name" />

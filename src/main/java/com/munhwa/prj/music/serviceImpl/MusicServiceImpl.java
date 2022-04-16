@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.munhwa.prj.common.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.music.mapper.MusicMapper;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.vo.MusicVO;

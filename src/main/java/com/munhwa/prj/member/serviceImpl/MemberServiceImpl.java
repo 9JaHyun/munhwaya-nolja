@@ -1,6 +1,6 @@
 package com.munhwa.prj.member.serviceImpl;
 
-import com.munhwa.prj.common.service.PropertiesScan;
+import com.munhwa.prj.common.propertyScan.service.PropertiesScan;
 import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;

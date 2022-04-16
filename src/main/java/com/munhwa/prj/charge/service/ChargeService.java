@@ -3,7 +3,7 @@ package com.munhwa.prj.charge.service;
 import java.util.List;
 
 import com.munhwa.prj.charge.vo.ChargeVO;
-import com.munhwa.prj.common.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 
 public interface ChargeService {
 	// 상세 지갑 정보 

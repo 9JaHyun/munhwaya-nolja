@@ -1,10 +1,9 @@
 package com.munhwa.prj.member.web;
 
 import com.munhwa.prj.artist.service.ArtistService;
-import com.munhwa.prj.artist.vo.ArtistVO;
-import com.munhwa.prj.common.code.Genre;
-import com.munhwa.prj.common.entity.UploadFile;
-import com.munhwa.prj.common.service.FileUtils;
+import com.munhwa.prj.common.code.entity.Genre;
+import com.munhwa.prj.common.file.entity.UploadFile;
+import com.munhwa.prj.common.file.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.service.MemberService;

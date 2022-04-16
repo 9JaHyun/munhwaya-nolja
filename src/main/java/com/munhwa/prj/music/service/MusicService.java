@@ -3,7 +3,7 @@ package com.munhwa.prj.music.service;
 import java.util.List;
 import java.util.Map;
 
-import com.munhwa.prj.common.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.music.vo.MusicVO;
 
 public interface MusicService {

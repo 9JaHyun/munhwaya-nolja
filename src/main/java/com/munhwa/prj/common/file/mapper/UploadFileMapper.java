@@ -1,6 +1,6 @@
-package com.munhwa.prj.common.mapper;
+package com.munhwa.prj.common.file.mapper;
 
-import com.munhwa.prj.common.entity.UploadFileVO;
+import com.munhwa.prj.common.file.entity.UploadFileVO;
 import java.util.List;
 
 public interface UploadFileMapper {

@@ -1,6 +1,6 @@
 package com.munhwa.prj.wallet.mapper;
 
-import com.munhwa.prj.common.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.wallet.vo.UsageVO;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

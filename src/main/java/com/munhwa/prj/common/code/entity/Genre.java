@@ -1,4 +1,4 @@
-package com.munhwa.prj.common.code;
+package com.munhwa.prj.common.code.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

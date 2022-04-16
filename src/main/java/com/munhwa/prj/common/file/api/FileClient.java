@@ -1,8 +1,8 @@
-package com.munhwa.prj.common.api;
+package com.munhwa.prj.common.file.api;
 
-import com.munhwa.prj.common.entity.UploadFileVO;
-import com.munhwa.prj.common.service.FileUtils;
-import com.munhwa.prj.common.service.UploadFileService;
+import com.munhwa.prj.common.file.entity.UploadFileVO;
+import com.munhwa.prj.common.file.service.FileUtils;
+import com.munhwa.prj.common.file.service.UploadFileService;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;

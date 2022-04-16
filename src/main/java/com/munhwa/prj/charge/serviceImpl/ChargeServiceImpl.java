@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.munhwa.prj.charge.mapper.ChargeMapper;
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
-import com.munhwa.prj.common.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 
 @Service("chargeDao")
 public class ChargeServiceImpl implements ChargeService {

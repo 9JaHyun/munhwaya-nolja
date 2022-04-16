@@ -1,6 +1,6 @@
-package com.munhwa.prj.common.service;
+package com.munhwa.prj.common.file.service;
 
-import com.munhwa.prj.common.entity.UploadFileVO;
+import com.munhwa.prj.common.file.entity.UploadFileVO;
 import java.util.List;
 
 public interface UploadFileService {
