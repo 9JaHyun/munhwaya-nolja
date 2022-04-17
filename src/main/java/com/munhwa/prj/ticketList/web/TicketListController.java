@@ -117,6 +117,7 @@ public class TicketListController {
 		usageVO.setPlace("U02");
 		usageVO.setMemberId(memberId);
 		usageVO.setPks(vo.getId());
+		usageVO.setName(vo.getPerformancevo().getName());
 
 		resultUsageList.add(usageVO);
 
@@ -125,6 +126,7 @@ public class TicketListController {
 		param.put("v_ticket_list_id", vo.getId());
 		param.put("v_profit_at", useDate);
 		param.put("v_artist_id", vo.getPerformancevo().getArtistId());
+		param.put("v_name", vo.getPerformancevo().getName());
 		
 		// 사용 내역 남기기
 		usageDao.insertUsage(resultUsageList);

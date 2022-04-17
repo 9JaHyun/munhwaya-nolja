@@ -20,6 +20,7 @@ public class ProfitVO {
 	private int pks;
 	private String refund;
 	private String buyer;
+	private String name;
 	
 	private CommonCodeVO commonCodevo;
 	private MusicVO musicvo;

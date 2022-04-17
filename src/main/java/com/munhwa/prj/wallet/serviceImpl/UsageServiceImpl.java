@@ -1,6 +1,7 @@
 package com.munhwa.prj.wallet.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,6 +52,23 @@ public class UsageServiceImpl implements UsageService {
 	@Override
 	public Integer getSumByPerformance(String id, String startDate, String endDate) {
 		return map.getSumByPerformance(id, startDate, endDate);
+	}
+
+
+	@Override
+	public int refundOfMusic(Map<String, Object> vo) {
+		return map.refundOfMusic(vo);
+	}
+
+	@Override
+	public int refundOfPerformance(Map<String, Object> vo) {
+		return map.refundOfPerformance(vo);
+	}
+
+
+	@Override
+	public List<UsageVO> selectById(int id, String place) {
+		return map.selectById(id, place);
 	}
 
 }

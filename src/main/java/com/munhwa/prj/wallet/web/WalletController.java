@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +28,13 @@ import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.music.vo.PurchaseVO;
+import com.munhwa.prj.performance.service.PerformanceService;
+import com.munhwa.prj.ticketList.service.TicketListService;
+import com.munhwa.prj.ticketList.vo.TicketListVO;
 import com.munhwa.prj.wallet.service.ProfitService;
 import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.ProfitVO;
@@ -50,6 +56,16 @@ public class WalletController {
 	
 	@Autowired
 	private PurchaseService purchaseDao;
+	
+	@Autowired
+	private MusicService musicDao;
+	
+	@Autowired
+	private TicketListService ticketListDao;
+	
+	@Autowired
+	private PerformanceService performanceDao;
+	
 	
 	//카트 결제
 	@Transactional
@@ -79,6 +95,7 @@ public class WalletController {
 			usageVO.setPlace("U01");
 			usageVO.setMemberId(memberId);
 			usageVO.setPks(music.getId());
+			usageVO.setName(music.getTitle());
 			
 			resultUsageList.add(usageVO);
 			            
@@ -95,6 +112,7 @@ public class WalletController {
 			profitVO.setPks(music.getId());
 			profitVO.setId(music.getId());
 			profitVO.setBuyer(memberId);
+			profitVO.setName(music.getTitle());
 			
 			resultProfitByArtist.add(profitVO);
 								
@@ -237,8 +255,61 @@ public class WalletController {
 		return "profitHistoryOfPerformance-memberWallet";
 	}
 	
-//	@RequestMapping("/refund")
-//	public String refundUsage(@LoginUser SessionUser user, Model model) {
-//		
-//	}
+	@RequestMapping("/refundOfMusic.do")
+	@ResponseBody
+	public String refundOfMusic(@LoginUser SessionUser user, Model model, @RequestParam("id") int id, @RequestParam("place") String place) {
+		String memberId = user.getId();
+		System.out.println("--------------------"+id +"-----------------"+place);
+		List<UsageVO> usages = usageDao.selectById(id, place);
+		Map<String,Object> param = new HashMap<String, Object>();
+		
+	
+		for(UsageVO usage : usages) {		
+		MusicVO mvo = musicDao.musicSelect(usage.getPks());
+		usage.setMusicvo(mvo);
+		
+		param.put("v_member_id", memberId);
+		param.put("v_music_id", usage.getPks());
+		param.put("v_mileage", usage.getMusicvo().getPrice());
+		param.put("v_title", usage.getMusicvo().getTitle());
+		
+		user.setMileage(user.getMileage()+usage.getMileage());
+		usageDao.refundOfMusic(param);
+
+		}
+		
+		return "ok";
+	}
+	
+	@RequestMapping("/refundOfPerformance.do")
+	public String refundOfPerformance(@LoginUser SessionUser user, Model model, @RequestParam int id, @RequestParam String place) {
+		System.out.println("--------------------"+id +"-----------------"+place);
+		String memberId = user.getId();
+		List<UsageVO> usages = usageDao.selectById(id, place);
+		Map<String,Object> param = new HashMap<String, Object>();
+		for(UsageVO usage : usages) {
+			
+		TicketListVO tvo = new TicketListVO();
+		tvo.setId(usage.getPks());
+		tvo = ticketListDao.ticketListSelect(tvo);
+		usage.setTicketListvo(tvo);
+		
+		param.put("v_tic_id", usage.getPks());
+		param.put("v_pro_pks", usage.getPks());
+		param.put("v_tic_attendance", usage.getTicketListvo().getAttendance());
+		param.put("v_pro_buyer", memberId);
+		param.put("v_per_id", usage.getTicketListvo().getPerformanceId());
+		param.put("v_tic_person", usage.getTicketListvo().getPerson());
+		param.put("v_mileage", usage.getMileage());
+		param.put("v_member_id", memberId);
+		
+		user.setMileage(user.getMileage()+usage.getMileage());
+		
+		}
+		
+		usageDao.refundOfPerformance(param);
+		
+	
+		return "usageHistoryOfPerformance-memberWallet";
+	}
 }

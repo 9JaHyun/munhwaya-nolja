@@ -102,6 +102,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				<th scope="col">수익 금액</th>
 				<th scope="col">수익처</th>
 				<th scope="col">판매한 곡 명</th>
+				<th scope="col">상태</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -112,6 +113,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 					<td class="listMileage">${profit.mileage }</td>
 					<td>${profit.commonCodevo.name }</td>
 					<td>${profit.musicvo.title }</td>
+					<td><button type="button" class="tbutton small"></button></td>
 				</tr>
 			</c:forEach>
 		</tbody>

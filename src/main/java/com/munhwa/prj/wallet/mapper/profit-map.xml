@@ -10,6 +10,7 @@
 		<result property="pks" column="pks"/>
 		<result property="refund" column="refund"/>
 		<result property="buyer" column="buyer"/>
+		<result property="name" column="name"/>
 		<collection property="commonCodevo" resultMap="commonResultMap"/>
 		<collection property="musicvo" resultMap="musicResultMap" />
 		<collection property="artistvo" resultMap="artistResultMap" />
@@ -71,6 +72,7 @@
             p.profit_at,
             sum(p.mileage) as mileage,
             c.name,
+            p.refund,
             LISTAGG(m.title, ', ') within group(order by m.title) as title
         from profit_history p,
         common_code c, 
@@ -93,7 +95,7 @@
 			</otherwise>
 		</choose>
 		<![CDATA[
-	           group by p.profit_at, p.member_id, c.name
+	           group by p.profit_at, p.member_id, c.name, p.refund
 	           order by p.profit_at desc
                 )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
@@ -128,6 +130,7 @@
 		from profit_history
 		where member_id = #{memberId}
 		and place = 'U01'
+		and (refund = 'B01' or refund = 'B03')
 		]]>
 		<choose>
 			<when
@@ -152,6 +155,7 @@
             p.profit_at,
             sum(p.mileage) as mileage,
             c.name,
+            p.refund,
             LISTAGG(pe.name, ', ') within group(order by pe.name) as pname
         from profit_history p,
         common_code c, 
@@ -174,7 +178,7 @@
 			</otherwise>
 		</choose>
 		<![CDATA[
-	           group by p.profit_at, p.member_id, c.name
+	           group by p.profit_at, p.member_id, c.name, p.refund
 	           order by p.profit_at desc
                 )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
@@ -209,6 +213,7 @@
 		from profit_history
 		where member_id = #{memberId}
 		and place = 'U02'
+		and (refund = 'B01' or refund = 'B03')
 		]]>
 		<choose>
 			<when
@@ -230,11 +235,12 @@
 								   mileage, 
 								   place,
 								   pks,
-								   buyer, 
+								   buyer,
+								   name,
 								   member_id
 								   )
 		select profit_history_seq.nextval, 
-		#{profitAt}, #{mileage}, #{place}, #{pks}, #{buyer}, a.member_id
+		#{profitAt}, #{mileage}, #{place}, #{pks}, #{buyer}, #{name}, a.member_id
 		from artist a, music m
 		where a.name = m.art_name
 		and m.Id = #{id}
