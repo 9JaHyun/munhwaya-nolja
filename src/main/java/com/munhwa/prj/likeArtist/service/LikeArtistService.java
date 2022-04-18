@@ -12,4 +12,5 @@ public interface LikeArtistService {
 	// 좋아요 한 아티스트 삭제
 	int deleteLikeArtist(LikeArtistVO vo);
 
+	List<String> searchFollowers(int artistId);
 }
