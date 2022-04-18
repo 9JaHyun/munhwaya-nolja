@@ -129,9 +129,9 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		</tbody>
 	</table>
 </div>
-<div class="pageInfo_wrap">
+<div class="pageInfo_wrap" style="float:left; width:80%; text-align:center;">
 	<div class="pageInfo_area"
-		style="margin-left: auto; margin-top: 30px; width: 410px;">
+		style="display: inline-block;">
 		<ul id="pageInfo" class="pageInfo">
 			<!-- 이전페이지 버튼 -->
 			<c:if test="${pageMaker.prev}">
