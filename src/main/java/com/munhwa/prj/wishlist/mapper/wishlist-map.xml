@@ -12,6 +12,7 @@
 	<resultMap type="com.munhwa.prj.wishlist.vo.WishlistMusicVO" id="wishlistMusicResultMap">
 		<id property="wishlistId" column="wishlist_id"/>
 		<result property="musicId" column="music_id"/>
+		<result property="orders" column="orders"/>
 	</resultMap>
 	
 	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
@@ -71,7 +72,9 @@
 	<!-- 위시리스트 한건 등록 -->
 	<insert id="insertWishlist" parameterType="int"> 
 		INSERT INTO WISHLIST_MUSIC 
-		VALUES(#{wishId},#{musicId})
+		VALUES(#{wishId},#{musicId}, (select NVL2(max(orders), max(orders) + 1, 1) 
+									  from wishlist_music 
+									  where wishList_id = #{wishId}))
 	</insert>
 	
 	<!-- 위시리스트 다건 등록 -->
