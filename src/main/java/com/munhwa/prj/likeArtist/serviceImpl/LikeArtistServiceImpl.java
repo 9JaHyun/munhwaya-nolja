@@ -4,14 +4,16 @@ import com.munhwa.prj.likeArtist.mapper.LikeArtistMapper;
 import com.munhwa.prj.likeArtist.service.LikeArtistService;
 import com.munhwa.prj.likeArtist.vo.LikeArtistVO;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LikeArtistServiceImpl implements LikeArtistService {
 
-    @Autowired
-    private LikeArtistMapper map;
+    private final LikeArtistMapper map;
+
+    public LikeArtistServiceImpl(LikeArtistMapper map) {
+        this.map = map;
+    }
 
     @Override
     public List<LikeArtistVO> likeArtistList(String memberId) {
