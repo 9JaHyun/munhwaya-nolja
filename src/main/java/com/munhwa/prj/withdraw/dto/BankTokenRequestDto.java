@@ -3,13 +3,12 @@ package com.munhwa.prj.withdraw.dto;
 import lombok.Data;
 
 @Data
-public class BankRequestToken {
+public class BankTokenRequestDto {
     private String code;
     private String client_id;
     private String client_secret;
     private String redirect_uri;
     private String grant_type; //고정값: authorization_code
-
 
     public void setBankRequestToken(String client_id,String client_secret, String redirect_uri, String grant_type){
         this.client_id= client_id;

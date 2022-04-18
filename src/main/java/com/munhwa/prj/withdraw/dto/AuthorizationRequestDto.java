@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class AuthorizationRequestDto {
+
     private String client_id;
     private String scope;
     private String redirect_uri;

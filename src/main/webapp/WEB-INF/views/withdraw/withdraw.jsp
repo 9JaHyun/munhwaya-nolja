@@ -7,7 +7,7 @@
         tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?" +
             "response_type=code&" +
             "client_id=12ce99f4-e774-4231-ab01-e287c5d279fc&" + //
-            "redirect_uri=http://localhost/prj/auth/openbank/code&" +
+            "redirect_uri=http://localhost/prj/auth/openbank/&" +
             "scope=login inquiry transfer&" +
             "state=b80BLsfigm9OokPTjy03elbJqRHOfGSY&" +
             "auth_type=0"

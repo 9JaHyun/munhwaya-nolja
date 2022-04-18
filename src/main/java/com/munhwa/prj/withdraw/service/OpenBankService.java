@@ -7,10 +7,8 @@ import com.munhwa.prj.withdraw.dto.AccountSearchRequestDto;
 import com.munhwa.prj.withdraw.dto.AccountTransferRequestDto;
 import com.munhwa.prj.withdraw.dto.AccountTransferResponseDto;
 import com.munhwa.prj.withdraw.dto.BankAcountSearchResponseDto;
-import com.munhwa.prj.withdraw.dto.BankBalanceRequestDto;
-import com.munhwa.prj.withdraw.dto.BankBalanceResponseDto;
-import com.munhwa.prj.withdraw.dto.BankReponseToken;
-import com.munhwa.prj.withdraw.dto.BankRequestToken;
+import com.munhwa.prj.withdraw.dto.BankTokenResponseDto;
+import com.munhwa.prj.withdraw.dto.BankTokenRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,17 +17,19 @@ import lombok.RequiredArgsConstructor;
 public class OpenBankService {
 
     private final OpenBankApiClient openBankApiClient;
-    public BankReponseToken requestToken(BankRequestToken bankRequestToken){
-        return openBankApiClient.requestToken(bankRequestToken);
+
+    public BankTokenResponseDto requestToken(BankTokenRequestDto bankTokenRequestDTO) {
+        return openBankApiClient.requestToken(bankTokenRequestDTO);
     }
-    public BankAcountSearchResponseDto findAccount(AccountSearchRequestDto accountSearchRequestDto){
-       return openBankApiClient.requestAccountList(accountSearchRequestDto);
+
+    public BankAcountSearchResponseDto findAccount(
+          AccountSearchRequestDto accountSearchRequestDto) {
+        return openBankApiClient.requestAccountList(accountSearchRequestDto);
     }
-    public BankBalanceResponseDto findBalance(String access_token, BankBalanceRequestDto bankBalanceRequestDto){
-        return openBankApiClient.requestBalance(bankBalanceRequestDto,access_token);
-    }
-    public AccountTransferResponseDto accountTransfer(String access_token, AccountTransferRequestDto accountTransferRequestDto){
-        return openBankApiClient.requestTransfer(access_token,accountTransferRequestDto);
+
+    public AccountTransferResponseDto accountTransfer(String access_token,
+          AccountTransferRequestDto accountTransferRequestDto) {
+        return openBankApiClient.requestTransfer(access_token, accountTransferRequestDto);
     }
 
 }

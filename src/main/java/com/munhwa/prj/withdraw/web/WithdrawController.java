@@ -1,35 +1,31 @@
 package com.munhwa.prj.withdraw.web;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
+import com.munhwa.prj.withdraw.api.OpenBankUtil;
+import com.munhwa.prj.withdraw.dto.AccountTransferRequestDto;
+import com.munhwa.prj.withdraw.dto.AccountTransferResponseDto;
+import com.munhwa.prj.withdraw.dto.AuthorizationResponseDto;
+import com.munhwa.prj.withdraw.dto.BankTokenRequestDto;
+import com.munhwa.prj.withdraw.dto.BankTokenResponseDto;
+import com.munhwa.prj.withdraw.service.OpenBankService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-
-import com.munhwa.prj.withdraw.dto.CodeResponseDTO;
-import com.munhwa.prj.withdraw.dto.TokenRequestDTO;
-import com.munhwa.prj.withdraw.dto.TokenResponseDTO;
-import com.munhwa.prj.withdraw.dto.User;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class WithdrawController {
 
-	private final RestTemplate restTemplate;
-    private final HttpHeaders httpHeaders;
-    private final String REDIRECT_URI = "http://localhost/prj/auth/openbank/code";
-    private final String BASE_URL = "https://testapi.openbanking.or.kr";
+    private final OpenBankService openBankService;
+    private final OpenBankUtil openBankUtil;
 
-    public WithdrawController() {
-        this.restTemplate = new RestTemplate();
-        this.httpHeaders = new HttpHeaders();
+    public WithdrawController(OpenBankService openBankService,
+          OpenBankUtil openBankUtil) {
+        this.openBankService = openBankService;
+        this.openBankUtil = openBankUtil;
     }
 
     @GetMapping("/withdraw")
@@ -38,34 +34,34 @@ public class WithdrawController {
     }
 
     @ResponseBody
-    @GetMapping("/auth/openbank/code")
-    public void receive(@ModelAttribute CodeResponseDTO responseDTO) {
-        log.info("getCode! ={}", responseDTO.toString());
-        getToken(responseDTO.getCode());
+    @GetMapping("/auth/openbank")
+    public void receive(@ModelAttribute AuthorizationResponseDto responseDto) {
+        BankTokenRequestDto dto = new BankTokenRequestDto();
+        dto.setCode(responseDto.getCode());
+        BankTokenResponseDto tokenResponseDto = openBankService.requestToken(dto);
+        log.info("getTokenResult = {}", tokenResponseDto);
     }
 
-    public TokenResponseDTO getToken(String code) {
-        User user = new User();
-        TokenRequestDTO dto = new TokenRequestDTO(code, user.getClientId(), user.getClientSecret(),
-              REDIRECT_URI, "authorization_code");
+    @GetMapping("/transfer")
+    public String openTransfer(Model model, String bank_tran_id, String access_token,
+          String fintech_use_num, String account_num, String req_client_name) {
+        /**
+         * 20000, 100000원만 등록되어있음
+         */
+        //계좌번호 마스킹된값 제거(계좌번호 보여주는건 계약된 사용자만가능(그래서 마스킹된 3자리 잘라서 보내주고 클라이언트에서 3자리 더해줌
+        model.addAttribute("token", access_token);
+        model.addAttribute("transferForm",
+              new AccountTransferRequestDto(openBankUtil.getRandomNumber(bank_tran_id),
+                    fintech_use_num, req_client_name,
+                    openBankUtil.trimAccountNum(account_num, account_num.length()),
+                    openBankUtil.trimAccountNum(account_num, account_num.length())));
+        return "withdraw/transferForm";
+    }
 
-        httpHeaders.add("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-
-        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-        parameters.add("code", dto.getCode());
-        parameters.add("client_id", dto.getClientId());
-        parameters.add("client_secret", dto.getClientSecret());
-        parameters.add("redirect_uri", dto.getRedirectUri());
-        parameters.add("grant_type", dto.getGrantType());
-
-        HttpEntity<MultiValueMap<String, String>> param = new HttpEntity<>(parameters, httpHeaders);
-
-        //Http 요청하기 - post 방식으로
-        TokenResponseDTO result = restTemplate.exchange(
-                BASE_URL + "/oauth/2.0/token",
-                HttpMethod.POST, param, TokenResponseDTO.class).getBody();
-        System.out.println("----------"+result.getAccess_token());
-
-        return result;
+    @PostMapping("/transfer")
+    public @ResponseBody
+    AccountTransferResponseDto transfer(String access_token,
+          AccountTransferRequestDto accountTransferRequestDto) {
+        return openBankService.accountTransfer(access_token, accountTransferRequestDto);
     }
 }
