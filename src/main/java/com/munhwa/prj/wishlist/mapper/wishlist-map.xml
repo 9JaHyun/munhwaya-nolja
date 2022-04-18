@@ -59,14 +59,15 @@
 
 	<!-- 위시리스트 곡 리스트 -->
 	<select id="wishlistMusicList" parameterType="String" resultMap="musicResultMap" >
-	SELECT *
-	FROM MUSIC
-	WHERE ID IN (SELECT MUSIC_ID
-				FROM WISHLIST_MUSIC
-				WHERE WISHLIST_ID IN (SELECT ID
-									  FROM WISHLIST
-									  WHERE MEMBER_ID = #{memberId}
-									  AND ID = #{wishlistId}))
+   		SELECT m.*, wm.orders
+	   	FROM MUSIC m, (SELECT MUSIC_ID, ORDERS
+			           FROM WISHLIST_MUSIC
+			           WHERE WISHLIST_ID = (SELECT ID
+			                             	FROM WISHLIST
+			                            	WHERE MEMBER_ID = #{memberId}
+			                                AND ID = #{id})) WM
+		WHERE ID IN WM.MUSIC_ID
+		ORDER BY ORDERS
 	</select>
 
 	<!-- 위시리스트 한건 등록 -->

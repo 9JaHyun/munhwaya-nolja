@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
 
 <style>
-    .js-load {
-        display: none;
-    }
+.js-load {
+	display: none;
+}
 
-    .js-load.active {
-        display: revert;
-    }
+.js-load.active {
+	display: revert;
+}
+    
+    
 </style>
 
 
@@ -31,7 +34,7 @@
             </thead>
             <tbody>
             <c:forEach items="${wishlistMusic}" var="wishlistMusic">
-                <tr class="js-load">
+                <tr class="js-load target">
                     <td><a href="streaming?id=${wishlistMusic.id}">${wishlistMusic.title}</a></td>
                     <td style="padding-right: 30px;">${wishlistMusic.artName}</td>
                     <td style="padding-right: 20px;"><i class="icon-remove" id="${wishlistMusic.id}"
@@ -87,4 +90,14 @@
             document.getElementById(musicId).parentNode.parentNode.remove();
         });
     }
+    
+    // drag and drop
+    
+    $("table").sortable({
+    	items: $(".target"),
+     	axis: 'y'
+    });
+    
+    $("table").disableSelection();
+
 </script>
