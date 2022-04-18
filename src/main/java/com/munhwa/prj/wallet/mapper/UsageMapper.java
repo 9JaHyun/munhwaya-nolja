@@ -1,9 +1,13 @@
 package com.munhwa.prj.wallet.mapper;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.wallet.vo.UsageVO;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface UsageMapper {
 	// 곡 구매 내역
@@ -19,4 +23,13 @@ public interface UsageMapper {
 	
 	Integer getSumByPerformance(@Param("memberId") String id, @Param("startDate") String startDate, @Param("endDate") String endDate);
 	int insertUsage(UsageVO usageVO);
+	
+	// 환불 하기 프로시저
+	int refundOfMusic(Map<String, Object> vo);
+	int refundOfPerformance(Map<String, Object> vo);
+		
+	List<UsageVO> selectById(@Param("id") int id, @Param("place") String place);
+	
+	UsageVO selectByMusicOfId(@Param("pks") int pks, @Param("memberId") String memberId);
+	
 }

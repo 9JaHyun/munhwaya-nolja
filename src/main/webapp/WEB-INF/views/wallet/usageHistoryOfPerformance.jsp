@@ -50,18 +50,17 @@ a:hover {
 }
 
 .accordion {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
+	background-color: #eee;
+	color: #444;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+	transition: 0.4s;
 }
-
 </style>
 <%
 response.setHeader("Cache-Control", "no-store");
@@ -74,10 +73,17 @@ if (request.getProtocol().equals("HTTP/1.1"))
 <div align="right" style="margin-bottom: 50px;">
 	<h4>마일리지 사용내역</h4>
 	<div class="mbf clearfix" style="font-size: 20px;"></div>
-	<div style="float:right;">
-	<div style="float:left; margin-right:30px;"><a href="usageHistoryOfMusic.do" class="tbutton small"><span>곡 구매 내역</span></a></div> 
-	<div style="float:left; margin-right:30px;"><a href="" class="tbutton small"><span>공연 티켓 구매 내역</span></a></div> 
-	<div style="float:left; margin-right:30px;"><a href="walletInfo.do" class="tbutton small"><span>출금 내역</span></a></div>
+	<div style="float: right;">
+		<div style="float: left; margin-right: 30px;">
+			<a href="usageHistoryOfMusic.do" class="tbutton small"><span>곡
+					구매 내역</span></a>
+		</div>
+		<div style="float: left; margin-right: 30px;">
+			<a href="" class="tbutton small"><span>공연 티켓 구매 내역</span></a>
+		</div>
+		<div style="float: left; margin-right: 30px;">
+			<a href="walletInfo.do" class="tbutton small"><span>출금 내역</span></a>
+		</div>
 		<select id="cntPerPage" name="sel" onchange="selChange()">
 			<option value="10"
 				<c:if test="${pageMaker.cri.amount == 10}">selected</c:if>>10줄
@@ -89,21 +95,21 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				<c:if test="${pageMaker.cri.amount == 20}">selected</c:if>>20줄
 				보기</option>
 		</select>
-		<form id="dateSelect" action="usageHistoryOfPerformance.do" method="post"
-				style="color: white;">
-				시작일&nbsp;&nbsp; <input type="date" id="startDate" name="startDate"
-					style="margin-bottom: 0px; margin-right: 20px; width: 100px;"
-					value="${startDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
-					type="date" id="endDate" name="endDate"
-					style="margin-bottom: 0px; width: 100px" value="${endDate }">
-				<input type="submit" value="검색" class="tbutton small"
-					style="height: 30px; width: 50px">
-			</form>
-			<div style="color: white; margin-top: 10px; margin-bottom: 10px;">
-				기간별 사용액&nbsp;&nbsp;<input type="text" id="sumMileage"
-					value="${sumMileage }" readonly="readonly"
-					style="height: 20px; width: 60px; margin-bottom: 0px;">
-			</div>
+		<form id="dateSelect" action="usageHistoryOfPerformance.do"
+			method="post" style="color: white;">
+			시작일&nbsp;&nbsp; <input type="date" id="startDate" name="startDate"
+				style="margin-bottom: 0px; margin-right: 20px; width: 100px;"
+				value="${startDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
+				type="date" id="endDate" name="endDate"
+				style="margin-bottom: 0px; width: 100px" value="${endDate }">
+			<input type="submit" value="검색" class="tbutton small"
+				style="height: 30px; width: 50px">
+		</form>
+		<div style="color: white; margin-top: 10px; margin-bottom: 10px;">
+			기간별 사용액&nbsp;&nbsp;<input type="text" id="sumMileage"
+				value="${sumMileage }" readonly="readonly"
+				style="height: 20px; width: 60px; margin-bottom: 0px;">
+		</div>
 	</div>
 	<table class="table">
 		<thead>
@@ -112,6 +118,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				<th scope="col">사용 금액</th>
 				<th scope="col">사용처</th>
 				<th scope="col">구매한 공연 명</th>
+				<th scope="col">상태(환불 여부)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -122,29 +129,41 @@ if (request.getProtocol().equals("HTTP/1.1"))
 					<td class="listMileage">${usage.mileage }</td>
 					<td>${usage.commonCodevo.name }</td>
 					<td>${usage.performancevo.name }</td>
+					<td><button type="button" class="refund tbutton small"
+							onclick="refundOfPerformance()">
+							<c:choose>
+								<c:when test="${usage.refund eq 'B01'}"><span data-usageid="${usage.id }">환불 신청</span></c:when>
+								<c:when test="${usage.refund eq 'B02'}"><span>환불 완료</span></c:when>
+								<c:when test="${usage.refund eq 'B03'}"><span>환불 불가</span></c:when>
+							</c:choose>
+						</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </div>
 <div class="pageInfo_wrap">
-	<div class="pageInfo_area" style="margin-left:auto; margin-top:30px; width:410px;">
+	<div class="pageInfo_area"
+		style="margin-left: auto; margin-top: 30px; width: 410px;">
 		<ul id="pageInfo" class="pageInfo">
 			<!-- 이전페이지 버튼 -->
 			<c:if test="${pageMaker.prev}">
 				<li class="pageInfo_btn previous"><a href="#"
-					onclick="paging(${pageMaker.startPage-1})" style="border : 1px solid white; padding:5px 5px;">Previous</a></li>
+					onclick="paging(${pageMaker.startPage-1})"
+					style="border: 1px solid white; padding: 5px 5px;">Previous</a></li>
 			</c:if>
 			<!-- 각 번호 페이지 버튼 -->
 			<c:forEach var="num" begin="${pageMaker.startPage}"
 				end="${pageMaker.endPage}">
 				<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":""}"><a
-					href="#" onclick="paging(${num})" style="border : 1px solid white; padding:5px 5px;">${num}</a></li>
+					href="#" onclick="paging(${num})"
+					style="border: 1px solid white; padding: 5px 5px;">${num}</a></li>
 			</c:forEach>
 			<!-- 다음페이지 버튼 -->
 			<c:if test="${pageMaker.next}">
 				<li class="pageInfo_btn next"><a href="#"
-					onclick="paging(${pageMaker.endPage + 1})" style="border : 1px solid white; padding:5px 5px;">Next</a></li>
+					onclick="paging(${pageMaker.endPage + 1})"
+					style="border: 1px solid white; padding: 5px 5px;">Next</a></li>
 			</c:if>
 		</ul>
 	</div>
@@ -154,9 +173,8 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 	<input type="hidden" name="startDate" value="${startDate }"> <input
-			type="hidden" name="endDate" value="${endDate }">
+		type="hidden" name="endDate" value="${endDate }">
 </form>
-
 
 <div align="right">
 	<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>뒤로가기</span></a>
@@ -186,5 +204,38 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	document.getElementsByClassName('listMileage')[i].textContent = listMileage2+'원';
 	
 	}
+	
+	function refundOfPerformance() {
+			console.log($(event.target).data("usageid"));
+			if($(event.target).text() == '환불 완료' || $(event.target).text() == '환불 불가' ) {
+				alert("환불이 불가능한 상태입니다.");
+			}
+			else {
+				var id = $(event.target).data("usageid");
+				
+				var confirm1 = confirm('환불 하시겠습니까?')
+				if (confirm1) {
+		            $.ajax({
+		                url: "refundOfPerformance.do",
+		                type: "post",
+		                data: {"id": id, "place": "U02"},
+		                dataType: "text",
+		                success: function (data) {
+		                    console.log(data);
+		                    alert("환불 되었습니다.");
+		                    location.href="usageHistoryOfPerformance.do";
+		                    
+		                },
+		                error: function (xhr, status, error) {
+		                    alert("환불에 실패 하였습니다.");
+		                }
+		            })
+
+		        } else {
+		            alert("취소하셨습니다.")
+		        }
+		    }
+	}
+		
 
 </script>

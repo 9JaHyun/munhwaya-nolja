@@ -102,6 +102,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				<th scope="col">수익 금액</th>
 				<th scope="col">수익처</th>
 				<th scope="col">판매한 공연 명</th>
+				<th scope="col">상태(환불 여부)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -112,6 +113,17 @@ if (request.getProtocol().equals("HTTP/1.1"))
 					<td class="listMileage">${profit.mileage }</td>
 					<td>${profit.commonCodevo.name }</td>
 					<td>${profit.performancevo.name }</td>
+					<td><c:choose>
+							<c:when test="${profit.refund eq 'B01'}">
+								<span>결제</span>
+							</c:when>
+							<c:when test="${profit.refund eq 'B02'}">
+								<span>환불 완료</span>
+							</c:when>
+							<c:when test="${profit.refund eq 'B03'}">
+								<span>환불 불가</span>
+							</c:when>
+						</c:choose></td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -9,9 +9,13 @@
 		<result property="memberId" column="member_id" />
 		<result property="pks" column="pks" />
 		<result property="refund" column="refund"/>
+		<result property="name" column="name"/>
+		<result property="usageIds" column="us_ids"/>
 		<collection property="commonCodevo" resultMap="commonResultMap" />
 		<collection property="musicvo" resultMap="musicResultMap" />
 		<collection property="performancevo" resultMap="performanceResultMap" />
+		<collection property="performancePersonalvo" resultMap="performancepersonalResultMap"/>
+		<collection property="ticketListvo" resultMap="ticketListResultMap"/>
 	</resultMap>
 
 	<resultMap type="com.munhwa.prj.common.code.entity.CommonCodeVO"
@@ -51,22 +55,55 @@
 		<result property="price" column="price" />
 		<result property="person" column="person" />
 	</resultMap>
-
+	
+	<resultMap type="com.munhwa.prj.performance.vo.PerformancePersonalVO" id="performancepersonalResultMap">
+		<id property="id" column="id"/>
+		<result property="personal" column="personal"/>
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.ticketList.vo.TicketListVO"
+		id="ticketListResultMap">
+		<id property="id" column="id" />
+		<result property="performanceId" column="performance_id" />
+		<result property="memberId" column="member_id" />
+		<result property="qrcode" column="qrcode" />
+		<result property="attendance" column="attendance" />
+		<result property="person" column="person" />
+		<collection property="performancevo"
+			resultMap="performanceResultMap"></collection>
+	</resultMap>
+	
+	<select id="selectById" resultMap="usageResultMap">
+		select *
+		from usage_history
+		where id = #{id}
+		and place = #{place}
+		and refund = 'B01'
+	</select>
+	
+	<select id="selectByMusicOfId" resultMap="usageResultMap">
+		select * 
+        from usage_history
+        where pks = #{pks}
+        and member_id=#{memberId}
+        and place = 'U01'
+        and refund = 'B01'
+	</select>
 	<!-- 곡 구매 내역 -->
 	<select id="selectUsageListMusic" resultMap="usageResultMap">
 		<![CDATA[
 		 select *
-	        from ( select
+	         from ( select
 	            DENSE_RANK() OVER (ORDER BY u.use_at desc, u.member_id, c.name) as rn,
 				u.use_at,
 	            sum(u.mileage) as mileage,
 	            c.name,
-	            LISTAGG(m.title, ', ') within group(order by m.title) as title
+	            u.refund,
+	            LISTAGG(u.name, ', ') within group(order by u.name) as title,
+                LISTAGG(u.pks, ', ') within group(order by u.name) as us_ids
 			from usage_history u,
-	        common_code c,
-	        music m
+	        common_code c
 			where u.place = c.id
-	            and u.pks = m.id
 				and u.member_id = #{memberId}
 				and u.place = 'U01'
 		]]>
@@ -83,7 +120,7 @@
 			</otherwise>
 		</choose>
 		<![CDATA[ 
-	           group by u.use_at, u.member_id, c.name
+	           group by u.use_at, u.member_id, c.name, u.refund
 	           order by u.use_at desc
 	     )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
@@ -121,6 +158,7 @@
 		from usage_history
 		where member_id = #{memberId}
 		and place = 'U01'
+		and (refund = 'B01' or refund = 'B03')
 		]]>
 		<choose>
 			<when
@@ -143,18 +181,18 @@
 	<select id="selectUsageListPerformance"
 		resultMap="usageResultMap">
   	 <![CDATA[
-		 select *
+		select *
 	        from ( select
-	            DENSE_RANK() OVER (ORDER BY u.use_at desc, u.member_id, c.name) as rn,
+	            rownum as rn,
 				u.use_at,
-	            sum(u.mileage) as mileage,
+	            u.mileage,
 	            c.name,
-	            LISTAGG(pe.name, ', ') within group(order by pe.name) as pname
+	            u.refund,
+	            u.id,
+	            u.name as pname
 			from usage_history u,
-	        common_code c,
-	        performance pe
+	        common_code c
 			where u.place = c.id
-	            and u.pks = pe.id
 				and u.member_id = #{memberId}
 				and u.place = 'U02'
 		]]>
@@ -171,8 +209,7 @@
 			</otherwise>
 		</choose>
 		<![CDATA[	
-	           group by u.use_at, u.member_id, c.name
-	           order by u.use_at desc
+	     	order by u.use_at desc
 	     )
 	      where rn> (#{cri.pageNum}-1) * #{cri.amount}
 	     and rn <= #{cri.pageNum} * #{cri.amount}
@@ -181,7 +218,7 @@
 
 	<select id="getCountByPerformance" resultType="int">
   		<![CDATA[
-		select count(count(id))
+		select count(id)
 		from usage_history
 		where member_id = #{memberId}
 		and place = 'U02'
@@ -198,17 +235,15 @@
 				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
-		<![CDATA[
-		group by use_at
-		]]>
 	</select>
 
 	<select id="getSumByPerformance" resultType="int">
 		<![CDATA[
-		select sum(sum(mileage))
+		select sum(mileage)
 		from usage_history
 		where member_id = #{memberId}
 		and place = 'U02'
+		and (refund = 'B01' or refund = 'B03')
 		]]>
 		<choose>
 			<when
@@ -222,9 +257,6 @@
 				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
-		<![CDATA[
-		group by use_at
-		]]>
 	</select>
 
 	<insert id="insertUsage"
@@ -235,12 +267,39 @@
 		PLACE,
 		MEMBER_ID,
 		USE_AT,
-		PKS)
+		PKS,
+		NAME)
 		VALUES(usage_history_seq.nextval,
 		#{mileage},
 		#{place},
 		#{memberId},
 		#{useAt},
-		#{pks})
+		#{pks},
+		#{name})
 	</insert>
+	
+	<update id="refundOfMusic" parameterType="map" statementType="CALLABLE">
+	<![CDATA[
+	{ call refund_music (
+	  #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_title, mode=IN, jdbcType=VARCHAR, javaType=string}
+	)}
+	]]>
+	</update>
+	
+	
+	<update id="refundOfPerformance" parameterType="map" statementType="CALLABLE">
+	<![CDATA[
+	{ call refund_ticket_list (
+      #{v_tic_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_tic_attendance, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_tic_person, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},
+	  #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string}
+	)}
+	]]>
+	</update>
 </mapper>

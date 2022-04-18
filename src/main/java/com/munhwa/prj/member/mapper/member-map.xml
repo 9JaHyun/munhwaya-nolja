@@ -140,7 +140,8 @@
       #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},
       #{v_ticket_list_id, mode=IN, jdbcType=INTEGER, javaType=int},
       #{v_profit_at, mode=IN, jdbcType=DATE, javaType=date},
-      #{v_artist_id, mode=IN, jdbcType=INTEGER, javaType=int}
+      #{v_artist_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_name, mode=IN, jdbcType=VARCHAR, javaType=string}
       )}
     ]]>
 	</update>
