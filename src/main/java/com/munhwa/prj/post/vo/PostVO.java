@@ -26,16 +26,11 @@ public class PostVO {
         this.content = content;
         return this;
     }
-
-    public PostVO(String title, String writer, String content, Date createdAt, int hit, int likeIt,
-          String memberId, String fileGroupId) {
+    public PostVO(String title, String content, Date createdAt, int hit, int likeIt) {
         this.title = title;
-        this.writer = writer;
         this.content = content;
         this.createdAt = createdAt;
         this.hit = hit;
         this.likeIt = likeIt;
-        this.memberId = memberId;
-        this.fileGroupId = fileGroupId;
     }
 }

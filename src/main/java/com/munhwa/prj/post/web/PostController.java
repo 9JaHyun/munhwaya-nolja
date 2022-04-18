@@ -56,9 +56,13 @@ public class PostController {
     }
 
     @PostMapping("/posting")
-    public String posting(PostingRequestDto dto) throws IOException {
-        List<MultipartFile> files = dto.getUploadFile();
+    public String posting(@LoginUser SessionUser user, PostingRequestDto dto)throws IOException {
         PostVO post = dto.toEntity();
+        List<MultipartFile> files = dto.getFiles();
+
+        post.setWriter(user.getNickname());
+        post.setMemberId(user.getId());
+
         int postId = postService.save(post);
         if (files != null && files.size() != 0) {
             List<UploadFile> uploadFiles = fileUtils.storeFiles(files);
@@ -66,8 +70,7 @@ public class PostController {
                 uploadFileService.save(uploadFile, "post", postId);
             });
         }
-
-        return "post/postList";
+        return "redirect:posts";
     }
 
     @GetMapping("/updatePost")

@@ -59,6 +59,9 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                    <button onclick="location.href='posting'">
+                        글쓰기
+                    </button>
                 </div>
             </div>
             <div class="pagination-tt clearfix"
