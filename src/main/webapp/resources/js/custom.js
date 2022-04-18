@@ -173,6 +173,7 @@ jQuery( function($) {
 			speed: 800
 		});
 	}
+	
 	if ($(".mp3-carousel")[0]) {
 		jQuery(".mp3-carousel").jCarouselLite({
 			btnNext: ".nexte",
@@ -185,6 +186,7 @@ jQuery( function($) {
 			speed: 800
 		});
 	}
+	
 	if ($(".progress-bar")[0]) {
 		$(".progress-bar > span").each(function () {
 			$(this)
@@ -210,6 +212,7 @@ jQuery( function($) {
 		});
 		// Aligning bg
 		$("#LoginBackgroundPopup").css({"height": windowHeight});
+		
 	
 		// Pop up the div and Bg
 		if (popupStatus == 0) {
@@ -235,7 +238,7 @@ jQuery( function($) {
 	$('#popupLogin, #Login_PopUp_Link').click(function(e) {
 		e.stopPropagation();
 	});
-
+	
 	// Masonry
 	if ($("#masonry-container")[0]) {
 		var $masonrytt = $('#masonry-container');

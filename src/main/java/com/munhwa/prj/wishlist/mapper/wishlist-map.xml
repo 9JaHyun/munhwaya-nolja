@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.wishlist.mapper.WishlistMapper">
+
+	<resultMap type="com.munhwa.prj.wishlist.vo.WishlistVO" id="wishlistResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="memberId" column="member_id" />
+		<result property="count" column="count" />
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.wishlist.vo.WishlistMusicVO" id="wishlistMusicResultMap">
+		<id property="wishlistId" column="wishlist_id"/>
+		<result property="musicId" column="music_id"/>
+		<result property="orders" column="orders"/>
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
+		<id property="id" column="ID" />
+		<result property="artName" column="ART_NAME"/>
+		<result property="genre" column="GENRE"/>
+		<result property="lyric" column="LYRIC"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="price" column="PRICE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="time" column="TIME"/>
+		<result property="writer" column="WRITER"/>
+		<result property="composing" column="COMPOSING"/>
+		<result property="arrangement" column="ARRANGEMENT"/>
+		<result property="picture" column="PICTURE"/>
+	</resultMap>
+
+	<!-- 위시리스트 리스트 -->
+	<select id="wishlistList" resultMap="wishlistResultMap">
+		SELECT w.ID, w.NAME, w.MEMBER_ID, (select COUNT(*) from wishlist_music where wishlist_id = w.id) as count
+		FROM WISHLIST w
+		WHERE w.MEMBER_ID = #{memberId}
+		ORDER BY ID DESC
+	</select>
+
+	<!-- 위시리스트 삭제 -->
+	<delete id="deleteWishlist" parameterType="com.munhwa.prj.wishlist.vo.WishlistVO">
+	DELETE FROM WISHLIST
+	WHERE ID = #{id}
+	</delete>
+	
+	<!-- 위시리스트 생성 -->
+	<insert id="createWishList" statementType = "CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call createwishlist (
+			#{v_name, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{p_id, mode=OUT, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
+	</insert>
+
+	<!-- 위시리스트 곡 리스트 -->
+	<select id="wishlistMusicList" parameterType="String" resultMap="musicResultMap" >
+	SELECT *
+	FROM MUSIC
+	WHERE ID IN (SELECT MUSIC_ID
+				FROM WISHLIST_MUSIC
+				WHERE WISHLIST_ID IN (SELECT ID
+									  FROM WISHLIST
+									  WHERE MEMBER_ID = #{memberId}
+									  AND ID = #{wishlistId}))
+	</select>
+
+	<!-- 위시리스트 한건 등록 -->
+	<insert id="insertWishlist" parameterType="int"> 
+		INSERT INTO WISHLIST_MUSIC 
+		VALUES(#{wishId},#{musicId}, (select NVL2(max(orders), max(orders) + 1, 1) 
+									  from wishlist_music 
+									  where wishList_id = #{wishId}))
+	</insert>
+	
+	<!-- 위시리스트 다건 등록 -->
+	<insert id="insertWishlist2" statementType = "CALLABLE" parameterType="map" >
+		<![CDATA[
+			{ call add_2_wishlist (
+			#{v_wishlist_id, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
+	</insert>
+  
+	<!-- 위시리스트 곡 삭제 -->
+	<delete id="deleteWishlistMusic" parameterType="int">
+	DELETE FROM WISHLIST_MUSIC
+	WHERE WISHLIST_ID = #{wishId} 
+	AND MUSIC_ID = #{musicId}
+	</delete>
+	
+	<!-- 마이페이지 - 위시리스트 추가 -->
+	<insert id="addWishlist" parameterType="com.munhwa.prj.wishlist.vo.WishlistVO">
+		INSERT INTO WISHLIST
+		VALUES (wishlist_seq.nextval, #{name}, #{memberId})
+	</insert>
+
+	
+</mapper>

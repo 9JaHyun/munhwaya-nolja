@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.artist.mapper.ArtistMapper">
+	
+	<resultMap type="com.munhwa.prj.artist.vo.ArtistVO" id="artistMap">
+		<id property="id" column="id"/>
+		<result property="image" column="image"/>
+		<result property="gender" column="gender"/>
+		<result property="genre" column="genre"/>
+		<result property="content" column="content"/>
+		<result property="type" column="type"/>
+		<result property="memberId" column="member_id"/>
+		<result property="name" column="name"/>
+	</resultMap>
+
+	<select id="selectArtistList" resultMap="artistMap">
+		SELECT * FROM ARTIST ORDER BY DESC
+	</select>
+	
+	<select id="selectArtistByMemberId" resultMap="artistMap">
+		SELECT * FROM ARTIST WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	<insert id="insertArtist" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+    INSERT INTO ARTIST(ID, IMAGE, GENDER, GENRE, CONTENT, TYPE, NAME, member_id)
+    VALUES(artist_seq.nextval, #{image}, #{gender}, #{genre}, #{content}, #{type}, #{name}, #{memberId})
+	</insert>
+	
+	<update id="updateArtist" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
+		UPDATE ARTIST
+		<set>
+			<if test="image != null">image = #{image},</if>
+			<if test="gender != null">gender = #{gender},</if>
+			<if test="genre != null">genre = #{genre},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="name != null">name = #{name}</if>  
+		</set>
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
+	<select id="chkName" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM ARTIST
+		WHERE NAME = #{name}
+	</select>
+	
+</mapper>

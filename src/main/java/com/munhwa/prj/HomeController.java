@@ -1,12 +1,17 @@
 package com.munhwa.prj;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @Controller
 public class HomeController {
+
+    @GetMapping("/home.do")
+    public String homeDo() {
+        return "home/home";
+    }
 
     @GetMapping("/")
     public String home() {
@@ -16,11 +21,6 @@ public class HomeController {
     @GetMapping("/404")
     public String errorPage() {
         return "error/404";
-    }
-
-    @GetMapping("/shop")
-    public String shopPage() {
-        return "shop/shop";
     }
 
     @GetMapping("/shop/cart")
