@@ -133,8 +133,8 @@ if (request.getProtocol().equals("HTTP/1.1"))
 							onclick="refundOfPerformance()">
 							<c:choose>
 								<c:when test="${usage.refund eq 'B01'}"><span data-usageid="${usage.id }">환불 신청</span></c:when>
-								<c:when test="${usage.refund eq 'B02'}"><span data-usageid="${usage.id }">환불 완료</span></c:when>
-								<c:when test="${usage.refund eq 'B03'}"><span data-usageid="${usage.id }">환불 불가</span></c:when>
+								<c:when test="${usage.refund eq 'B02'}"><span>환불 완료</span></c:when>
+								<c:when test="${usage.refund eq 'B03'}"><span>환불 불가</span></c:when>
 							</c:choose>
 						</button></td>
 				</tr>

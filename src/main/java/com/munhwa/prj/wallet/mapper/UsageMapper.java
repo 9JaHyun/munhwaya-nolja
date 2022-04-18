@@ -1,5 +1,6 @@
 package com.munhwa.prj.wallet.mapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +29,7 @@ public interface UsageMapper {
 	int refundOfPerformance(Map<String, Object> vo);
 		
 	List<UsageVO> selectById(@Param("id") int id, @Param("place") String place);
+	
+	UsageVO selectByMusicOfId(@Param("pks") int pks, @Param("memberId") String memberId);
 	
 }

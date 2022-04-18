@@ -38,7 +38,7 @@
 		<result property="arrangement" column="ARRANGEMENT"/>
 	</resultMap>
     
-    <resultMap type="com.munhwa.prj.wallet.vo.ArtistVO" id="artistResultMap">
+    <resultMap type="com.munhwa.prj.artist.vo.ArtistVO" id="artistResultMap">
     	<id property="id" column="id"/>
 		<result property="image" column="image"/>
 		<result property="gender" column="gender"/>
@@ -73,9 +73,9 @@
             sum(p.mileage) as mileage,
             c.name,
             p.refund,
-            LISTAGG(m.title, ', ') within group(order by m.title) as title
+            LISTAGG(p.name, ', ') within group(order by p.name) as title
         from profit_history p,
-        common_code c, 
+        common_code c,
         music m
         where p.place = c.id
             and p.pks = m.id
@@ -156,12 +156,13 @@
             sum(p.mileage) as mileage,
             c.name,
             p.refund,
-            LISTAGG(pe.name, ', ') within group(order by pe.name) as pname
-        from profit_history p,
+            p.buyer,
+            LISTAGG(p.name, ', ') within group(order by p.name) as pname
+          from profit_history p,
         common_code c, 
         performance pe
         where p.place = c.id
-            and p.pks = pe.id
+            and pe.name= p.name
 				and p.member_id = #{memberId}
 				and p.place = 'U02'
 		]]>
@@ -178,7 +179,7 @@
 			</otherwise>
 		</choose>
 		<![CDATA[
-	           group by p.profit_at, p.member_id, c.name, p.refund
+	           group by p.profit_at, p.member_id, c.name, p.refund, p.buyer
 	           order by p.profit_at desc
                 )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}

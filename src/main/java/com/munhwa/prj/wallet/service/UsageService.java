@@ -1,5 +1,6 @@
 package com.munhwa.prj.wallet.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +26,6 @@ public interface UsageService {
 	int refundOfPerformance(Map<String, Object> vo);
 		
 	List<UsageVO> selectById(int id,String place);
+	
+	List<UsageVO> selectByMusicOfId(List<Integer> pks, String memberId);
 }

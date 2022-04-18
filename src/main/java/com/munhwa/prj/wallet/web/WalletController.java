@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -86,7 +87,6 @@ public class WalletController {
 		List<UsageVO> resultUsageList = new ArrayList<>();
 		List<PurchaseVO> resultPurchaseList = new ArrayList<>();
 		List<ProfitVO> resultProfitByArtist = new ArrayList<>();
-		Map<String,Object> param = new HashMap<String, Object>();
 		for(MusicVO music : musics) {
 			sum += music.getPrice();
 			UsageVO usageVO = new UsageVO();
@@ -102,7 +102,8 @@ public class WalletController {
 			PurchaseVO purchaseVO = new PurchaseVO();
 			purchaseVO.setMusicId(music.getId());
 			purchaseVO.setMemberId(memberId);
-			
+			purchaseVO.setCreatedAt(useDate);
+
 			resultPurchaseList.add(purchaseVO);
 			
 			ProfitVO profitVO = new ProfitVO();
@@ -115,10 +116,15 @@ public class WalletController {
 			profitVO.setName(music.getTitle());
 			
 			resultProfitByArtist.add(profitVO);
+			
+			Map<String,Object> param = new HashMap<String, Object>();
 								
 			param.put("v_member_id", memberId);
 			param.put("v_mileage", music.getPrice());
 			param.put("v_title", music.getTitle());
+
+			// 곡 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저 
+			memberDao.updateMileageMusic(param);
 		}	
 
 			// 사용내역 남기기 
@@ -127,8 +133,6 @@ public class WalletController {
 			purchaseDao.purchaseInsert(resultPurchaseList);
 			// 곡 구매시 아티스트 수익 내역에 찍기
 			profitDao.insertProfit(resultProfitByArtist);
-			// 곡 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저 
-			memberDao.updateMileageMusic(param);
 			
 			user.getCart().clear();
 			user.setMileage(user.getMileage()-sum);
@@ -257,25 +261,30 @@ public class WalletController {
 	
 	@RequestMapping("/refundOfMusic.do")
 	@ResponseBody
-	public String refundOfMusic(@LoginUser SessionUser user, Model model, @RequestParam("id") int id, @RequestParam("place") String place) {
+	public String refundOfMusic(@LoginUser SessionUser user, Model model, @RequestBody List<RefundRequestDto> pkList) {
 		String memberId = user.getId();
-		System.out.println("--------------------"+id +"-----------------"+place);
-		List<UsageVO> usages = usageDao.selectById(id, place);
-		Map<String,Object> param = new HashMap<String, Object>();
-		
-	
-		for(UsageVO usage : usages) {		
-		MusicVO mvo = musicDao.musicSelect(usage.getPks());
-		usage.setMusicvo(mvo);
-		
-		param.put("v_member_id", memberId);
-		param.put("v_music_id", usage.getPks());
-		param.put("v_mileage", usage.getMusicvo().getPrice());
-		param.put("v_title", usage.getMusicvo().getTitle());
-		
-		user.setMileage(user.getMileage()+usage.getMileage());
-		usageDao.refundOfMusic(param);
+//		System.out.println(usageList.);
+//		requestList.forEach(req -> {
+//			System.out.println("반환값= " + req.getId() + "/ " + req.getPlace());
+//			});
+		System.out.println(pkList);
+		List<Integer> idList = pkList.stream()
+				.map(RefundRequestDto::getPks)
+				.collect(Collectors.toList());
+		List<UsageVO> usages = usageDao.selectByMusicOfId(idList, memberId);
 
+		for(UsageVO usage : usages) {	
+			Map<String,Object> param = new HashMap<String, Object>();
+			MusicVO mvo = musicDao.musicSelect(usage.getPks());
+			usage.setMusicvo(mvo);
+			
+			param.put("v_member_id", memberId);
+			param.put("v_music_id", usage.getPks());
+			param.put("v_mileage", usage.getMusicvo().getPrice());
+			param.put("v_title", usage.getMusicvo().getTitle());
+			
+			user.setMileage(user.getMileage()+usage.getMileage());
+			usageDao.refundOfMusic(param);
 		}
 		
 		return "ok";
@@ -295,9 +304,7 @@ public class WalletController {
 		usage.setTicketListvo(tvo);
 		
 		param.put("v_tic_id", usage.getPks());
-		param.put("v_pro_pks", usage.getPks());
 		param.put("v_tic_attendance", usage.getTicketListvo().getAttendance());
-		param.put("v_pro_buyer", memberId);
 		param.put("v_per_id", usage.getTicketListvo().getPerformanceId());
 		param.put("v_tic_person", usage.getTicketListvo().getPerson());
 		param.put("v_mileage", usage.getMileage());

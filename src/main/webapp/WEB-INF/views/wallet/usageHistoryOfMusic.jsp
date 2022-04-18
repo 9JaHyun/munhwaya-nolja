@@ -9,7 +9,6 @@
 	display: inline-block;
 	margin: 10px 0 0 100px;
 }
-
 .pageInfo li {
 	float: left;
 	font-size: 1px;
@@ -17,38 +16,31 @@
 	padding: 7px;
 	font-weight: 500;
 }
-
 a:link {
 	color: white;
 	text-decoration: none;
 }
-
 a:visited {
 	color: white;
 	text-decoration: none;
 }
-
 a:hover {
 	color: #FF0078;
 	text-decoration: underline;
 }
-
 .search_area {
 	display: inline-block;
 	margin-top: 30px;
 	margin-left: 260px;
 }
-
 .search_area input {
 	height: 30px;
 	width: 250px;
 }
-
 .search_area button {
 	width: 100px;
 	height: 36px;
 }
-
 .accordion {
 	background-color: #eee;
 	color: #444;
@@ -216,22 +208,28 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	
 	function refundOfMusic() {
 		console.log($(event.target).data("usageid"));
-		console.log($(event.target).data("usageid").split(', '));
+
 		if($(event.target).text() == '환불 완료' || $(event.target).text() == '환불 불가' ) {
 			alert("환불이 불가능한 상태입니다.");
 		} else {
 			
 			let list =[];
-
-			var id = $(event.target).data("usageid").split(', ');
-			for (let i = 0; i < $(event.target).data("usageid").split(', ').length; i++) {
+			if($(event.target).data("usageid").toString().includes(',')){
+				var id = $(event.target).data("usageid").split(', ');
+				for (let i = 0; i < $(event.target).data("usageid").split(', ').length; i++) {
+					var obj= {};
+					obj["pks"] = id[i];
+					list.push(obj);		
+					
+				}
+			} else{
+				var id = $(event.target).data("usageid");
 				var obj= {};
-				obj["id"] = parseInt(id[i]);
-				obj["place"]= "U01";
-				
+				obj["pks"] = id;
+				list.push(obj);		
 			}
-				
-			list.push(obj);
+			
+			console.log(JSON.stringify(list));
 			var confirm1 = confirm('환불 하시겠습니까?')
 			if (confirm1) {
 				$.ajax ({
@@ -242,13 +240,12 @@ if (request.getProtocol().equals("HTTP/1.1"))
 					contentType : 'application/json; charset=utf-8',
 			        success : function(data) {
 		                alert("환불 되었습니다.")
-		                location.href="usageHistoryOfMusic.do";
+ 		                location.href="usageHistoryOfMusic.do";
 			        },
 	                error: function (xhr, status, error) {
 	                    alert("환불에 실패 하였습니다.");
 	                }
 	            })
-
 	        } else {
 	            alert("취소하셨습니다.")
 	        }
@@ -257,4 +254,3 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		
 	
 </script>
-

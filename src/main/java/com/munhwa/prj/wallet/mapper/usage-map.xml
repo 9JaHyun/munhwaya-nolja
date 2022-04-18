@@ -78,8 +78,17 @@
 		from usage_history
 		where id = #{id}
 		and place = #{place}
+		and refund = 'B01'
 	</select>
 	
+	<select id="selectByMusicOfId" resultMap="usageResultMap">
+		select * 
+        from usage_history
+        where pks = #{pks}
+        and member_id=#{memberId}
+        and place = 'U01'
+        and refund = 'B01'
+	</select>
 	<!-- 곡 구매 내역 -->
 	<select id="selectUsageListMusic" resultMap="usageResultMap">
 		<![CDATA[
@@ -91,7 +100,7 @@
 	            c.name,
 	            u.refund,
 	            LISTAGG(u.name, ', ') within group(order by u.name) as title,
-                LISTAGG(u.id, ', ') within group(order by u.name) as us_ids
+                LISTAGG(u.pks, ', ') within group(order by u.name) as us_ids
 			from usage_history u,
 	        common_code c
 			where u.place = c.id
@@ -285,9 +294,7 @@
 	<![CDATA[
 	{ call refund_ticket_list (
       #{v_tic_id, mode=IN, jdbcType=INTEGER, javaType=int},
-      #{v_pro_pks, mode=IN, jdbcType=INTEGER, javaType=int},
       #{v_tic_attendance, mode=IN, jdbcType=VARCHAR, javaType=string},
-      #{v_pro_buyer, mode=IN, jdbcType=VARCHAR, javaType=string},
       #{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
       #{v_tic_person, mode=IN, jdbcType=INTEGER, javaType=int},
       #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},

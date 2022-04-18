@@ -139,18 +139,6 @@ function requestPayKaKao() {
 				</select>
 			</div>
 			<div id="paylist" align="center">
-<!-- 			<button onclick="requestPayKaKao()" style="margin-left: 30px" -->
-<!-- 				id="kakaoPay" value="imp66890146"> -->
-<%-- 				<img src="${path}/resources/images/payment/kakaopay.png" style="width:150px; height:75px;"> --%>
-<!-- 			</button> -->
-<!-- 			<button onclick="requestPaySmilePay()" style="margin-left: 30px" -->
-<!-- 				id="smilePay" value="imp04405403"> -->
-<%-- 				<img src="${path}/resources/images/payment/smilepay.png" style="width:150px; height:75px;"> --%>
-<!-- 			</button> -->
-<!-- 			<button onclick="requestPayCard()" style="margin-left: 30px" -->
-<!-- 				id="smilePay" value="imp00514439"> -->
-<%-- 				<img src="${path}/resources/images/payment/kginicis.jpg" style="width:150px; height:75px;"> --%>
-<!-- 			</button> -->
 			</div>
 		</div>
 		<div align="right">

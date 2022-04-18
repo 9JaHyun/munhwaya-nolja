@@ -1,5 +1,6 @@
 package com.munhwa.prj.wallet.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,16 @@ public class UsageServiceImpl implements UsageService {
 	@Override
 	public List<UsageVO> selectById(int id, String place) {
 		return map.selectById(id, place);
+	}
+
+	@Override
+	public List<UsageVO> selectByMusicOfId(List<Integer> pks, String memberId) {
+		List<UsageVO> resultList = new ArrayList<>();
+		pks.forEach(pk -> 
+				resultList.add(map.selectByMusicOfId(pk, memberId))
+		);
+		
+		return resultList;
 	}
 
 }
