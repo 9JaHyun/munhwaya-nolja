@@ -14,7 +14,7 @@
 		<result property="price" column="price"/>
 		<result property="person" column="person"/>
 		<result property="artistName" column="artist_name"/>
-		<collection property="performancepersonalvo" resultMap="performancepersonalResultMap"></collection>
+		<collection property="performancepersonalvo" resultMap="performancepersonalResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.munhwa.prj.performance.vo.PerformancePersonalVO" id="performancepersonalResultMap">
@@ -164,14 +164,13 @@
 		INSERT INTO PERFORMANCE(ID, NAME, LOCATION, SDATE, EDATE, CONTENT, IMAGE, PRICE, ARTIST_ID)
 		VALUES(PERFORMANCE_SEQ.nextval, #{name}, #{location}, #{sdate}, #{edate}, #{content}, #{image}, #{price}, #{artistId})
 	</insert>
-
-
 	
 	<update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
 		<![CDATA[
 			{ call accept_performance (
 				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
-				#{v_per_status, mode=IN, jdbcType=VARCHAR, javaType=string}
+				#{v_per_status, mode=IN, jdbcType=VARCHAR, javaType=string},
+				#{v_artist_id, mode=OUT, jdbcType=INTEGER, javaType=int}
 			)}
 		]]>
 	</update>

@@ -49,7 +49,7 @@ public class MemberController {
     @PreAuthorize("hasRole('R01')")
     @GetMapping("/mypage.do")
     public String mypage(@LoginUser SessionUser sessionUser, Model model) {
-        model.addAttribute("news1", newsService.newsList(sessionUser.getId()));
+        model.addAttribute("news1", newsService.findByMemberId(sessionUser.getId()));
         return "mypage-member";
     }
 
