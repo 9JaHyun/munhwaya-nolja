@@ -104,13 +104,13 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				style="height: 20px; width: 60px; margin-bottom: 0px;">
 		</div>
 	</div>
-	<table class="table">
+	<table class="table" style="word-break:break-all;">
 		<thead>
 			<tr>
 				<th scope="col">사용 일자</th>
 				<th scope="col">사용 금액</th>
 				<th scope="col">사용처</th>
-				<th scope="col">구매한 곡 명</th>
+				<th scope="col">구매 곡</th>
 				<th scope="col">상태(환불 여부)</th>
 			</tr>
 		</thead>
@@ -121,7 +121,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 							value="${usage.useAt}" /></td>
 					<td class="listMileage">${usage.mileage }</td>
 					<td>${usage.commonCodevo.name }</td>
-					<td>${usage.musicvo.title }</td>
+					<td style="width:15%">${usage.musicvo.title }</td>
 					<td><button type="button" class="refund tbutton small"
 							onclick="refundOfMusic()">
 							<c:choose>
@@ -251,6 +251,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	        }
 	    }
 }
-		
+
 	
 </script>

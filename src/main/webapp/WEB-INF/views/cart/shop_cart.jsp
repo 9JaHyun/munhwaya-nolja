@@ -56,7 +56,7 @@ tr {
                                         <c:forEach items="${carts }" var="cart">
                                         <tr class="cart_table_item" style="height:50px; color:white;">
                                             <td class="product-thumbnail" >
-                                                <a href="#"><img src="resources/images/bg/musicBg3.jpg"
+                                                <a href="#"><img src="api/picture/${cart.value.picture }"
                                                                  alt="#" name="carts"  style="width:100px; height:100px; object-fit: cover;"></a>
                                             </td>
                                             <td class="product-name" style="text-align:center;">
