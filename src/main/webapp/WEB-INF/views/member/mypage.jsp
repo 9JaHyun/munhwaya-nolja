@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
+
 <style>
     .js-load {
         display: none;
@@ -69,7 +70,7 @@
                         <div class="js-load">
                             <div class="notification-box notification-box-error">
                                 <p>
-                                    <i class="icon-ok"></i><a href="#">${news.artistName}님이
+                                    <i class="icon-ok"></i><a onclick="performanceSearch(${news.pks})">${news.artistName}님이
                                     <c:if test="${news.code eq 'N03'}">공연</c:if>을 등록하셨습니다.&nbsp;&nbsp;
                                     <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
                                 </p>
@@ -105,7 +106,18 @@
     </div>
 </div>
 
+<div>
+	<form id = "frm" action="performanceSelect.do" method="post">
+		<input type="hidden" id="id" name="id">
+	</form>
+</div>
+
 <script>
+	function performanceSearch(n) {
+		frm.id.value = n;
+		frm.submit();
+	}
+	
     function delNewsFnc(id) {
         $.ajax({
             type: "POST",
@@ -138,4 +150,5 @@
         }
         $(list + ":lt(" + total_cnt + ")").addClass("active");
     }
+
 </script>

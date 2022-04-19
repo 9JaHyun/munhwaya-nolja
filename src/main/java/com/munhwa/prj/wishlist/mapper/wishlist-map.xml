@@ -12,7 +12,9 @@
 	<resultMap type="com.munhwa.prj.wishlist.vo.WishlistMusicVO" id="wishlistMusicResultMap">
 		<id property="wishlistId" column="wishlist_id"/>
 		<result property="musicId" column="music_id"/>
+		<result property="title" column="title"/>
 		<result property="orders" column="orders"/>
+		<result property="artName" column="art_name"/>
 	</resultMap>
 	
 	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
@@ -58,15 +60,16 @@
 	</insert>
 
 	<!-- 위시리스트 곡 리스트 -->
-	<select id="wishlistMusicList" parameterType="String" resultMap="musicResultMap" >
-	SELECT *
-	FROM MUSIC
-	WHERE ID IN (SELECT MUSIC_ID
-				FROM WISHLIST_MUSIC
-				WHERE WISHLIST_ID IN (SELECT ID
-									  FROM WISHLIST
-									  WHERE MEMBER_ID = #{memberId}
-									  AND ID = #{wishlistId}))
+	<select id="wishlistMusicList" parameterType="String" resultMap="wishlistMusicResultMap" >
+   		SELECT M.ID AS music_id, M.TITLE AS TITLE, M.ART_NAME AS ART_NAME, WM.ORDERS AS ORDERS
+	   	FROM MUSIC M, (SELECT MUSIC_ID, ORDERS
+			           FROM WISHLIST_MUSIC
+			           WHERE WISHLIST_ID = (SELECT ID
+			                             	FROM WISHLIST
+			                            	WHERE MEMBER_ID = #{memberId}
+			                                AND ID = #{wishlistId})) WM
+		WHERE ID IN WM.MUSIC_ID
+		ORDER BY ORDERS
 	</select>
 
 	<!-- 위시리스트 한건 등록 -->
@@ -99,6 +102,15 @@
 		INSERT INTO WISHLIST
 		VALUES (wishlist_seq.nextval, #{name}, #{memberId})
 	</insert>
-
 	
+	<!-- 위시리스트 곡 순서변경 -->
+	<update id="updateMusicOrders" statementType="CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call update_order_proc (
+			#{v_wishlist_id, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{v_to, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{v_from, mode=IN, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>	
+	</update>
 </mapper>

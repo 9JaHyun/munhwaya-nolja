@@ -1,5 +1,6 @@
 package com.munhwa.prj.wishlist.service;
 
+import com.munhwa.prj.wishlist.vo.WishlistMusicVO;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
 import java.util.List;
 import java.util.Map;
@@ -28,4 +29,7 @@ public interface WishlistService {
 
 	// 마이페이지 - 위시리스트 추가
 	int addWishlist(WishlistVO vo);
+	
+	// 위시리스트 곡 순서변경
+	int updateMusicOrders(Map<String, Object> vo);
 }
