@@ -53,4 +53,9 @@ public class WishlistServiceImpl implements WishlistService {
     public int addWishlist(WishlistVO vo) {
         return map.addWishlist(vo);
     }
+
+	@Override
+	public int updateMusicOrders(Map<String, Object> vo) {
+		return map.updateMusicOrders(vo);
+	}
 }

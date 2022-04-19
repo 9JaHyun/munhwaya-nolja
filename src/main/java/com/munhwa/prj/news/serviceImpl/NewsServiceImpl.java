@@ -6,7 +6,6 @@ import com.munhwa.prj.news.vo.NewsVO;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class NewsServiceImpl implements NewsService {
 

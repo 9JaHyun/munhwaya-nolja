@@ -2,6 +2,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 
 <!--Stylesheet-->
@@ -89,7 +90,7 @@ button {
 </div>
 <div class="background"></div>
 <form method="post" action="signin">
-	<h3 style="margin-bottom: 40px;">Sign In</h3>
+	<h3 style="margin-bottom: 40px;">SIGN IN</h3>
 
 	<h5 style="margin-bottom: 20px;">ID</h5>
 	<input type="text" id="username" name="username"
@@ -109,9 +110,8 @@ button {
 
 
 	<div align="right">
-		<label> Remember ID <input type="checkbox" name="remember-me"
+		Remember ID <input type="checkbox" id="idSaveCheck"
 			style="margin: 0px;">
-		</label>
 	</div>
 
 	<button type="submit">Sign in</button>
@@ -127,7 +127,65 @@ button {
 	</div>
 </form>
 <div align="center" style="margin-bottom: 130px;">
-	<a href="findId">아이디 찾기</a> |
-	<a href="findPassword">비밀번호 찾기</a> | 
-	<a href="signupForm.do">회원가입</a>
+	<a href="findId">아이디 찾기</a> | <a href="findPassword">비밀번호 찾기</a> | <a
+		href="signupForm.do">회원가입</a>
 </div>
+
+
+<script>
+	$(document).ready(function() {
+
+		// 저장된 쿠키값을 가져와서 ID 칸에 넣어줌. 없으면 공백.
+		var key = getCookie("key");
+		$("#username").val(key);
+
+		if ($("#username").val() != "") { // 입력 칸에 저장된 ID가 표시된 상태라면 체크 상태로 두기.
+			$("#idSaveCheck").attr("checked", true);
+		}
+
+		$("#idSaveCheck").change(function() { // 체크박스에 변화가 있다면 7일 동안 쿠키 보관
+			if ($("#idSaveCheck").is(":checked")) { 
+				setCookie("key", $("#username").val(), 7); 
+			} else {
+				deleteCookie("key");
+			}
+		});
+
+		// 체크한 상태에서 ID를 입력하는 경우 쿠키 저장
+		$("#username").keyup(function() { 
+			if ($("#idSaveCheck").is(":checked")) { 
+				setCookie("key", $("#username").val(), 7); 
+			}
+		});
+	});
+
+	function setCookie(cookieName, value, exdays) {
+		var exdate = new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var cookieValue = escape(value)
+				+ ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+		document.cookie = cookieName + "=" + cookieValue;
+	}
+
+	function deleteCookie(cookieName) {
+		var expireDate = new Date();
+		expireDate.setDate(expireDate.getDate() - 1);
+		document.cookie = cookieName + "= " + "; expires="
+				+ expireDate.toGMTString();
+	}
+
+	function getCookie(cookieName) {
+		cookieName = cookieName + '=';
+		var cookieData = document.cookie;
+		var start = cookieData.indexOf(cookieName);
+		var cookieValue = '';
+		if (start != -1) {
+			start += cookieName.length;
+			var end = cookieData.indexOf(';', start);
+			if (end == -1)
+				end = cookieData.length;
+			cookieValue = cookieData.substring(start, end);
+		}
+		return unescape(cookieValue);
+	}
+</script>

@@ -1,14 +1,5 @@
 package com.munhwa.prj.admin.web;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminController {
 
     private final PerformanceService performanceService;
-    private final ApplicationEventPublisher publisher;
 
-    public AdminController(PerformanceService performanceService,
-          ApplicationEventPublisher publisher) {
+    public AdminController(PerformanceService performanceService) {
         this.performanceService = performanceService;
-        this.publisher = publisher;
     }
     
     // 공연 신청 목록
@@ -64,10 +52,6 @@ public class AdminController {
         paramMap.put("v_per_status", status);
         int result = performanceService.performanceUpdate(paramMap);
 
-        if (status.equals("A01")) {
-            log.info("call PerformancePublishEvent");
-            publisher.publishEvent(new PerformancePublishEvent(performanceId, (int) paramMap.get("v_artist_id")));
-        }
         if (result == 1) {
             return "성공";
         } else {

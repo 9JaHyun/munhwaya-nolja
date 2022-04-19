@@ -1,5 +1,7 @@
 package com.munhwa.prj.artist.vo;
 
+import com.munhwa.prj.music.vo.MusicVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +17,8 @@ public class ArtistVO {
 	private String type;
 	private String memberId;
 	private String name;
+	private MusicVO musicvo;
+	private ArtDetailVO artDetailvo;
 	
 	public ArtistVO() {}
 	

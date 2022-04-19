@@ -44,8 +44,9 @@ public class WishlistController {
           @RequestParam String name) {
         String wishlistId = Integer.toString(id);
         model.addAttribute("wishlistName", name);
-        model.addAttribute("wishlistMusic",
+        model.addAttribute("wishMusic",
               wishlistDao.wishlistMusicList(user.getId(), wishlistId));
+        model.addAttribute("wishlistId", id);
         return "wishlistMusic-member";
     }
 
@@ -101,4 +102,18 @@ public class WishlistController {
         wishlistDao.addWishlist(vo);
         return "redirect:wishlist.do";
     }
+    
+    // 위시리스트 곡 순서변경
+    @PostMapping("changeOrders.do")
+    @ResponseBody
+    public String changeOrders(@RequestParam int id, int from, int to) {
+    	System.out.println(id + "," + from + "," + to);
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("v_wishlist_id", id);
+        paramMap.put("v_to", to);
+        paramMap.put("v_from", from);
+    	wishlistDao.updateMusicOrders(paramMap);
+        return "ok";
+    }    
+    
 }

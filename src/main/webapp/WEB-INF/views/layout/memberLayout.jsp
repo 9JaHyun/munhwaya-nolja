@@ -36,7 +36,7 @@
     	<div class="under_header">
 			<img src="resources/images/assets/mypageback.png" alt="#">
 		</div>
-		<div class="page-content back_to_up">
+		<div class="page-content back_to_up" style="min-height: 870px;">
 	    	<div class="row row-fluid clearfix mbf">
 	    <tiles:insertAttribute name="sidebar"/>
 	   			<div class="span8 posts">
