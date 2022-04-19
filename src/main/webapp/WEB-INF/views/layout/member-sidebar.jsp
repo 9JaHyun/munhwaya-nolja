@@ -67,11 +67,14 @@
                 <c:choose>
                     <c:when test="${member.role == 'R01'}">
                         <li><a href="#"><i class="icon-caret-right"> </i>구매한 공연</a></li>
-                        </li>
+                      
+                    </c:when>
+                    <c:when test="${member.role == 'R03' }">
+                    	<li><a href="judgeArtist"><i class="icon-caret-right"> </i>아티스트 승급 관리</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="artistManagement"><i class="icon-caret-right"></i>아티스트 관리</a></li>
-                        <li><a href="artistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 등록</a>
+                        <li><a href="artistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 등록</a></li>
                         <li><a href="artistDetail"><i class="icon-caret-right"></i>아티스트 정보 상세페이지</a></li>
                         <li><a href="changeArtistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 변경</a></li>
                     </c:otherwise>
