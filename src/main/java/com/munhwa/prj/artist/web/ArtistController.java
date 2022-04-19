@@ -5,24 +5,42 @@ import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.service.PromotionRequestService;
 import com.munhwa.prj.artist.serviceImpl.SmsServiceImpl;
+import com.munhwa.prj.artist.vo.ArtDetailVO;
+import com.munhwa.prj.artist.vo.ArtDetailVO2;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.service.FileUtils;
+import com.munhwa.prj.common.paging.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.music.service.MusicService;
+import com.munhwa.prj.music.vo.AlbumVO;
+import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.wishlist.service.WishlistService;
+import com.munhwa.prj.wishlist.vo.WishlistVO;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,26 +51,90 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 public class ArtistController {
-
+	
 	private final ArtistService artistDao;
+	private final WishlistService wishlistDao;
 	private final FileUtils fileUtils;
 	private final PromotionRequestService promotionRequestDao;
-
+	
+	
 	public ArtistController(ArtistService artistDao, FileUtils fileUtils,
-		PromotionRequestService promotionRequestDao) {
+		PromotionRequestService promotionRequestDao, WishlistService wishlistDao) {
+		this.wishlistDao = wishlistDao;
 		this.artistDao = artistDao;
 		this.fileUtils = fileUtils;
 		this.promotionRequestDao = promotionRequestDao;
 	}
 
 	// 아티스트 상세정보
+	
 	@RequestMapping("/artistDetail")
-	public String artistDetail(@LoginUser SessionUser user, Model model) {
+	public String artistDetail(@LoginUser SessionUser user,  Model model, Criteria cri) {
 		ArtistVO artist = artistDao.findByMemberId(user.getId());
 		model.addAttribute("artist", artist);
+		
+		List<ArtDetailVO> list = artistDao.findMusic(cri,artist.getId());
+		model.addAttribute("musicList", list);
+		
+		int total = artistDao.getTotal(cri, artist.getId());
+		PageDTO pageMaker = new PageDTO(cri, total);
+		model.addAttribute("pageMaker", pageMaker);
+		
+		//사용자의 위시리스트를 리스트로 불러와서 모델에 담는다
+		List<WishlistVO> list1 = wishlistDao.wishlistList(user.getId());
+		model.addAttribute("wishList", list1);
+		
+		// 곡 개수
+		int musicCnt = artistDao.musicCnt(artist.getId());
+		model.addAttribute("musicCnt", musicCnt);
+		
+		// 앨범 개수
+		int albumCnt = artistDao.albumCnt(artist.getId());
+		model.addAttribute("albumCnt", albumCnt);
+		
+		
+		
+		
 		return "artist/artistDetail";
 	}
-
+	
+	@ResponseBody
+	@RequestMapping("checkBuy") //구매할려는 곡이 이미 샀는곡인지 아니면 안산곡인지 체크
+	public int checkBuy (@LoginUser SessionUser user, @RequestParam int id ) {
+		int r = artistDao.checkBuy(user.getId(), id);
+		return r;
+		
+	}
+	
+//	// 곡 목록 페이징 처리
+//	@GetMapping("/page")
+//	public String musicListPage(Model model, Criteria cri) {
+//		
+//		List<ArtDetailVO2> list = artistDao.musicListPage(cri);
+//		
+//		model.addAttribute("page", list);
+//		
+//		int total = artistDao.getTotal(cri, )
+//	    PageDTO pageMake = new PageDTO(cri, total);
+//	    model.addAttribute("pageMaker", pageMake);
+//		
+//	    return "artist/artistDetail";
+//	}
+		//log.info("musicListPage");
+		        
+		//model.addAttribute("page", artistDao.musicListPage(cri));
+		        
+		/*
+		 * int total = ArtistService.getTotal();
+		 * 
+		 * PageDTO pageMake = new PageDTO(cri, total);
+		 * 
+		 * model.addAttribute("pageMaker", pageMake);
+		 */
+		        
+		 //   }    
+	
+	
 	// 아티스트 회원정보
 	@RequestMapping("/artistManagement")
 	public String artistManagement() {
