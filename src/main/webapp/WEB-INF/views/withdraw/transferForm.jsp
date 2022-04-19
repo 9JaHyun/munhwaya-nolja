@@ -1,57 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	여기는 송금폼
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">계좌번호</th>
-				<th scope="col">은행</th>
-				<th scope="col">소유주</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<form id="acount" method="post" action="/transfer">
-					<input type="hidden" id="access_token" name="access_token"
-						th:value="${token}"></input> <input type="hidden"
-						id="bank_tran_id" name="bank_tran_id"
-						th:value="${transferForm.bank_tran_id}"></input> <input
-						type="hidden" id="cntr_account_num" name="cntr_account_num"
-						th:value="${transferForm.cntr_account_num}+'324'"></input> <input
-						type="hidden" id="dps_print_content" name="dps_print_content"
-						th:value="간편계좌이체"></input> <input type="hidden"
-						id="cntr_account_type" name="cntr_account_type" th:value="N"></input>
-					<input type="hidden" id="fintech_use_num" name="fintech_use_num"
-						th:value="${transferForm.fintech_use_num}"></input>
-					<td><a>송금금액(100000, 20000)원만 가능(테스트케이스에 등록된값만 출금이체가능):</a> <input
-						type="text" id="tran_amt" name="tran_amt"></input></td> <input
-						type="hidden" id="req_client_name" name="req_client_name"
-						th:value="${transferForm.req_client_name}"></input> <input
-						type="hidden" id="req_client_bank_code"
-						name="req_client_bank_code" th:value="004"></input> <input
-						type="hidden" id="req_client_account_num"
-						name="req_client_account_num"
-						th:value="${transferForm.req_client_account_num}+'324'"></input> <input
-						type="text" id="req_client_num" name="req_client_num"
-						th:value="BEOMSEON1234"></input> <input type="hidden"
-						id="transfer_purpose" name="transfer_purpose" th:value="TR"></input>
-					<input type="hidden" id="recv_client_bank_code"
-						name="recv_client_bank_code" th:value="011"></input>
-					<td><a>수취인 계좌번호</a> <input type="text" id="recv_client_account_num" name="recv_client_account_num"
-						th:placeholder="계좌번호입력"></input></td>
-					<td><a>수취인명</a> <input type="text" id="recv_client_name"
-						name="recv_client_name" th:value="박범선" th:placeholder="박범선"></input></td>
-					<td><button type="submit">송금</button></td>
-				</form>
-			</tr>
-		</tbody>
-	</table>
-</body>
-</html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">계좌번호</th>
+            <th scope="col">은행</th>
+            <th scope="col">소유주</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr c:each="account : ${bankAccounts.getRes_list()}">
+            <th c:text="${account.getAccount_num_masked()}"></th>
+            <td c:text="${account.account_num}"></td>
+            <td c:text="${account.getBank_name()}"></td>
+            <td c:text="${account.getAccount_holder_name()}"></td>
+            <td c:if="${account.account_num_masked=='5234234***'}">주계좌</td>
+            <td>
+                <c:if test="${account.account_num_masked}=='5234234***'">
+                    <form method="get" action="/transfer">
+                        <input type="hidden" name="access_token" value="${access_token}"></input>
+                        <input type="hidden" name="fintech_use_num"
+                               value="${account.fintech_use_num}"></input>
+                        <input type="hidden" name="account_num"
+                               value="${account.account_num_masked}"></input>
+                        <input type="hidden" name="bank_tran_id" value="${useCode}+U"></input>
+                        <input type="hidden" name="req_client_name"
+                               value="${account.account_holder_name}"></input>
+                        <button type="submit">이 계좌로 입금하기</button>
+                    </form>
+                </c:if>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a type="button" onclick="location.href='../'">뒤로가기</a>
+</div>

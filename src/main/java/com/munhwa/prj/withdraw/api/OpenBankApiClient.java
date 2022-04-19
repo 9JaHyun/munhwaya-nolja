@@ -1,12 +1,12 @@
 package com.munhwa.prj.withdraw.api;
 
 import com.munhwa.prj.common.propertyScan.service.PropertiesScan;
-import com.munhwa.prj.withdraw.dto.AccountSearchRequestDto;
 import com.munhwa.prj.withdraw.dto.AccountTransferRequestDto;
 import com.munhwa.prj.withdraw.dto.AccountTransferResponseDto;
 import com.munhwa.prj.withdraw.dto.BankAcountSearchResponseDto;
 import com.munhwa.prj.withdraw.dto.BankTokenRequestDto;
 import com.munhwa.prj.withdraw.dto.BankTokenResponseDto;
+import com.munhwa.prj.withdraw.web.BankAccountSearchRequestDto;
 import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -31,8 +31,8 @@ public class OpenBankApiClient {
     private final RestTemplate restTemplate;
     private final PropertiesScan propertiesScan;
 
-    private final String REDIRECT_URL = "http://localhost/prj/auth/openbank/";
-    private final String BASE_URL = "https://testapi.openbanking.or.kr/2.0";
+    private final String REDIRECT_URL = "http://localhost/prj/auth/openbank";
+    private final String BASE_URL = "https://testapi.openbanking.or.kr";
     private final String USE_CODE;
     private final String CLIENT_ID;
     private final String CLIENT_SECRET;
@@ -47,13 +47,11 @@ public class OpenBankApiClient {
 
         Properties properties = propertiesScan.readProperties("config/openbanking.properties");
         USE_CODE = properties.getProperty("useCode");
-        CLIENT_ID = properties.getProperty("clientId");
+        CLIENT_ID = properties.getProperty("client_id");
         CLIENT_SECRET = properties.getProperty("client_secret");
     }
 
-    /**
-     * 토큰발급요청
-     */
+    // 토큰 발급 요청
     public BankTokenResponseDto requestToken(BankTokenRequestDto bankTokenRequestDto) {
         httpHeaders.add("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
         bankTokenRequestDto.setBankRequestToken(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL,
@@ -67,37 +65,31 @@ public class OpenBankApiClient {
 
         HttpEntity<MultiValueMap<String, String>> param = new HttpEntity<>(parameters, httpHeaders);
 
-        return restTemplate.exchange(BASE_URL + "/token",
+        return restTemplate.exchange(BASE_URL + "/oauth/2.0/token",
               HttpMethod.POST, param, BankTokenResponseDto.class).getBody();
     }
 
-    /**
-     * 계좌조히
-     *
-     * @param accountSearchRequestDto
-     * @return
-     */
+    // 계좌 조회
     public BankAcountSearchResponseDto requestAccountList(
-          AccountSearchRequestDto accountSearchRequestDto) {
-        String url = BASE_URL + "/account/list";
-        HttpEntity<String> openBankAcountSerchRequest = new HttpEntity<>(
-              setHeader(accountSearchRequestDto.getAccess_token()));
+          BankAccountSearchRequestDto bankAccountSearchRequestDto){
+        String url = BASE_URL+"/account/list";
+        HttpEntity<String> openBankAccountSearchRequest = new HttpEntity<>(setHeader(
+              bankAccountSearchRequestDto.getAccess_token()));
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
-              .queryParam("user_seq_no", accountSearchRequestDto.getUser_seq_no())
-              .queryParam("include_cancel_yn", accountSearchRequestDto.getInclude_cancel_yn())
-              .queryParam("sort_order", accountSearchRequestDto.getSort_order())
+              .queryParam("user_seq_no", bankAccountSearchRequestDto.getUser_seq_no())
+              .queryParam("include_cancel_yn", bankAccountSearchRequestDto.getInclude_cancel_yn())
+              .queryParam("sort_order", bankAccountSearchRequestDto.getSort_order())
               .build();
 
-        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET,
-              openBankAcountSerchRequest, BankAcountSearchResponseDto.class).getBody();
+        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, openBankAccountSearchRequest, BankAcountSearchResponseDto.class).getBody();
     }
 
-    /**
-     * 계좌이체
-     */
+    // 계좌 이체
     public AccountTransferResponseDto requestTransfer(String access_token,
           AccountTransferRequestDto accountTransferRequestDto) {
-        String url = BASE_URL + "//transfer/withdraw/fin_num";
+
+        String url = BASE_URL + "/transfer/deposit/acnt_num";
+
         accountTransferRequestDto.setTran_dtime(openBankutil.getTransTime());
         ResponseEntity<AccountTransferRequestDto> param = new ResponseEntity<>(
               accountTransferRequestDto, setHeader(access_token), HttpStatus.OK);

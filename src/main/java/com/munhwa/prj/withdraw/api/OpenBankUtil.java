@@ -20,23 +20,17 @@ public class OpenBankUtil {
         }
         return bank_tran_id+rst;
     }
-    /**
-     * 거래시간 
-     */
+
+    // 거래 시간
     public String getTransTime(){
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddhhmmss");
-        String now = localDateTime.format(dateTimeFormatter);
-        return now;
+        return localDateTime.format(dateTimeFormatter);
     }
 
-    /**
-     * 
-     * 마스킹된 계좌 자르기
-     */
+    // 마스킹 계좌 자르기
     public String trimAccountNum(String accountNum, int length){
-        String account = accountNum.substring(0, length - 3);
-        return account;
+        return accountNum.substring(0, length - 3);
     }
 
 }

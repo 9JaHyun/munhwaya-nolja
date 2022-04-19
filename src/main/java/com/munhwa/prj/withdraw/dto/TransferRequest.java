@@ -10,7 +10,7 @@ public class TransferRequest {
     private String bank_code_std;           // 입금은행 표준코드
     private String account_num;             // 내계좌
     private String account_holder_name;     // 입금계좌 예금주명
-    private String print_content;           // 입금계좌 인자내역
+    private String print_content = "문화야 놀자 마일리지 환전";
     private int tran_amt;                   // 거래 금액
     private String req_client_name;         // 요청고객성명
     private String req_client_num;          // 요청 고객 회원 번호
