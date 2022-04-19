@@ -5,14 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Remix - Music & Band Site Template HTML5 and CSS3</title>
+    <title>CCC</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <!-- Seo Meta -->
     <meta name="description" content="Remix - Music & Band Site Template HTML5 and CSS3">
     <meta name="keywords"
           content="remix, music, light, dark, themeforest, multi purpose, band, css3, html5">
-	
+
     <!-- jquery cdn -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
@@ -72,7 +72,6 @@
             function () {
                 // callback function
             });
-
     });
     /* ]]> */
 </script>

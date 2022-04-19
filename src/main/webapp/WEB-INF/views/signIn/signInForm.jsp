@@ -2,6 +2,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 
@@ -116,13 +117,13 @@ button {
 
 	<button type="submit">Sign in</button>
 	<div class="social" align="center">
-		<div
-			style="padding-top: 10px; float: left; width: 48%; background-color: #1A73E8;">
-			<a href="/prj/oauth2/authorization/google" role="button">Google</a>
+		<div onclick="location.href='${rootPath}/oauth2/authorization/google'"
+			 style="padding-top: 10px; float: left; width: 48%; background-color: #1A73E8; cursor:pointer;">
+			<p  role="button">Google</p>
 		</div>
-		<div
-			style="padding-top: 10px; float: right; width: 48%; background-color: #19CE60;">
-			<a href="/prj/oauth2/authorization/naver" role="button">Naver</a>
+		<div onclick="location.href='${rootPath}/oauth2/authorization/naver'"
+			style="padding-top: 10px; float: right; width: 48%; background-color: #19CE60; cursor:pointer;">
+			<p>Naver</p>
 		</div>
 	</div>
 </form>
