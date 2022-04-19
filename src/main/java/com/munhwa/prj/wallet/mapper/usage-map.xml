@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.wallet.mapper.UsageMapper">
+	<resultMap type="com.munhwa.prj.wallet.vo.UsageVO" id="usageResultMap">
+		<id property="id" column="id" />
+		<result property="useAt" column="use_at" />
+		<result property="mileage" column="mileage" />
+		<result property="place" column="place" />
+		<result property="memberId" column="member_id" />
+		<result property="pks" column="pks" />
+		<result property="refund" column="refund"/>
+		<result property="name" column="name"/>
+		<result property="usageIds" column="us_ids"/>
+		<collection property="commonCodevo" resultMap="commonResultMap" />
+		<collection property="musicvo" resultMap="musicResultMap" />
+		<collection property="performancevo" resultMap="performanceResultMap" />
+		<collection property="performancePersonalvo" resultMap="performancepersonalResultMap"/>
+		<collection property="ticketListvo" resultMap="ticketListResultMap"/>
+	</resultMap>
+
+	<resultMap type="com.munhwa.prj.common.code.entity.CommonCodeVO"
+		id="commonResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+	</resultMap>
+
+	<resultMap type="com.munhwa.prj.music.vo.MusicVO"
+		id="musicResultMap">
+		<id property="id" column="ID" />
+		<result property="artName" column="ART_NAME"/>
+		<result property="genre" column="GENRE"/>
+		<result property="lyric" column="LYRIC"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="price" column="PRICE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="time" column="TIME"/>
+		<result property="writer" column="WRITER"/>
+		<result property="composing" column="COMPOSING"/>
+		<result property="arrangement" column="ARRANGEMENT"/>
+	</resultMap>
+
+	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO"
+		id="performanceResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="pname" />
+		<result property="location" column="location" />
+		<result property="sdate" column="sdate" />
+		<result property="edate" column="edate" />
+		<result property="content" column="content" />
+		<result property="status" column="status" />
+		<result property="image" column="image" />
+		<result property="artistId" column="artist_id" />
+		<result property="price" column="price" />
+		<result property="person" column="person" />
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.performance.vo.PerformancePersonalVO" id="performancepersonalResultMap">
+		<id property="id" column="id"/>
+		<result property="personal" column="personal"/>
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.ticketList.vo.TicketListVO"
+		id="ticketListResultMap">
+		<id property="id" column="id" />
+		<result property="performanceId" column="performance_id" />
+		<result property="memberId" column="member_id" />
+		<result property="qrcode" column="qrcode" />
+		<result property="attendance" column="attendance" />
+		<result property="person" column="person" />
+		<collection property="performancevo"
+			resultMap="performanceResultMap"></collection>
+	</resultMap>
+	
+	<select id="selectById" resultMap="usageResultMap">
+		select *
+		from usage_history
+		where id = #{id}
+		and place = #{place}
+		and refund = 'B01'
+	</select>
+	
+	<select id="selectByMusicOfId" resultMap="usageResultMap">
+		select * 
+        from usage_history
+        where pks = #{pks}
+        and member_id=#{memberId}
+        and place = 'U01'
+        and refund = 'B01'
+	</select>
+	<!-- 곡 구매 내역 -->
+	<select id="selectUsageListMusic" resultMap="usageResultMap">
+		<![CDATA[
+		 select *
+	         from ( select
+	            DENSE_RANK() OVER (ORDER BY u.use_at desc, u.member_id, c.name) as rn,
+				u.use_at,
+	            sum(u.mileage) as mileage,
+	            c.name,
+	            u.refund,
+	            LISTAGG(u.name, ', ') within group(order by u.name) as title,
+                LISTAGG(u.pks, ', ') within group(order by u.name) as us_ids
+			from usage_history u,
+	        common_code c
+			where u.place = c.id
+				and u.member_id = #{memberId}
+				and u.place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and u.use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and u.use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[ 
+	           group by u.use_at, u.member_id, c.name, u.refund
+	           order by u.use_at desc
+	     )
+	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
+     ]]>
+	</select>
+
+	<select id="getCountByMusic" resultType="int">
+  		<![CDATA[
+		select count(count(id))
+		from usage_history
+		where member_id = #{memberId}
+		and place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[
+		group by use_at
+		]]>
+	</select>
+
+	<select id="getSumByMusic" resultType="int">
+		<![CDATA[
+		select sum(sum(mileage))
+		from usage_history
+		where member_id = #{memberId}
+		and place = 'U01'
+		and (refund = 'B01' or refund = 'B03')
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[
+		group by use_at
+		]]>
+	</select>
+
+	<!-- 공연 티켓 구매 내역 -->
+	<select id="selectUsageListPerformance"
+		resultMap="usageResultMap">
+  	 <![CDATA[
+		select *
+	        from ( select
+	            rownum as rn,
+				u.use_at,
+	            u.mileage,
+	            c.name,
+	            u.refund,
+	            u.id,
+	            u.name as pname
+			from usage_history u,
+	        common_code c
+			where u.place = c.id
+				and u.member_id = #{memberId}
+				and u.place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and u.use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and u.use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+		<![CDATA[	
+	     	order by u.use_at desc
+	     )
+	      where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
+     ]]>
+	</select>
+
+	<select id="getCountByPerformance" resultType="int">
+  		<![CDATA[
+		select count(id)
+		from usage_history
+		where member_id = #{memberId}
+		and place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getSumByPerformance" resultType="int">
+		<![CDATA[
+		select sum(mileage)
+		from usage_history
+		where member_id = #{memberId}
+		and place = 'U02'
+		and (refund = 'B01' or refund = 'B03')
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+			</when>
+			<otherwise>
+				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insertUsage"
+		parameterType="com.munhwa.prj.wallet.vo.UsageVO">
+		INSERT INTO USAGE_HISTORY
+		(ID,
+		MILEAGE,
+		PLACE,
+		MEMBER_ID,
+		USE_AT,
+		PKS,
+		NAME)
+		VALUES(usage_history_seq.nextval,
+		#{mileage},
+		#{place},
+		#{memberId},
+		#{useAt},
+		#{pks},
+		#{name})
+	</insert>
+	
+	<update id="refundOfMusic" parameterType="map" statementType="CALLABLE">
+	<![CDATA[
+	{ call refund_music (
+	  #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_title, mode=IN, jdbcType=VARCHAR, javaType=string}
+	)}
+	]]>
+	</update>
+	
+	
+	<update id="refundOfPerformance" parameterType="map" statementType="CALLABLE">
+	<![CDATA[
+	{ call refund_ticket_list (
+      #{v_tic_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_tic_attendance, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_tic_person, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_mileage, mode=IN, jdbcType=INTEGER, javaType=int},
+	  #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string}
+	)}
+	]]>
+	</update>
+</mapper>

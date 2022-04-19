@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.music.mapper.MusicMapper">
+	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
+		<id property="id" column="ID" />
+		<result property="artName" column="ART_NAME"/>
+		<result property="genre" column="GENRE"/>
+		<result property="lyric" column="LYRIC"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="price" column="PRICE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="time" column="TIME"/>
+		<result property="writer" column="WRITER"/>
+		<result property="composing" column="COMPOSING"/>
+		<result property="arrangement" column="ARRANGEMENT"/>
+		<result property="picture" column="PICTURE"/>
+	</resultMap>
+	
+	<select id="musicSelectList" resultMap="musicResultMap">
+		<![CDATA[
+		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE
+		FROM (	SELECT
+				RANK() OVER (ORDER BY DOWNLOAD_CNT DESC) AS RN,
+				TITLE, ART_NAME, GENRE, ID, PICTURE
+				FROM MUSIC )
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
+	</select>
+	
+	<select id="musicSelectListByGenre" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE GENRE = #{genre}
+		ORDER BY DOWNLOAD_CNT DESC
+	</select>
+	
+	<select id="musicPersonalList" resultMap="musicResultMap">
+		<![CDATA[
+		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT
+		FROM (SELECT 
+        	  RANK() OVER (ORDER BY DOWNLOAD_CNT DESC) AS RN,
+        	  ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT
+			  FROM MUSIC
+			  WHERE GENRE=( SELECT GENRE
+							FROM MEMBER
+							WHERE ID=#{id}))
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
+	</select>
+	
+	<select id="getCountByList" resultType="int">
+	  <![CDATA[
+	      SELECT COUNT(ID)
+	      FROM (SELECT ID
+			    FROM MUSIC
+			    WHERE GENRE=(SELECT GENRE
+							  FROM MEMBER
+							  WHERE ID=#{id}))
+      ]]>
+	</select>
+	
+	<select id="musicSelectByTitle" resultMap="musicResultMap">
+ 		<![CDATA[
+ 		SELECT ID, TITLE, ART_NAME, FILE_ID, PICTURE
+		FROM (SELECT 
+        	  	ROWNUM AS RN,
+        	  	ID, TITLE, ART_NAME, FILE_ID, PICTURE
+			  FROM MUSIC
+			  WHERE UPPER(TITLE) LIKE UPPER('%'||#{title}||'%')) 
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+	     ]]>
+	</select>
+	
+	<select id="getCountByList3" resultType="int">
+	  <![CDATA[
+	      SELECT COUNT(ID)
+		  FROM MUSIC
+		  WHERE UPPER(TITLE) LIKE UPPER('%'||#{title}||'%')
+      ]]>
+	</select>
+	
+	
+	<select id="musicSelectByAlBum" parameterType="int" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC m 
+		WHERE ALBUM_ID = #{id}
+		ORDER BY DOWNLOAD_CNT DESC
+	</select>
+	
+	<select id="musicSelectListByPurchase" resultMap="musicResultMap">
+		<![CDATA[
+		SELECT ID, PICTURE, TITLE, ART_NAME, PRICE, FILE_ID
+		FROM (SELECT 
+        	  ROWNUM AS RN,
+        	  ID, PICTURE, TITLE, ART_NAME, PRICE, FILE_ID
+			  FROM MUSIC
+			  WHERE ID IN (SELECT MUSIC_ID
+                           FROM PURCHASED_MUSIC
+                     	   WHERE MEMBER_ID = #{id}))
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
+	</select>
+	
+	<select id="getCountByList2" resultType="int">
+	  <![CDATA[
+	      SELECT COUNT(ID)
+	      FROM (SELECT ID
+				FROM MUSIC
+				WHERE ID IN (SELECT MUSIC_ID
+                    		 FROM PURCHASED_MUSIC
+                    		 WHERE MEMBER_ID = #{id}))
+      ]]>
+	</select>
+	
+	<select id="musicSelectListByWishList" parameterType="int" resultMap="musicResultMap">
+		SELECT * FROM MUSIC
+		WHERE ID IN (SELECT MUSIC_ID
+        			 FROM WISHLIST_MUSIC
+        			 WHERE WISHLIST_ID=#{id})
+	</select>
+	
+	<select id="musicSelectListByMusicId" parameterType="map" resultMap="musicResultMap">
+		SELECT * FROM MUSIC
+		WHERE ID IN 
+		<foreach item="item" index="index" collection="musicIdList" open="(" separator="," close=")">
+        	#{item}
+  		</foreach>
+	</select>
+	
+	<select id="musicSelect" parameterType="int" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="musicSelectByArtName" parameterType="String" resultMap="musicResultMap">
+		SELECT *
+		FROM MUSIC
+		WHERE TITLE = #{title}
+		AND ART_NAME= #{artName}
+	</select>
+	
+	<select id="musicIdByTitle" parameterType="com.munhwa.prj.music.vo.MusicVO" resultType="int">
+		SELECT ID
+		FROM MUSIC
+		WHERE TITLE = #{title}
+		AND ART_NAME = #{artName)
+	</select>
+	
+	<update id="statusUpdate" statementType = "CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call STATUSUPDATE (
+			#{V_MUSIC_ID, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{V_MEMBER_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+			)}
+		]]>
+	</update>
+	
+</mapper>

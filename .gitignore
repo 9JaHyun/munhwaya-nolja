@@ -100,3 +100,7 @@ fabric.properties
 
 ## github
 .github/
+
+
+## security
+src/main/resources/config/
