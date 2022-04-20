@@ -41,12 +41,19 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-								<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
-									<a href="streaming?id=${music.id }" class="grid_3">
-										<img src="api/picture/${music.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
-										<span><strong>${music.title }</strong>${music.artName}</span>
-									</a>
-								</c:forEach>
+								<c:choose>
+									<c:when test="${checkM eq 0}">
+												<span><strong>검색결과가 없습니다</strong></span>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
+											<a href="streaming?id=${music.id }" class="grid_3">
+												<img src="api/picture/${music.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
+												<span><strong>${music.title }</strong>${music.artName}</span>
+											</a>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->
@@ -70,15 +77,19 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-								<c:forEach var="album" items="${albumSelectListByTitle}" begin="0" end="7">
-									<a class="grid_3" href="albumInfo?id=${album.id }">
-										<img src="api/picture/${album.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
-										<span><strong>${album.albName }</strong>${album.artName}</span>
-									</a>
-								<%-- <form action="#" method="post">
-									<input type="hidden" value="${album.albumId }" name="albumId">
-								</form> --%>
-							</c:forEach>
+								<c:choose>
+									<c:when test="${checkA eq 0}">
+												<span><strong>검색결과가 없습니다</strong></span>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="album" items="${albumSelectListByTitle}" begin="0" end="7">
+											<a class="grid_3" href="albumInfo?id=${album.id }">
+												<img src="api/picture/${album.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
+												<span><strong>${album.albName }</strong>${album.artName}</span>
+											</a>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->

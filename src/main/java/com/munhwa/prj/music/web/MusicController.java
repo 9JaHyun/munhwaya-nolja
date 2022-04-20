@@ -67,8 +67,19 @@ public class MusicController {
 
 	@GetMapping("/searchResult")
 	public String searchResult(String title, Model model, Criteria cri) {
+		title = title.trim();
 		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title,cri));
+		if(musicDAO.musicSelectByTitle(title,cri).size() == 0) {
+			model.addAttribute("checkM", 0);
+		} else {
+			model.addAttribute("checkM", 1);
+		}
 		model.addAttribute("albumSelectListByTitle", albumDAO.albumSelectByTitle(title,cri));
+		if(albumDAO.albumSelectByTitle(title,cri).size() == 0) {
+			model.addAttribute("checkA", 0);
+		} else {
+			model.addAttribute("checkA", 1);
+		}
 		model.addAttribute("title", title);
 		return "music/searchResult";
 	}

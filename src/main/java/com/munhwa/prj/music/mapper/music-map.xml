@@ -119,10 +119,11 @@
 	</select>
 	
 	<select id="musicSelectListByWishList" parameterType="int" resultMap="musicResultMap">
-		SELECT * FROM MUSIC
-		WHERE ID IN (SELECT MUSIC_ID
-        			 FROM WISHLIST_MUSIC
-        			 WHERE WISHLIST_ID=#{id})
+		SELECT * 
+		FROM MUSIC m JOIN WISHLIST_MUSIC w
+		ON(m.ID = w.MUSIC_ID)
+		WHERE w.WISHLIST_ID= #{id}
+		ORDER BY w.ORDERS
 	</select>
 	
 	<select id="musicSelectListByMusicId" parameterType="map" resultMap="musicResultMap">

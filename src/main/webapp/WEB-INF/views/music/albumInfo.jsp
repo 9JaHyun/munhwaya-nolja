@@ -82,7 +82,11 @@
 		<div class="row row-fluid clearfix mbf">
 				<div class="posts">
 					<div class="def-block">
-						<h4> 앨범수록곡 </h4><span class="liner"></span>
+						<h4 style="border:none;"> 앨범수록곡 </h4>
+						<button type="button" class="tbutton medium" onclick="ListaddCart()" style="font-size:10px; margin-bottom:7px; margin-left: 7px">
+						    <span>선택구매</span>
+						</button>
+						<span class="liner" style="margin-top:10px"></span>
 						<div class="products shop clearfix">
 							<div class="grid_12">
 								<form id="playList" action="streamingList" method="post">
@@ -90,22 +94,33 @@
 										<table class="shop_table footable tablet footable-loaded" style="width:100%;">
 											<thead>
 												<tr>
+													<th><input style="margin-right:30px" type="checkbox" id="allCheck"></th>
 													<th></th>
 													<th style="width:300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
-													<th><h4>좋아요</h4></th>
-													<th><h4>다운로드</h4></th>
+													<th><h4>장르</h4></th>
+													<th><h4>구매</h4></th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="music" items="${selectMusicByAlbum}">
 													<tr data-musicid="${music.id }" class="cart_table_item" style="text-align: center; font-size: medium;">
 														<td style="display:none;"><input name="musicIdList" value="${music.id }"></td>
+														
+														<c:choose>
+					                                        <c:when test="${!music.purchase }">
+																<td style="vertical-align: middle;"><input class="all" style="margin-right:30px" name="buyCheck" type="checkbox" value="${music.id }"></td>
+															</c:when>
+															<c:otherwise>
+				                                            	<td></td>
+				                                            </c:otherwise>
+														</c:choose>
 														<td class="product-thumbnail" style="width:70px;">
 															<a href="streaming?id=${music.id }">
 																<img class="img1" src="api/picture/${music.picture }" alt="#" style="max-width:80px; min-width:80px; max-height :90px; min-height:90px; margin: 10px 0px 10px 0px;">
 															</a>
 														</td>
+														
 														<td  class="product-name" style="vertical-align:middle;">
 															${music.title }
 														</td>
@@ -239,5 +254,42 @@ function addWishList() {
 // 전체재생
 function playAll() {
 	$('#playList').submit();
+}
+
+$('#allCheck').change( function(){
+    var imChecked = $(this).is(":checked");
+    if(imChecked){
+        $('.all').prop('checked',true);
+    } else {
+        $('.all').prop('checked',false);
+    }
+});
+
+function ListaddCart() {
+	let idList = []
+	$('.all').each(function(index, item){
+		if($(this).is(":checked")) {
+			idList.push($(this).val())
+		} 
+	})
+	var confirm1 = confirm('장바구니에 담으시겠습니까?')
+     if(confirm1) {
+          $.ajax ({
+            url : "cart/add",
+            type : "post",
+            contentType:'application/x-www-form-urlencoded;charset=utf-8',
+    		traditional:true,
+            data : {"id" : idList},                   
+            dataType : "text",
+            success : function(data) {
+            	 alert(data);
+            },
+            error: function(xhr, status, error){
+            	alert("통신실패"); 	            }
+         }) 
+         
+      } else {
+         alert("취소")
+      }
 }
 </script>	
