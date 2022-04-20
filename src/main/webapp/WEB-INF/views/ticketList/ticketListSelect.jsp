@@ -195,7 +195,7 @@ body {
 									value="${ticket.performancevo.sdate }" /></span> <span><fmt:formatDate
 									pattern="yyyy" value="${ticket.performancevo.sdate }" /></span>
 						</p>
-						<div class="show-name">
+						<div class="show-name" style="text-align: center;">
 							<span>${ticket.performancevo.name }</span>
 						</div>
 						<br>
@@ -214,7 +214,7 @@ body {
 
 					<div class="right-info-container"
 						style="margin-top: 20px; margin-right: 20px; height: 350px;">
-						<div class="show-name">
+						<div class="show-name" style="text-align: center;">
 							<h1>${ticket.performancevo.name }</h1>
 						</div>
 						<div class="time">
