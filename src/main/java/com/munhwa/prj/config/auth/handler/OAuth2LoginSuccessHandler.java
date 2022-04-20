@@ -35,7 +35,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
               new SessionUser(memberMapper.selectByMemberId(username)));
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
-        log.info("savedRequest = {}", savedRequest.getRedirectUrl());
 
         if(savedRequest != null) {
             String targetUrl = savedRequest.getRedirectUrl();

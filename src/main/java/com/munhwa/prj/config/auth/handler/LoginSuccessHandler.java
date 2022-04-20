@@ -52,13 +52,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         }
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
-        log.info("savedRequest = {}", savedRequest.getRedirectUrl());
 
         if(savedRequest != null) {
             String targetUrl = savedRequest.getRedirectUrl();
             redirectStrategy.sendRedirect(request, response, targetUrl);
         } else {
-            redirectStrategy.sendRedirect(request, response, request.getContextPath()+"/home.do");
+            redirectStrategy.sendRedirect(request, response, "/home.do");
         }
     }
 }
