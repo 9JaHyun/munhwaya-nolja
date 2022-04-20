@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Remix - Music & Band Site Template HTML5 and CSS3</title>
+    <title>CCC - 마이페이지</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <!-- Seo Meta -->
@@ -36,7 +36,7 @@
     	<div class="under_header">
 			<img src="resources/images/assets/mypageback.png" alt="#">
 		</div>
-		<div class="page-content back_to_up">
+		<div class="page-content back_to_up" style="min-height: 870px;">
 	    	<div class="row row-fluid clearfix mbf">
 	    <tiles:insertAttribute name="sidebar"/>
 	   			<div class="span8 posts">

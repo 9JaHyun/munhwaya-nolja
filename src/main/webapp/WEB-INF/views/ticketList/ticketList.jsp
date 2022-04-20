@@ -40,7 +40,6 @@
 </div>
 <script type="text/javascript">
 	function ticketListSearch(n) {
-		console.log(n);
 		frm.id.value = n;
 		frm.submit();
 	}

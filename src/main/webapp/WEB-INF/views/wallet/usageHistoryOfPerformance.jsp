@@ -206,7 +206,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	}
 	
 	function refundOfPerformance() {
-			console.log($(event.target).data("usageid"));
 			if($(event.target).text() == '환불 완료' || $(event.target).text() == '환불 불가' ) {
 				alert("환불이 불가능한 상태입니다.");
 			}
@@ -221,7 +220,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		                data: {"id": id, "place": "U02"},
 		                dataType: "text",
 		                success: function (data) {
-		                    console.log(data);
 		                    alert("환불 되었습니다.");
 		                    location.href="usageHistoryOfPerformance.do";
 		                    

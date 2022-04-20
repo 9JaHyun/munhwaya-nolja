@@ -207,7 +207,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	}
 	
 	function refundOfMusic() {
-		console.log($(event.target).data("usageid"));
 
 		if($(event.target).text() == '환불 완료' || $(event.target).text() == '환불 불가' ) {
 			alert("환불이 불가능한 상태입니다.");
@@ -229,7 +228,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				list.push(obj);		
 			}
 			
-			console.log(JSON.stringify(list));
 			var confirm1 = confirm('환불 하시겠습니까?')
 			if (confirm1) {
 				$.ajax ({

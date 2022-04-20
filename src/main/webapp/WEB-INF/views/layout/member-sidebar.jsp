@@ -58,19 +58,23 @@
         <h4>카테고리</h4>
         <span class="liner"></span>
         <div class="widget-content">
-            <ul class="list" style="font-size: 13px;">
+            <ul class="list">
                 <li><a href="memberChangeInfo.do"><i class="icon-caret-right"> </i>회원정보 변경</a></li>
                 <li><a href="likeArtist.do"><i class="icon-caret-right"> </i>좋아요 한 아티스트</a></li>
                 <li><a href="artistRequestForm"><i class="icon-caret-right"></i>아티스트 신청</a>
                 <li><a href="wishlist.do"><i class="icon-caret-right"> </i>위시리스트</a></li>
                 <li><a href="walletInfo.do"><i class="icon-caret-right"> </i>지갑 정보</a></li>
+                <li><a href="artistRequestForm"><i class="icon-caret-right"> </i>아티스트 신청</a>
                 <c:choose>
                     <c:when test="${member.role == 'R01'}">
-                        <li><a href="ticketList.do"><i class="icon-caret-right"> </i>구매한 공연</a></li>
+                        <li><a href="ticketList.do"><i class="icon-caret-right"> </i>구매한 공연</a></li> 
+                    </c:when>
+                    <c:when test="${member.role == 'R03' }">
+                    	<li><a href="judgeArtist"><i class="icon-caret-right"> </i>아티스트 승급 관리</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="artistManagement"><i class="icon-caret-right"></i>아티스트 관리</a></li>
-                        <li><a href="artistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 등록</a>
+                        <li><a href="artistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 등록</a></li>
                         <li><a href="artistDetail"><i class="icon-caret-right"></i>아티스트 정보 상세페이지</a></li>
                         <li><a href="changeArtistProfileForm"><i class="icon-caret-right"></i>아티스트 정보 변경</a></li>
                     </c:otherwise>

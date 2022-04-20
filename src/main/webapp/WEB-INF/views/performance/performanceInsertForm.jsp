@@ -107,7 +107,6 @@
 
 							request
 									.done(function(data) {
-										console.log(data); // log 로 데이터 찍어주기.
 
 										var calendarEl = document
 												.getElementById('calendar');

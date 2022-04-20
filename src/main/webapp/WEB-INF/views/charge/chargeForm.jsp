@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
+<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 <script type="text/javascript"
    src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <!-- iamport.payment.js -->
@@ -49,7 +49,7 @@
 <div id="fluidGridSystem">
     <div id="layout" class="full">
         <div class="under_header">
-            <img src="${path}/resources/images/assets/breadcrumbs13.png" alt="#">
+            <img src="${rootPath}/resources/images/assets/breadcrumbs13.png" alt="#">
         </div>
 
         <div class="page-content back_to_up">
@@ -62,7 +62,7 @@
                                 <small>해당 페이지는 이전에 삭제되었거나 변경되었습니다</small>
                             </h2>
                             <div><input type="text" id="mileage" name="mileage" ></div>
-                            <div><button onclick="requestPayKaKao()"><img src="${path}/resources/images/payment/kakaopay.png" width="100" height="80"></button></div>
+                            <div><button onclick="requestPayKaKao()"><img src="${rootPath}/resources/images/payment/kakaopay.png" width="100" height="80"></button></div>
                             <div>
                             	<a href="requestPayKaKao()">
                             	

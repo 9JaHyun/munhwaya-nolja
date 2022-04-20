@@ -172,6 +172,7 @@ function paging(num) {
  };
 //  다운로드 여부 업뎃
  function statusUpdate() {
+	
 	//클릭한 곳의 뮤직 데이터 속성 가져오기
 	let musicId = $(event.target).data("musicid")
 	//뮤직아이디 주고 그음원의 status 변경

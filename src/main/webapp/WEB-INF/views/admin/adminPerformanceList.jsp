@@ -147,7 +147,7 @@
 				alert("공연이 승인되었습니다.");
     	    },
     	    error: function(error){
-    	    	console.log("fail");
+    	    	alert("fail");
     	    },
     	});
     });
@@ -163,7 +163,7 @@
     	    	alert("공연이 거절되었습니다.");
     	    },
     	    error: function(error){
-    	    	console.log("fail");
+    	    	alert("통신 실패!");
     	    },
     	});
     });

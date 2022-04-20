@@ -8,11 +8,13 @@
     <result property="code" column="code"/>
     <result property="pks" column="pks"/>
     <result property="artistName" column="artist_name"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="artistId" column="artist_id"/>
   </resultMap>
 
   <insert id="insertNews">
-    INSERT INTO news (id, member_id, code, pks, artist_id)
-    VALUES (news_seq.nextval, #{memberId}, #{code}, #{pks}, #{artistId})
+    INSERT INTO news (id, member_id, code, pks, artist_id, created_at)
+    VALUES (news_seq.nextval, #{memberId}, #{code}, #{pks}, #{artistId}, #{createdAt})
   </insert>
 
   <!-- 새소식 리스트 -->
