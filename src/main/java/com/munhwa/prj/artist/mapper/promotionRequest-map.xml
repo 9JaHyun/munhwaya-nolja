@@ -49,8 +49,8 @@
 	</select>
 	
 	<insert id="promotionRequestInsert" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
-		INSERT INTO PROMOTION_REQUEST(MEMBER_ID, IDENTIFY, ARTWORK, STATUS, FILE_GROUP_ID)
-		VALUES(#{memberId}, #{identify}, #{artwork}, #{status},#{fileGroupId})
+		INSERT INTO PROMOTION_REQUEST(MEMBER_ID, IDENTIFY, ARTWORK, STATUS, FILE_GROUP_ID, created_at)
+		VALUES(#{memberId}, #{identify}, #{artwork}, #{status},#{fileGroupId}, #{createdAt})
 	</insert>
 	
 	<delete id="promotionRequestDelete"  parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
