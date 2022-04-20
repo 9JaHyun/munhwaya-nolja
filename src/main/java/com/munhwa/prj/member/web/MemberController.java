@@ -5,7 +5,7 @@ import com.munhwa.prj.common.code.entity.Genre;
 import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.Auth;
 import com.munhwa.prj.member.vo.MemberVO;

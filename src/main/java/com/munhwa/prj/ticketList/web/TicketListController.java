@@ -7,7 +7,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.performance.service.PerformanceService;
 import com.munhwa.prj.performance.vo.PerformanceVO;
@@ -69,7 +69,7 @@ public class TicketListController {
 		String memberId = user.getId();
 		List<TicketListVO> list = ticketListDao.ticketListSelectList(memberId);
 		model.addAttribute("ticketLists", list);
-		return "ticketList/ticketList";
+		return "ticketList-memberTicket";
 	}
 
 	@RequestMapping("/ticketListSelect.do")
@@ -78,7 +78,7 @@ public class TicketListController {
 		vo = ticketListDao.ticketListSelect(vo);
 		model.addAttribute("nickname", nickname);
 		model.addAttribute("ticket", vo);
-		return "ticketList/ticketListSelect";
+		return "ticketListSelect-memberTicket";
 	}
 	
 	@Transactional
@@ -86,10 +86,12 @@ public class TicketListController {
 	public String ticketListInsert(@LoginUser SessionUser user, int id, int person, HttpServletRequest req,
 			HttpServletResponse response) throws WriterException, IOException {
 		String memberId = user.getId();
+		Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("v_member_id", memberId);
 		paramMap.put("v_performance_id", id);
 		paramMap.put("v_person", person);
+		paramMap.put("v_time", useDate);
 
 		int ticketId = ticketListDao.ticketListInsert(paramMap);
 		log.info("ticketId={}", ticketId);
@@ -106,7 +108,6 @@ public class TicketListController {
 		ticketListDao.qrcodeUpdate(vo);
 
 
-		Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 
 		List<UsageVO> resultUsageList = new ArrayList<>();
 		Map<String, Object> param = new HashMap<String, Object>();

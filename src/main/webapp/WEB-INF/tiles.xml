@@ -51,7 +51,11 @@
   <definition name="*-qrcode" extends="qrcodeTemplate">
     <put-attribute name="body" value="/WEB-INF/views/qrcode/{1}.jsp"/>
   </definition>
-	
+  
+  <definition name="*-memberTicket" extends="memberTemplate">
+    <put-attribute name="body" value="/WEB-INF/views/ticketList/{1}.jsp"/>
+  </definition>
+
   <definition name="*-admin" extends="listTemplate">
     <put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp"/>
   </definition>

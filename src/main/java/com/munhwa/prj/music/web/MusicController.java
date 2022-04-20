@@ -24,7 +24,7 @@ import com.munhwa.prj.common.file.service.UploadFileService;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.service.PurchaseService;

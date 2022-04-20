@@ -6,7 +6,6 @@ import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.service.PromotionRequestService;
 import com.munhwa.prj.artist.serviceImpl.SmsServiceImpl;
 import com.munhwa.prj.artist.vo.ArtDetailVO;
-import com.munhwa.prj.artist.vo.ArtDetailVO2;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.file.entity.UploadFile;
@@ -14,10 +13,7 @@ import com.munhwa.prj.common.file.service.FileUtils;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.music.service.MusicService;
-import com.munhwa.prj.music.vo.AlbumVO;
-import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.wishlist.service.WishlistService;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
 
@@ -29,15 +25,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;

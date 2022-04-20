@@ -119,11 +119,15 @@ button {
 	<div class="social" align="center">
 		<div onclick="location.href='${rootPath}/oauth2/authorization/google'"
 			 style="padding-top: 10px; float: left; width: 48%; background-color: #1A73E8; cursor:pointer;">
-			<p  role="button">Google</p>
+			<p>Google</p>
 		</div>
 		<div onclick="location.href='${rootPath}/oauth2/authorization/naver'"
 			style="padding-top: 10px; float: right; width: 48%; background-color: #19CE60; cursor:pointer;">
 			<p>Naver</p>
+		</div>
+		<div onclick="location.href='${rootPath}/oauth2/authorization/kakao'"
+			 style="padding-top: 10px; float: right; width: 48%; background-color: #E9BB2C; cursor:pointer;">
+			<p>Kakao</p>
 		</div>
 	</div>
 </form>

@@ -202,7 +202,7 @@
       <div class="ticket__timing">
         <p>
           <span class="u-upper ticket__small-label">공연일</span>
-          <span class="ticket__detail"><fmt:formatDate pattern = "E요일 dd" value = "${ticket.performancevo.sdate }" /></span>
+          <span class="ticket__detail"><fmt:formatDate pattern = "MM월 E요일 dd일" value = "${ticket.performancevo.sdate }" /></span>
         </p>
         <p>
           <span class="u-upper ticket__small-label">공연시간</span>
@@ -215,9 +215,6 @@
         </p>
       </div><br>
       <a><MARQUEE behavior="scroll" bgColor="black" style="color:white; height:40px; font-size:20pt;">입장이 완료되었습니다.</MARQUEE></a>
-      <p class="ticket__fine-print" style="text-align: left;">ㆍ공연취소/변경은 불가능합니다</p>
-      <p class="ticket__fine-print" style="text-align: left;">ㆍ아티스트의 사정에 의해 본 공연 시작이<br>&nbsp;&nbsp;&nbsp;10여분 정도 차이 날 수 있습니다.</p>
-      <p class="ticket__fine-print" style="text-align: left;">ㆍ공연관 에티켓을 준수하여 즐거운 관람하세요.</p>
       <span id="dpTime">현재시각 01:44:40</span>
     </div>
   </div>

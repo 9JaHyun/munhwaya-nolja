@@ -13,19 +13,13 @@
                 <a href="${rootPath}/signin" class="sign-btn tbutton small"
                    style="margin-right: 6px;"> <span>로그인</span></a>
             </sec:authorize>
-            <sec:authorize access="hasRole('ROLE_R01 || ROLE_R02')">
+            <sec:authorize access="isAuthenticated()">
                 <a href="${rootPath}/mypage.do" class="tbutton color2 small"
                    style="background-color: #4c4c4c; margin-right: 6px;"> <span>마이페이지</span></a>
                 <div id="cart" style="float: right; margin-left: 10px">
                     <a href="${rootPath}/cart"><i class="icon-shopping-cart"
                                                   style="font-size: 25px"></i></a>
                 </div>
-            </sec:authorize>
-            <sec:authorize access="hasRole('ROLE_R03')">
-                <a href="${rootPath}/mypage.do" class="tbutton color2 small"
-                   style="background-color: #4c4c4c; margin-right: 6px;"> <span>관리자페이지</span></a>
-            </sec:authorize>
-            <sec:authorize access="isAuthenticated()">
                 <div style="float: right;">
                     <form action="${rootPath}/logout" method="post">
                         <button class="sign-btn tbutton small" type="submit">
@@ -63,7 +57,6 @@
                             <sec:authorize access="hasRole('ROLE_R02')">
                                 <li><a href="${rootPath}/performanceInsertForm.do">아티스트 공연 등록 신청</a></li>
                             </sec:authorize>
-                            <li><a href="${rootPath}/ticketList.do">구매리스트</a></li>
                             <sec:authorize access="hasRole('ROLE_R03')">
                                 <li><a href="${rootPath}/admin/performanceList">관리자 공연리스트</a></li>
                             </sec:authorize>

@@ -10,6 +10,7 @@
 		<result property="qrcode" column="qrcode" />
 		<result property="attendance" column="attendance" />
 		<result property="person" column="person" />
+		<result property="time" column="time"/>
 		<collection property="performancevo"
 			resultMap="performanceResultMap"></collection>
 	</resultMap>
@@ -32,12 +33,13 @@
 	<select id="ticketListSelectList"
 		parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
 		resultMap="ticketListResultMap">
-
 		SELECT T.ID,
+		T.TIME,
 		P.NAME,
 		P.SDATE,
 		P.EDATE,
-		P.LOCATION
+		P.LOCATION,
+		P.PRICE
 		FROM TICKET_LIST T,
 		MEMBER M,
 		PERFORMANCE P
@@ -55,6 +57,7 @@
 		P.EDATE,
 		P.LOCATION,
 		P.IMAGE,
+		P.PRICE,
 		T.PERSON,
 		T.MEMBER_ID,
 		T.QRCODE,
@@ -75,7 +78,8 @@
                 #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
                 #{v_performance_id, mode=IN, jdbcType=INTEGER, javaType=int},
                 #{v_person, mode=IN, jdbcType=INTEGER, javaType=int},
-                #{v_ticket_id, mode=OUT, jdbcType=INTEGER, javaType=int}
+                #{v_ticket_id, mode=OUT, jdbcType=INTEGER, javaType=int},
+                #{v_time, mode=IN, jdbcType=DATE, javaType=date}
             )
      ]]>
 	</select>
