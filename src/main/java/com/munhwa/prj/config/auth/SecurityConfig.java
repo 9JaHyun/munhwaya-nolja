@@ -122,7 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
         return new InMemoryClientRegistrationRepository(List.of(this.googleClientRegistration()
-        , this.naverClientRegistration()));
+        , this.naverClientRegistration(), this.kakaoBookClientRegistration()));
     }
 
     @Bean
@@ -145,12 +145,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .build();
     }
 
-    // 미구현
-    private ClientRegistration faceBookClientRegistration() {
-        return CommonOAuth2Provider.FACEBOOK.getBuilder("faceBook")
-              .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")
-              .clientSecret("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")
-              .scope("email", "nickname", "profile_image")
+    private ClientRegistration kakaoBookClientRegistration() {
+        return CustomCommonOAuth2Provider.KAKAO.getBuilder("kakao")
+              .clientId("23934882b27e3266007b1b0c54f1cdc4")
+              .clientSecret("5b81c3f3f431b7e23317a4de35240c0d")
               .build();
     }
 

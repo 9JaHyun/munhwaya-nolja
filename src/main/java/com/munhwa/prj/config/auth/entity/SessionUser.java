@@ -1,4 +1,4 @@
-package com.munhwa.prj.config.auth.dto;
+package com.munhwa.prj.config.auth.entity;
 
 import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.common.code.entity.Genre;
