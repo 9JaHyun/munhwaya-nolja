@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="resources"
-	value="${pageContext.request.contextPath}/resources" />
+<c:set var="resources" value="${pageContext.request.contextPath}/resources" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <div align="right" style="margin-bottom: 50px; height: 400px;">
 	<h4>구매한 공연</h4>
 	
@@ -92,8 +92,7 @@
 	      moveForm.pageNum.value = num;
 //         moveForm.attr("action", "performance");
 	      moveForm.submit();
-
-	};
+	}
 	
     $(".pageInfo a").on("click", function(e){
         e.preventDefault();
