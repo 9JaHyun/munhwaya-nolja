@@ -21,7 +21,7 @@ import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.common.file.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.performance.service.PerformanceService;
 import com.munhwa.prj.performance.vo.Criteria;
 import com.munhwa.prj.performance.vo.PageMakeDTO;

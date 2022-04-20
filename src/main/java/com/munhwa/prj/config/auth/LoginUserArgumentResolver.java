@@ -1,7 +1,6 @@
 package com.munhwa.prj.config.auth;
 
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.member.mapper.MemberMapper;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

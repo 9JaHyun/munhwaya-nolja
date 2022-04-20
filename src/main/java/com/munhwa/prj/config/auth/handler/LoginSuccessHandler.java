@@ -1,6 +1,6 @@
 package com.munhwa.prj.config.auth.handler;
 
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.vo.MemberVO;
 import java.io.IOException;
