@@ -26,7 +26,7 @@ public class JudgeAdminController {
 	    private PromotionRequestService proDao;
 	 
 	   // 아티스트 승급 신청 목록
-	    @GetMapping("/admin/judgeArtist")
+	    @GetMapping("/judgeArtist")
 	    public String permitArtistList(Model model, Criteria cri) {
 	    	List<PromotionRequestVO> vo = proDao.promotionRequestSelectList(cri);
 	    	model.addAttribute("requestLists", vo);
