@@ -14,8 +14,14 @@ public class Criteria {
     
     private String keyword;
     
-    public Criteria() {
-        this(1,10);
+    private Criteria() {}
+    
+    public static Criteria ofNormal() {
+        return new Criteria(1,10);
+    }
+    
+    public static Criteria ofPerformance() {
+    	return new Criteria(1,9);
     }
  
     public Criteria(int pageNum, int amount) {

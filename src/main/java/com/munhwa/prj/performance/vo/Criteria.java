@@ -1,5 +1,10 @@
 package com.munhwa.prj.performance.vo;
 
+import java.util.Arrays;
+
+import lombok.Data;
+
+@Data
 public class Criteria {
 
 	 /* 현재 페이지 */
@@ -16,7 +21,32 @@ public class Criteria {
     /* 검색 키워드 */
     private String keyword;
     
-    /* 생성자 => 원하는 pageNum, 원하는 amount */
+    /* 검색 타입 */
+    private String type;
+    
+    /* 검색 타입 배열 */
+    private String[] typeArr;
+    
+    private String filter;
+    
+    public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+		this.typeArr = type.split("");
+	}
+
+	public String[] getTypeArr() {
+		return typeArr;
+	}
+
+	public void setTypeArr(String[] typeArr) {
+		this.typeArr = typeArr;
+	}
+
+	/* 생성자 => 원하는 pageNum, 원하는 amount */
     public Criteria(int pageNum, int amount) {
         this.pageNum = pageNum;
         this.amount = amount;
@@ -48,6 +78,7 @@ public class Criteria {
 
 	@Override
 	public String toString() {
-		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", keyword=" + keyword + "]";
+		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", keyword=" + keyword + ", type=" + type
+				+ ", typeArr=" + Arrays.toString(typeArr) + "]";
 	}
 }

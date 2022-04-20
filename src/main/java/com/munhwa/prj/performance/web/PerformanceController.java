@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtistVO;
@@ -74,9 +75,10 @@ public class PerformanceController {
 	}
 
 	@RequestMapping("/performanceInsertForm.do")
-	public String performanceInsertForm(@LoginUser SessionUser user, Model model) {
+	public String performanceInsertForm(@LoginUser SessionUser user, Model model, String errMsg) {
 		ArtistVO artist = artistDao.findByMemberId(user.getId());
 		model.addAttribute("artist", artist);
+		model.addAttribute("errMsg", errMsg);
 		return "performance/performanceInsertForm";
 	}
 
@@ -99,23 +101,41 @@ public class PerformanceController {
 
 	// 공연신청
 	@RequestMapping("/performanceInsert.do")
-    public String performanceInsert(PerformanceVO vo) throws IOException {
-    	boolean result = performanceDao.findAll()
+    public String performanceInsert(PerformanceVO vo, RedirectAttributes red) throws IOException {
+    	String sdate = String.valueOf(vo.getSdate()).substring(0,10);
+    	String edate = String.valueOf(vo.getEdate()).substring(0,10);
+    	Date date = new Date();
+    	
+    	// 중복 확인
+		boolean result = performanceDao.findAll()
     						.stream()
     						.map(PerformanceVO::getSdate)
     						.map(d -> date2String(d))
     						.anyMatch(d -> d.equals(date2String(vo.getSdate())));
     	
+		// 이미 그날에 공연이 존재하는가
     	if(result) {
-    		return "performance/calendarError";
-    	} else {
-    		int n = performanceDao.performanceInsert(vo);
-	    	if( n != 0 ) {
-	    		return "redirect:performance";    			
-	    	}
-	    	return"performance/performanceError";
+    		red.addAttribute("errMsg", "해당 일자에 공연이 존재합니다.");
+    		return "redirect:performanceInsertForm.do";
     	}
-
+    	
+    	// 오늘날짜보다 이전에는 등록 불가
+    	if(vo.getSdate().before(date)) {		
+    		red.addAttribute("errMsg", "등록일자는 항상 오늘날짜보다 이후여야 합니다.");
+    		return "redirect:performanceInsertForm.do";
+    	}
+    	
+    	// 공연은 항상 당일치기
+    	if(!sdate.equals(edate)) {
+    		red.addAttribute("errMsg", "시작날짜와 종료날짜가 같아야 합니다.");
+    		return "redirect:performanceInsertForm.do";
+		}
+    	
+		int n = performanceDao.performanceInsert(vo);    			    			
+		if( n != 0 ) {
+			return "redirect:performanceInsertForm.do";    			
+		}
+		return "redirect:performanceInsertForm.do"; 
 	}
 
 	@RequestMapping("/performanceList.do")

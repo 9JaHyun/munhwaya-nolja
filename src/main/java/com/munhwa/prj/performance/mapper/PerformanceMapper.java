@@ -21,7 +21,7 @@ public interface PerformanceMapper {
 	PerformanceVO performanceSelect(PerformanceVO vo);
 	
     /* 게시판 총 갯수 */
-    public int getTotal(@Param("cri") Criteria cri, @Param("filter") String filter);
+    public int getTotal(Criteria cri);
     
     int performanceUpdate(Map<String, Object> paramMap);
 	

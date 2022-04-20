@@ -42,8 +42,8 @@ public class PerformanceServiceImpl implements PerformanceService {
     }
 
     @Override
-    public int getTotal(Criteria cri, String filter) {
-        return performanceMapper.getTotal(cri, filter);
+    public int getTotal(Criteria cri) {
+        return performanceMapper.getTotal(cri);
     }
 
     @Override
