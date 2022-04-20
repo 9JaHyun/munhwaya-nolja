@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.munhwa.prj.artist.mapper.ArtistMapper">
-
+  
 	<resultMap type="com.munhwa.prj.artist.vo.ArtistVO" id="artistMap">
 		<id property="id" column="id"/>
 		<result property="image" column="image"/>
@@ -37,6 +37,13 @@
 		<result property="artName" column="NAME"/>
 		<result property="albName" column="ALB_NAME" />
 	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.artist.vo.ArtDetailVO2" id="detailMap2">
+		<id property="artistId" column="artist_id"/>
+		<result property="albName" column="alb_name"/>
+		<result property="releaseAt" column="release_at"/>
+		<result property="picture" column="picture"/>
+	</resultMap>
 		
 		
 		
@@ -44,8 +51,14 @@
 		SELECT * FROM ARTIST ORDER BY DESC
 	</select>
 	
+	
+	<select id="findByMemberId" resultMap="artistMap">
+		SELECT * FROM ARTIST WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	
 	<select id="findMusic" parameterType="int" resultMap="detailMap">
-		<![CDATA[
+	<![CDATA[
 	SELECT *
 	FROM(
 	SELECT RANK() OVER (ORDER BY M.ID DESC) RANK, 
@@ -54,16 +67,43 @@
   	  A.NAME, 
   	  L.ALB_NAME
   	FROM ARTIST A 
-  	JOIN ALBUM L
-    ON (A.ID = L.ARTIST_ID)
-    JOIN MUSIC M
-    ON(L.ID = M.ALBUM_ID)
-    WHERE A.ID = #{id}
-    )
+  		 JOIN ALBUM L
+   		 ON (A.ID = L.ARTIST_ID)
+   		 JOIN MUSIC M
+    	 ON(L.ID = M.ALBUM_ID)
+   		 WHERE A.ID = #{id}
+  		  )
     WHERE RANK > (#{cri.pageNum} -1) * #{cri.amount}
       AND RANK <= #{cri.pageNum} * #{cri.amount}
-]]>
+	]]>
 	</select>
+	 
+	<select id="getTotal" resultType="int">
+	SELECT COUNT(*)
+	FROM MUSIC
+	WHERE ALBUM_ID IN(SELECT ID 
+                      FROM ALBUM
+                      WHERE ARTIST_ID = #{artistId})
+	</select>
+	
+	<select id="albumInfo" resultType="int" resultMap="detailMap2">
+	<![CDATA[
+	SELECT *
+	FROM(
+		SELECT artist_Id, alb_name, release_at, picture, RANK() OVER (ORDER BY ID DESC) RANK
+		FROM ALBUM
+		WHERE ARTIST_ID = ${artistId}
+		)
+	WHERE RANK > (${cri.pageNum} -1) * ${cri.amount}
+    AND RANK <= ${cri.pageNum} * ${cri.amount}
+    ]]>
+    </select>
+    
+    <select id="getTotal2" resultType="int">
+    SELECT COUNT(*)
+    FROM ALBUM
+    WHERE ARTIST_ID = #{artistId}
+    </select>
 	
 	<select id="checkBuy" resultType="int">
 		SELECT COUNT(*)
@@ -80,20 +120,13 @@
                       WHERE ARTIST_ID = #{artistId})
 	</select>
 	
-	<select id="getTotal" resultType="int">
-	SELECT COUNT(*)
-	FROM MUSIC
-	WHERE ALBUM_ID IN(SELECT ID 
-                      FROM ALBUM
-                      WHERE ARTIST_ID = #{artistId})
-	</select>
-	
 	<select id="albumCnt" resultType="int">
 	SELECT COUNT(ID)
 	FROM ALBUM
 	WHERE ARTIST_ID = #{id}
 	</select>
 	
+
 <!-- 	<select id="musicListPage" resultType="int"> -->
 <!-- 	SELECT M.ID, M.TITLE,  M.ART_NAME, A.ALB_NAME -->
 <!-- 	FROM ALBUM A, MUSIC M -->
@@ -104,9 +137,7 @@
 <!-- 	</select> -->
 	
 	
-	<select id="selectArtistByMemberId" resultMap="artistMap">
-		SELECT * FROM ARTIST WHERE MEMBER_ID = #{memberId}
-	</select>
+
 	
 	<insert id="insertArtist" parameterType="com.munhwa.prj.artist.vo.ArtistVO">
     INSERT INTO ARTIST(ID, IMAGE, GENDER, GENRE, CONTENT, TYPE, NAME, member_id)
@@ -126,9 +157,9 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
-	<select id="chkName" resultType="int" parameterType="String">
-		SELECT COUNT(*) FROM ARTIST
-		WHERE NAME = #{name}
-	</select>
+<!-- 	<select id="chkName" resultType="int" parameterType="String"> -->
+<!-- 		SELECT COUNT(*) FROM ARTIST -->
+<!-- 		WHERE NAME = #{name} -->
+<!-- 	</select> -->
 	
 </mapper>

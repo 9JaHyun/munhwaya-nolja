@@ -9,13 +9,14 @@ import lombok.ToString;
 @ToString
 public class Criteria {
 	  
-    private int pageNum;
-    private int amount;
+    private int pageNum; // 현재페이지
+    private int amount; // 수량
     
     public Criteria() {
         this(1,10);
     }
  
+    
     public Criteria(int pageNum, int amount) {
         this.pageNum = pageNum;
         this.amount = amount;

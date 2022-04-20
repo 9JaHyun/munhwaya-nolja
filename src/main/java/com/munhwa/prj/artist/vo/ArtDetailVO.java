@@ -7,6 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 public class ArtDetailVO {
+	
+	private int id;
 	private int musicId;
 	private String musicTitle;
 	private String artName;

@@ -69,16 +69,52 @@ public class ArtistController {
 	// 아티스트 상세정보
 	
 	@RequestMapping("/artistDetail")
-	public String artistDetail(@LoginUser SessionUser user,  Model model, Criteria cri) {
-		ArtistVO artist = artistDao.findByMemberId(user.getId());
+	public String artistDetail(@LoginUser SessionUser user, Model model
+			, Integer musicPageNum
+			, Integer musicAmount
+			, Integer albumPageNum
+			, Integer albumAmount) {
+	
+		
+		// 해당 아티스트 정보 찾아서 상세정보 페이지로 보내기
+		ArtistVO artist = artistDao.findByMemberId(user.getId()); // 데이터가 안맞으므로 고쳐야할수도..  -> 변동사항 : artist.getId();, 해당하는 user가 아니라 해당 아티스트에 대한 인물정보이므로
 		model.addAttribute("artist", artist);
 		
-		List<ArtDetailVO> list = artistDao.findMusic(cri,artist.getId());
-		model.addAttribute("musicList", list);
 		
-		int total = artistDao.getTotal(cri, artist.getId());
-		PageDTO pageMaker = new PageDTO(cri, total);
+		if(musicPageNum == null) {
+			musicPageNum=1;
+			musicAmount=10;
+		}
+		
+		if(albumPageNum == null) {
+			albumPageNum=1;
+			albumAmount=3;
+		}
+		Criteria musicCri = new Criteria(musicPageNum, musicAmount);
+		
+		// 곡 목록의 데이터를 담아서 페이징 처리
+		List<ArtDetailVO> list = artistDao.findMusic(musicCri, artist.getId());
+
+		model.addAttribute("musicList", list);	
+		// 곡 전체 개수 구하기
+		int total = artistDao.getTotal(musicCri, artist.getId()); // Creiteria 클래스 정보(PageNum:현재페이지, amount: 수량), 해당 아티스트 아이디(aritstId로 곡 갯수 세아림)
+		PageDTO pageMaker = new PageDTO(musicCri, total); // PageDTO의 (현재 페이지: 페이지당 게시물 표시수) , total(현재페이지, 수량)
 		model.addAttribute("pageMaker", pageMaker);
+		
+//========================================================================================
+		
+		Criteria albumCri = new Criteria(albumPageNum, albumAmount); //어마운트는 보여질 게시물 수
+		// 앨범 목록의 데이터를 담아서 페이징 처리
+		List<ArtDetailVO2> album = artistDao.albumInfo(albumCri,artist.getId());
+		
+		
+		albumCri.setAmount(3); // 앨범 게시물 수 3개 호출
+		model.addAttribute("album", album);
+		
+		// 앨범 전체 개수 구하기
+		int total2 = artistDao.getTotal2(albumCri, artist.getId());
+		PageDTO pagemaker2 = new PageDTO(albumCri, total2);
+		model.addAttribute("pageMaker2", pagemaker2);
 		
 		//사용자의 위시리스트를 리스트로 불러와서 모델에 담는다
 		List<WishlistVO> list1 = wishlistDao.wishlistList(user.getId());
@@ -98,8 +134,9 @@ public class ArtistController {
 		return "artist/artistDetail";
 	}
 	
+	// 이미 구매한 곡인지, 구매안한 곡인지 체크
 	@ResponseBody
-	@RequestMapping("checkBuy") //구매할려는 곡이 이미 샀는곡인지 아니면 안산곡인지 체크
+	@RequestMapping("checkBuy") 
 	public int checkBuy (@LoginUser SessionUser user, @RequestParam int id ) {
 		int r = artistDao.checkBuy(user.getId(), id);
 		return r;
@@ -177,7 +214,7 @@ public class ArtistController {
 	public String artistProfile(@LoginUser SessionUser user, ArtistVO vo, Model model) {
 		vo.setMemberId(user.getId());
 
-		int pro = artistDao.save(vo);
+		int pro = artistDao.insertArtist(vo);
 			if(pro != 0) {
 				model.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
 			}else {
@@ -203,7 +240,7 @@ public class ArtistController {
     	artist.setMemberId(user.getId());
     	artist.setImage(file.getStoredFileName());
     
-    	artistDao.update(artist);
+    	artistDao.updateArtist(artist);
     	return "redirect:mypage.do";
     }
     

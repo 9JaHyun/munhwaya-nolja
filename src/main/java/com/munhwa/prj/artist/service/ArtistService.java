@@ -8,22 +8,24 @@ import com.munhwa.prj.artist.vo.ArtDetailVO;
 import com.munhwa.prj.artist.vo.ArtDetailVO2;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
+import com.munhwa.prj.music.vo.AlbumVO;
 
 public interface ArtistService {
 
-	List<ArtistVO> findAll();
-	List<ArtDetailVO> findMusic(Criteria cri, int id);
-//	List<ArtDetailVO2> musicListPage(Criteria cri);
-	ArtistVO findByMemberId(String memberId);
-	int checkBuy(String id, int musicId);
-	int save(ArtistVO vo);
-	int update(ArtistVO vo);
-	int musicCnt(int vo);
-	int albumCnt(int vo);
 
-	int getTotal(Criteria cri, int id);
-	
-	int chkNick(String name);
-	
-	
+    List<ArtistVO> selectArtistList();
+    List<ArtDetailVO> findMusic(@Param("cri") Criteria cri, @Param("id") int artistId);
+//    List<ArtDetailVO2> musicListPage(@Param("cri") Criteria cri, @Param("artistId")int id);
+    ArtistVO findByMemberId(String memberId);
+    List<ArtDetailVO2> albumInfo(@Param("cri") Criteria cri, @Param("artistId") int artistId);
+	int checkBuy(@Param("id") String id, @Param("musicId") int musicId);
+    int insertArtist(ArtistVO vo);
+    int updateArtist(ArtistVO vo);
+    int musicCnt(int vo);
+    int albumCnt(int vo);
+	int getTotal(@Param("cri") Criteria cri, @Param("artistId") int id);
+	int getTotal2(@Param("cri") Criteria cri, @Param("artistId") int artistId);
+    
+   // int chkName(String name);
 }
+
