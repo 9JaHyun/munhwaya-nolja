@@ -1,5 +1,9 @@
 package com.munhwa.prj.ticketList.vo;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.munhwa.prj.performance.vo.PerformanceVO;
 
 import lombok.Getter;
@@ -15,6 +19,8 @@ public class TicketListVO {
 	private PerformanceVO performancevo;
 	private String attendance;
 	private int person;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private Date time;
 }
 
 
