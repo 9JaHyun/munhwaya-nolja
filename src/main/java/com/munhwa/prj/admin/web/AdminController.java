@@ -38,7 +38,7 @@ public class AdminController {
         PageMakeDTO pageMake = new PageMakeDTO(cri, total);
 
         model.addAttribute("pageMake", pageMake);
-        return "admin/adminPerformanceList";
+        return "adminPerformanceList-admin";
     }
 
     //공연 [승인&거절]

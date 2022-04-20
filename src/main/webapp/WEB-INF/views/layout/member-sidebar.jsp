@@ -71,6 +71,7 @@
                     </c:when>
                     <c:when test="${member.role == 'R03' }">
                     	<li><a href="judgeArtist"><i class="icon-caret-right"> </i>아티스트 승급 관리</a></li>
+                    	<li><a href="/prj/admin/performanceList"><i class="icon-caret-right"> </i>아티스트 공연 관리</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="artistManagement"><i class="icon-caret-right"></i>아티스트 관리</a></li>

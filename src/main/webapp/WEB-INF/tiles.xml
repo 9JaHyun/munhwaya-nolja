@@ -31,7 +31,6 @@
     <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp"/>
   </definition>
   
-
   <definition name="*/*" extends="template">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
   </definition>
@@ -59,4 +58,5 @@
   <definition name="*-admin" extends="listTemplate">
     <put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp"/>
   </definition>
+
 </tiles-definitions>
