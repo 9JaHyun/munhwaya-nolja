@@ -1,5 +1,6 @@
 package com.munhwa.prj.artist.serviceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,25 +19,22 @@ public class PromotionRequestServiceImpl implements PromotionRequestService {
 	private PromotionRequestMapper map;
 	@Override
 	public List<PromotionRequestVO> promotionRequestSelectList(Criteria cri) {
-		// TODO Auto-generated method stub
 		return map.promotionRequestSelectList(cri);
 	}
 
 	@Override
 	public PromotionRequestVO promotionRequestSelect(String memberId) {
-		// TODO Auto-generated method stub
 		return map.promotionRequestSelect(memberId);
 	}
 
 	@Override
 	public int promotionRequestInsert(PromotionRequestVO vo) {
-		// TODO Auto-generated method stub
+		vo.setCreatedAt(new Date());
 		return map.promotionRequestInsert(vo);
 	}
 
 	@Override
 	public int promotionRequestDelete(PromotionRequestVO vo) {
-		// TODO Auto-generated method stub
 		return map.promotionRequestDelete(vo);
 	}
 
