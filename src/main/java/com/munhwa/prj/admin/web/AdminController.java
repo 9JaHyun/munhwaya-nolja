@@ -26,7 +26,7 @@ public class AdminController {
     }
     
     // 공연 신청 목록
-    @GetMapping("admin/performanceList")
+    @GetMapping("performanceList")
     public String changePerformanceStatus(Model model, Criteria cri, PerformanceVO vo,
           String filter) {
         List<PerformanceVO> list = performanceService.adminSelectList(cri);
@@ -42,7 +42,7 @@ public class AdminController {
     }
 
     //공연 [승인&거절]
-    @PostMapping("admin/performanceSelect")
+    @PostMapping("performanceSelect")
     public @ResponseBody
     String changePerformanceStatus(@RequestParam int performanceId, @RequestParam String status) {
         Map<String, Object> paramMap = new HashMap<>();
