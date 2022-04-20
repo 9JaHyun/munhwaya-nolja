@@ -164,7 +164,6 @@ function addWishList(e) {
 	let musicId = param.get('id');
 	let wishId = $(event.target).data('wishid')
 	
-	alert(wishId)
 	$.ajax({
 		type: "POST", //요청 메소드 방식
 		url:"addWishList",
@@ -293,7 +292,6 @@ function result(data) {
 		        data : {"id" : id},                   
 		        dataType : "text",
 		        success : function(data) {
-		        console.log(data);
 		        alert("장바구니에 담았습니다.");
 		        },
 		        error: function(xhr, status, error){

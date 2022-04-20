@@ -307,8 +307,6 @@ size {
         $('#myModal').on('show.bs.modal', function(event) {   
         	
         	musicid = $(event.relatedTarget).data('musicid');
-        	console.log( $(event.relatedTarget.data()));
-        	console.log( $(event.target));
         });
     });
 
@@ -329,7 +327,6 @@ size {
 		    		        data : {"id" : id},                   
 		    		        dataType : "text",
 		    		        success : function(data) {
-		    		        console.log(data);
 		    		        	alert("장바구니에 담았습니다.");
 		    		        },
 		    		        error: function(xhr, status, error){

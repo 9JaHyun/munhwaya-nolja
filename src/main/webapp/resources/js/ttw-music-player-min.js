@@ -220,7 +220,7 @@
 
                     //since $ratings refers to a specific object, if we just use .html($ratings) we would be moving the $rating object from one list item to the next
                     $track.find(cssSelector.rating).html($ratings.clone());
-					/*console.log(trackId(j));*/
+
                     $track.find(cssSelector.title).html(trackName(j)).attr("data-musicid",trackId(j));
 					$track.find(cssSelector.title).attr("data-writer",trackWriter(j));
 					$track.find(cssSelector.title).attr("data-composing",trackComposing(j));

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
+<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 <script>
     function getCode() {
         var tmpWindow = window.open('about:blank')
@@ -21,7 +21,7 @@
     <div id="layout" class="full">
         <%-- 에러 백그라운드 이미지--%>
         <div class="under_header">
-            <img src="${path}/resources/images/assets/breadcrumbs13.png" alt="#">
+            <img src="${rootPath}/resources/images/assets/breadcrumbs13.png" alt="#">
         </div>
 
         <div class="page-content back_to_up">

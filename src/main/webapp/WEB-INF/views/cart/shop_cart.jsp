@@ -143,7 +143,6 @@ $(document).ready(function(){
 	});
 	
 function itemTotal() {
-	console.log("토탈들어옴?");
 	var price = document.getElementsByClassName("price").innerHTML
 	var sum = 0;
 

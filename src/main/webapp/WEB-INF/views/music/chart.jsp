@@ -214,7 +214,6 @@
                 data: {"id": id},
                 dataType: "text",
                 success: function (data) {
-                    console.log(data);
                     alert("장바구니에 담았습니다.");
                 },
                 error: function (xhr, status, error) {
