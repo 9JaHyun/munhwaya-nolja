@@ -40,7 +40,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             String targetUrl = savedRequest.getRedirectUrl();
             redirectStrategy.sendRedirect(request, response, targetUrl);
         } else {
-            redirectStrategy.sendRedirect(request, response, request.getContextPath()+"/home.do");
+            redirectStrategy.sendRedirect(request, response, "/home.do");
         }
     }
 }
