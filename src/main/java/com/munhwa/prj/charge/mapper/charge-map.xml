@@ -13,26 +13,12 @@
 			resultMap="commonResultMap" />
 	</resultMap>
 
-	<resultMap type="com.munhwa.prj.common.code.entity.CommonCodeVO"
+	<resultMap
+		type="com.munhwa.prj.common.code.entity.CommonCodeVO"
 		id="commonResultMap">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 	</resultMap>
-
-
-	<!-- <select id="selectChargeListByMemberId" parameterType="String" resultMap="chargeResultMap"> -->
-	<!-- select a.id as cartId, -->
-	<!-- a.charge_at, -->
-	<!-- a.mileage, -->
-	<!-- a.type, -->
-	<!-- a.member_id, -->
-	<!-- b.id, -->
-	<!-- b.name -->
-	<!-- from charge_history a, -->
-	<!-- common_code b -->
-	<!-- where a.type = b.id -->
-	<!-- and a.member_id = #{id} -->
-	<!-- </select> -->
 
 	<select id="selectChargeListByMemberId"
 		resultMap="chargeResultMap">
@@ -51,13 +37,14 @@
 		and a.member_id = #{memberId} 
 	]]>
 		<choose>
-						<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+			<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and a.charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and a.charge_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD') AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				and a.charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
 	<![CDATA[ 
@@ -74,16 +61,18 @@
   		where member_id = #{memberId}
   		]]>
 		<choose>
-						<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and charge_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD') AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				and charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
-		</choose>	
-		</select>
+		</choose>
+	</select>
 
 	<select id="getCountByMileage" resultType="int">
   		<![CDATA[
@@ -92,30 +81,27 @@
    		where member_id = #{memberId} 
    		]]>
 		<choose>
-			<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and charge_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD') AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				and charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
-		</choose>	
-		</select>
+		</choose>
+	</select>
 
 
-	<!-- <select id="selectCharge" resultMap="chargeResultMap"> -->
-	<!-- SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, 
-		member_id -->
-	<!-- SELECT id, charge_at, mileage, type, member_id -->
-	<!-- FROM charge_history -->
-	<!-- WHERE member_id = #{memberId} -->
-	<!-- </select> -->
 	<!-- 충전 내역 남기기 -->
 	<insert id="insertCharge"
 		parameterType="com.munhwa.prj.charge.vo.ChargeVO">
-		INSERT INTO charge_history(id, charge_at, mileage, type, member_id)
-		VALUES (charge_history_seq.nextval, SYSDATE, #{mileage}, #{type},
+		INSERT INTO charge_history(id, charge_at, mileage, type,
+		member_id)
+		VALUES (charge_history_seq.nextval, SYSDATE, #{mileage},
+		#{type},
 		#{memberId})
 	</insert>
 

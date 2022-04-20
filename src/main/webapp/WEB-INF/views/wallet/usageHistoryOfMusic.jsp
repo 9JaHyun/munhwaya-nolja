@@ -62,7 +62,7 @@ response.setDateHeader("Expires", 0);
 if (request.getProtocol().equals("HTTP/1.1"))
 	response.setHeader("Cache-Control", "no-cache");
 %>
-
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <div align="right" style="margin-bottom: 50px;">
 	<h4>마일리지 사용내역</h4>
 	<div class="mbf clearfix" style="font-size: 20px;"></div>
@@ -117,26 +117,28 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		<tbody>
 			<c:forEach items="${usages }" var="usage">
 				<tr>
-					<td><fmt:formatDate pattern="YYYY년 MM월 dd일 HH시 mm분"
-							value="${usage.useAt}" /></td>
+					<td class="selReq" data-usageid="${usage.usageIds }" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close" data-mid="${requestList.memberId }"><fmt:formatDate pattern="YYYY년 MM월 dd일 HH시 mm분"
+							value="${usage.useAt}"  /></td>
 					<td class="listMileage">${usage.mileage }</td>
 					<td>${usage.commonCodevo.name }</td>
 					<td>${usage.musicvo.title }</td>
-					<td><button type="button" class="refund tbutton small"
-							onclick="refundOfMusic()">
-							<c:choose>
-								<c:when test="${usage.refund eq 'B01'}">
-									<span class="usageId" data-usageid="${usage.usageIds }">환불
-										신청</span>
-								</c:when>
-								<c:when test="${usage.refund eq 'B02'}">
-									<span>환불 완료</span>
-								</c:when>
-								<c:when test="${usage.refund eq 'B03'}">
-									<span>환불 불가</span>
-								</c:when>
-							</c:choose>
-						</button></td>
+					<td>
+<!-- 					<button type="button" class="refund tbutton small" -->
+<!-- 							onclick="refundOfMusic()"> -->
+<%-- 							<c:choose> --%>
+<%-- 								<c:when test="${usage.refund eq 'B01'}"> --%>
+<!-- 									<span class="usageId">환불 -->
+<!-- 										신청</span> -->
+<%-- 								</c:when> --%>
+<%-- 								<c:when test="${usage.refund eq 'B02'}"> --%>
+<!-- 									<span>환불 완료</span> -->
+<%-- 								</c:when> --%>
+<%-- 								<c:when test="${usage.refund eq 'B03'}"> --%>
+<!-- 									<span>환불 불가</span> -->
+<%-- 								</c:when> --%>
+<%-- 							</c:choose> --%>
+<!-- 						</button> -->
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -144,7 +146,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 </div>
 <div class="pageInfo_wrap">
 	<div class="pageInfo_area"
-		style="margin-left: auto; margin-top: 30px; width: 410px;">
+		style="margin-left: auto; margin-top: 30px; width: 660px;">
 		<ul id="pageInfo" class="pageInfo">
 			<!-- 이전페이지 버튼 -->
 			<c:if test="${pageMaker.prev}">
@@ -181,6 +183,27 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>뒤로가기</span></a>
 </div>
 
+<!-- 승인 거절 모달 -->
+<div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
+  <div class="modal-dialog ">
+    <div class="modal-content ">
+      <div class="modal-header" id="modalHeader">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white" aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">서류, 작업물 확인</h4>
+      </div>
+      <h5>제출 서류</h5>
+      <div><img id="uploadImage"></div>
+      <h5>작업물</h5>
+      <div id="artworkRead"style="color:white;"></div>
+      <div class="modal-footer def-block">
+        <button class="tbutton small permit" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>승인</span></button>
+        <button class="tbutton small refuse" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>거절</span></button>
+        <button class="tbutton small" data-dismiss="modal" aria-label="Close"><span>뒤로 가기</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 승인 거절 모달 끝-->
 <script>
 	 function paging(num) {
 		moveForm.pageNum.value = num;
@@ -249,6 +272,37 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	        }
 	    }
 }
-		
+	$('.selReq').on("click", function(e) {
+		let list =[];
+		if($(event.target).data("usageid").toString().includes(',')){
+			var id = $(event.target).data("usageid").split(', ');
+			for (let i = 0; i < $(event.target).data("usageid").split(', ').length; i++) {
+				var obj= {};
+				obj["pks"] = id[i];
+				list.push(obj);		
+				
+			}
+		} else{
+			var id = $(event.target).data("usageid");
+			var obj= {};
+			obj["pks"] = id;
+			list.push(obj);		
+		}
+		console.log(list);
+		$.ajax ({
+			url:"usagePurchasedMusic",
+			type:"post",
+			data : JSON.stringify(list),
+			dataType : "text",
+			contentType : 'application/json; charset=utf-8',
+			success : function(data) {
+                alert("성공")
+                console.log(data);
+	        },
+            error: function (xhr, status, error) {
+                alert("실패");
+            }
+		})
+	});
 	
 </script>

@@ -92,7 +92,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 			<div style="color: white; margin-top: 10px; margin-bottom: 10px;">
 				기간별 충전액&nbsp;&nbsp;<input type="text" id="sumMileage"
 					value="${sumMileage }" readonly="readonly"
-					style="height: 20px; width: 60px; margin-bottom: 0px;">
+					style="height: 20px; width: 80px; margin-bottom: 0px;">
 			</div>
 		</div>
 		<table class="table">
@@ -116,7 +116,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		</table>
 	</div>
 	<div class="pageInfo_wrap">
-		<div class="pageInfo_area" style="margin-left:auto; margin-top:30px; width:410px;">
+		<div class="pageInfo_area" style="margin-left:auto; margin-top:30px; width:660px;">
 			<ul id="pageInfo" class="pageInfo">
 				<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMaker.prev}">

@@ -70,4 +70,13 @@
 		WHERE ID = #{id}
 	</delete>
 	
+	<!-- 사용내역 모달용 셀렉트 -->
+	<select id="purchaseSelectList3" resultType="com.munhwa.prj.music.vo.PurchaseVO2">
+		SELECT m.id, m.PICTURE,  m.TITLE, m.ART_NAME AS artName, m.PRICE, p.CREATED_AT AS createdAt, m.FILE_ID AS fileId
+				FROM PURCHASED_MUSIC p JOIN MUSIC m
+				ON p.MUSIC_ID = m. ID
+				WHERE MEMBER_ID = #{memberId}
+				AND MUSIC_ID = #{musicId}
+	</select>
+	
 </mapper>

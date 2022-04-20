@@ -89,9 +89,9 @@
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and p.profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and p.profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
 		<![CDATA[
@@ -117,9 +117,9 @@
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
     </select>
@@ -139,9 +139,9 @@
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
     </select>
@@ -173,9 +173,9 @@
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and p.profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and p.profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
 		<![CDATA[
@@ -201,9 +201,9 @@
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
     </select>
@@ -223,9 +223,9 @@
 				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
 			</when>
 			<otherwise>
-				and profit_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
 			</otherwise>
 		</choose>
     </select>

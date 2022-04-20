@@ -39,7 +39,7 @@
     <put-attribute name="body" value="/WEB-INF/views/member/{1}.jsp"/>
   </definition>
 
-  <definition name="*-memberWallet" extends="memberTemplate">
+  <definition name="*-memberWallet" extends="listTemplate">
     <put-attribute name="body" value="/WEB-INF/views/wallet/{1}.jsp"/>
   </definition>
 
