@@ -15,6 +15,12 @@
 	display: revert;
 }
 
+.highlight {
+	position: absolute;
+	border: 1px solid white;
+    border-spacing: 850px;
+}
+
 </style>
 
 
@@ -29,7 +35,7 @@
 		 <table class="table" style="margin-bottom: 50px;">
 			<thead>
 				<tr style="border-top: 1px solid white;">
-					<th scope="col">TITLE</th>
+					<th scope="col" style="padding-left: 54px;">TITLE</th>
 					<th scope="col" style="padding-right: 30px;">ARTIST</th>
 					<th scope="col"></th>
 				</tr>
@@ -37,8 +43,10 @@
 			<tbody id="sortable">
 				<c:forEach items="${wishMusic}" var="wishlistMusic">
 					<tr class="js-load">
-						<td><a href="streaming?id=${wishlistMusic.musicId}">${wishlistMusic.title}
-						</a></td>
+						<td>
+							<div style="float:left; margin-left: 10px; margin-right: 20px;"><i class="icon-reorder"></i></div>
+							<a href="streaming?id=${wishlistMusic.musicId}">${wishlistMusic.title}</a>
+						</td>
 						<td style="padding-right: 30px;">${wishlistMusic.artName}</td>
 						<td style="padding-right: 20px;"><i class="icon-remove"
 							id="${wishlistMusic.musicId}"
@@ -92,6 +100,7 @@
         })
         .done(() => {
             document.getElementById(musicId).parentNode.parentNode.remove();
+            load('#js-load', '1');
         });
     }
     
@@ -99,10 +108,11 @@
     $("#sortable").sortable({
     	axis: "y",
         start: function(e, ui) {
+        	$(this).width($(this).width());
+        	ui.item.toggleClass("highlight");
             $(this).attr('data-previndex', ui.item.index());
         },
         update: function (e, ui) {
-            // orders-from
         var to = parseInt(ui.item.index()) + 1;
         var from = parseInt($(this).attr('data-previndex')) + 1;
 		$(this).removeAttr('data-previndex');
@@ -121,7 +131,11 @@
             		 $('html').css('cursor', 'auto');
             	 }
             });
-        }
+        },
+        
+        stop: function (event, ui) {
+            ui.item.toggleClass("highlight");
+    }
      });
     
      $("#sortable").disableSelection();

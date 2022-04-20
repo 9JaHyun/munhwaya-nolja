@@ -67,6 +67,7 @@
 
         .done(() => {
             document.getElementById(id).parentNode.parentNode.parentNode.remove();
+            load('#js-load', '1');
         })
         ;
     }
