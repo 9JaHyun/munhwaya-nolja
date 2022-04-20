@@ -161,26 +161,22 @@
 	
 	$('#selReq').on("click", function(e) {
 		var id = $(event.target).first().data("mid");
-		console.log(id);
 		$.ajax({
 			type:"POST",
 			url: "judgeArtistOfMemberId",
 			data: {"memberId" : id},
 			dataType: "text",
 			success: function(res){
-				console.log("success");
-				console.log(res);
-				var obj = JSON.parse(res); 				
+				var obj = JSON.parse(res);
 				$('#artworkRead').append(obj.artwork);
 				var img = obj.fileGroupId;
 				var mid = obj.memberId;
-				console.log(img);
 				$('#uploadImage').attr('src', 'api/picture/'+img);
 				$('.permit').data('mid', obj.memberId);
 				$('.refuse').data('mid', obj.memberId);
     	    },
     	    error: function(error){
-    	    	console.log("fail");
+				alert("통신 실패!!");
     	    },
 		})
 	});
@@ -211,7 +207,7 @@
 				location.href="judgeArtist";
     	    },
     	    error: function(error){
-    	    	console.log("fail");
+				alert("통신 실패!!");
     	    },
     	});
     });
@@ -228,7 +224,7 @@
     	    	location.href="judgeArtist";
     	    },
     	    error: function(error){
-    	    	console.log("fail");
+				alert("통신 실패!!");
     	    },
     	});
     });
@@ -245,7 +241,7 @@
 				location.href="judgeArtist";
     	    },
     	    error: function(error){
-    	    	console.log("fail");
+				alert("통신 실패!!");
     	    },
     	});
     });
@@ -262,7 +258,7 @@
     	    	location.href="judgeArtist";
     	    },
     	    error: function(error){
-    	    	console.log("fail");
+				alert("통신 실패!!");
     	    },
     	});
     });

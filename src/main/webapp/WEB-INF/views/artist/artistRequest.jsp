@@ -148,7 +148,6 @@ label {
 	// 카운트 다운 종료
 	function resetCountDown() {
 		for(shedule of sheduleList){
-			console.log('clear ' + shedule);
 			clearTimeout(shedule);
 		}
 	}

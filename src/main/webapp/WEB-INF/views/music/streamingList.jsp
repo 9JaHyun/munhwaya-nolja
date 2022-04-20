@@ -276,15 +276,12 @@ function change() {
 	//li"track", span"title", span"duration" a"buy" => 각각 마다 다르게 주기
 	let musicId = 0;
 	if(event.target.className == 'track') {
-		//console.log('this is li Tag')
 		musicId = $(event.target).children().data("musicid")
 	} 
 	if(event.target.className == 'title') {
-		//console.log('this is spanTilte Tag')
 		musicId = $(event.target).data("musicid")
 	} 
 	if(event.target.className == 'duration') {
-		//console.log('this is spanduration Tag')
 		musicId = $(event.target).prev().data("musicid")
 	} 
 	if(event.target.className == 'buy') {
@@ -362,7 +359,6 @@ function result1(result) {
 				        data : {"id" : id},                   
 				        dataType : "text",
 				        success : function(data) {
-				        console.log(data);
 				        alert("장바구니에 담았습니다.");
 				        },
 				        error: function(xhr, status, error){

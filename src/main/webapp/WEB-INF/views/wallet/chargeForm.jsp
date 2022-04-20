@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="path" value="${pageContext.request.contextPath}" />
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <!-- iamport.payment.js -->
@@ -158,7 +158,7 @@ function payChange() {
 		$('#kgInicis').remove();
 		
 		var btn = $("<button>").attr('id','kakaoPay').attr('onclick', 'requestPayKaKao()').attr('style','margin-left: 30px');
-		var kakaoPay = $('<img>').attr('src','${path}/resources/images/payment/kakaopay.png').attr('style','width:150px; height:75px;');
+		var kakaoPay = $('<img>').attr('src','${rootPath}/resources/images/payment/kakaopay.png').attr('style','width:150px; height:75px;');
 		btn.append(kakaoPay);
 		$('#paylist').append(btn);
 	} else if (value == 'imp04405403') {
@@ -168,7 +168,7 @@ function payChange() {
 		$('#kgInicis').remove();
 		
 		var btn2 = $("<button>").attr('id','smilePay').attr('onclick', 'requestPaySmilePay()').attr('style','margin-left: 30px');
-		var smilePay = $('<img>').attr('src','${path}/resources/images/payment/smilepay.png').attr('style','width:150px; height:75px;');
+		var smilePay = $('<img>').attr('src','${rootPath}/resources/images/payment/smilepay.png').attr('style','width:150px; height:75px;');
 		btn2.append(smilePay);
 		$('#paylist').append(btn2);
 	} else if (value == 'imp00514439') {
@@ -178,7 +178,7 @@ function payChange() {
 		$('#kgInicis').remove();
 		
 		var btn3 = $("<button>").attr('id','kgInicis').attr('onclick', 'requestPayCard()').attr('style','margin-left: 30px');
-		var kgInicis = $('<img>').attr('src','${path}/resources/images/payment/kginicis.jpg').attr('style','width:150px; height:75px;');
+		var kgInicis = $('<img>').attr('src','${rootPath}/resources/images/payment/kginicis.jpg').attr('style','width:150px; height:75px;');
 		btn3.append(kgInicis);
 		$('#paylist').append(btn3);
 	}

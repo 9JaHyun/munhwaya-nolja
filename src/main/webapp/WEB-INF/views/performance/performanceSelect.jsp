@@ -189,7 +189,6 @@
 	function ticketListInsert(n) {
 		ticketFrm.id.value = n;
 		var num = $('#option').val();
-		console.log(num);
 		ticketFrm.person.value = num;
 		ticketFrm.submit();
 	}
