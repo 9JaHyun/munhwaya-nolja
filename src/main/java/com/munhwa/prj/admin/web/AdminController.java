@@ -32,7 +32,7 @@ public class AdminController {
 
         model.addAttribute("performances", list);
 
-        int total = performanceService.getTotal(cri);
+        int total = performanceService.admingetTotal(cri);
 
         PageMakeDTO pageMake = new PageMakeDTO(cri, total);
 

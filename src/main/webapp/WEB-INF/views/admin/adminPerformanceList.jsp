@@ -7,7 +7,7 @@
 	<h4>구매한 공연</h4>
 	
 	<div class="search_area" style="margin-top:30px; margin-right:30px; margin-bottom:20px;">
-		<select style="width: 70px;" name="type">
+		<select style="width: 100px;" name="type">
 		 	<option value="" <c:out value="${pageMake.cri.type == null?'selected':'' }"/>>--</option>
 		 	<option value="T" <c:out value="${pageMake.cri.type eq 'T'?'selected':'' }"/>>제목</option>
 		 	<option value="S" <c:out value="${pageMake.cri.type eq 'S'?'selected':'' }"/>>처리상태</option>
@@ -60,7 +60,7 @@
 		</div>
 		<!-- gridfull -->
 		<div class="pagination-tt clearfix"
-			style="margin-left: auto; margin-top: 30px; width: 550px;">
+			 style="display:flex; justify-content: center;">
 			<ul>
 				<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMake.prev}">
@@ -138,6 +138,7 @@
     	    dataType:"text",
     	    success: function(res){
 				alert("공연이 승인되었습니다.");
+				location.href="performanceList";
     	    },
     	    error: function(error){
     	    	alert("fail");

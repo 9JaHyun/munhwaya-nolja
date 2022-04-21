@@ -42,8 +42,8 @@ public class PerformanceServiceImpl implements PerformanceService {
     }
 
     @Override
-    public int getTotal(Criteria cri) {
-        return performanceMapper.getTotal(cri);
+    public int admingetTotal(Criteria cri) {
+        return performanceMapper.admingetTotal(cri);
     }
 
     @Override
@@ -78,5 +78,10 @@ public class PerformanceServiceImpl implements PerformanceService {
     public List<PerformanceVO> adminSelectList(Criteria cri) {
         return performanceMapper.adminSelectList(cri);
     }
+
+	@Override
+	public int getTotal(Criteria cri) {
+		return performanceMapper.getTotal(cri);
+	}
 
 }

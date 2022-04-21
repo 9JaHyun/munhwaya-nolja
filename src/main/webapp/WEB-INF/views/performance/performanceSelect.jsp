@@ -68,7 +68,7 @@
                                 <br>
                                 <div style="margin-bottom: 10px">
                                     <strong style="font-size: 14pt;">공연가격</strong>
-                                    <span id="Mileage"
+                                    <span id="gMileage"
                                           style="margin-left:30px; color:white; font-size:13pt;">${performance.price }</span>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                         </tr>
                         <tr class="total">
                             <th><strong>결제 금액</strong></th>
-                            <td><span class="sumMileage" id="price"
+                            <td><span id="price"
                                       style="margin-left:10px; color:white; font-size:13pt;">0</span>
                             </td>
                         </tr>
@@ -131,7 +131,7 @@
                     <br><br><br>
                     <h4>티켓수량</h4>
                     <span class="liner"></span>
-                    <select id="option" style="width:275px; margin-bottom:20px;"
+                    <select id="option" name="select" style="width:275px; margin-bottom:20px;"
                             onchange="changeMileage(this.value)">
                         <option value="" selected>수량 선택</option>
                         <c:choose>
@@ -170,28 +170,20 @@
             <!-- widget shop cart -->
         </div>
         <!-- span4 sidebar -->
-
-        <div class="span4 sidebar">
+        
+                <div class="span4 sidebar">
 
             <div class="def-block widget">
-                <h4>현재시간</h4>
+                <h4>좌석배치도</h4>
                 <span class="liner"></span>
-                <div class="widget-content tags">
-                    <ul id="backsoon" class="countdown clearfix">
-                        <li style="padding:0px;">
-                            <span id="date" class="date" style="font-size:17pt;"></span>
-                            <span id="time" class="days" style="font-size:18pt;"></span>
-                        </li>
-                        <li style="padding:0px;">
-                        </li>
-                    </ul>
+                <div>
+                	<img src="api/picture/좌석배치도.jpg">
                 </div>
-                <!-- widget content -->
             </div>
             <!-- span4 sidebar -->
-
         </div>
-        <!-- row clearfix -->
+        
+        
     </div>
     <!-- end page content -->
 </div>
@@ -207,6 +199,10 @@
     var currentWon = currentMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     document.getElementById('currentMileage').innerHTML = currentWon + '원';
     document.getElementById('totalMileage').innerHTML = currentWon + '원';
+    
+    var gMileage = ${performance.price};
+    var gMileageWon = gMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    document.getElementById('gMileage').innerHTML = gMileageWon + '원';
 
     function changeMileage(value) {
         let price = '${performance.price }' * value
@@ -218,33 +214,18 @@
     }
 
     function ticketListInsert(n) {
+    	var str = document.getElementById("price").innerHTML.slice(0, -1);
+    	var str2 = str.replace(",", "");
+    	if(${mileage} < str2) {
+        	alert("잔액이 부족합니다.")		
+        	location.href="chargeForm.do";
+    	} else {
         ticketFrm.id.value = n;
         var num = $('#option').val();
         ticketFrm.person.value = num;
         ticketFrm.submit();
+        alert("예매가 완료되었습니다.");
+    	}
     }
-
-    function setClock() {
-        var dateInfo = new Date();
-        var hour = modifyNumber(dateInfo.getHours());
-        var min = modifyNumber(dateInfo.getMinutes());
-        var sec = modifyNumber(dateInfo.getSeconds());
-        var year = dateInfo.getFullYear();
-        var month = dateInfo.getMonth() + 1; //monthIndex를 반환해주기 때문에 1을 더해준다.
-        var date = dateInfo.getDate();
-        document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec;
-        document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
-    }
-
-    function modifyNumber(time) {
-        if (parseInt(time) < 10) {
-            return "0" + time;
-        } else
-            return time;
-    }
-
-    window.onload = function () {
-        setClock();
-        setInterval(setClock, 1000); //1초마다 setClock 함수 실행
-    }
+    
 </script>

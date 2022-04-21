@@ -42,23 +42,20 @@ public class PerformanceController {
 	private FileUtils fileUtils;
 
 	@GetMapping("/performance")
-	public String performance(Model model, Criteria cri, 
-			@RequestParam(value = "filter", defaultValue = "A01") String filter) {
+	public String performance(Model model, Criteria cri) {
+		
+		
 		List<PerformanceVO> list = performanceDao.performanceSelectList(cri);
+		
 
-		List<PerformanceVO> result = list.stream()
-				.filter(p -> p.getStatus().equals("승인"))
-				.collect(Collectors.toList());
+		model.addAttribute("performances", list);
 
-		model.addAttribute("performances", result);
-
-		int total = performanceDao.getTotal(cri, filter);
+		int total = performanceDao.getTotal(cri);
 
 		PageMakeDTO pageMake = new PageMakeDTO(cri, total);
 
 		model.addAttribute("pageMake", pageMake);
 
-		// model.addAttribute("list", performanceDao.getListPaging(cri));
 		return "performance/performance";
 	}
 
@@ -75,10 +72,10 @@ public class PerformanceController {
 	}
 
 	@RequestMapping("/performanceInsertForm.do")
-	public String performanceInsertForm(@LoginUser SessionUser user, Model model, String errMsg) {
+	public String performanceInsertForm(@LoginUser SessionUser user, Model model, String message) {
 		ArtistVO artist = artistDao.findByMemberId(user.getId());
 		model.addAttribute("artist", artist);
-		model.addAttribute("errMsg", errMsg);
+		model.addAttribute("message", message);
 		return "performance/performanceInsertForm";
 	}
 
@@ -115,22 +112,23 @@ public class PerformanceController {
     	
 		// 이미 그날에 공연이 존재하는가
     	if(result) {
-    		red.addAttribute("errMsg", "해당 일자에 공연이 존재합니다.");
+    		red.addAttribute("message", "해당 일자에 공연이 존재합니다.");
     		return "redirect:performanceInsertForm.do";
     	}
     	
     	// 오늘날짜보다 이전에는 등록 불가
     	if(vo.getSdate().before(date)) {		
-    		red.addAttribute("errMsg", "등록일자는 항상 오늘날짜보다 이후여야 합니다.");
+    		red.addAttribute("message", "등록일자는 항상 오늘날짜보다 이후여야 합니다.");
     		return "redirect:performanceInsertForm.do";
     	}
     	
     	// 공연은 항상 당일치기
     	if(!sdate.equals(edate)) {
-    		red.addAttribute("errMsg", "시작날짜와 종료날짜가 같아야 합니다.");
+    		red.addAttribute("message", "시작날짜와 종료날짜가 같아야 합니다.");
     		return "redirect:performanceInsertForm.do";
 		}
     	
+    	red.addAttribute("message", "공연 신청이 완료되었습니다.");
 		int n = performanceDao.performanceInsert(vo);    			    			
 		if( n != 0 ) {
 			return "redirect:performanceInsertForm.do";    			

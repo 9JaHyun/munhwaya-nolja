@@ -95,9 +95,9 @@
 
 <script>
 $(document).ready(function(){
-	var errMsg = "${errMsg}"
-	   if(errMsg != null && errMsg.length > 0) {
-		   alert(errMsg);
+	var message = "${message}"
+	   if(message != null && message.length > 0) {
+		   alert(message);
 	   }
 });
 

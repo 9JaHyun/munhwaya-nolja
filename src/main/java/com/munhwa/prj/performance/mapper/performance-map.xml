@@ -133,20 +133,17 @@
 		SELECT COUNT(*) FROM PERFORMANCE P
 		<where>
 			<if test="keyword != null">
-				<include refid="criteria"></include>
+				AND P.NAME LIKE '%'||#{keyword}||'%'
+			</if>
+				AND P.STATUS = 'A01'
+		</where>
+	</select>
 
-				<if test="keyword.equals('승인')">
-					AND P.STATUS = 'A01'
-				</if>
-				<if test="keyword.equals('거절')">
-					AND P.STATUS = 'A02'
-				</if>
-				<if test="keyword.equals('대기')">
-					AND P.STATUS = 'A03'
-				</if>
-				<if test="keyword.equals('종료')">
-					AND P.STATUS = 'A04'
-				</if>
+	<select id="admingetTotal" resultType="int">
+		SELECT COUNT(*) FROM PERFORMANCE P
+		<where>
+			<if test="keyword != null">
+				<include refid="criteria"></include>
 			</if>
 		</where>
 	</select>
@@ -173,7 +170,6 @@
 							<if test="keyword.equals('종료')">
 								P.STATUS = 'A04'
 							</if>
-							P.STATUS like '%'||#{keyword}||'%'
 						</when>
 					</choose>
 				</trim>

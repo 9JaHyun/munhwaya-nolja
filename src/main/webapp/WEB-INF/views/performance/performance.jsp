@@ -23,8 +23,9 @@
                     <h4 style="border-bottom:none;"> 공연리스트 </h4>
 				<div class="search_wrap" style="float:right;">
 					<div class="search_area">
-						<select style="width:70px;">
-							<option value="제목">제목
+						<select style="width:100px;" name="type">
+							<option value="" <c:out value="${pageMake.cri.type == null?'selected':'' }"/>>--</option>
+		 					<option value="T" <c:out value="${pageMake.cri.type eq 'T'?'selected':'' }"/>>제목</option>
 						</select>
 						<input type="text" name="keyword" value="${pageMake.cri.keyword }">
 						<button class="tbutton small" style="height:32px; width:60px; margin-bottom:10px; font-size:10pt;">검색</button>
@@ -47,7 +48,7 @@
                             </c:forEach>
                         </div><!-- products -->
                     </div><!-- gridfull -->
-                    <div class="pagination-tt clearfix" style="margin-left: auto; margin-top:30px; width: 520px;">
+                    <div class="pagination-tt clearfix" style="display:flex; justify-content: center; margin-top:40px;">
         					<!-- 이전페이지 버튼 -->
                 			<c:if test="${pageMake.prev}">
                     			<li><a href="${pageMake.startPage-1}">Previous</a></li>
@@ -78,6 +79,7 @@
         <input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
         <input type="hidden" name="amount" value="${pageMake.cri.amount }">
         <input type="hidden" name="keyword" value="${pageMake.cri.keyword }">   
+        <input type="hidden" name="type" value="${pageMake.cri.type }">
 	</form>
 </div>
 <script type="text/javascript">
@@ -99,17 +101,36 @@
         moveForm.submit();
     });
     
+//     $(".search_area button").on("click", function(e){
+//         e.preventDefault();
+//         let val = $("input[name='keyword']").val();
+//         moveForm.keyword.value = val;
+//         moveForm.pageNum.value = 1;
+//         moveForm.submit();
+//     });
+
     $(".search_area button").on("click", function(e){
         e.preventDefault();
-        let val = $("input[name='keyword']").val();
-        moveForm.keyword.value = val;
+        
+        let type = $(".search_area select").val();
+        let keyword = $(".search_area input[name='keyword']").val();
+        
+        if(!type){
+            alert("검색 종류를 선택하세요.");
+            return false;
+        }
+        
+        if(!keyword){
+            alert("키워드를 입력하세요.");
+            return false;
+        }        
+        
+        moveForm.type.value = type;
+        moveForm.keyword.value = keyword;
         moveForm.pageNum.value = 1;
         moveForm.submit();
     });
     
-//     var sumMileage = document.getElementById('sumMileage').value;
-//     var sumMileage2 = sumMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-//     document.getElementById('sumMileage').value = sumMileage2+'원';
     
     for (var i=0; i<document.getElementsByClassName('listMileage').length; i++) {
     var listMileage = document.getElementsByClassName('listMileage')[i].innerHTML
