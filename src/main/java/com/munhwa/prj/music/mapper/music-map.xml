@@ -20,10 +20,10 @@
 	
 	<select id="musicSelectList" resultMap="musicResultMap">
 		<![CDATA[
-		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE
+		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE, ALBUM_ID
 		FROM (	SELECT
 				RANK() OVER (ORDER BY DOWNLOAD_CNT DESC) AS RN,
-				TITLE, ART_NAME, GENRE, ID, PICTURE
+				TITLE, ART_NAME, GENRE, ID, PICTURE, ALBUM_ID
 				FROM MUSIC )
 	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
 	     AND RN <= #{cri.pageNum} * #{cri.amount}

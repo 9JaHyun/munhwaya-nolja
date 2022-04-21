@@ -15,6 +15,7 @@ public interface ArtistService {
 	List<ArtDetailVO> findMusic(Criteria cri, int id);
 //	List<ArtDetailVO2> musicListPage(Criteria cri);
 	ArtistVO findByMemberId(String memberId);
+    int artIdByAlbId(int albumId);
 	int checkBuy(String id, int musicId);
 	int save(ArtistVO vo);
 	int update(ArtistVO vo);

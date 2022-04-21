@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.entity.UploadFileVO;
 import com.munhwa.prj.common.file.service.FileUtils;
@@ -45,6 +46,8 @@ public class MusicController {
 	private PurchaseService purchaseDao;
 	@Autowired
 	private UploadFileService uploadService;
+	@Autowired
+	private ArtistService artistDAO;
 
 	@GetMapping("/musicMain")
 	public String musicMain(@LoginUser SessionUser user,  Model model, Criteria cri) {
@@ -156,6 +159,7 @@ public class MusicController {
 				}
 			}
 			dto.setPurchase(isPurchased);
+			dto.setArtId(artistDAO.artIdByAlbId(dto.getAlbumId()));
 			chartList.add(dto);
 		}
 		int total = 50;
@@ -196,7 +200,7 @@ public class MusicController {
 			MusicChartDto dto = new MusicChartDto(vo); //차트리스트의 음원을 구입여부가있는 vo2에 넣어줌
 			int ids = dto.getId();
 			boolean isPurchased = false;
-					
+				
 			for(int id1 : musicList) {
 				if(ids == id1) {
 				isPurchased = true;
@@ -204,9 +208,10 @@ public class MusicController {
 				}
 			}
 				dto.setPurchase(isPurchased);
+				dto.setArtId(artistDAO.artIdByAlbId(dto.getAlbumId()));
 				chartList.add(dto);
 				}
-		
+			
 		model.addAttribute("selectAlbum", albumDAO.albumSelect(id));
 		model.addAttribute("selectMusicByAlbum",chartList);
 		model.addAttribute("wishlists", wishlistDao.wishlistList(user.getId()));

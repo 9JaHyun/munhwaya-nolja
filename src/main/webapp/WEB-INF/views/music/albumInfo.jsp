@@ -122,10 +122,12 @@
 														</td>
 														
 														<td  class="product-name" style="vertical-align:middle;">
-															${music.title }
+															<a href="streaming?id=${music.id }">
+																${music.title }
+															</a>
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
-															${music.artName }
+															<a href="#" data-artistid="${music.artId }">${music.artName }</a>
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
 															<c:choose>
@@ -292,4 +294,5 @@ function ListaddCart() {
          alert("취소")
       }
 }
+
 </script>	

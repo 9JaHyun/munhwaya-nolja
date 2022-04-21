@@ -147,10 +147,10 @@
                                                 </a>
                                             </td>
                                             <td class="product-name">
-                                                    ${music.title }
+                                                    <a href="streaming?id=${music.id }">${music.title }</a>
                                             </td>
                                             <td id="artName" class="product-name">
-                                                    ${music.artName }
+                                                    <a href="#" data-artistid="${music.artId }">${music.artName }</a>
                                             </td>
                                             <td class="product-name">
                                                     <c:choose>
