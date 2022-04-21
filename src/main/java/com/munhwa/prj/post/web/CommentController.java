@@ -3,6 +3,7 @@ package com.munhwa.prj.post.web;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.dto.SessionUser;
 import com.munhwa.prj.post.service.CommentService;
+import com.munhwa.prj.post.vo.CommentShowVO;
 import com.munhwa.prj.post.vo.CommentVO;
 import com.munhwa.prj.post.web.dto.CommentRequestDto;
 import java.util.List;
@@ -21,8 +22,9 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/comment")
-    public List<CommentVO> showAllComments(int id) {
-        return commentService.findByPostId(id);
+    public List<CommentShowVO> showAllComments(int id) {
+        List<CommentShowVO> byPostId = commentService.findByPostId(id);
+        return byPostId;
     }
 
     @PostMapping("/comment")

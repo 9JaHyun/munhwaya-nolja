@@ -30,40 +30,121 @@
                 ${post.content}
             </div>
         </div>
-        <c:if test="${sessionScope.id == post.memberId}">
+        <c:if test="${userId == post.memberId}">
             <div>
-                <button class="tbutton" style="font-size: 18px; width: 50px"> 수정 </button>
-                <button class="tbutton" style="font-size: 18px; width: 50px"> 삭제 </button>
+                <button class="tbutton" style="font-size: 18px; width: 50px"> 수정</button>
+                <button class="tbutton" style="font-size: 18px; width: 50px"> 삭제</button>
             </div>
         </c:if>
-
         <div id="comments" class="user-comments mbs">
-            <h4> Comments 2 </h4><span class="liner"></span>
-            <ul class="showcomments clearfix">
-                <li class="clearfix">
-                    <div class="thumb">
-                        <a href="#"><img src="images/assets/user1.jpg" alt="#"></a>
-                        <div class="reply"><a href="#"><i class="icon-reply first-i"></i> Reply</a></div>
-                    </div>
-                    <h5 class="entry-title"><a href="#" class="title">Jessica Alba</a><i>said:</i> <span class="date">30 September, 2022</span></h5>
-                    <p>Nam vitae tellus lectus. Vivamus et ultrices urna. Morbi et elit odio, vel cursus sapien. Curabitur ac turpis et velit hendrerit commodo. Curabitur orci erat.</p>
-                </li>
-                <li class="child admin-comment clearfix">
-                    <div class="thumb">
-                        <a href="#"><img src="images/assets/user2.jpg" alt="#"></a>
-                        <div class="reply"><a href="#"><i class="icon-reply first-i"></i> Reply</a></div>
-                    </div>
-                    <h5 class="entry-title"><a href="#" class="title">Alexander Cruise</a><i>author</i> <span class="date">31 September, 2022</span></h5>
-                    <p>Nam vitae tellus lectus. Vivamus et ultrices urna. Morbi et elit odio, vel cursus sapien. Curabitur ac turpis et velit hendrerit commodo. Curabitur orci erat.</p>
-                </li>
-            </ul>
+            <h4> 댓글 </h4><span class="liner"></span>
+            <form action="#" method="post" id="commentform">
+                <textarea name="comment" rows="8" placeholder="Your Message *"
+                          required=""></textarea>
+                <p>
+                    <input name="submit" type="submit" class="send-message" value="댓글 쓰기">
+                    <input type="hidden" name="comment_post_ID" value="6" id="comment_post_ID">
+                    <input type="hidden" name="comment_parent" id="comment_parent" value="0">
+                </p>
+            </form>
+            <br><br><br><br>
+            <ul id="commentList" class="showcomments clearfix"></ul>
         </div>
     </div>
 </div>
 
 <script>
     $(window).load(() => {
-        var postId = ${post.id}
-        console.log(postId);
+        console.log(${post.id})
+        loadComments(${post.id})
     })
+
+    function loadComments(id) {
+        $.ajax({
+                url: 'comment',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    let listHtml = "";
+                    for (const i in data) {
+                        let id = data[i].id;
+                        let content = data[i].content;
+                        let groupId = data[i].groupId;
+                        let postId = data[i].postId;
+                        let memberId = data[i].memberId;
+                        let writer = data[i].writer;
+                        let writerProfile = data[i].writerProfile;
+                        let createdAt = data[i].createdAt;
+                        let updatedAt = data[i].updatedAt;
+                        let groupOrder = data[i].groupOrder;
+
+                        if (groupOrder == 1) {
+                            listHtml += "<li id='" + id + "' class='clearfix'>";
+                        } else {
+                            listHtml += "<li id='" + id + "' class='child clearfix'>";
+                        }
+
+                        listHtml += "<div class='thumb'>";
+                        listHtml += showProfile(writerProfile);
+                        listHtml += "<div class='reply' onclick='reply()'><i class='icon-reply first-i'></i>Reply</div>"
+                        listHtml += "</div>";
+
+                        listHtml += "<h5 class='entry-title'>" + writer;
+                        listHtml += "<span class='date'>" + createdAt + "</span></h5>";
+                        if (content == "" || content == null) {
+                            listHtml += "<p>(삭제된 댓글입니다.)</p>"
+                        } else {
+                            listHtml += "<p>" + content + "</p>"
+                        }
+                        listHtml + "</li>";
+
+                        $("#commentList").html(listHtml);
+                    }
+                },
+                //
+                // $('button.btn.btn-success.mb-1.write_rereply').on('click', function () {
+                //     console.log('no', $(this).attr('no'));
+                //     console.log('bno', $(this).attr('bno'));
+                //     WriteReReply($(this).attr('bno'), $(this).attr('no'));
+                // });
+                //
+                // // 삭제버튼을 클릭했을 때
+                // $('.reply_delete').on('click', function () {
+                //     // 모댓글 삭제일때
+                //     if ($(this).attr('grpl') == 0) {
+                //         DeleteReply($(this).attr('no'), $(this).attr('bno'));
+                //
+                //         // 답글 삭제일때
+                //     } else {
+                //         DeleteReReply($(this).attr('no'), $(this).attr('bno'), $(this).attr('grp'));
+                //     }
+                //
+                // })
+                error: function () {
+                    alert('서버 에러');
+                }
+            }
+        );
+    }
+
+    <%--function isWriter(memberId) {--%>
+    <%--    return (${userId == memberId}) ? "<i>작성자</i>" : "<i></i>";--%>
+    <%--}--%>
+
+    function showProfile(profile) {
+        var result;
+        if (profile == null || profile.length === 0) {
+            result = "<img src='resources/images/basic_profile.png'"
+        } else {
+            if (profile.indexOf('https://') !== -1) {
+                result = "<img src='" + profile +"'>";
+            } else {
+                result = "<img src='api/picture/" + profile +"'>";
+            }
+        }
+        return result;
+    }
+
 </script>

@@ -2,14 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.munhwa.prj.post.mapper.CommentMapper">
-  <resultMap id="commentMap" type="com.munhwa.prj.post.vo.CommentVO">
+  <resultMap type="com.munhwa.prj.post.vo.CommentVO" id="commentMap">
     <id property="id" column="id"/>
     <result property="content" column="content"/>
     <result property="groupId" column="group_id"/>
     <result property="postId" column="post_id"/>
     <result property="memberId" column="member_id"/>
     <result property="createdAt" column="created_at"/>
-    <result property="updatedAt" column="updated_at"/>[
+    <result property="updatedAt" column="updated_at"/>
+  </resultMap>
+
+  <resultMap type="com.munhwa.prj.post.vo.CommentShowVO" id="commentShowMap">
+    <id property="id" column="id"/>
+    <result property="content" column="content"/>
+    <result property="groupId" column="group_id"/>
+    <result property="postId" column="post_id"/>
+    <result property="memberId" column="member_id"/>
+    <result property="writer" column="writer"/>
+    <result property="writerProfile" column="profile"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="updatedAt" column="updated_at"/>
+    <result property="groupOrder" column="group_order"/>
   </resultMap>
 
   <insert id="insertComment">
@@ -44,16 +57,14 @@
     ]]>
 	</update>
 
-  <select id="selectListByPostId" resultMap="commentMap">
-    SELECT *
-    FROM comments
+  <select id="selectListByPostId" resultMap="commentShowMap">
+    SELECT c.*,
+           m.sname    AS profile,
+           m.nickname AS writer
+    FROM comments c,
+         member m
     WHERE post_id = #{postId}
-    ORDER BY created_at
-  </select>
-
-  <select id="selectById" resultMap="commentMap">
-    SELECT *
-    FROM comments
-    WHERE id = #{id};
+      AND c.member_id = m.id
+    ORDER BY c.group_id, c.group_order
   </select>
 </mapper>

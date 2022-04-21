@@ -2,6 +2,7 @@ package com.munhwa.prj.post.serviceImpl;
 
 import com.munhwa.prj.post.mapper.CommentMapper;
 import com.munhwa.prj.post.service.CommentService;
+import com.munhwa.prj.post.vo.CommentShowVO;
 import com.munhwa.prj.post.vo.CommentVO;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,14 +38,8 @@ public class CommentServiceImpl implements CommentService {
         return (int) paramMap.get("v_result");
     }
 
-
     @Override
-    public CommentVO findById(int id) {
-        return mapper.selectById(id);
-    }
-
-    @Override
-    public List<CommentVO> findByPostId(int id) {
+    public List<CommentShowVO> findByPostId(int id) {
         return mapper.selectListByPostId(id);
     }
 }

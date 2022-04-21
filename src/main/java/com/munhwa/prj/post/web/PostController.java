@@ -36,6 +36,7 @@ public class PostController {
     public String showPost(@LoginUser SessionUser user, Model model, int id) {
         PostVO post = postService.findById(id);
         model.addAttribute("post", post);
+        model.addAttribute("userId", user.getId());
         return "post/post";
     }
 

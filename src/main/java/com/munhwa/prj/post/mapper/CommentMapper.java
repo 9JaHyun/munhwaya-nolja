@@ -1,5 +1,6 @@
 package com.munhwa.prj.post.mapper;
 
+import com.munhwa.prj.post.vo.CommentShowVO;
 import com.munhwa.prj.post.vo.CommentVO;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,6 @@ public interface CommentMapper {
 
     int deleteCommentById(Map<String, Object> paramMap);
 
-    CommentVO selectById(int id);
-
-    List<CommentVO> selectListByPostId(int id);
+    List<CommentShowVO> selectListByPostId(int id);
 
 }
