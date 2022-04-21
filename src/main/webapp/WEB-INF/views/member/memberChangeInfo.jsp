@@ -13,11 +13,11 @@
                     </c:when>
                     <c:otherwise>
                     	 <c:choose>
-                    		<c:when test="${artists.content eq null}">
-                    			<a href="#">프로필 등록</a>
+                    		<c:when test="${artists.name eq null}">
+                    			<a href="artistProfileForm">프로필 등록</a>
                     		</c:when>
                     		<c:otherwise>
-                    			<a href="#">프로필 수정</a>
+                    			<a href="changeArtistProfileForm">프로필 수정</a>
                     		</c:otherwise>
                     	</c:choose>
                     </c:otherwise>

@@ -73,7 +73,9 @@ size {
 	float: center;
 	align-content: space-between;
 }
-
+td{
+	color: white;
+}
 
 </style>
 
@@ -113,7 +115,7 @@ size {
 							</div>
 							<div class="artist-info" style="float: left; width: 50%; padding-left: 50px;">
 								<div class="act">
-									<a>활동명</a>&emsp;<a>${art.name}</a><br>
+									<a>활동명</a>&emsp;<a>${artist.name}</a><br>
 								</div>
 								<div class="act">
 									<c:choose>
@@ -172,10 +174,10 @@ size {
              				<td style="text-align:center">${status.count}</td>
                				<td><a href="streaming?id=${music.musicId}"><i class="icon-angle-right" style="font-size: large; margin-left: 7px;"></a></i></td>
                				<td><button data-musicid="${music.musicId}" onclick="buy()">구매</button></td> 
-               				<td>${music.musicTitle}</td>
-               				<td>${music.artName}</td>
-              				<td>${music.albName}</td>
-             				<td><button data-toggle="modal" data-target="#myModal" data-musicid="${music.musicId}" data-dismiss="modal" aria-label="Close">담기</button></td>
+               				<td><a href="streaming?id=${music.musicId}">${music.musicTitle}</a></td>
+               					<td>${music.artName}</td>
+              					<td><a href="albumInfo?id=${music.albId }">${music.albName}</a></td>
+             				<td><button data-toggle="modal" data-target="#myModal" data-musicid="${music.musicId}" data-dismiss="modal" aria-label="Close" class="wishBtn">담기</button></td>
            				 </tr>
        				  </c:forEach>
 				</tbody>
@@ -241,7 +243,7 @@ size {
 				<li id="Latest" class="active">
 					<div class="video-grid">
 					  <c:forEach items="${album}" var="album">
-						<a href="albumInfo" class="grid_3"
+						<a href="albumInfo?id=${album.id }" class="grid_3"
 							style="margin: 0em 0.5em 0em 0.5em; width: 32%;">
 							 <img src="api/picture/PICHONG.png" alt="#"> 
 							 <span><strong>앨범명${album.albName}</strong>아티스트명${album.artName} / 앨범날짜${album.releaseAt}</span>
@@ -304,7 +306,7 @@ size {
         <h4 style="border:none;" class="modal-title" id="myModalLabel">위시리스트 선택</h4>
       </div>
       <div id="activeAdd" class="modal-body def-block">
-        <c:forEach items="${wishList}" var="wishlist">
+        <c:forEach items="${wishLists}" var="wishlist">
 		<div class="mbf clearfix">
 			<ul>
 				<li>
@@ -358,15 +360,6 @@ size {
 				.getElementsByTagName('BODY')[0]).appendChild(s);
 	}());
 	/* ]]> */
-	
-	$(document).ready(function() {     
-        $('#myModal').on('show.bs.modal', function(event) {   
-        	
-        	musicid = $(event.relatedTarget).data('musicid');
-        	console.log( $(event.relatedTarget.data()));
-        	console.log( $(event.target));
-        });
-    });
 
 	function buy() {
 		 var id = $(event.target).data('musicid');
@@ -406,8 +399,6 @@ size {
 		  
 	}
 	
-	 
-	
 	function paging(num) {
 	        moveForm.musicPageNum.value = num;
 	        moveForm.submit();
@@ -418,50 +409,33 @@ size {
 	        moveForm2.submit();
 	     };    
 	     
+//위시리스트
+	//뮤직아이디 가져오기
+	var id;
+	$(document).ready(function() {     //페이지를 틀면 바로 실행
+        $('.wishBtn').on('click', function(event) {   //담기버튼을 클릭하면 담기버튼안의 musicid가 var id;에 들어간다 그리고 저장되고 밑에 addwish()메소드에서 사용할거다
+        	//인풋폼
+        	id = $(this).data("musicid");
+        });
+    });
+	//위시리스트 추가
 	function addWishList() {
-		
 		let wishId = $(event.target).data('wishid')
-		alert(musicid) //musicId를 가져올수가 없음
-		
-// 		$.ajax({
-// 			type: "POST", //요청 메소드 방식
-// 			url:"addWishList",
-// 			contentType:'application/json;charset=utf-8',
-// 			data: JSON.stringify({"musicId": musicId, "wishId": wishId}),
-// 			dataType:"text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
-// 			error : function(){
-// 				alert("이미 추가한 곡입니다.");
-// 			},
-// 			success: function(result) {
-// 				alert("추가되었습니다");
-// 			}
-// 		})
-		
-		
-	}
-	
-	function wishlist() {
-	
-// 		$("[name='selNo']:checked").each(function(i, checkbox){
-// 			var tr = $(checkbox).parent().parent();
-// 			var td = $(tr).children();
-// 			var obj = {};
-// 		}
-		
-//		 var wishlist = td.eq(7).find("button").val();
-
-//		obj["wishlist"] = wishlist;
-
-		var wish = $(event.target).data('musicId');
 		
 		$.ajax({
-			url : "wishlist", //(프로젝트명, 컨트롤러에 호출할 경로)
-			type : "post",
-			contentType : "application/json",
-			data : JSON.stringify(wishlist),
-			data
-
+			type: "POST", //요청 메소드 방식
+			url:"addWishList",
+			contentType:'application/json;charset=utf-8',
+			data: JSON.stringify({"musicId": id, "wishId": wishId}),
+			dataType:"text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+			error : function(){
+				alert("이미 추가한 곡입니다.");
+			},
+			success: function(result) {
+				alert("추가되었습니다");
+			}
 		})
 	}
+	
 </script>
 </html>

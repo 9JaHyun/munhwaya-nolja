@@ -13,5 +13,6 @@ public class ArtDetailVO {
 	private String musicTitle;
 	private String artName;
 	private String albName;
+	private String albId;
 	
 }

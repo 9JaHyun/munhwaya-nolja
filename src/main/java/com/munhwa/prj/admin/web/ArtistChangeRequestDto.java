@@ -14,7 +14,7 @@ public class ArtistChangeRequestDto {
 	private String type;
 	private String memberId;
 	private String name;
-	private MultipartFile image;
+	private MultipartFile image; //jsp에서 수정해서 보내주는 파일자체
 	
 	public ArtistVO toEntity() {
 		return new ArtistVO(gender, genre, content, type, memberId, name);

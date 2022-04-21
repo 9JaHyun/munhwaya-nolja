@@ -13,5 +13,6 @@ public class ArtDetailVO2 {
 	private String artName;
 	private String releaseAt;
 	private String picture;
+	private int id;
 	
 }

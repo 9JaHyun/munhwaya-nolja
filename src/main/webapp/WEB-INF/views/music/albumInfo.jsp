@@ -47,7 +47,9 @@
 							<!-- grid6 -->
 							<div class="grid_6">
 								<h2>제목: ${selectAlbum.albName }</h2>
-								<h2>가수: ${selectAlbum.artName }</h2>
+								<a href="artistDetail?artId=121">
+									<h2>가수: ${selectAlbum.artName }</h2>
+								</a>
 							<c:choose>
 								<c:when test="${selectAlbum.genre eq 'G01' }">
 									<h3>장르: 발라드</h3>

@@ -32,12 +32,6 @@ private ArtistMapper map;
 	}
 	
 	@Override
-	public ArtistVO findByMemberId(String memberId) {
-		// TODO Auto-generated method stub
-		return map.findByMemberId(memberId);
-	}
-	
-	@Override
 	public int insertArtist(ArtistVO vo) {
 		// TODO Auto-generated method stub
 		return map.insertArtist(vo);
@@ -88,6 +82,22 @@ private ArtistMapper map;
 	public int getTotal2(Criteria cri, int artistId) {
 		// TODO Auto-generated method stub
 		return map.getTotal2(cri, artistId);
+	}
+
+	@Override
+	public ArtistVO findByArtistId(int artId) {
+		return map.findByArtistId(artId);
+	}
+
+	@Override
+	public ArtistVO findByMemberId(String id) {
+		return map.findByMemberId(id);
+	}
+
+	@Override
+	public int getStatus(String memberId, String status) {
+		// TODO Auto-generated method stub
+		return map.getStatus(memberId, status);
 	}
 
 	

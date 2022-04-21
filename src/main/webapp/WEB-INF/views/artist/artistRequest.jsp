@@ -32,7 +32,7 @@ label {
 	<h4>아티스트 승급신청</h4>
 	<div class="grid_12 tt" style="margin-top: 70px;">
 		<ul class="forum-items" style="text-align: left;">
-			<li><i class="icon-comment-alt"></i> <a href="#">승급 신청</a>
+			<li><i class="icon-comment-alt"></i>승급 신청</a>
 				<div class="topic-time">아티스트 승급에 필요한 인증사항을 입력해주세요.</div></li>
 		</ul>
 	</div>

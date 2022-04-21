@@ -16,7 +16,8 @@ public interface ArtistService {
     List<ArtistVO> selectArtistList();
     List<ArtDetailVO> findMusic(@Param("cri") Criteria cri, @Param("id") int artistId);
 //    List<ArtDetailVO2> musicListPage(@Param("cri") Criteria cri, @Param("artistId")int id);
-    ArtistVO findByMemberId(String memberId);
+    ArtistVO findByMemberId(String id);
+    ArtistVO findByArtistId(int artId);
     List<ArtDetailVO2> albumInfo(@Param("cri") Criteria cri, @Param("artistId") int artistId);
 	int checkBuy(@Param("id") String id, @Param("musicId") int musicId);
     int insertArtist(ArtistVO vo);
@@ -25,7 +26,7 @@ public interface ArtistService {
     int albumCnt(int vo);
 	int getTotal(@Param("cri") Criteria cri, @Param("artistId") int id);
 	int getTotal2(@Param("cri") Criteria cri, @Param("artistId") int artistId);
-    
+    int getStatus(@Param("memberId") String memberId, @Param("status") String status);
    // int chkName(String name);
 }
 
