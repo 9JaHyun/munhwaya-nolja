@@ -14,5 +14,4 @@ public interface PurchaseService {
 	int purchaseInsert(List<PurchaseVO> vo);
 	int purchaseUpdate(PurchaseVO vo);
 	int purchaseDelete(PurchaseVO vo);
-	List<PurchaseVO2> purchaseSelectList3(String memberId, List<Integer> musicId);
 }

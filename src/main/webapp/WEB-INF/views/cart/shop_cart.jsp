@@ -204,7 +204,9 @@ function deleteCart(n) {
 }
 
 function payCart() {
- 	if(${mileage} < document.getElementById("itemTotalPrice").innerHTML) {
+	var str = document.getElementById("itemTotalPrice").innerHTML.slice(0, -1);
+	var str2 = str.replace(",", "");
+ 	if(${mileage} < str2) {
 	alert("잔액이 부족합니다.")		
 	location.href="chargeForm.do";
 } else {

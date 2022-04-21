@@ -16,5 +16,4 @@ public interface PurchaseMapper {
 	int purchaseInsert(PurchaseVO vo);
 	int purchaseUpdate(PurchaseVO vo);
 	int purchaseDelete(PurchaseVO vo);
-	PurchaseVO2 purchaseSelectList3(@Param("memberId") String memberId, @Param("musicId") int musicId);
 }

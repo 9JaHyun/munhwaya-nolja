@@ -261,30 +261,28 @@ public class WalletController {
 	
 	@RequestMapping("/refundOfMusic.do")
 	@ResponseBody
-	public String refundOfMusic(@LoginUser SessionUser user, Model model, @RequestBody List<RefundRequestDto> pkList) {
+	public String refundOfMusic(@LoginUser SessionUser user, Model model, @RequestParam int id, @RequestParam String place) {
+		System.out.println("--------------------"+id +"-----------------"+place);
 		String memberId = user.getId();
-		System.out.println(pkList);
-		List<Integer> idList = pkList.stream()
-				.map(RefundRequestDto::getPks)
-				.collect(Collectors.toList());
-		List<UsageVO> usages = usageDao.selectByMusicOfId(idList, memberId);
-
-		for(UsageVO usage : usages) {	
-			Map<String,Object> param = new HashMap<String, Object>();
-			MusicVO mvo = musicDao.musicSelect(usage.getPks());
-			usage.setMusicvo(mvo);
-			
+		List<UsageVO> usages = usageDao.selectById(id, place);
+		Map<String,Object> param = new HashMap<String, Object>();
+		for(UsageVO usage : usages) {
+			System.out.println(usage.getPks());
+			System.out.println(usage.getMileage());
+			System.out.println(usage.getName());
 			param.put("v_member_id", memberId);
 			param.put("v_music_id", usage.getPks());
-			param.put("v_mileage", usage.getMusicvo().getPrice());
-			param.put("v_title", usage.getMusicvo().getTitle());
+			param.put("v_mileage", usage.getMileage());
+			param.put("v_title", usage.getName());
 			
 			user.setMileage(user.getMileage()+usage.getMileage());
-			usageDao.refundOfMusic(param);
 		}
+			usageDao.refundOfMusic(param);
+		
 		
 		return "ok";
 	}
+	
 	
 	@RequestMapping("/refundOfPerformance.do")
 	public String refundOfPerformance(@LoginUser SessionUser user, Model model, @RequestParam int id, @RequestParam String place) {
@@ -316,29 +314,19 @@ public class WalletController {
 		return "usageHistoryOfPerformance-memberWallet";
 	}
 	
-	// 사용내역 내가 구매한 음원리스트 모달용 띄우기
 	@RequestMapping("/usagePurchasedMusic")
 	@ResponseBody
-	public List<PurchaseVO2> usagePurchasedMusic(@LoginUser SessionUser user, Model model,@RequestBody List<RefundRequestDto> pkList) {
+	public List<UsageVO> usagePurchasedMusic(@LoginUser SessionUser user, @RequestBody List<RefundRequestDto> pkList) {
 		String memberId = user.getId();
 		System.out.println(pkList);
-		
-		// 사용 내역에서 주는 music Id 리스트
 		List<Integer> idList = pkList.stream()
 				.map(RefundRequestDto::getPks)
 				.collect(Collectors.toList());
 		
-		// 구매 음원 테이블에서 해당 회원이 구매한 음원 정보 다 가져오기
-		List<Integer> purchaseIdList = purchaseDao.purchaseSelectList(user.getId());
+		List<UsageVO> result = usageDao.selectByMusicOfId(idList, memberId);
+		System.out.println(result);
 		
-		// 사용 내역과 구매 음원 ID 목록 비교 후, 환불을 하지 않은 내역을 add
-		List<Integer> notRefundIdList = new ArrayList<Integer>();
-		for(int id : idList) {
-			if(purchaseIdList.indexOf(id) != 0) {
-				notRefundIdList.add(id);
-			}
-		}
-
-		return purchaseDao.purchaseSelectList3(memberId, notRefundIdList);
+		return result;
 	}
+	
 }

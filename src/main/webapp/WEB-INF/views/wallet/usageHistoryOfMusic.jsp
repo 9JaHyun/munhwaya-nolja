@@ -111,34 +111,16 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				<th scope="col">사용 금액</th>
 				<th scope="col">사용처</th>
 				<th scope="col">구매한 곡 명</th>
-				<th scope="col">상태(환불 여부)</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${usages }" var="usage">
 				<tr>
-					<td class="selReq" data-usageid="${usage.usageIds }" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close" data-mid="${requestList.memberId }"><fmt:formatDate pattern="YYYY년 MM월 dd일 HH시 mm분"
+					<td class="selReq" data-usageid="${usage.usageIds }" data-toggle="modal" data-target="#myModal" data-dismiss="modal" data-backdrop="static" data-keyboard="false" aria-label="Close" data-mid="${requestList.memberId }"><fmt:formatDate pattern="YYYY년 MM월 dd일 HH시 mm분"
 							value="${usage.useAt}"  /></td>
 					<td class="listMileage">${usage.mileage }</td>
 					<td>${usage.commonCodevo.name }</td>
 					<td>${usage.musicvo.title }</td>
-					<td>
-<!-- 					<button type="button" class="refund tbutton small" -->
-<!-- 							onclick="refundOfMusic()"> -->
-<%-- 							<c:choose> --%>
-<%-- 								<c:when test="${usage.refund eq 'B01'}"> --%>
-<!-- 									<span class="usageId">환불 -->
-<!-- 										신청</span> -->
-<%-- 								</c:when> --%>
-<%-- 								<c:when test="${usage.refund eq 'B02'}"> --%>
-<!-- 									<span>환불 완료</span> -->
-<%-- 								</c:when> --%>
-<%-- 								<c:when test="${usage.refund eq 'B03'}"> --%>
-<!-- 									<span>환불 불가</span> -->
-<%-- 								</c:when> --%>
-<%-- 							</c:choose> --%>
-<!-- 						</button> -->
-					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -183,27 +165,33 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>뒤로가기</span></a>
 </div>
 
-<!-- 승인 거절 모달 -->
+<!-- 모달 -->
 <div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
   <div class="modal-dialog ">
     <div class="modal-content ">
       <div class="modal-header" id="modalHeader">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white" aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">서류, 작업물 확인</h4>
+        <h4 class="modal-title" id="myModalLabel">구매 목록</h4>
       </div>
-      <h5>제출 서류</h5>
-      <div><img id="uploadImage"></div>
-      <h5>작업물</h5>
+     <table class="table">
+		<thead>
+			<tr>
+				<th scope="col">사용 일자</th>
+				<th scope="col">사용 금액</th>
+				<th scope="col">구매한 곡 명</th>
+				<th scope="col">상태(환불 여부)</th>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+		</tbody>
+	</table>
       <div id="artworkRead"style="color:white;"></div>
       <div class="modal-footer def-block">
-        <button class="tbutton small permit" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>승인</span></button>
-        <button class="tbutton small refuse" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>거절</span></button>
-        <button class="tbutton small" data-dismiss="modal" aria-label="Close"><span>뒤로 가기</span></button>
+        <button class="tbutton small" data-dismiss="modal" aria-label="Close" onclick="removeData()"><span>뒤로 가기</span></button>
       </div>
     </div>
   </div>
 </div>
-<!-- 승인 거절 모달 끝-->
+<!-- 모달 끝-->
 <script>
 	 function paging(num) {
 		moveForm.pageNum.value = num;
@@ -229,36 +217,21 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	
 	}
 	
-	function refundOfMusic() {
+function refundOfMusic() {
 
-		if($(event.target).text() == '환불 완료' || $(event.target).text() == '환불 불가' ) {
+		if($(event.target).text() == '환불 불가' || $(event.target).text() == '환불 완료' ) {
 			alert("환불이 불가능한 상태입니다.");
 		} else {
-			
-			let list =[];
-			if($(event.target).data("usageid").toString().includes(',')){
-				var id = $(event.target).data("usageid").split(', ');
-				for (let i = 0; i < $(event.target).data("usageid").split(', ').length; i++) {
-					var obj= {};
-					obj["pks"] = id[i];
-					list.push(obj);		
-					
-				}
-			} else{
 				var id = $(event.target).data("usageid");
-				var obj= {};
-				obj["pks"] = id;
-				list.push(obj);		
-			}
-			
+				var useAt = $(event.target).data(useAt);
+					
 			var confirm1 = confirm('환불 하시겠습니까?')
 			if (confirm1) {
 				$.ajax ({
 					url:"refundOfMusic.do",
 					type:"post",
-					data : JSON.stringify(list),
+					data : {"id": id, "place": "U01", "useAt" : useAt},
 					dataType : "text",
-					contentType : 'application/json; charset=utf-8',
 			        success : function(data) {
 		                alert("환불 되었습니다.")
  		                location.href="usageHistoryOfMusic.do";
@@ -296,8 +269,31 @@ if (request.getProtocol().equals("HTTP/1.1"))
 			dataType : "text",
 			contentType : 'application/json; charset=utf-8',
 			success : function(data) {
-                alert("성공")
-                console.log(data);
+                alert("로딩이 완료 되었습니다.");
+                var object = JSON.parse(data);
+                console.log(object);
+                console.log(object[0]['id']);
+                console.log(object.length);
+                for(var i=0; i<object.length; i++) {
+				$('#tbody').append(
+						'<tr class="insert">' +
+						'<td class="useAt">'+object[i]['useAt'] + '</td>' +
+						'<td class="mileage">'+object[i]['mileage'] + '</td>' +
+						'<td class="name">'+object[i]['name'] + '</td>' +
+						'<td class="refund">'+'<button class="tbutton small refundBtn" onclick="refundOfMusic()" data-usageid='+object[i]['id']+'>'+object[i]['refund']+ '</button>' + '</td>' + 
+						'</tr>'
+						)	
+				if($('.refundBtn')[i].innerHTML == 'B01') {
+					$('.refundBtn')[i].innerHTML = '환불 신청';
+				} 
+				else if ($('.refundBtn')[i].innerHTML == 'B03') {
+					$('.refundBtn')[i].innerHTML = '환불 불가';
+				} else {
+					$('.refundBtn')[i].innerHTML ='환불 완료';
+				}
+               
+                }
+//                	replaceButton();
 	        },
             error: function (xhr, status, error) {
                 alert("실패");
@@ -305,4 +301,19 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		})
 	});
 	
+	function removeData() {
+		$('.insert').remove();
+	}
+	
+// 	function replaceButton() {
+// 		for(var i=0; i < $('.refund').length; i++ ) {
+// 			if($('.refundBtn')[i].innerHTML == '환불 불가') {
+// 				$('.refundBtn')[i].remove();
+// 				$('.refund').innerHTML = '환불 불가';
+// 			} else if($('.refundBtn')[i].innerHTML == '환불 완료') {
+// 				$('.refundBtn')[i].remove();
+// 				$('.refund').innerHTML = '환불 완료';
+// 			}
+// 		}
+// 	};
 </script>

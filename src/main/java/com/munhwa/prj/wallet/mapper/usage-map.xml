@@ -78,17 +78,16 @@
 		from usage_history
 		where id = #{id}
 		and place = #{place}
-		and refund = 'B01'
 	</select>
 	
 	<select id="selectByMusicOfId" resultMap="usageResultMap">
 		select * 
         from usage_history
-        where pks = #{pks}
+        where id = #{id}
         and member_id=#{memberId}
         and place = 'U01'
-        and refund = 'B01'
 	</select>
+	
 	<!-- 곡 구매 내역 -->
 	<select id="selectUsageListMusic" resultMap="usageResultMap">
 		<![CDATA[
@@ -98,9 +97,8 @@
 				u.use_at,
 	            sum(u.mileage) as mileage,
 	            c.name,
-	            u.refund,
 	            LISTAGG(u.name, ', ') within group(order by u.name) as title,
-                LISTAGG(u.pks, ', ') within group(order by u.name) as us_ids
+                LISTAGG(u.id, ', ') within group(order by u.name) as us_ids
 			from usage_history u,
 	        common_code c
 			where u.place = c.id
@@ -120,7 +118,7 @@
 			</otherwise>
 		</choose>
 		<![CDATA[ 
-	           group by u.use_at, u.member_id, c.name, u.refund
+	           group by u.use_at, u.member_id, c.name
 	           order by u.use_at desc
 	     )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
