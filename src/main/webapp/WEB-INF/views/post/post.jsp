@@ -30,9 +30,40 @@
                 ${post.content}
             </div>
         </div>
-        <div>
-            <button class="tbutton" style="font-size: 18px; width: 50px"> 수정 </button>
-            <button class="tbutton" style="font-size: 18px; width: 50px"> 삭제 </button>
+        <c:if test="${sessionScope.id == post.memberId}">
+            <div>
+                <button class="tbutton" style="font-size: 18px; width: 50px"> 수정 </button>
+                <button class="tbutton" style="font-size: 18px; width: 50px"> 삭제 </button>
+            </div>
+        </c:if>
+
+        <div id="comments" class="user-comments mbs">
+            <h4> Comments 2 </h4><span class="liner"></span>
+            <ul class="showcomments clearfix">
+                <li class="clearfix">
+                    <div class="thumb">
+                        <a href="#"><img src="images/assets/user1.jpg" alt="#"></a>
+                        <div class="reply"><a href="#"><i class="icon-reply first-i"></i> Reply</a></div>
+                    </div>
+                    <h5 class="entry-title"><a href="#" class="title">Jessica Alba</a><i>said:</i> <span class="date">30 September, 2022</span></h5>
+                    <p>Nam vitae tellus lectus. Vivamus et ultrices urna. Morbi et elit odio, vel cursus sapien. Curabitur ac turpis et velit hendrerit commodo. Curabitur orci erat.</p>
+                </li>
+                <li class="child admin-comment clearfix">
+                    <div class="thumb">
+                        <a href="#"><img src="images/assets/user2.jpg" alt="#"></a>
+                        <div class="reply"><a href="#"><i class="icon-reply first-i"></i> Reply</a></div>
+                    </div>
+                    <h5 class="entry-title"><a href="#" class="title">Alexander Cruise</a><i>author</i> <span class="date">31 September, 2022</span></h5>
+                    <p>Nam vitae tellus lectus. Vivamus et ultrices urna. Morbi et elit odio, vel cursus sapien. Curabitur ac turpis et velit hendrerit commodo. Curabitur orci erat.</p>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
+
+<script>
+    $(window).load(() => {
+        var postId = ${post.id}
+        console.log(postId);
+    })
+</script>

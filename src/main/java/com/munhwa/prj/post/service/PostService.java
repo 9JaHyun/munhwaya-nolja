@@ -16,9 +16,5 @@ public interface PostService {
 
     PostVO findById(int id);
 
-    List<PostVO> findAll();
-
     List<PostVO> findByFilter(String filter, String value, int pageNum, int amount);
-
-
 }

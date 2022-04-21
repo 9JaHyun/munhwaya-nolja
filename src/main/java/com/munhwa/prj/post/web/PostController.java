@@ -33,8 +33,9 @@ public class PostController {
     private final FileUtils fileUtils;
 
     @GetMapping("/post")
-    public String showPost(Model model, int id) {
-        model.addAttribute("post", postService.findById(id));
+    public String showPost(@LoginUser SessionUser user, Model model, int id) {
+        PostVO post = postService.findById(id);
+        model.addAttribute("post", post);
         return "post/post";
     }
 
