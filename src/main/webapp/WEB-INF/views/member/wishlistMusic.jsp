@@ -125,9 +125,11 @@
             		 	"to" : to}, 
             	 type : "POST",
             	 beforeSend : function() {
+            		 $('html').css('pointer-events', 'none');
             		 $('html').css('cursor', 'wait');
             	 },
             	 complete : function() {
+            		 $('html').css('pointer-events', 'auto');
             		 $('html').css('cursor', 'auto');
             	 }
             });

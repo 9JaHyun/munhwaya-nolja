@@ -13,7 +13,7 @@
                     </c:when>
                     <c:otherwise>
                     	 <c:choose>
-                    		<c:when test="${artists.content eq null}">
+                    		<c:when test="${artists.name eq null}">
                     			<a href="#">프로필 등록</a>
                     		</c:when>
                     		<c:otherwise>
@@ -28,7 +28,7 @@
             <li>
                 <i class="icon-comment-alt"></i>
                 <a href="changeInfo.do">개인정보 변경</a>
-                <div class="topic-time">비밀번호와 전화번호, 관심장르를 변경합니다.</div>
+                <div class="topic-time">전화번호와 관심장르를 변경합니다.</div>
             </li>
             <li>
                 <i class="icon-comment-alt"></i>

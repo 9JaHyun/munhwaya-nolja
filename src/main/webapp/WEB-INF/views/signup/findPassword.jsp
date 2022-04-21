@@ -109,9 +109,15 @@ button {
 				data : {
 					id : $("#id").val()
 				},
+				beforeSend : function() {
+           		 $('html').css('cursor', 'wait');
+           	 	},
+           	 	complete : function() {
+        		 $('html').css('cursor', 'auto');
+        	 	},
 				success : function(result) {
 					alert(result);
-				},
+				}
 			})
 		});
 	})
