@@ -36,31 +36,31 @@ public class CartController {
 	}
 
 	@RequestMapping(value = "/cart/add", produces = "application/text; charset=UTF-8")
-	   public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam List<Integer> id) {
-	      Map<String, List<Integer>> paramMap = new HashMap<>();
-	      paramMap.put("musicIdList", id);
+	public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam List<Integer> id) {
+		Map<String, List<Integer>> paramMap = new HashMap<>();
+		paramMap.put("musicIdList", id);
 
-	      List<MusicVO> list = musicDAO.musicSelectListByMusicId(paramMap);
+		List<MusicVO> list = musicDAO.musicSelectListByMusicId(paramMap);
 
-	      Map<Integer, MusicVO> cart = user.getCart();
-	      int count = 0;
-	      for (MusicVO vo : list) {
-	         if (cart.containsKey(vo.getId())) {
-	            ++count;
-	         }
-	         cart.put(vo.getId(), vo);
-	      }
-	      user.setCart(cart);
-	      String msg;
-	      int result = list.size() - count;
-	      if(result == list.size()) {
-	         msg = String.format("%d개의 곡을 장바구니에 넣었습니다.", result); 
-	      } else {
-	         msg = String.format("이미 존재하는 곡을 제외한 %d개의 곡을 장바구니에 넣었습니다.", result); 
-	      }
-	      return ResponseEntity.ok().body(msg);
-	   }
-	
+		Map<Integer, MusicVO> cart = user.getCart();
+		int count = 0;
+		for (MusicVO vo : list) {
+			if (cart.containsKey(vo.getId())) {
+				++count;
+			}
+			cart.put(vo.getId(), vo);
+		}
+		user.setCart(cart);
+		String msg;
+		int result = list.size() - count;
+		if(result == list.size()) {
+			msg = String.format("%d개의 곡을 장바구니에 넣었습니다.", result); 
+		} else {
+			msg = String.format("이미 존재하는 곡을 제외한 %d개의 곡을 장바구니에 넣었습니다.", result); 
+		}
+		return ResponseEntity.ok().body(msg);
+	}
+  
 	@PostMapping("/deleteCart")
 	@ResponseBody
 	public String deleteCart(@LoginUser SessionUser user, MusicVO vo) {

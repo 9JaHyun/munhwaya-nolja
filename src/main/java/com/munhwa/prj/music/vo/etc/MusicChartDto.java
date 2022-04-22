@@ -15,6 +15,9 @@ public class MusicChartDto {
 	private String picture;
 	private String title;
 	private String genre;
+	private int albumId;
+
+	private int artId;
 	private boolean purchase;
 	
 	public MusicChartDto(MusicVO musicVO) {
@@ -24,6 +27,7 @@ public class MusicChartDto {
 		this.picture = musicVO.getPicture();
 		this.title = musicVO.getTitle();
 		this.genre = musicVO.getGenre();
+		this.albumId = musicVO.getAlbumId();
 		this.purchase = false;
 	}
 }

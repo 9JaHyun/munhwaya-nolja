@@ -95,13 +95,13 @@ if (request.getProtocol().equals("HTTP/1.1"))
 					style="height: 20px; width: 60px; margin-bottom: 0px;">
 			</div>
 	</div>
-	<table class="table">
+	<table class="table" style="word-break:break-all;">
 		<thead>
 			<tr>
 				<th scope="col">수익 일자</th>
 				<th scope="col">수익 금액</th>
 				<th scope="col">수익처</th>
-				<th scope="col">판매한 공연 명</th>
+				<th scope="col">판매 공연</th>
 				<th scope="col">상태(환불 여부)</th>
 			</tr>
 		</thead>
@@ -112,7 +112,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 							value="${profit.profitAt}" /></td>
 					<td class="listMileage">${profit.mileage }</td>
 					<td>${profit.commonCodevo.name }</td>
-					<td>${profit.performancevo.name }</td>
+					<td style="width:15%">${profit.performancevo.name }</td>
 					<td><c:choose>
 							<c:when test="${profit.refund eq 'B01'}">
 								<span>결제</span>

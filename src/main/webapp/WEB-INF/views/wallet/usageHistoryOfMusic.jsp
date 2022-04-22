@@ -104,7 +104,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				style="height: 20px; width: 60px; margin-bottom: 0px;">
 		</div>
 	</div>
-	<table class="table">
+	<table class="table" style="word-break:break-all;">
 		<thead>
 			<tr>
 				<th scope="col">사용 일자</th>
@@ -126,7 +126,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		</tbody>
 	</table>
 </div>
-<div class="pageInfo_wrap">
+<div class="pageInfo_wrap" style="float:left; width:80%; text-align:center;">
 	<div class="pageInfo_area"
 		style="margin-left: auto; margin-top: 30px; width: 660px;">
 		<ul id="pageInfo" class="pageInfo">
@@ -304,16 +304,4 @@ function refundOfMusic() {
 	function removeData() {
 		$('.insert').remove();
 	}
-	
-// 	function replaceButton() {
-// 		for(var i=0; i < $('.refund').length; i++ ) {
-// 			if($('.refundBtn')[i].innerHTML == '환불 불가') {
-// 				$('.refundBtn')[i].remove();
-// 				$('.refund').innerHTML = '환불 불가';
-// 			} else if($('.refundBtn')[i].innerHTML == '환불 완료') {
-// 				$('.refundBtn')[i].remove();
-// 				$('.refund').innerHTML = '환불 완료';
-// 			}
-// 		}
-// 	};
 </script>

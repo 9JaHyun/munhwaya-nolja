@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <div align="right" style="margin-bottom: 50px;">
-    <a href="memberChangeInfo.do">회원정보 변경 >&nbsp;</a><a href="changeInfo.do">개인정보 변경 ></a>
+    <a href="memberChangeInfo.do">회원정보 변경 >&nbsp;</a>
     <h4>비밀번호 변경</h4>
     <div class="grid_12 tt" style="margin-top: 70px;">
         <ul class="forum-items" style="text-align: left;">
@@ -18,6 +18,7 @@
         <a>변경할 비밀번호 확인 : </a> <input type="password" id="password2" name="password2">
     </div>
     <div align="right" style="margin-bottom: 10px">
+    	<button type="button" class="tbutton small" style="margin-right: 2px;" onclick="location.href='memberChangeInfo.do'"><span>뒤로가기</span></button>
         <button type="submit" class="tbutton small"><span>수정</span></button>
     </div>
 </form>
@@ -43,7 +44,7 @@
             alert("비밀번호가 서로 일치하지 않습니다.");
             return false;
         } else {
-            alert("수정 완료되었습니다.");
+            alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
             return true;
         }
     }

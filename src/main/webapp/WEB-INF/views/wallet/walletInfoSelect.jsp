@@ -95,7 +95,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 					style="height: 20px; width: 80px; margin-bottom: 0px;">
 			</div>
 		</div>
-		<table class="table">
+		<table class="table" style="word-break:break-all;">
 			<thead>
 				<tr>
 					<th scope="col">충전 일자</th>
