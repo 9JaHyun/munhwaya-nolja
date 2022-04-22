@@ -70,7 +70,7 @@
                         <div class="js-load">
                             <div class="notification-box notification-box-error">
                                 <p>
-                                    <i class="icon-ok"></i><a onclick="performanceSearch(${news.pks})">${news.artistName}님이
+                                    <i class="icon-ok"></i><a onclick="performanceSearch(${news.pks}); delNewsFnc(${news.id});">${news.artistName}님이
                                     <c:if test="${news.code eq 'N03'}">공연</c:if>을 등록하셨습니다.&nbsp;&nbsp;
                                     <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
                                 </p>
@@ -125,7 +125,8 @@
             data: JSON.stringify({"id": id}),
             contentType: "application/json"
         })
-        .done(() => {  	
+        .done(() => {
+        	load('#js-load', '1');
         });
     }
 

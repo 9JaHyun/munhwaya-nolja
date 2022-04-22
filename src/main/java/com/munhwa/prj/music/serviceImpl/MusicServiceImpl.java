@@ -106,5 +106,5 @@ public class MusicServiceImpl implements MusicService{
 		return map.statusUpdate(paramMap);
 	}
 
-
+	
 }

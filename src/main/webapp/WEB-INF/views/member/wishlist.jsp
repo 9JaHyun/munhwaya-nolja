@@ -139,7 +139,7 @@
         $(list + ":lt(" + total_cnt + ")").addClass("active");
     }
 
-    function delWishFnc(id) {
+     function delWishFnc(id) {
         var wname = $(event.target).parent().parent().next().children().children().data("wname");
         if (!confirm("[" + wname + '] 삭제하시겠습니까?')) {
         } else {
@@ -151,6 +151,7 @@
             })
             .done(() => {
                 document.getElementById(id).parentNode.parentNode.parentNode.parentNode.remove();
+                load('#js-load', '1');
             });
         }
     }

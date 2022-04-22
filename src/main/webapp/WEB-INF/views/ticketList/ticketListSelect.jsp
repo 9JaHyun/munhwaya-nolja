@@ -184,7 +184,7 @@ body {
 }
 </style>
 <div align="right" style="margin-bottom: 80px; height: 400px;">
-	<h4>구매한 공연</h4>
+	<h4>입장표</h4>
 			<div class="ticket">
 				<div class="left">
 					<div class="ticket-info">
@@ -202,7 +202,6 @@ body {
 						<div style="text-align: left;">
 							<p style="margin:15px; font-size:15pt;"><fmt:formatDate pattern="YYYY년 MM월 dd일 E요일" value="${ticket.performancevo.sdate }" /></p>
 							<p style="margin:15px; font-size:15pt;"><fmt:formatDate pattern="HH시 mm분" value="${ticket.performancevo.sdate }" />~<fmt:formatDate pattern="HH시 mm분" value="${ticket.performancevo.edate }" /></p>
-							<p style="margin:15px; font-size:15pt;">${ticket.performancevo.price }원</p>
 						</div>
 						<p class="location">
 							<span>${ticket.performancevo.location }</span> <span class="separator"><i

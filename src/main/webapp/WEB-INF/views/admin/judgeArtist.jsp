@@ -42,7 +42,7 @@
 									<tbody>
 										<c:forEach items="${requestLists}" var="requestList">
 											<tr>
-												<td class="selReq"style="color: white;" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close" data-mid="${requestList.memberId }">${requestList.memberId }</td>
+												<td class="selReq" style="color: white;" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close" data-mid="${requestList.memberId }">${requestList.memberId }</td>
 												<td style="color: white;"><fmt:formatDate
 														pattern="MM월 dd일 HH시 mm분"
 														value="${requestList.createdAt }" /></td>
