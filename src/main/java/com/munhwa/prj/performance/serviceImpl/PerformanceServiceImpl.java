@@ -5,7 +5,7 @@ import com.munhwa.prj.news.mapper.NewsMapper;
 import com.munhwa.prj.news.vo.NewsVO;
 import com.munhwa.prj.performance.mapper.PerformanceMapper;
 import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.performance.vo.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 import java.util.Date;
 import java.util.List;

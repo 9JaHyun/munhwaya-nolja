@@ -117,7 +117,7 @@
                         <tr class="total">
                             <th><strong>결제 금액</strong></th>
                             <td><span id="price"
-                                      style="margin-left:10px; color:white; font-size:13pt;">0</span>
+                                      style="margin-left:10px; color:white; font-size:13pt;">0원</span>
                             </td>
                         </tr>
                         <tr class="total">
@@ -150,6 +150,9 @@
                     </select>
 
                     <span class="liner"></span>
+                    <div style="margin-bottom:10px; font-size:16pt;">
+                    	<strong>남은 좌석수 : ${50 - performance.performancepersonalvo.personal }개</strong>
+                    </div>
                     <c:choose>
                         <c:when test="${performance.performancepersonalvo.personal >= 50}">
                             <button class="tbutton mt medium" style="width:275px;">
@@ -164,6 +167,7 @@
                             </button>
                         </c:otherwise>
                     </c:choose>
+                    
                 </div>
                 <!-- widget content -->
             </div>
@@ -216,6 +220,9 @@
     function ticketListInsert(n) {
     	var str = document.getElementById("price").innerHTML.slice(0, -1);
     	var str2 = str.replace(",", "");
+    	if ($('#option').val() == '') {
+    		alert('수량을 선택해주세요.');
+    	} else {
     	if(${mileage} < str2) {
         	alert("잔액이 부족합니다.")		
         	location.href="chargeForm.do";
@@ -227,5 +234,5 @@
         alert("예매가 완료되었습니다.");
     	}
     }
-    
+    }
 </script>

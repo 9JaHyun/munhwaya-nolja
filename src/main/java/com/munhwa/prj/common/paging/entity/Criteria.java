@@ -14,18 +14,27 @@ public class Criteria {
     
     private String keyword;
     
-    private Criteria() {}
+    private String type;
     
-    public static Criteria ofNormal() {
-        return new Criteria(1,10);
-    }
+    private String[] typeArr;
     
-    public static Criteria ofPerformance() {
-    	return new Criteria(1,9);
+    private String filter;
+    
+    public Criteria() {
+        this(1,10);
     }
  
     public Criteria(int pageNum, int amount) {
         this.pageNum = pageNum;
         this.amount = amount;
     }
+    
+	public void setType(String type) {
+		this.type = type;
+		this.typeArr = type.split("");
+	}
+
+	public String[] getTypeArr() {
+		return typeArr;
+	}
 }

@@ -83,7 +83,7 @@
 <div>
 	<form id="moveForm" method="get" action="performanceList">
 		<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
-		<input type="hidden" name="amount" value="${pageMake.cri.amount }">
+		<input type="hidden" name="amount" value="9">
 		<input type="hidden" name="keyword" value="${pageMake.cri.keyword }">
 		<input type="hidden" name="type" value="${pageMake.cri.type }">
 	</form>

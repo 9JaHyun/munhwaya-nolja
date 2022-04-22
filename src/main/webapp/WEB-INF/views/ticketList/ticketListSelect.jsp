@@ -184,7 +184,7 @@ body {
 }
 </style>
 <div align="right" style="margin-bottom: 80px; height: 400px;">
-	<h4>구매한 공연</h4>
+	<h4>입장표</h4>
 			<div class="ticket">
 				<div class="left">
 					<div class="ticket-info">

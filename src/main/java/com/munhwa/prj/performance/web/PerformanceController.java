@@ -7,25 +7,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.common.file.service.FileUtils;
+import com.munhwa.prj.common.paging.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.performance.vo.Criteria;
-import com.munhwa.prj.performance.vo.PageMakeDTO;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 
 @Controller
@@ -44,7 +42,7 @@ public class PerformanceController {
 	@GetMapping("/performance")
 	public String performance(Model model, Criteria cri) {
 		
-		
+		cri.setAmount(9);
 		List<PerformanceVO> list = performanceDao.performanceSelectList(cri);
 		
 
@@ -52,7 +50,7 @@ public class PerformanceController {
 
 		int total = performanceDao.getTotal(cri);
 
-		PageMakeDTO pageMake = new PageMakeDTO(cri, total);
+		PageDTO pageMake = new PageDTO(cri, total);
 
 		model.addAttribute("pageMake", pageMake);
 
@@ -101,6 +99,29 @@ public class PerformanceController {
     public String performanceInsert(PerformanceVO vo, RedirectAttributes red) throws IOException {
     	String sdate = String.valueOf(vo.getSdate()).substring(0,10);
     	String edate = String.valueOf(vo.getEdate()).substring(0,10);
+    
+    	String sdatetime = String.valueOf(vo.getSdate()).substring(11,19);
+    	String edatetime = String.valueOf(vo.getEdate()).substring(11,19);
+    	
+    	String sdatetime2[] = sdatetime.split(":");
+    	String edatetime2[] = edatetime.split(":");
+    	
+    	String sdatetime3 = ""; 
+    	for(int i = 0; i < sdatetime2.length; i++) {
+    		sdatetime3 += sdatetime2[i];
+    	}
+    	
+    	String edatetime3 = ""; 
+    	for(int i = 0; i < edatetime2.length; i++) {
+    		edatetime3 += edatetime2[i];
+    	}
+    	
+    	int sdatetime4 = Integer.parseInt(sdatetime3);
+    	int edatetime4 = Integer.parseInt(edatetime3);
+    	
+    	System.out.println("==========Sdate"+sdatetime);
+    	System.out.println("==========Sdate tt"+sdatetime3);
+    	System.out.println("==========Edate tt"+edatetime3);
     	Date date = new Date();
     	
     	// 중복 확인
@@ -113,6 +134,12 @@ public class PerformanceController {
 		// 이미 그날에 공연이 존재하는가
     	if(result) {
     		red.addAttribute("message", "해당 일자에 공연이 존재합니다.");
+    		return "redirect:performanceInsertForm.do";
+    	}
+    	
+    	// 시작시간이 종료시간보다 이전이여야함
+    	if(sdatetime4 > edatetime4) {
+    		red.addAttribute("message", "시작시간이 종료시간보다 이전이여야 합니다.");
     		return "redirect:performanceInsertForm.do";
     	}
     	

@@ -3,9 +3,8 @@ package com.munhwa.prj.performance.mapper;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 
-import com.munhwa.prj.performance.vo.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 
 public interface PerformanceMapper {

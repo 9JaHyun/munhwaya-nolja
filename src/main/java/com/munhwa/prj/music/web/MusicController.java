@@ -52,9 +52,6 @@ public class MusicController {
 		 * Map<Integer, CartVO> map = (Map<Integer, cart>) session.getAttribute("cart");
 		 * map.set(musicVO.getId(), musicVO) session.addAttribue("cart", map)
 		 */
-		if(cri.getAmount() == 0) {
-			cri = Criteria.ofNormal();
-		}
 		
 		String id = user.getId();
 		model.addAttribute("musicRnBList", musicDAO.musicSelectListByGenre("G04"));
@@ -71,9 +68,6 @@ public class MusicController {
 
 	@GetMapping("/searchResult")
 	public String searchResult(String title, Model model, Criteria cri) {
-		if(cri == null) {
-			cri = Criteria.ofNormal();
-		}
 		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title,cri));
 		model.addAttribute("albumSelectListByTitle", albumDAO.albumSelectByTitle(title,cri));
 		model.addAttribute("title", title);
@@ -82,9 +76,6 @@ public class MusicController {
 
 	@GetMapping("/searchResultMusic")
 	public String searchResultMusic(@LoginUser SessionUser user, Model model, String title, Criteria cri) {
-		if(cri == null) {
-			cri = Criteria.ofNormal();
-		}
 		model.addAttribute("title", title);
 		
 		List<MusicVO> list = musicDAO.musicSelectByTitle(title,cri);
@@ -119,9 +110,6 @@ public class MusicController {
 
 	@GetMapping("/searchResultAlbum")
 	public String searchResultAlbum(Model model, String title, Criteria cri) {
-		if(cri == null) {
-			cri = Criteria.ofNormal();
-		}
 		model.addAttribute("title", title);
 		model.addAttribute("albumSelectListByTitle1", albumDAO.albumSelectByTitle(title,cri));
 		
@@ -134,10 +122,6 @@ public class MusicController {
 
 	@GetMapping("/chart")
 	public String chart(@LoginUser SessionUser user, Model model, Criteria cri) {
-		if(cri == null) {
-			cri = Criteria.ofNormal();
-		}
-		
 		//원래 차트에 표시될 음원의 리스트
 		List<MusicVO> list = musicDAO.musicSelectList(cri); //여기서 페이징처리후 다가져온다?  1-10까지검색 => 11-20까지 검색
 		
@@ -173,10 +157,6 @@ public class MusicController {
 	
 	@GetMapping("/releaseSoon")
 	public String releaseSoon(Model model, Criteria cri) {
-		if(cri == null) {
-			cri = Criteria.ofNormal();
-		}
-		
 		List<AlbumVO> list =  albumDAO.albumSelectListByRelease(cri);
 		model.addAttribute("releaseSoonAlbumList", list);
 		
@@ -266,11 +246,7 @@ public class MusicController {
 	}
 	
 	@GetMapping("/personalResult")
-	public String personalResult(Model model, @LoginUser SessionUser user, Criteria cri) {
-		if(cri == null) {
-			cri = Criteria.ofNormal();
-		}
-				
+	public String personalResult(Model model, @LoginUser SessionUser user, Criteria cri) {			
 		List<MusicVO> list = musicDAO.musicPersonalList(user.getId(), cri);
 		
 		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());
@@ -323,9 +299,6 @@ public class MusicController {
 	// 내가 구매한 음원 목록
 	@GetMapping("/purchase")
 	public String purchase(@LoginUser SessionUser user, Model model, Criteria cri) {
-		if(cri == null) {
-			cri = Criteria.ofNormal();
-		}
 		String id = user.getId();
 		model.addAttribute("purchasedList", purchaseDao.purchaseSelectList2(id,cri));
 		int total = purchaseDao.getCountByList5(id);

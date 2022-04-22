@@ -1,8 +1,8 @@
 package com.munhwa.prj.admin.web;
 
 import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.performance.vo.Criteria;
-import com.munhwa.prj.performance.vo.PageMakeDTO;
+import com.munhwa.prj.common.paging.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +34,7 @@ public class AdminController {
 
         int total = performanceService.admingetTotal(cri);
 
-        PageMakeDTO pageMake = new PageMakeDTO(cri, total);
+        PageDTO pageMake = new PageDTO(cri, total);
 
         model.addAttribute("pageMake", pageMake);
         return "adminPerformanceList-admin";
