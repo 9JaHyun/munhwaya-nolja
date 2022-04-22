@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.entity.UploadFileVO;
 import com.munhwa.prj.common.file.service.FileUtils;
@@ -24,12 +25,13 @@ import com.munhwa.prj.common.file.service.UploadFileService;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.AlbumVO;
 import com.munhwa.prj.music.vo.MusicVO;
+import com.munhwa.prj.music.vo.PurchaseVO2;
 import com.munhwa.prj.music.vo.etc.MusicChartDto;
 import com.munhwa.prj.wishlist.service.WishlistService;
 
@@ -45,6 +47,8 @@ public class MusicController {
 	private PurchaseService purchaseDao;
 	@Autowired
 	private UploadFileService uploadService;
+	@Autowired
+	private ArtistService artistDAO;
 
 	@GetMapping("/musicMain")
 	public String musicMain(@LoginUser SessionUser user,  Model model, Criteria cri) {
@@ -67,8 +71,19 @@ public class MusicController {
 
 	@GetMapping("/searchResult")
 	public String searchResult(String title, Model model, Criteria cri) {
+		title = title.trim();
 		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title,cri));
+		if(musicDAO.musicSelectByTitle(title,cri).size() == 0) {
+			model.addAttribute("checkM", 0);
+		} else {
+			model.addAttribute("checkM", 1);
+		}
 		model.addAttribute("albumSelectListByTitle", albumDAO.albumSelectByTitle(title,cri));
+		if(albumDAO.albumSelectByTitle(title,cri).size() == 0) {
+			model.addAttribute("checkA", 0);
+		} else {
+			model.addAttribute("checkA", 1);
+		}
 		model.addAttribute("title", title);
 		return "music/searchResult";
 	}
@@ -96,6 +111,7 @@ public class MusicController {
 				}
 			}
 			dto.setPurchase(isPurchased);
+			dto.setArtId(artistDAO.artIdByAlbId(dto.getAlbumId()));
 			chartList.add(dto);//구입여부가 들어잇는 vo2를 jsp에 표시할 리스트모델에 담음
 		}
 		model.addAttribute("musicSelectListByTitle1", chartList);
@@ -145,6 +161,7 @@ public class MusicController {
 				}
 			}
 			dto.setPurchase(isPurchased);
+			dto.setArtId(artistDAO.artIdByAlbId(dto.getAlbumId()));
 			chartList.add(dto);
 		}
 		int total = 50;
@@ -185,7 +202,7 @@ public class MusicController {
 			MusicChartDto dto = new MusicChartDto(vo); //차트리스트의 음원을 구입여부가있는 vo2에 넣어줌
 			int ids = dto.getId();
 			boolean isPurchased = false;
-					
+				
 			for(int id1 : musicList) {
 				if(ids == id1) {
 				isPurchased = true;
@@ -193,9 +210,10 @@ public class MusicController {
 				}
 			}
 				dto.setPurchase(isPurchased);
+				dto.setArtId(artistDAO.artIdByAlbId(dto.getAlbumId()));
 				chartList.add(dto);
 				}
-		
+			
 		model.addAttribute("selectAlbum", albumDAO.albumSelect(id));
 		model.addAttribute("selectMusicByAlbum",chartList);
 		model.addAttribute("wishlists", wishlistDao.wishlistList(user.getId()));
@@ -268,6 +286,7 @@ public class MusicController {
 				}
 			}
 			dto.setPurchase(isPurchased);
+			dto.setArtId(artistDAO.artIdByAlbId(dto.getAlbumId()));
 			chartList.add(dto);//구입여부가 들어잇는 vo2를 jsp에 표시할 리스트모델에 담음
 		}
 		
@@ -302,7 +321,11 @@ public class MusicController {
 	@GetMapping("/purchase")
 	public String purchase(@LoginUser SessionUser user, Model model, Criteria cri) {
 		String id = user.getId();
-		model.addAttribute("purchasedList", purchaseDao.purchaseSelectList2(id,cri));
+		List<PurchaseVO2> list = purchaseDao.purchaseSelectList2(id,cri);
+		for(PurchaseVO2 vo : list) {
+			vo.setArtId(artistDAO.artIdByAlbId(vo.getAlbId()));
+		}
+		model.addAttribute("purchasedList", list);
 		int total = purchaseDao.getCountByList5(id);
 	    PageDTO pageMake = new PageDTO(cri, total);
 	    model.addAttribute("pageMaker", pageMake);
@@ -367,14 +390,5 @@ public class MusicController {
 		
 		musicDAO.statusUpdate(map);
 	}
-	
-	@GetMapping("/chicken")
-	public String chicken() {
-		return "music/chicken";
-	}
-	
-	
-	
-	
 	
 }

@@ -1,7 +1,7 @@
 package com.munhwa.prj.likeArtist.web;
 
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.likeArtist.service.LikeArtistService;
 import com.munhwa.prj.likeArtist.vo.LikeArtistVO;
 import org.springframework.beans.factory.annotation.Autowired;

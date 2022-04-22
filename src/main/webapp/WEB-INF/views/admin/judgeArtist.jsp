@@ -33,8 +33,6 @@
 									<thead>
 										<tr>
 											<th scope="col" style="font-size: 13pt;">신청 회원 아이디</th>
-<!-- 											<th scope="col" style="font-size: 13pt;">작업물</th> -->
-<!-- 											<th scope="col" style="font-size: 13pt;">인증서류</th> -->
 											<th scope="col" style="font-size: 13pt;">신청일</th>
 											<th scope="col" style="font-size: 13pt;">확정일</th>
 											<th scope="col" style="font-size: 13pt;">처리상태</th>
@@ -43,10 +41,8 @@
 									</thead>
 									<tbody>
 										<c:forEach items="${requestLists}" var="requestList">
-											<tr id="selReq">
-												<td style="color: white;" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close" data-mid="${requestList.memberId }">${requestList.memberId }</td>
-<%-- 												<td style="color: white;">${requestList.artwork }</td> --%>
-<%-- 												<td style="color: white;">${requestList.fileGroupId }</td> --%>
+											<tr>
+												<td class="selReq"style="color: white;" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close" data-mid="${requestList.memberId }">${requestList.memberId }</td>
 												<td style="color: white;"><fmt:formatDate
 														pattern="MM월 dd일 HH시 mm분"
 														value="${requestList.createdAt }" /></td>
@@ -67,12 +63,6 @@
 												<td><c:choose>
 														<c:when test="${requestList.status eq 'A03'}">
 													대기
-<%-- 															<button data-pid="${requestList.memberId }" --%>
-<!-- 																class="tbutton small success" -->
-<!-- 																style="height: 25px; width: 50px;">승인</button> -->
-<%-- 															<button data-pid="${requestList.memberId }" --%>
-<!-- 																class="tbutton small fail" -->
-<!-- 																style="height: 25px; width: 50px;">거절</button> -->
 														</c:when>
 														<c:otherwise>
 													완료
@@ -132,12 +122,12 @@
     <div class="modal-content ">
       <div class="modal-header" id="modalHeader">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white" aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">상세 정보</h4>
+        <h4 class="modal-title" id="myModalLabel">서류, 작업물 확인</h4>
       </div>
       <h5>제출 서류</h5>
       <div><img id="uploadImage"></div>
       <h5>작업물</h5>
-      <div id="artworkRead"></div>
+      <div id="artworkRead"style="color:white;"></div>
       <div class="modal-footer def-block">
         <button class="tbutton small permit" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>승인</span></button>
         <button class="tbutton small refuse" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>거절</span></button>
@@ -159,8 +149,13 @@
 
 	};
 	
-	$('#selReq').on("click", function(e) {
-		var id = $(event.target).first().data("mid");
+	for(var i = 0; i<document.getElementsByClassName('selReq').length; i++) {
+	if(document.getElementsByClassName('selReq')[i].parentElement.childNodes[9].textContent.trim() == '완료')
+		document.getElementsByClassName('selReq')[i].parentElement.childNodes[1].removeAttribute('data-toggle');
+	}
+		
+	$('.selReq').on("click", function(e) {
+		var id = $(event.target).data("mid");
 		$.ajax({
 			type:"POST",
 			url: "judgeArtistOfMemberId",
@@ -168,7 +163,7 @@
 			dataType: "text",
 			success: function(res){
 				var obj = JSON.parse(res);
-				$('#artworkRead').append(obj.artwork);
+				artworkRead.innerHTML = obj.artwork;
 				var img = obj.fileGroupId;
 				var mid = obj.memberId;
 				$('#uploadImage').attr('src', 'api/picture/'+img);
@@ -229,37 +224,4 @@
     	});
     });
     
-    $(".success").on("click", function(e) {
-		var id = $(event.target).data("pid");    	
-    	$.ajax({
-    	    type: "POST",
-    	    url: "judgeResultOfArtist",
-    	    data: {"status" : "A01", "memberId" : id},
-    	    dataType:"text",
-    	    success: function(res){
-				alert("공연이 승인되었습니다.");
-				location.href="judgeArtist";
-    	    },
-    	    error: function(error){
-				alert("통신 실패!!");
-    	    },
-    	});
-    });
-    
-    $(".fail").on("click", function(e) {
-		var id = $(event.target).data("pid");    	
-    	$.ajax({
-    	    type: "POST",
-    	    url: "judgeResultOfArtist",
-    	    data: {"status" : "A02", "memberId" : id},
-    	    dataType:"text",
-    	    success: function(res){
-    	    	alert("공연이 거절되었습니다.");
-    	    	location.href="judgeArtist";
-    	    },
-    	    error: function(error){
-				alert("통신 실패!!");
-    	    },
-    	});
-    });
 </script>

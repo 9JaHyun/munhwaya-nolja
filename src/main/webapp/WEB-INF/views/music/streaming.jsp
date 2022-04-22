@@ -50,16 +50,11 @@ jQuery(document).ready(function () {
 			warningAlerts: true
 		}
 	})
+	
 })
 }
 </script>
-<script>
-jQuery(document).ready(function(){
-	$('#writer').html('작사: ${musicSelect.writer}');
-	$('#composing').html('작곡: ${musicSelect.composing}');
-	$('#arrangement').html('편곡: ${musicSelect.arrangement}');
-})
-</script>
+
 <!-- =================================================================== -->
 <style>
 	xmp {
@@ -158,6 +153,7 @@ ${musicSelect.lyric }
 <!-- ================================================================ -->
 <script>
 <!-- 위시리스트 추가 -->
+
 function addWishList(e) {
 	let query = window.location.search;
 	let param = new URLSearchParams(query);
@@ -244,6 +240,11 @@ function addWishList(e) {
 </div>
 	<!-- 위시리스트 추가모달 끝-->
 <script>
+window.onload =function(){
+	$('#writer').html('작사: ${musicSelect.writer}');
+	$('#composing').html('작곡: ${musicSelect.composing}');
+	$('#arrangement').html('편곡: ${musicSelect.arrangement}');
+}
 // 위시리스트 생성 버튼 
 function createWishList() {
 	//onclick시 인풋밸류 보내고 위시리스트 DB에 넣고, alert띄우고, input밸류지우기

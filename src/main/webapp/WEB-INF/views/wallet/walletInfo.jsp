@@ -34,8 +34,8 @@
 			<li><i class="icon-comment-alt"></i> <a href="withdrawForm.do">마일리지
 					출금</a>
 				<div class="topic-time">마일리지를 출금 합니다.</div></li>
-			<li><i class="icon-comment-alt"></i> <a href="profitHistoryOfMusic.do">수익
-					내역</a>
+			<li><i class="icon-comment-alt"></i> <a href="profitHistoryOfMusic.do">마일리지 
+					수익 내역</a>
 				<div class="topic-time">아티스트의 수익 내역을 조회합니다.</div></li>
 		</c:otherwise>
 		</c:choose>			

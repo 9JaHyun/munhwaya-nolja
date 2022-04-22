@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +25,7 @@ import com.munhwa.prj.charge.vo.ChargeVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.service.PurchaseService;

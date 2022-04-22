@@ -6,7 +6,11 @@
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
-		
+<style>
+	span{
+		color: #D0D0D0;
+	}
+</style>		
 	<!-- content -->
 	<div class="page-content back_to_up">
 		<!-- 최상단메인칸 -->

@@ -82,6 +82,12 @@ private ArtistMapper map;
 		// TODO Auto-generated method stub
 		return map.getTotal(cri,id);
 	}
+
+	@Override
+	public int artIdByAlbId(int albumId) {
+		// TODO Auto-generated method stub
+		return map.artIdByAlbId(albumId);
+	}
 	
 	
 }

@@ -31,9 +31,9 @@
 	
 	<select id="purchaseSelectList2" resultType="com.munhwa.prj.music.vo.PurchaseVO2">
 		<![CDATA[
-		SELECT ID, PICTURE, TITLE, artName, PRICE, createdAt, fileId
+		SELECT ID, PICTURE, TITLE, artName, PRICE, createdAt, fileId, albId
 		FROM (SELECT RANK() OVER (ORDER BY p.CREATED_AT DESC) AS RN,
-					m.id, m.PICTURE,  m.TITLE, m.ART_NAME AS artName, m.PRICE, p.CREATED_AT AS createdAt, m.FILE_ID AS fileId
+					m.id, m.PICTURE,  m.TITLE, m.ART_NAME AS artName, m.PRICE, p.CREATED_AT AS createdAt, m.FILE_ID AS fileId, M.ALBUM_ID AS albId
 				FROM PURCHASED_MUSIC p JOIN MUSIC m
 				ON p.MUSIC_ID = m. ID
 				WHERE MEMBER_ID = #{id})

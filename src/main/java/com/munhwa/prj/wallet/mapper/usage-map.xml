@@ -182,8 +182,8 @@
 		resultMap="usageResultMap">
   	 <![CDATA[
 		select *
-	        from ( select
-	            rownum as rn,
+	         from ( select
+	            rank() over (ORDER BY u.use_at desc) rank,
 				u.use_at,
 	            u.mileage,
 	            c.name,
@@ -211,8 +211,8 @@
 		<![CDATA[	
 	     	order by u.use_at desc
 	     )
-	      where rn> (#{cri.pageNum}-1) * #{cri.amount}
-	     and rn <= #{cri.pageNum} * #{cri.amount}
+	      where rank> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rank <= #{cri.pageNum} * #{cri.amount}
      ]]>
 	</select>
 
