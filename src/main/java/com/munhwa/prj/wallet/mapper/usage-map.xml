@@ -78,17 +78,16 @@
 		from usage_history
 		where id = #{id}
 		and place = #{place}
-		and refund = 'B01'
 	</select>
 	
 	<select id="selectByMusicOfId" resultMap="usageResultMap">
 		select * 
         from usage_history
-        where pks = #{pks}
+        where id = #{id}
         and member_id=#{memberId}
         and place = 'U01'
-        and refund = 'B01'
 	</select>
+	
 	<!-- 곡 구매 내역 -->
 	<select id="selectUsageListMusic" resultMap="usageResultMap">
 		<![CDATA[
@@ -98,9 +97,8 @@
 				u.use_at,
 	            sum(u.mileage) as mileage,
 	            c.name,
-	            u.refund,
 	            LISTAGG(u.name, ', ') within group(order by u.name) as title,
-                LISTAGG(u.pks, ', ') within group(order by u.name) as us_ids
+                LISTAGG(u.id, ', ') within group(order by u.name) as us_ids
 			from usage_history u,
 	        common_code c
 			where u.place = c.id
@@ -111,16 +109,16 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and u.use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
-				and u.use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and u.use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 		<![CDATA[ 
-	           group by u.use_at, u.member_id, c.name, u.refund
+	           group by u.use_at, u.member_id, c.name
 	           order by u.use_at desc
 	     )
 	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
@@ -139,12 +137,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
-				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 		<![CDATA[
@@ -164,12 +162,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
-				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 		<![CDATA[
@@ -200,12 +198,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and u.use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
-				and u.use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and u.use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 		<![CDATA[	
@@ -227,12 +225,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
-				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 	</select>
@@ -249,12 +247,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
-				and use_at BETWEEN TO_DATE('1900-01-01','YYYY-MM-DD')
+				and use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2999-01-01', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 	</select>

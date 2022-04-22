@@ -30,6 +30,6 @@ public interface UsageMapper {
 		
 	List<UsageVO> selectById(@Param("id") int id, @Param("place") String place);
 	
-	UsageVO selectByMusicOfId(@Param("pks") int pks, @Param("memberId") String memberId);
+	UsageVO selectByMusicOfId(@Param("id") int pks, @Param("memberId") String memberId);
 	
 }
