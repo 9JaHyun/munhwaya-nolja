@@ -15,7 +15,8 @@ public interface ArtistMapper {
     List<ArtDetailVO> findMusic(@Param("cri") Criteria cri, @Param("id") int artistId);
 //    List<ArtDetailVO2> musicListPage(@Param("cri") Criteria cri, @Param("artistId")int id);
     ArtistVO selectArtistByMemberId(String memberId);
-	int checkBuy(@Param("id") String id, @Param("musicId") int musicId);
+    int artIdByAlbId(int albumId);
+    int checkBuy(@Param("id") String id, @Param("musicId") int musicId);
     int insertArtist(ArtistVO vo);
     int updateArtist(ArtistVO vo);
     int musicCnt(int vo);
