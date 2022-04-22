@@ -45,7 +45,9 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td style="text-align: center; padding: 22px 110px 0px 0px;" id="artistName"><a>${likeArtist.name}</a></td>
+                    <td style="text-align: center; padding: 22px 110px 0px 0px;" id="artistName">
+                    	<a href="artistDetail?artId=${likeArtist.id}">${likeArtist.name}</a>
+                    </td>
                     <!-- 좋아요 한 아티스트 삭제 버튼 -->
                     <td style="padding: 20px 15px 0px 0px;"><a><i
                             class="icon-remove" id="${likeArtist.id}"

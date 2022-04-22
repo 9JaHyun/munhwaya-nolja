@@ -33,6 +33,8 @@ form {
 	border: 1px solid #ff0078;
 	box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
 	padding: 50px 35px;
+	z-index: 1;
+
 }
 
 form * {
@@ -41,7 +43,6 @@ form * {
 	outline: none;
 	border: none;
 }
-
 
 label {
 	display: block;
@@ -73,7 +74,35 @@ button {
 	color: #eaf0fb;
 	text-align: center;
 }
+
+.wrap-loading{ /*화면 전체를 어둡게*/
+    position: absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.5);
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');
+    z-index: 10;
+}
+
+.wrap-loading div{ /*로딩 이미지*/
+	width: 50px;	
+	height: 50px;
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+    z-index: 10;
+}
+
+.display-none{ /*감추기*/
+	display:none;
+}
+
 </style>
+
 
 <div class="under_header">
 	<img src="resources/images/assets/signupback.png" alt="#">
@@ -87,16 +116,17 @@ button {
 	<input type="email" id="id" name="id"
 		style="height: 50px; width: 100%; margin-bottom: 30px;"
 		placeholder="ID(EMAIL)" required autofocus>
-
 	<button type="button" id="findBtn">Find</button>
-
 </form>
+
+<div class="wrap-loading display-none" id="div_ajax_load_image">
+    <div><img src="resources/images/loadingIcon.gif" /></div>
+</div>
+
 <div align="center" style="margin-bottom: 200px;">
 	<a href="signin">로그인</a> |
 	<a href="findId">아이디 찾기</a>
 </div>
-
-
 
 <script>
 	$(function(){
@@ -110,10 +140,10 @@ button {
 					id : $("#id").val()
 				},
 				beforeSend : function() {
-           		 $('html').css('cursor', 'wait');
+		       		$("#div_ajax_load_image").show();
            	 	},
            	 	complete : function() {
-        		 $('html').css('cursor', 'auto');
+           	 		$("#div_ajax_load_image").hide();
         	 	},
 				success : function(result) {
 					alert(result);
