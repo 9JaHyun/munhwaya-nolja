@@ -74,9 +74,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 			<a href="usageHistoryOfPerformance.do" class="tbutton small"><span>공연
 					티켓 구매 내역</span></a>
 		</div>
-		<div style="float: left; margin-right: 30px;">
-			<a href="walletInfo.do" class="tbutton small"><span>출금 내역</span></a>
-		</div>
 		<select id="cntPerPage" name="sel" onchange="selChange()">
 			<option value="10"
 				<c:if test="${pageMaker.cri.amount == 10}">selected</c:if>>10줄
