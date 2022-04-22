@@ -1,5 +1,7 @@
 package com.munhwa.prj.cart.web;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,21 +35,32 @@ public class CartController {
 		return "cart/shop_cart";
 	}
 
-	@RequestMapping("/cart/add")
-	public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam int id) {
-	      MusicVO vo = musicDAO.musicSelect(id);
+	@RequestMapping(value = "/cart/add", produces = "application/text; charset=UTF-8")
+	public ResponseEntity<String> addCart(@LoginUser SessionUser user, @RequestParam List<Integer> id) {
+		Map<String, List<Integer>> paramMap = new HashMap<>();
+		paramMap.put("musicIdList", id);
 
-	      Map<Integer, MusicVO> cart = user.getCart();
-	      if(cart.containsKey(vo.getId()) ) {
-	         return ResponseEntity.badRequest().body("");
-	      }
-	      cart.put(vo.getId(), vo);
-	      user.setCart(cart);
-//	      log.info("id={}", vo.getId());
+		List<MusicVO> list = musicDAO.musicSelectListByMusicId(paramMap);
 
-	      return ResponseEntity.ok().body("");
+		Map<Integer, MusicVO> cart = user.getCart();
+		int count = 0;
+		for (MusicVO vo : list) {
+			if (cart.containsKey(vo.getId())) {
+				++count;
+			}
+			cart.put(vo.getId(), vo);
+		}
+		user.setCart(cart);
+		String msg;
+		int result = list.size() - count;
+		if(result == list.size()) {
+			msg = String.format("%d개의 곡을 장바구니에 넣었습니다.", result); 
+		} else {
+			msg = String.format("이미 존재하는 곡을 제외한 %d개의 곡을 장바구니에 넣었습니다.", result); 
+		}
+		return ResponseEntity.ok().body(msg);
 	}
-	
+
 	@PostMapping("/deleteCart")
 	@ResponseBody
 	public String deleteCart(@LoginUser SessionUser user, MusicVO vo) {
