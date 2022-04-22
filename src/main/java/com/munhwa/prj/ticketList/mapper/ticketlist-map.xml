@@ -45,7 +45,7 @@
 		PERFORMANCE P
 		WHERE T.MEMBER_ID = #{memberId}
 		AND T.PERFORMANCE_ID = P.ID
-		ORDER BY SDATE DESC
+		ORDER BY TIME DESC
 	</select>
 
 	<select id="ticketListSelect"

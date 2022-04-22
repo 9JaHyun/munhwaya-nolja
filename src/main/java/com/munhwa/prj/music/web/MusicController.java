@@ -56,6 +56,7 @@ public class MusicController {
 		 * Map<Integer, CartVO> map = (Map<Integer, cart>) session.getAttribute("cart");
 		 * map.set(musicVO.getId(), musicVO) session.addAttribue("cart", map)
 		 */
+		
 		String id = user.getId();
 		model.addAttribute("musicRnBList", musicDAO.musicSelectListByGenre("G04"));
 		model.addAttribute("musicRapList", musicDAO.musicSelectListByGenre("G03"));
@@ -137,7 +138,6 @@ public class MusicController {
 
 	@GetMapping("/chart")
 	public String chart(@LoginUser SessionUser user, Model model, Criteria cri) {
-		
 		//원래 차트에 표시될 음원의 리스트
 		List<MusicVO> list = musicDAO.musicSelectList(cri); //여기서 페이징처리후 다가져온다?  1-10까지검색 => 11-20까지 검색
 		
@@ -174,7 +174,6 @@ public class MusicController {
 	
 	@GetMapping("/releaseSoon")
 	public String releaseSoon(Model model, Criteria cri) {
-		
 		List<AlbumVO> list =  albumDAO.albumSelectListByRelease(cri);
 		model.addAttribute("releaseSoonAlbumList", list);
 		
@@ -265,8 +264,7 @@ public class MusicController {
 	}
 	
 	@GetMapping("/personalResult")
-	public String personalResult(Model model, @LoginUser SessionUser user, Criteria cri) {
-				
+	public String personalResult(Model model, @LoginUser SessionUser user, Criteria cri) {			
 		List<MusicVO> list = musicDAO.musicPersonalList(user.getId(), cri);
 		
 		List<Integer> musicList = purchaseDao.purchaseSelectList(user.getId());

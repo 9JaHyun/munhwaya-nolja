@@ -69,6 +69,9 @@
                     <c:when test="${member.role == 'R01'}">
                         <li><a href="${rootPath}/ticketList.do"><i class="icon-caret-right"> </i>구매한 공연</a></li>
                     </c:when>
+                    <c:when test="${member.role == 'R02'}">
+                        <li><a href="${rootPath}/performanceInsertForm.do"><i class="icon-caret-right"> </i>아티스트 공연 등록 신청</a></li>
+                    </c:when>
                     <c:when test="${member.role == 'R03' }">
                     	<li><a href="${rootPath}/judgeArtist"><i class="icon-caret-right"> </i>아티스트 승급 관리</a></li>
                       <li><a href="${rootPath}/performanceList"><i class="icon-caret-right"> </i>아티스트 공연 관리</a></li>

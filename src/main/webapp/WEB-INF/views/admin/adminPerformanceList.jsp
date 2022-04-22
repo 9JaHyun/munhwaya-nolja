@@ -7,9 +7,12 @@
 	<h4>구매한 공연</h4>
 	
 	<div class="search_area" style="margin-top:30px; margin-right:30px; margin-bottom:20px;">
-		<select style="width: 70px;">
-			<option value="제목">제목
-		</select> <input type="text" name="keyword" value="${pageMake.cri.keyword }">
+		<select style="width: 100px;" name="type">
+		 	<option value="" <c:out value="${pageMake.cri.type == null?'selected':'' }"/>>--</option>
+		 	<option value="T" <c:out value="${pageMake.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+		 	<option value="S" <c:out value="${pageMake.cri.type eq 'S'?'selected':'' }"/>>처리상태</option>
+		</select>
+		<input type="text" name="keyword" value="${pageMake.cri.keyword }">
 		<button class="tbutton small"
 			style="height: 32px; width: 60px; margin-bottom: 10px; font-size: 10pt;">검색</button>
 	</div>
@@ -24,6 +27,7 @@
 								<th scope="col" style="font-size: 13pt;">공연시작일</th>
 								<th scope="col" style="font-size: 13pt;">공연마감일</th>
 								<th scope="col" style="font-size: 13pt;">아티스트명</th>
+								<th scope="col" style="font-size: 13pt;">아티스트ID</th>
 								<th scope="col" style="font-size: 13pt;">처리상태</th>
 								<th scope="col" style="font-size: 13pt;">결과처리</th>
 							</tr>
@@ -37,6 +41,7 @@
 									<td style="color: white;"><fmt:formatDate
 											pattern="MM월 dd일 HH시 mm분" value="${performances.edate }" /></td>
 									<td style="color: white;">${performances.artistName }</td>
+									<td style="color: white;">${performances.artistId }</td>
 									<td class="status" style="color: white;">${performances.status }</td>
 									<td>
 										<button data-pid="${performances.id }"
@@ -55,7 +60,7 @@
 		</div>
 		<!-- gridfull -->
 		<div class="pagination-tt clearfix"
-			style="margin-left: auto; margin-top: 30px; width: 550px;">
+			 style="display:flex; justify-content: center;">
 			<ul>
 				<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMake.prev}">
@@ -78,8 +83,9 @@
 <div>
 	<form id="moveForm" method="get" action="performanceList">
 		<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
-		<input type="hidden" name="amount" value="${pageMake.cri.amount }">
+		<input type="hidden" name="amount" value="9">
 		<input type="hidden" name="keyword" value="${pageMake.cri.keyword }">
+		<input type="hidden" name="type" value="${pageMake.cri.type }">
 	</form>
 </div>
 <script type="text/javascript">
@@ -102,8 +108,22 @@
     
     $(".search_area button").on("click", function(e){
         e.preventDefault();
-        let val = $("input[name='keyword']").val();
-        moveForm.keyword.value = val;
+        
+        let type = $(".search_area select").val();
+        let keyword = $(".search_area input[name='keyword']").val();
+        
+        if(!type){
+            alert("검색 종류를 선택하세요.");
+            return false;
+        }
+        
+        if(!keyword){
+            alert("키워드를 입력하세요.");
+            return false;
+        }        
+        
+        moveForm.type.value = type;
+        moveForm.keyword.value = keyword;
         moveForm.pageNum.value = 1;
         moveForm.submit();
     });
@@ -118,6 +138,7 @@
     	    dataType:"text",
     	    success: function(res){
 				alert("공연이 승인되었습니다.");
+				location.href="performanceList";
     	    },
     	    error: function(error){
     	    	alert("fail");

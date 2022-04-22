@@ -5,7 +5,7 @@ import com.munhwa.prj.news.mapper.NewsMapper;
 import com.munhwa.prj.news.vo.NewsVO;
 import com.munhwa.prj.performance.mapper.PerformanceMapper;
 import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.performance.vo.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +42,8 @@ public class PerformanceServiceImpl implements PerformanceService {
     }
 
     @Override
-    public int getTotal(Criteria cri, String filter) {
-        return performanceMapper.getTotal(cri, filter);
+    public int admingetTotal(Criteria cri) {
+        return performanceMapper.admingetTotal(cri);
     }
 
     @Override
@@ -78,5 +78,10 @@ public class PerformanceServiceImpl implements PerformanceService {
     public List<PerformanceVO> adminSelectList(Criteria cri) {
         return performanceMapper.adminSelectList(cri);
     }
+
+	@Override
+	public int getTotal(Criteria cri) {
+		return performanceMapper.getTotal(cri);
+	}
 
 }
