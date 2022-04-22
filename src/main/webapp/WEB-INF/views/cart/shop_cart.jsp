@@ -204,6 +204,9 @@ function deleteCart(n) {
 }
 
 function payCart() {
+	if($('.selId').length == 0 ){
+		alert('구매할 곡이 없습니다. 카트에 곡을 담아주세요.');
+	} else {
 	var str = document.getElementById("itemTotalPrice").innerHTML.slice(0, -1);
 	var str2 = str.replace(",", "");
  	if(${mileage} < str2) {
@@ -246,7 +249,7 @@ function payCart() {
 	        });
   
     }}
-
+}
 	var sessionMileage = document.getElementById('sessionMileage').textContent
 	var sessionMileage2 = sessionMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	document.getElementById('sessionMileage').textContent = sessionMileage2+'원';

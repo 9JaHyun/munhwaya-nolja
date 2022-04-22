@@ -109,12 +109,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and u.use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and u.use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 		<![CDATA[ 
@@ -137,12 +137,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 		<![CDATA[
@@ -162,12 +162,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 		<![CDATA[
@@ -198,12 +198,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and u.use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and u.use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 		<![CDATA[	
@@ -225,12 +225,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 	</select>
@@ -247,12 +247,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and use_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and use_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 	</select>

@@ -1,5 +1,7 @@
 package com.munhwa.prj.wallet.web;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
@@ -31,7 +34,6 @@ import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.music.vo.PurchaseVO;
-import com.munhwa.prj.music.vo.PurchaseVO2;
 import com.munhwa.prj.performance.service.PerformanceService;
 import com.munhwa.prj.ticketList.service.TicketListService;
 import com.munhwa.prj.ticketList.vo.TicketListVO;
@@ -148,12 +150,14 @@ public class WalletController {
 		return "walletInfo-memberWallet";
 	}
 	
+		
 	// 지갑 정보 상세 페이지
 	@RequestMapping("/walletInfoSelect.do")
 	public String walletInfoSelect(@LoginUser SessionUser user, Model model, Criteria cri, 
 			@RequestParam(value="startDate", required = false, defaultValue = "2022-01-01") String startDate,
 			@RequestParam(value="endDate", required = false, defaultValue="2022-12-31") String endDate) {
-		
+
+	    
 		String memberId = user.getId();
 		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri, startDate, endDate);
 		Integer mileage = chargeDao.getCountByMileage(memberId, startDate, endDate);

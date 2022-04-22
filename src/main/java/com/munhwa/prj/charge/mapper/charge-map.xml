@@ -25,7 +25,7 @@
   	<![CDATA[
   		select id, charge_at, mileage, name
     from (select
-    	rownum rn,
+    	rank() OVER (order by a.charge_at desc) rank,
     	a.id, 
         a.charge_at, 
         a.mileage, 
@@ -33,24 +33,24 @@
     from charge_history a, 
 		 common_code b
 	where a.type = b.id
-		and rownum<= #{cri.pageNum} * #{cri.amount}
 		and a.member_id = #{memberId} 
 	]]>
 		<choose>
 			<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and a.charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and a.charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 	<![CDATA[ 
 		order by id desc
     )
-	where rn > (#{cri.pageNum}-1) * #{cri.amount}
+	where rank > (#{cri.pageNum}-1) * #{cri.amount}
+	and rank<= #{cri.pageNum} * #{cri.amount}
   	]]>
 	</select>
 
@@ -64,12 +64,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 	</select>
@@ -84,12 +84,12 @@
 			<when
 				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
 				and charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
-				TO_DATE(#{endDate}, 'YYYY-MM-DD')+1
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
 			</when>
 			<otherwise>
 				and charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
 				AND
-				TO_DATE('2022-12-31', 'YYYY-MM-DD')+1
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
 			</otherwise>
 		</choose>
 	</select>

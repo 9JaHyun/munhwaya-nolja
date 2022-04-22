@@ -99,7 +99,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 			method="post" style="color: white;">
 			시작일&nbsp;&nbsp; <input type="date" id="startDate" name="startDate"
 				style="margin-bottom: 0px; margin-right: 20px; width: 100px;"
-				value="${startDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
+				value="${startDate}" max="${endDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
 				type="date" id="endDate" name="endDate"
 				style="margin-bottom: 0px; width: 100px" value="${endDate }">
 			<input type="submit" value="검색" class="tbutton small"
