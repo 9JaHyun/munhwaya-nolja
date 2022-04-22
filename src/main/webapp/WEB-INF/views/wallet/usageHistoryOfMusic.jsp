@@ -186,7 +186,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	</table>
       <div id="artworkRead"style="color:white;"></div>
       <div class="modal-footer def-block">
-        <button class="tbutton small" data-dismiss="modal" aria-label="Close" onclick="removeData()"><span>뒤로 가기</span></button>
+        <button class="tbutton small" data-dismiss="modal" aria-label="Close" onclick="removeData()"><span>목록으로</span></button>
       </div>
     </div>
   </div>

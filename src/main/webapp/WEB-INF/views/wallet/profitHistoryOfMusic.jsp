@@ -164,7 +164,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 </form>
 
 <div align="right">
-	<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>뒤로가기</span></a>
+	<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>목록으로</span></a>
 </div>
 
 <script>
