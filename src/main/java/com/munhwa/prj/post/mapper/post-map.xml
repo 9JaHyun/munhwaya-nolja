@@ -62,8 +62,7 @@
     from (select *
     from post
     <where>
-      <if test="key.equals('no')"/>
-      <if test="key.equals('member')">AND member_id LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('member')">member_id LIKE '%'||#{value}||'%'</if>
       <if test="key.equals('nickname')">AND writer LIKE '%'||#{value}||'%'</if>
       <if test="key.equals('title')">AND title LIKE '%'||#{value}||'%'</if>
     </where>

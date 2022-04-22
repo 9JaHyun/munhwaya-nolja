@@ -5,8 +5,9 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 <fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate"/>
 <style>
-    #boardTbl > thead > tr > th {
+    #commentList  {
         font-size: 13pt;
+        color: white;
     }
 </style>
 <div class="row row-fluid clearfix mbf">
@@ -38,13 +39,12 @@
         </c:if>
         <div id="comments" class="user-comments mbs">
             <h4> 댓글 </h4><span class="liner"></span>
-            <form action="#" method="post" id="commentform">
-                <textarea name="comment" rows="8" placeholder="Your Message *"
-                          required=""></textarea>
+            <form id="commentform">
+                <textarea name="content" rows="4" required=""></textarea>
                 <p>
-                    <input name="submit" type="submit" class="send-message" value="댓글 쓰기">
-                    <input type="hidden" name="comment_post_ID" value="6" id="comment_post_ID">
-                    <input type="hidden" name="comment_parent" id="comment_parent" value="0">
+                    <input type="hidden" name="postId" value="${post.id}">
+                    <input type="hidden" name="groupId" value="0">
+                    <a id="postingComment" class="send-message">댓글 쓰기</a>
                 </p>
             </form>
             <br><br><br><br>
@@ -55,8 +55,26 @@
 
 <script>
     $(window).load(() => {
-        console.log(${post.id})
         loadComments(${post.id})
+    })
+
+    $('#postingComment').on('click', function () {
+        $.ajax({
+            url: "comment",
+            type: "post",
+            data: {
+                "postId": commentform.postId.value,
+                "content": commentform.content.value,
+                "groupId": commentform.groupId.value
+            },
+            dataType: "text",
+            success: function () {
+                loadComments(${post.id})
+            },
+            error: function () {
+                alert('입력실패');
+            }
+        })
     })
 
     function loadComments(id) {
@@ -81,14 +99,14 @@
                         let groupOrder = data[i].groupOrder;
 
                         if (groupOrder == 1) {
-                            listHtml += "<li id='" + id + "' class='clearfix'>";
+                            listHtml += "<li id='" + id + "' data-groupId = '" + groupId + "' class='clearfix'>";
                         } else {
                             listHtml += "<li id='" + id + "' class='child clearfix'>";
                         }
 
                         listHtml += "<div class='thumb'>";
                         listHtml += showProfile(writerProfile);
-                        listHtml += "<div class='reply' onclick='reply()'><i class='icon-reply first-i'></i>Reply</div>"
+                        listHtml += "<div class='reply' value='N'><i class='icon-reply first-i'></i>Reply</div>"
                         listHtml += "</div>";
 
                         listHtml += "<h5 class='entry-title'>" + writer;
@@ -102,16 +120,42 @@
 
                         $("#commentList").html(listHtml);
                     }
+
+                    $('.reply').on('click', function () {
+                        let li = $(this).parent().parent();
+                        var replyDiv = $('<div>');
+                        replyDiv.attr("width", "100%")
+                        replyDiv.attr("height", "50px")
+
+                        var newForm = $('<form></form>');
+                        //set attribute (form)
+                        newForm.attr("name", "replyForm");
+                        newForm.attr("method", "post");
+                        newForm.attr("action", "comment");
+                        newForm.attr("target", "_blank"); // create element & set attribute (input)
+                        newForm.append(
+                            $('<input/>', {type: 'hidden', name: 'postId', value: ${post.id}}));
+                        newForm.append(
+                            $('<input/>', {type: 'hidden', name: 'groupId', value: li.data('groupid')}));
+                        newForm.append(
+                            $('<textarea/>', {
+                                name: 'content',
+                                rows: "2",
+                                style: 'width: 70%; margin-right: 10px'
+                            }));
+                        newForm.append(
+                            $("<a class='send-message tbutton postingReply' style='height: 100%'>댓글 쓰기</a>"));
+                        newForm.append($("<a class='closeBtn'> X</a>"));
+                        li.append(replyDiv.append(newForm));
+
+                        $('.closeBtn').on('click', function () {
+                            $(this).parent().remove()
+                        });
+                    });
                 },
                 //
-                // $('button.btn.btn-success.mb-1.write_rereply').on('click', function () {
-                //     console.log('no', $(this).attr('no'));
-                //     console.log('bno', $(this).attr('bno'));
-                //     WriteReReply($(this).attr('bno'), $(this).attr('no'));
-                // });
-                //
                 // // 삭제버튼을 클릭했을 때
-                // $('.reply_delete').on('click', function () {
+                // $('.reply_delete').on('click', function ()
                 //     // 모댓글 삭제일때
                 //     if ($(this).attr('grpl') == 0) {
                 //         DeleteReply($(this).attr('no'), $(this).attr('bno'));
@@ -126,12 +170,13 @@
                     alert('서버 에러');
                 }
             }
-        );
+        )
+        ;
     }
 
-    <%--function isWriter(memberId) {--%>
-    <%--    return (${userId == memberId}) ? "<i>작성자</i>" : "<i></i>";--%>
-    <%--}--%>
+    function isWriter(memberId) {
+        return ('${post.memberId}' == memberId) ? "<i>작성자</i>" : "<i></i>";
+    }
 
     function showProfile(profile) {
         var result;
@@ -139,12 +184,11 @@
             result = "<img src='resources/images/basic_profile.png'"
         } else {
             if (profile.indexOf('https://') !== -1) {
-                result = "<img src='" + profile +"'>";
+                result = "<img src='" + profile + "'>";
             } else {
-                result = "<img src='api/picture/" + profile +"'>";
+                result = "<img src='api/picture/" + profile + "'>";
             }
         }
         return result;
     }
-
 </script>

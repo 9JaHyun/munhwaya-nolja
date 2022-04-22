@@ -6,7 +6,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class CommentVO {
-
     private int id;
     private String content;
     private int groupId;

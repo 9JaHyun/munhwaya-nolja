@@ -26,17 +26,19 @@
   </resultMap>
 
   <insert id="insertComment">
-    INSERT INTO comments (id, content, created_at, post_id, member_id, group_id)
+    INSERT INTO comments (id, content, created_at, post_id, member_id, group_id, group_order)
     VALUES (comments_seq.nextval, #{content}, #{createdAt}, #{postId}, #{memberId}
     <choose>
-      <when test="groupId == null">
-        ,(select NVL2(max(group_id), 1, max(group_id) + 1)
+      <when test="groupId != 0">
+        ,#{groupId}, (select NVL2(max(group_order), 1, max(group_order) + 1)
         from comments
-        where post_id = #{postId})
-        )
+        where post_id = #{postId}
+        and group_id = #{groupId}))
       </when>
       <otherwise>
-        ,#{groupId})
+        ,(select NVL2(max(group_id), max(group_id) + 1, 1)
+        from comments
+        where post_id = #{postId}), 1)
       </otherwise>
     </choose>
   </insert>
