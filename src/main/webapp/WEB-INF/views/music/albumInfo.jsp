@@ -47,7 +47,9 @@
 							<!-- grid6 -->
 							<div class="grid_6">
 								<h2>제목: ${selectAlbum.albName }</h2>
-								<h2>가수: ${selectAlbum.artName }</h2>
+								<a href="artistDetail?artId=${selectAlbum.artistId }">
+									<h2>가수: ${selectAlbum.artName }</h2>
+								</a>
 							<c:choose>
 								<c:when test="${selectAlbum.genre eq 'G01' }">
 									<h3>장르: 발라드</h3>
@@ -127,7 +129,7 @@
 															</a>
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
-															<a href="#" data-artistid="${music.artId }">${music.artName }</a>
+															<a href="artistDetail?artId=${music.artId }">${music.artName }</a>
 														</td>
 														<td class="product-name" style="vertical-align:middle;">
 															<c:choose>

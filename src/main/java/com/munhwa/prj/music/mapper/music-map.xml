@@ -39,10 +39,10 @@
 	
 	<select id="musicPersonalList" resultMap="musicResultMap">
 		<![CDATA[
-		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT
+		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT, ALBUM_ID
 		FROM (SELECT 
         	  RANK() OVER (ORDER BY DOWNLOAD_CNT DESC) AS RN,
-        	  ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT
+        	  ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT, ALBUM_ID
 			  FROM MUSIC
 			  WHERE GENRE=( SELECT GENRE
 							FROM MEMBER
@@ -65,10 +65,10 @@
 	
 	<select id="musicSelectByTitle" resultMap="musicResultMap">
  		<![CDATA[
- 		SELECT ID, TITLE, ART_NAME, FILE_ID, PICTURE
+ 		SELECT ID, TITLE, ART_NAME, FILE_ID, PICTURE, ALBUM_ID
 		FROM (SELECT 
         	  	ROWNUM AS RN,
-        	  	ID, TITLE, ART_NAME, FILE_ID, PICTURE
+        	  	ID, TITLE, ART_NAME, FILE_ID, PICTURE, ALBUM_ID
 			  FROM MUSIC
 			  WHERE UPPER(TITLE) LIKE UPPER('%'||#{title}||'%')) 
 	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}

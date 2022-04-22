@@ -2,7 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
+<style>
+	span{
+		color: #D0D0D0;
+	}
+</style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
 		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">

@@ -100,11 +100,11 @@
                                     <thead>
                                     <tr>
                                     	<th style="width: 50px;" ><input style="margin-right:30px" type="checkbox" id="allCheck"></th>
-                                        <th><h4>순위</h4></th>
+                                        <th style="width: 100px;"><h4>순위</h4></th>
                                     	<th></th>
-                                        <th style="width: 200px;"><h4>제목</h4></th>
-                                        <th><h4>가수</h4></th>
-                                        <th><h4>장르</h4></th>
+                                        <th style="width: 300px;"><h4>제목</h4></th>
+                                        <th style="width: 150px;"><h4>가수</h4></th>
+                                        <th style="width: 200px;"><h4>장르</h4></th>
                                         <th><h4>다운로드</h4></th>
                                     </tr>
                                     </thead>
@@ -112,7 +112,7 @@
                                     <c:forEach var="music" items="${musicChartList}" begin="0"
                                                end="9" varStatus="status">
                                         <tr class="cart_table_item"
-                                            style="text-align: center; font-size:small ;">
+                                            style="text-align: center; font-size:medium ;">
                                             	<c:choose>
 					                            	<c:when test="${!music.purchase }">
 													<td style="vertical-align: middle;"><input class="all" style="margin-right:30px" name="buyCheck" type="checkbox" value="${music.id }"></td>
@@ -150,7 +150,7 @@
                                                     <a href="streaming?id=${music.id }">${music.title }</a>
                                             </td>
                                             <td id="artName" class="product-name">
-                                                    <a href="#" data-artistid="${music.artId }">${music.artName }</a>
+                                                    <a href="artistDetail?artId=${music.artId }">${music.artName }</a>
                                             </td>
                                             <td class="product-name">
                                                     <c:choose>

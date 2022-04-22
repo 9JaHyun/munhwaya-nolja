@@ -56,7 +56,7 @@
 	}
 	
 	tr {
-	margin-bottom: 100px;
+		margin-bottom: 100px;
 	}
 </style>
 	<!--(배경이미지) -->
@@ -72,7 +72,7 @@
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
 						<input id="title" name="title" type="text"
-							style="font-size:x-small; width: 1000px; height: 60px; "
+							style="font-size:small; width: 1000px; height: 60px; "
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -123,10 +123,10 @@
 														</a>
 													</td>
 													<td class="product-name">
-														${music.title }
+														<a href="streaming?id=${music.id }">${music.title }</a>
 													</td>
 													<td class="product-name">
-														${music.artName }
+														<a href="artistDetail?artId=${music.artId }">${music.artName }</a>
 													</td>
 													<td class="product-name">
 														<span>

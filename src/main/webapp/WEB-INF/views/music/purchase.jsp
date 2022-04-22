@@ -106,10 +106,10 @@
 													<a href="streaming?id=${music.id }"><img src="api/picture/${music.picture }" alt="#" style="max-width:70px; min-width:70px; max-height :75px; min-height:75px; margin: 10px 0px 10px 0px;"></a>
 													</td>
 													<td class="product-name">
-														${music.title}
+														<a href="streaming?id=${music.id }">${music.title}</a>
 													</td>
 													<td class="product-name">
-														${music.artName}
+														<a href="artistDetail?artId=${music.artId }">${music.artName}</a>
 													</td>
 													<td class="product-name">
 														${music.price}원
