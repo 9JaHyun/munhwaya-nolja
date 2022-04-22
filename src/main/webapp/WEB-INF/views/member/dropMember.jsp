@@ -21,6 +21,7 @@
         <a>비밀번호 : </a> <input type="password" id="password" name="password">
     </div>
     <div align="right" style="margin-bottom: 10px">
+    	<button type="button" class="tbutton small" style="margin-right: 2px;" onclick="location.href='memberChangeInfo.do'"><span>뒤로가기</span></button>
         <button type="submit" class="tbutton small"><span>탈퇴</span></button>
     </div>
 </form>
