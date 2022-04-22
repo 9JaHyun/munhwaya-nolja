@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.munhwa.prj.artist.vo.ArtDetailVO;
 import com.munhwa.prj.artist.vo.ArtDetailVO2;
 import com.munhwa.prj.artist.vo.ArtistVO;
+import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.music.vo.AlbumVO;
 
@@ -25,6 +26,6 @@ public interface ArtistMapper {
     int albumCnt(int vo);
 	int getTotal(@Param("cri") Criteria cri, @Param("artistId") int id);
 	int getTotal2(@Param("cri") Criteria cri, @Param("artistId") int artistId);
-    int getStatus(@Param("memberId") String memberId, @Param("status") String status);
+	String getStatus(String memberId);
    // int chkName(String name);
 }

@@ -10,6 +10,7 @@ import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtDetailVO;
 import com.munhwa.prj.artist.vo.ArtDetailVO2;
 import com.munhwa.prj.artist.vo.ArtistVO;
+import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.music.vo.AlbumVO;
 
@@ -95,10 +96,13 @@ private ArtistMapper map;
 	}
 
 	@Override
-	public int getStatus(String memberId, String status) {
+	public String getStatus(String memberId) {
 		// TODO Auto-generated method stub
-		return map.getStatus(memberId, status);
+		return map.getStatus(memberId);
 	}
+
+	
+
 
 	
 

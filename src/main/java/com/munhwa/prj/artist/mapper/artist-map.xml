@@ -158,7 +158,7 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 
-	<select id="getStatus" parameterType="String">
-		SELECT MEMBER_ID, STATUS FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId};
+	<select id="getStatus" resultType="String">
+		SELECT STATUS FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
 	</select>
 </mapper>

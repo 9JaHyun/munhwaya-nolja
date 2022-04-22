@@ -6,7 +6,7 @@
 		<id property="memberId" column="member_id"/>
 		<result property="identify" column="identify"/>
 		<result property="artwork" column="artwork"/>
-		<result property="status" column="stauts"/>
+		<result property="status" column="status"/>
 		<result property="fileGroupId" column="file_group_id"/>
 	</resultMap>
 
@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="promotionRequestSelect" resultMap="requestMap" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
-		SELECT * FROM PROMOTION_REQUEST WHERE ID = #{member_id}
+		SELECT * FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
 	</select>
 	
 	<insert id="promotionRequestInsert" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
@@ -24,7 +24,7 @@
 	</insert>
 	
 	<delete id="promotionRequestDelete"  parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
-		DELETE FROM PROMOTION_REQUEST WHERE ID = #{memeber_id}
+		DELETE FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memeberId}
 	</delete>
 	
 </mapper>

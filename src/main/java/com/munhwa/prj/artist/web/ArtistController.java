@@ -6,8 +6,10 @@ import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,7 +71,7 @@ public class ArtistController {
 		//아티스트 아이디로 찾아올것
 		
 		// 해당 아티스트 정보 찾아서 상세정보 페이지로 보내기
-		ArtistVO artist = artistDao.findByArtistId(artId); // 데이터가 안맞으므로 고쳐야할수도..  -> 변동사항 : artist.getId();, 해당하는 user가 아니라 해당 아티스트에 대한 인물정보이므로
+		ArtistVO artist = artistDao.findByArtistId(artId); 
 		model.addAttribute("artist", artist);
 		
 		
@@ -184,27 +186,31 @@ public class ArtistController {
     	ArtistVO artist = dto.toEntity(); // ArtistVO의 내용을 호출하여 AtistChangeRequestDto안의 ArtistVO메소드를 return한다.(=기존 정보 호출하고 값은 dto에 저장된 수정 정보 return하기)
     	UploadFile file = fileUtils.storeFile(dto.getImage()); // dto의 이미지 호출 
 		MemberVO member = new MemberVO();
-    	if(file != null) {//파일을 선택안하고, 변경을 안하고 수정버튼을 눌렀다면 file => null(파일이 없다.)
-    		artist.setImage(file.getStoredFileName());	//파일수정안하면 오류 // getStoredFileName하는 이유 : 기존 파일이 없을 경우 오류가 나므로 임으로 파일 이름담아서 artist변수에 담음
+    	if(file != null) {//파일을 선택안하고, 변경을 안하고 수정버튼을 눌렀을때 file != null파일에 값이 있다
+    		artist.setImage(file.getStoredFileName());	//파일수정안하면 오류 // getStoredFileName하는 이유 : 기존 파일이 없을 경우 오류가 나므로 임으로 파일 이름담아서 artist변수에 담음 // storedFileName: 서버 로컬에 저장될 파일명
     		user.setSname(artist.getImage());
     	}
     	artist.setMemberId(user.getId());
     	int result = artistDao.updateArtist(artist);
-    	if(result != 0) {
+    	if(result != 0) { // artist에 값이 있으면
 
     		member.setId(artist.getMemberId());
     		member.setNickname(artist.getName());
     		member.setSname(artist.getImage());
     		memberService.updateProfile(member);
     		user.setNickname(artist.getName());
+
     	}
+    	
     	return "mypage.do";
     }
     
     // 회원 -> 아티스트 승급 신청 폼 호출
  	@RequestMapping("/artistRequestForm")
- 	public String artistRequestForm() {
- 		
+ 	public String artistRequestForm(@LoginUser SessionUser user, Model model) {
+ 		PromotionRequestVO vo = new PromotionRequestVO();
+ 		vo.setMemberId(user.getId());
+ 		model.addAttribute("pro", promotionRequestDao.promotionRequestSelect(vo));
  		return "artistRequest-artist";
  	}
 
@@ -271,23 +277,35 @@ public class ArtistController {
 	}
 	}
 	
+	
+	/* @RequestParam(value="memberId", required=false) String memberId*/
+	/*@RequestParam(value="memberId", required=false) String memberId, @RequestParam("status")*/
+	
 	@RequestMapping("/artStatus")
-	public String artStatus(@LoginUser SessionUser user, PromotionRequestVO vo, Model model) {
+	public String artStatus(@LoginUser SessionUser user, Model model) {
+		model.addAttribute("status", artistDao.getStatus(user.getId()));
 		
+		
+//		String userId = user.getId();
+//		String memId = vo.getMemberId();
+//		
+//		if(userId == memId) {
+//		    PromotionRequestVO pro = artistDao.getStatus("status", status);
+//			model.addAttribute(pro);
+//		}else {
+//			System.out.println("연결실패");
+//			
+//		}
 		//vo.setMemberId(user.getId());
-		PromotionRequestVO status = artistDao.getStatus(user.getId(), status); // user 세션에 있는 승인 상태를 artStatus에 뿌리기.
+		//String id2 = memberId.getParameter(memberId);
+		//PromotionRequestVO pro = artistDao.getStatus(memberId, status);
+		//int pro = artistDao.getStatus(user.getId(), status);
+		
+		//String pro = artistDao.getStatus(user.getId(), status); // user 세션에 있는 승인 상태를 artStatus에 뿌리기.
 		return "artStatus-artist";
 		
-		
 	}
+
 }
 
-//    // 아티스트 정보 수정
-//    @RequestMapping("/artistUpdate")
-//    public String artistUpdate(ArtistVO vo, Model model) {
-//    	System.out.println(vo);
-//    	int update = artistDao.artistUpdate(vo);
-//    	return "artist/myPageMove";
-//    	
-//    }
 
