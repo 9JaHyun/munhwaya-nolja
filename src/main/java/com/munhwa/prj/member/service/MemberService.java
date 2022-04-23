@@ -1,6 +1,8 @@
 package com.munhwa.prj.member.service;
 
 import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.wishlist.vo.WishlistMusicVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +52,5 @@ public interface MemberService {
 
 	// 프로시저 공연 구매 마일리지 22/04/08 류기태
 	int updateMileagePerformance(Map<String,Object> vo);
+
 }

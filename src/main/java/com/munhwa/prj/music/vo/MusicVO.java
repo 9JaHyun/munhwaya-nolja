@@ -20,4 +20,5 @@ public class MusicVO {
 	private String composing;
 	private String arrangement;
 	private String picture;
+	private int orders;
 }

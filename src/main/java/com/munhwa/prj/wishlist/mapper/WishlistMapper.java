@@ -35,4 +35,7 @@ public interface WishlistMapper {
 
 	//위시리스트 생성
 	int createWishList(Map<String, Object> paramMap);
+	
+	// 위시리스트 곡 순서변경
+	int updateMusicOrders(Map<String, Object> vo);
 }

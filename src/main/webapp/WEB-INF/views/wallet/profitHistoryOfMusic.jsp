@@ -80,28 +80,29 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				보기</option>
 		</select>
 		<form id="dateSelect" action="profitHistoryOfMusic.do" method="post"
-				style="color: white;">
-				시작일&nbsp;&nbsp; <input type="date" id="startDate" name="startDate"
-					style="margin-bottom: 0px; margin-right: 20px; width: 100px;"
-					value="${startDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
-					type="date" id="endDate" name="endDate"
-					style="margin-bottom: 0px; width: 100px" value="${endDate }">
-				<input type="submit" value="검색" class="tbutton small"
-					style="height: 30px; width: 50px">
-			</form>
-			<div style="color: white; margin-top: 10px; margin-bottom: 10px;">
-				기간별 수익&nbsp;&nbsp;<input type="text" id="sumMileage"
-					value="${sumMileage }" readonly="readonly"
-					style="height: 20px; width: 60px; margin-bottom: 0px;">
+			style="color: white;">
+			시작일&nbsp;&nbsp; <input type="date" id="startDate" name="startDate"
+				style="margin-bottom: 0px; margin-right: 20px; width: 100px;"
+				value="${startDate}" max="${endDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
+				type="date" id="endDate" name="endDate"
+				style="margin-bottom: 0px; width: 100px" value="${endDate }">
+			<input type="submit" value="검색" class="tbutton small"
+				style="height: 30px; width: 50px">
+		</form>
+		<div style="color: white; margin-top: 10px; margin-bottom: 10px;">
+			기간별 수익&nbsp;&nbsp;<input type="text" id="sumMileage"
+				value="${sumMileage }" readonly="readonly"
+				style="height: 20px; width: 60px; margin-bottom: 0px;">
 		</div>
 	</div>
-	<table class="table">
+	<table class="table" style="word-break:break-all;">
 		<thead>
 			<tr>
 				<th scope="col">수익 일자</th>
 				<th scope="col">수익 금액</th>
 				<th scope="col">수익처</th>
-				<th scope="col">판매한 곡 명</th>
+				<th scope="col">판매 곡</th>
+				<th scope="col">상태(환불 여부)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -111,30 +112,45 @@ if (request.getProtocol().equals("HTTP/1.1"))
 							value="${profit.profitAt}" /></td>
 					<td class="listMileage">${profit.mileage }</td>
 					<td>${profit.commonCodevo.name }</td>
-					<td>${profit.musicvo.title }</td>
+					<td style="width:15%">${profit.musicvo.title }</td>
+					<td><c:choose>
+							<c:when test="${profit.refund eq 'B01'}">
+								<span>결제</span>
+							</c:when>
+							<c:when test="${profit.refund eq 'B02'}">
+								<span>환불 완료</span>
+							</c:when>
+							<c:when test="${profit.refund eq 'B03'}">
+								<span>환불 불가</span>
+							</c:when>
+						</c:choose></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </div>
-<div class="pageInfo_wrap">
-	<div class="pageInfo_area" style="margin-left:auto; margin-top:30px; width:410px;">
+<div class="pageInfo_wrap" style="float:left; width:80%; text-align:center;">
+	<div class="pageInfo_area"
+		style="margin-left: auto; margin-top: 30px; width: 660px;">
 		<ul id="pageInfo" class="pageInfo">
 			<!-- 이전페이지 버튼 -->
 			<c:if test="${pageMaker.prev}">
 				<li class="pageInfo_btn previous"><a href="#"
-					onclick="paging(${pageMaker.startPage-1})" style="border : 1px solid white; padding:5px 5px;">Previous</a></li>
+					onclick="paging(${pageMaker.startPage-1})"
+					style="border: 1px solid white; padding: 5px 5px;">Previous</a></li>
 			</c:if>
 			<!-- 각 번호 페이지 버튼 -->
 			<c:forEach var="num" begin="${pageMaker.startPage}"
 				end="${pageMaker.endPage}">
 				<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
-					href="#" onclick="paging(${num})" style="border : 1px solid white; padding:5px 5px;">${num}</a></li>
+					href="#" onclick="paging(${num})"
+					style="border: 1px solid white; padding: 5px 5px;">${num}</a></li>
 			</c:forEach>
 			<!-- 다음페이지 버튼 -->
 			<c:if test="${pageMaker.next}">
 				<li class="pageInfo_btn next"><a href="#"
-					onclick="paging(${pageMaker.endPage + 1})" style="border : 1px solid white; padding:5px 5px;">Next</a></li>
+					onclick="paging(${pageMaker.endPage + 1})"
+					style="border: 1px solid white; padding: 5px 5px;">Next</a></li>
 			</c:if>
 		</ul>
 	</div>
@@ -144,11 +160,11 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 	<input type="hidden" name="startDate" value="${startDate }"> <input
-			type="hidden" name="endDate" value="${endDate }">
+		type="hidden" name="endDate" value="${endDate }">
 </form>
 
 <div align="right">
-	<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>뒤로가기</span></a>
+	<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>목록으로</span></a>
 </div>
 
 <script>

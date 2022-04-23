@@ -1,5 +1,7 @@
 package com.munhwa.prj.wallet.web;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,17 +21,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.music.service.MusicService;
 import com.munhwa.prj.music.service.PurchaseService;
 import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.music.vo.PurchaseVO;
+import com.munhwa.prj.performance.service.PerformanceService;
+import com.munhwa.prj.ticketList.service.TicketListService;
+import com.munhwa.prj.ticketList.vo.TicketListVO;
 import com.munhwa.prj.wallet.service.ProfitService;
 import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.ProfitVO;
@@ -51,6 +59,16 @@ public class WalletController {
 	@Autowired
 	private PurchaseService purchaseDao;
 	
+	@Autowired
+	private MusicService musicDao;
+	
+	@Autowired
+	private TicketListService ticketListDao;
+	
+	@Autowired
+	private PerformanceService performanceDao;
+	
+	
 	//카트 결제
 	@Transactional
 	@PostMapping("/payCart")
@@ -70,7 +88,6 @@ public class WalletController {
 		List<UsageVO> resultUsageList = new ArrayList<>();
 		List<PurchaseVO> resultPurchaseList = new ArrayList<>();
 		List<ProfitVO> resultProfitByArtist = new ArrayList<>();
-		Map<String,Object> param = new HashMap<String, Object>();
 		for(MusicVO music : musics) {
 			sum += music.getPrice();
 			UsageVO usageVO = new UsageVO();
@@ -79,13 +96,15 @@ public class WalletController {
 			usageVO.setPlace("U01");
 			usageVO.setMemberId(memberId);
 			usageVO.setPks(music.getId());
+			usageVO.setName(music.getTitle());
 			
 			resultUsageList.add(usageVO);
 			            
 			PurchaseVO purchaseVO = new PurchaseVO();
 			purchaseVO.setMusicId(music.getId());
 			purchaseVO.setMemberId(memberId);
-			
+			purchaseVO.setCreatedAt(useDate);
+
 			resultPurchaseList.add(purchaseVO);
 			
 			ProfitVO profitVO = new ProfitVO();
@@ -95,12 +114,18 @@ public class WalletController {
 			profitVO.setPks(music.getId());
 			profitVO.setId(music.getId());
 			profitVO.setBuyer(memberId);
+			profitVO.setName(music.getTitle());
 			
 			resultProfitByArtist.add(profitVO);
+			
+			Map<String,Object> param = new HashMap<String, Object>();
 								
 			param.put("v_member_id", memberId);
 			param.put("v_mileage", music.getPrice());
 			param.put("v_title", music.getTitle());
+
+			// 곡 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저 
+			memberDao.updateMileageMusic(param);
 		}	
 
 			// 사용내역 남기기 
@@ -109,8 +134,6 @@ public class WalletController {
 			purchaseDao.purchaseInsert(resultPurchaseList);
 			// 곡 구매시 아티스트 수익 내역에 찍기
 			profitDao.insertProfit(resultProfitByArtist);
-			// 곡 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저 
-			memberDao.updateMileageMusic(param);
 			
 			user.getCart().clear();
 			user.setMileage(user.getMileage()-sum);
@@ -127,11 +150,14 @@ public class WalletController {
 		return "walletInfo-memberWallet";
 	}
 	
+		
 	// 지갑 정보 상세 페이지
 	@RequestMapping("/walletInfoSelect.do")
 	public String walletInfoSelect(@LoginUser SessionUser user, Model model, Criteria cri, 
-			@RequestParam(value="startDate", required = false) String startDate,
-			@RequestParam(value="endDate", required = false) String endDate) {
+			@RequestParam(value="startDate", required = false, defaultValue = "2022-01-01") String startDate,
+			@RequestParam(value="endDate", required = false, defaultValue="2022-12-31") String endDate) {
+
+	    
 		String memberId = user.getId();
 		List<ChargeVO> list = chargeDao.findByMemberId(memberId, cri, startDate, endDate);
 		Integer mileage = chargeDao.getCountByMileage(memberId, startDate, endDate);
@@ -149,8 +175,8 @@ public class WalletController {
 	// 마일리지 사용 내역 페이지 (곡 구매)
 	@RequestMapping("/usageHistoryOfMusic.do")
 	public String usageHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri,
-			@RequestParam(value="startDate", required = false) String startDate,
-			@RequestParam(value="endDate", required = false) String endDate) {
+			@RequestParam(value="startDate", required = false, defaultValue = "2022-01-01") String startDate,
+			@RequestParam(value="endDate", required = false, defaultValue="2022-12-31") String endDate) {
 		String memberId = user.getId();
 		List<UsageVO> music = usageDao.findByMusic(memberId, cri, startDate, endDate);
 		Integer mileage = usageDao.getSumByMusic(memberId, startDate, endDate);
@@ -168,8 +194,8 @@ public class WalletController {
 	// 마일리지 사용 내역 페이지 (공연 티켓 구매)
 	@RequestMapping("/usageHistoryOfPerformance.do")
 	public String usageHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri,
-			@RequestParam(value="startDate", required = false) String startDate,
-			@RequestParam(value="endDate", required = false) String endDate) {
+			@RequestParam(value="startDate", required = false, defaultValue = "2022-01-01") String startDate,
+			@RequestParam(value="endDate", required = false, defaultValue="2022-12-31") String endDate) {
 		String memberId = user.getId();
 		List<UsageVO> performance = usageDao.findByPerformance(memberId, cri, startDate, endDate);
 		Integer mileage = usageDao.getSumByPerformance(memberId, startDate, endDate);
@@ -202,8 +228,8 @@ public class WalletController {
 	// 아티스트 수익 내역 페이지 (곡 수익)
 	@GetMapping("/profitHistoryOfMusic.do")
 	public String profitHistoryOfMusic(@LoginUser SessionUser user, Model model, Criteria cri,
-			@RequestParam(value="startDate", required = false) String startDate,
-			@RequestParam(value="endDate", required = false) String endDate) {
+			@RequestParam(value="startDate", required = false, defaultValue = "2022-01-01") String startDate,
+			@RequestParam(value="endDate", required = false, defaultValue="2022-12-31") String endDate) {
 		String memberId = user.getId();
 		List<ProfitVO> music = profitDao.findByMusic(memberId, cri, startDate, endDate);
 		Integer mileage = profitDao.getSumByMusic(memberId, startDate, endDate);
@@ -221,8 +247,8 @@ public class WalletController {
 	// 아티스트 수익 내역 페이지 (공연 수익)
 	@GetMapping("/profitHistoryOfPerformance.do")
 	public String profitHistoryOfPerformance(@LoginUser SessionUser user, Model model, Criteria cri,
-			@RequestParam(value="startDate", required = false) String startDate,
-			@RequestParam(value="endDate", required = false) String endDate) {
+			@RequestParam(value="startDate", required = false, defaultValue = "2022-01-01") String startDate,
+			@RequestParam(value="endDate", required = false, defaultValue="2022-12-31") String endDate) {
 		String memberId = user.getId();
 		List<ProfitVO> performance = profitDao.findByPerformance(memberId, cri, startDate, endDate);
 		Integer mileage = profitDao.getSumByPerformance(memberId, startDate, endDate);
@@ -237,8 +263,74 @@ public class WalletController {
 		return "profitHistoryOfPerformance-memberWallet";
 	}
 	
-//	@RequestMapping("/refund")
-//	public String refundUsage(@LoginUser SessionUser user, Model model) {
-//		
-//	}
+	@RequestMapping("/refundOfMusic.do")
+	@ResponseBody
+	public String refundOfMusic(@LoginUser SessionUser user, Model model, @RequestParam int id, @RequestParam String place) {
+		System.out.println("--------------------"+id +"-----------------"+place);
+		String memberId = user.getId();
+		List<UsageVO> usages = usageDao.selectById(id, place);
+		Map<String,Object> param = new HashMap<String, Object>();
+		for(UsageVO usage : usages) {
+			System.out.println(usage.getPks());
+			System.out.println(usage.getMileage());
+			System.out.println(usage.getName());
+			param.put("v_member_id", memberId);
+			param.put("v_music_id", usage.getPks());
+			param.put("v_mileage", usage.getMileage());
+			param.put("v_title", usage.getName());
+			
+			user.setMileage(user.getMileage()+usage.getMileage());
+		}
+			usageDao.refundOfMusic(param);
+		
+		
+		return "ok";
+	}
+	
+	
+	@RequestMapping("/refundOfPerformance.do")
+	public String refundOfPerformance(@LoginUser SessionUser user, Model model, @RequestParam int id, @RequestParam String place) {
+		System.out.println("--------------------"+id +"-----------------"+place);
+		String memberId = user.getId();
+		List<UsageVO> usages = usageDao.selectById(id, place);
+		Map<String,Object> param = new HashMap<String, Object>();
+		for(UsageVO usage : usages) {
+			
+		TicketListVO tvo = new TicketListVO();
+		tvo.setId(usage.getPks());
+		tvo = ticketListDao.ticketListSelect(tvo);
+		usage.setTicketListvo(tvo);
+		
+		param.put("v_tic_id", usage.getPks());
+		param.put("v_tic_attendance", usage.getTicketListvo().getAttendance());
+		param.put("v_per_id", usage.getTicketListvo().getPerformanceId());
+		param.put("v_tic_person", usage.getTicketListvo().getPerson());
+		param.put("v_mileage", usage.getMileage());
+		param.put("v_member_id", memberId);
+		
+		user.setMileage(user.getMileage()+usage.getMileage());
+		
+		}
+		
+		usageDao.refundOfPerformance(param);
+		
+	
+		return "usageHistoryOfPerformance-memberWallet";
+	}
+	
+	@RequestMapping("/usagePurchasedMusic")
+	@ResponseBody
+	public List<UsageVO> usagePurchasedMusic(@LoginUser SessionUser user, @RequestBody List<RefundRequestDto> pkList) {
+		String memberId = user.getId();
+		System.out.println(pkList);
+		List<Integer> idList = pkList.stream()
+				.map(RefundRequestDto::getPks)
+				.collect(Collectors.toList());
+		
+		List<UsageVO> result = usageDao.selectByMusicOfId(idList, memberId);
+		System.out.println(result);
+		
+		return result;
+	}
+	
 }

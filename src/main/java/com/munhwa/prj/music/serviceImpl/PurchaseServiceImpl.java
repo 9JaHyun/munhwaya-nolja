@@ -1,5 +1,6 @@
 package com.munhwa.prj.music.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,9 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public int getCountByList5(String id) {
 		return map.getCountByList5(id);
 	}
+
+
+	
+
 
 }

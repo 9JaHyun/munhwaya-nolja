@@ -23,15 +23,16 @@
 						<div>
 							<table border="1">
 								<tr>
-									<td width="300" hidden><a>아티스트 이름</a> <input name="artistId" style="width: 500px"
-										type="text" value="${artist.id}" readonly="readonly"></td>
+									<td width="300" hidden><a>아티스트 이름</a> <input
+										name="artistId" style="width: 500px" type="text"
+										value="${artist.id}" readonly="readonly"></td>
 									<td width="300"><a>아티스트 이름</a> <input style="width: 500px"
 										type="text" value="${artist.name}" readonly="readonly"></td>
 								</tr>
 								<tr>
-									<td width="300"><a>공연장소</a> <input
-										style="width: 500px" type="text" name="location"
-										id="location" value="예담 소극장" readonly="readonly"></td>
+									<td width="300"><a>공연장소</a> <input style="width: 500px"
+										type="text" name="location" id="location" value="예담 소극장"
+										readonly="readonly"></td>
 								</tr>
 								<tr>
 									<td width="300"><a>공연 시작 시간</a> <input
@@ -80,7 +81,7 @@
 	</div>
 	<!-- span8 posts -->
 	<div class="span4 sidebar">
-		<div class="def-block widget" style="width: 700px; height: 730px;">
+		<div class="def-block widget" style="width: 750px; height: 730px;">
 			<h4>공연일정</h4>
 			<span class="liner"></span>
 			<div id='calendar'></div>
@@ -93,6 +94,13 @@
 
 
 <script>
+$(document).ready(function(){
+	var message = "${message}"
+	   if(message != null && message.length > 0) {
+		   alert(message);
+	   }
+});
+
 	document
 			.addEventListener(
 					'DOMContentLoaded',
@@ -107,7 +115,6 @@
 
 							request
 									.done(function(data) {
-										console.log(data); // log 로 데이터 찍어주기.
 
 										var calendarEl = document
 												.getElementById('calendar');

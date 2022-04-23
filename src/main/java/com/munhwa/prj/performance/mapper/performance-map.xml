@@ -1,45 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.munhwa.prj.performance.mapper.PerformanceMapper">
-	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
-		<id property="id" column="id"/>
-		<result property="name" column="name"/>
-		<result property="location" column="location"/>
-		<result property="sdate" column="sdate"/>
-		<result property="edate" column="edate"/>
-		<result property="content" column="content"/>
-		<result property="status" column="status"/>
-		<result property="image" column="image"/>
-		<result property="artistId" column="artist_id"/>
-		<result property="price" column="price"/>
-		<result property="person" column="person"/>
-		<result property="artistName" column="artist_name"/>
-		<collection property="performancepersonalvo" resultMap="performancepersonalResultMap"></collection>
+<mapper
+	namespace="com.munhwa.prj.performance.mapper.PerformanceMapper">
+	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO"
+		id="performanceResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="location" column="location" />
+		<result property="sdate" column="sdate" />
+		<result property="edate" column="edate" />
+		<result property="content" column="content" />
+		<result property="status" column="status" />
+		<result property="image" column="image" />
+		<result property="artistId" column="artist_id" />
+		<result property="price" column="price" />
+		<result property="person" column="person" />
+		<result property="artistName" column="artist_name" />
+		<collection property="performancepersonalvo"
+			resultMap="performancepersonalResultMap" />
 	</resultMap>
-	
-	<resultMap type="com.munhwa.prj.performance.vo.PerformancePersonalVO" id="performancepersonalResultMap">
-		<id property="id" column="id"/>
-		<result property="personal" column="personal"/>
-	</resultMap>
-	
 
-	<select id="performanceSelectAll" resultMap="performanceResultMap">
-		SELECT	ID
-		,		NAME
-		,		LOCATION
-		,		SDATE
-		,		EDATE
-		,		CONTENT
-		,		IMAGE
-		,		ARTIST_ID
-		,		PRICE
-		,		PERSON
-		,		STATUS
-		FROM	PERFORMANCE
+	<resultMap
+		type="com.munhwa.prj.performance.vo.PerformancePersonalVO"
+		id="performancepersonalResultMap">
+		<id property="id" column="id" />
+		<result property="personal" column="personal" />
+	</resultMap>
+
+
+	<select id="performanceSelectAll"
+		resultMap="performanceResultMap">
+		SELECT ID
+		, NAME
+		, LOCATION
+		, SDATE
+		, EDATE
+		, CONTENT
+		, IMAGE
+		,
+		ARTIST_ID
+		, PRICE
+		, PERSON
+		, STATUS
+		FROM PERFORMANCE
 	</select>
-	
-	
-	<select id="performanceSelectList" resultMap="performanceResultMap">
+
+
+	<select id="performanceSelectList"
+		resultMap="performanceResultMap">
 		<![CDATA[
 		SELECT	ID
 		,		NAME
@@ -111,7 +119,7 @@
 		AND	  P.ARTIST_ID = A.ID
 		]]>
 		<if test="keyword != null">
-			AND P.NAME LIKE '%'||#{keyword}||'%'
+			<include refid="criteria"></include>
 		</if>
 		ORDER BY P.SDATE DESC
 		)
@@ -120,60 +128,97 @@
 		AND rank <= #{pageNum} * #{amount}
 		]]>
 	</select>
-	
+
 	<select id="getTotal" resultType="int">
-        SELECT COUNT(*) FROM PERFORMANCE
-        <where>
-        <if test="cri.keyword != null">
-        	AND NAME LIKE '%'||#{cri.keyword}||'%'
-        </if>
-        <if test="filter != null and filter.equals('A01')">
-        	AND STATUS = 'A01'
-        </if>
-        <if test="filter != null and filter.equals('A02')">
-        	AND STATUS = 'A02'
-        </if>
-        <if test="filter != null and filter.equals('A03')">
-        	AND STATUS = 'A03'
-        </if>
-        </where>
-    </select>
-	
-	
-	<select id="performanceSelect" parameterType="com.munhwa.prj.performance.vo.PerformanceVO" resultMap="performanceResultMap">
-		SELECT	P.ID
-		,		P.NAME
-		,		P.LOCATION
-		,		P.SDATE
-		,		P.EDATE
-		,		P.CONTENT
-		,		P.STATUS
-		,		P.IMAGE
-		,		P.ARTIST_ID
-		,		P.PRICE
-		,		PP.PERSONAL
-		,		A.NAME as artist_name
-		,		P.PERSON - PP.PERSONAL AS PERSON
-		FROM	PERFORMANCE P, PERFORMANCE_PERSONAL PP, ARTIST A
-		WHERE   P.ID = #{id}
-		AND		P.ID = PP.ID
-		AND		P.ARTIST_ID = A.ID
+		SELECT COUNT(*) FROM PERFORMANCE P
+		<where>
+			<if test="keyword != null">
+				AND P.NAME LIKE '%'||#{keyword}||'%'
+			</if>
+				AND P.STATUS = 'A01'
+		</where>
 	</select>
-	
-	<insert id="performanceInsert" parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
-		INSERT INTO PERFORMANCE(ID, NAME, LOCATION, SDATE, EDATE, CONTENT, IMAGE, PRICE, ARTIST_ID)
-		VALUES(PERFORMANCE_SEQ.nextval, #{name}, #{location}, #{sdate}, #{edate}, #{content}, #{image}, #{price}, #{artistId})
+
+	<select id="admingetTotal" resultType="int">
+		SELECT COUNT(*) FROM PERFORMANCE P
+		<where>
+			<if test="keyword != null">
+				<include refid="criteria"></include>
+			</if>
+		</where>
+	</select>
+
+	<!-- 검색 조건문 -->
+	<sql id="criteria">
+		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							P.NAME like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'S'.toString()">
+							<if test="keyword.equals('승인')">
+								P.STATUS = 'A01'
+							</if>
+							<if test="keyword.equals('거절')">
+								P.STATUS = 'A02'
+							</if>
+							<if test="keyword.equals('대기')">
+								P.STATUS = 'A03'
+							</if>
+							<if test="keyword.equals('종료')">
+								P.STATUS = 'A04'
+							</if>
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+	<select id="performanceSelect"
+		parameterType="com.munhwa.prj.performance.vo.PerformanceVO"
+		resultMap="performanceResultMap">
+		SELECT P.ID
+		, P.NAME
+		, P.LOCATION
+		, P.SDATE
+		, P.EDATE
+		, P.CONTENT
+		, P.STATUS
+		, P.IMAGE
+		, P.ARTIST_ID
+		, P.PRICE
+		, PP.PERSONAL
+		, A.NAME as
+		artist_name
+		, P.PERSON - PP.PERSONAL AS PERSON
+		FROM PERFORMANCE P,
+		PERFORMANCE_PERSONAL PP, ARTIST A
+		WHERE P.ID = #{id}
+		AND P.ID = PP.ID
+		AND P.ARTIST_ID = A.ID
+	</select>
+
+	<insert id="performanceInsert"
+		parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
+		INSERT INTO PERFORMANCE(ID, NAME, LOCATION, SDATE,
+		EDATE, CONTENT, IMAGE, PRICE, ARTIST_ID)
+		VALUES(PERFORMANCE_SEQ.nextval, #{name}, #{location}, #{sdate},
+		#{edate}, #{content}, #{image}, #{price}, #{artistId})
 	</insert>
 
-
-	
-	<update id="performanceUpdate" statementType="CALLABLE" parameterType="map">
+	<update id="performanceUpdate" statementType="CALLABLE"
+		parameterType="map">
 		<![CDATA[
 			{ call accept_performance (
 				#{v_per_id, mode=IN, jdbcType=INTEGER, javaType=int},
-				#{v_per_status, mode=IN, jdbcType=VARCHAR, javaType=string}
+				#{v_per_status, mode=IN, jdbcType=VARCHAR, javaType=string},
+				#{v_artist_id, mode=OUT, jdbcType=INTEGER, javaType=int}
 			)}
 		]]>
 	</update>
-	
+
 </mapper>

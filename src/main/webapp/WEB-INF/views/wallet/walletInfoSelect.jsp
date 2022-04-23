@@ -55,7 +55,7 @@ response.setDateHeader("Expires", 0);
 if (request.getProtocol().equals("HTTP/1.1"))
 	response.setHeader("Cache-Control", "no-cache");
 %>
-
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <div class="def-block clearfix">
 	<div align="right" style="margin-bottom: 50px;">
 		<h4>충전 내역</h4>
@@ -83,19 +83,19 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				style="color: white;">
 				시작일&nbsp;&nbsp; <input type="date" id="startDate" name="startDate"
 					style="margin-bottom: 0px; margin-right: 20px; width: 100px;"
-					value="${startDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
+					value="${startDate}" max="${endDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
 					type="date" id="endDate" name="endDate"
-					style="margin-bottom: 0px; width: 100px" value="${endDate }">
-				<input type="submit" value="검색" class="tbutton small"
+					style="margin-bottom: 0px; width: 100px" value="${endDate }" >
+				<input type="submit" value="검색" class="tbutton small" id="click"
 					style="height: 30px; width: 50px">
 			</form>
 			<div style="color: white; margin-top: 10px; margin-bottom: 10px;">
 				기간별 충전액&nbsp;&nbsp;<input type="text" id="sumMileage"
 					value="${sumMileage }" readonly="readonly"
-					style="height: 20px; width: 60px; margin-bottom: 0px;">
+					style="height: 20px; width: 80px; margin-bottom: 0px;">
 			</div>
 		</div>
-		<table class="table">
+		<table class="table" style="word-break:break-all;">
 			<thead>
 				<tr>
 					<th scope="col">충전 일자</th>
@@ -116,7 +116,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		</table>
 	</div>
 	<div class="pageInfo_wrap">
-		<div class="pageInfo_area" style="margin-left:auto; margin-top:30px; width:410px;">
+		<div class="pageInfo_area" style="margin-left:auto; margin-top:30px; width:660px;">
 			<ul id="pageInfo" class="pageInfo">
 				<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMaker.prev}">
@@ -153,6 +153,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 <!-- def block -->
 <!-- span8 posts -->
 <script>
+	
 	function paging(num) {
 		moveForm.pageNum.value = num;
 		moveForm.submit();		

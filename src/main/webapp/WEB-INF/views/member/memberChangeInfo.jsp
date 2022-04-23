@@ -20,7 +20,6 @@
                     </c:when>
                     <c:otherwise>
                     	 <c:choose>
-
                     		<c:when test="${artists.name eq null}">
                     	<li>
                     		<i class="icon-comment-alt"></i>
@@ -43,11 +42,16 @@
             <li>
                 <i class="icon-comment-alt"></i>
                 <a href="changeInfo.do">개인정보 변경</a>
-                <div class="topic-time">비밀번호와 전화번호, 관심장르를 변경합니다.</div>
+                <div class="topic-time">전화번호와 관심장르를 변경합니다.</div>
             </li>
             <li>
                 <i class="icon-comment-alt"></i>
-                <a href="dropMember.do">회원탈퇴</a>
+                <a href="checkPassword.do">비밀번호 변경</a>
+                <div class="topic-time">비밀번호를 변경합니다.</div>
+            </li>            
+            <li>
+                <i class="icon-comment-alt"></i>
+                <a href="dropMember.do">회원 탈퇴</a>
                 <div class="topic-time">회원을 탈퇴합니다.</div>
             </li>
         </ul>

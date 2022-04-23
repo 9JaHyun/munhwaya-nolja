@@ -119,10 +119,10 @@
 <script>
     $(window).on('load', function () {
         // 기본 갯수
-        load('#js-load', '4');
+        load('#js-load', '5');
         $("#js-btn-wrap .button").on("click", function () {
             // 증가 갯수
-            load('#js-load', '3', '#js-btn-wrap');
+            load('#js-load', '2', '#js-btn-wrap');
         })
     });
 
@@ -139,7 +139,7 @@
         $(list + ":lt(" + total_cnt + ")").addClass("active");
     }
 
-    function delWishFnc(id) {
+     function delWishFnc(id) {
         var wname = $(event.target).parent().parent().next().children().children().data("wname");
         if (!confirm("[" + wname + '] 삭제하시겠습니까?')) {
         } else {
@@ -151,6 +151,7 @@
             })
             .done(() => {
                 document.getElementById(id).parentNode.parentNode.parentNode.parentNode.remove();
+                load('#js-load', '1');
             });
         }
     }

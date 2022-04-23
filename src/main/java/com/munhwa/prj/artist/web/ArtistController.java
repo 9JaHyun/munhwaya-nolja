@@ -26,7 +26,6 @@ import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.service.PromotionRequestService;
 import com.munhwa.prj.artist.serviceImpl.SmsServiceImpl;
 import com.munhwa.prj.artist.vo.ArtDetailVO;
-import com.munhwa.prj.artist.vo.ArtDetailVO2;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.file.entity.UploadFile;

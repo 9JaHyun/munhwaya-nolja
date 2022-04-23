@@ -12,6 +12,14 @@ public class Criteria {
     private int pageNum; // 현재페이지
     private int amount; // 수량
     
+    private String keyword;
+    
+    private String type;
+    
+    private String[] typeArr;
+    
+    private String filter;
+    
     public Criteria() {
         this(1,10);
     }
@@ -21,4 +29,13 @@ public class Criteria {
         this.pageNum = pageNum;
         this.amount = amount;
     }
+    
+	public void setType(String type) {
+		this.type = type;
+		this.typeArr = type.split("");
+	}
+
+	public String[] getTypeArr() {
+		return typeArr;
+	}
 }

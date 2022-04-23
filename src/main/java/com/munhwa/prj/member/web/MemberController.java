@@ -7,7 +7,7 @@ import com.munhwa.prj.common.code.entity.Genre;
 import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.service.FileUtils;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.Auth;
 import com.munhwa.prj.member.vo.MemberVO;
@@ -55,7 +55,7 @@ public class MemberController {
     @PreAuthorize("hasRole('R01')")
     @GetMapping("/mypage.do")
     public String mypage(@LoginUser SessionUser sessionUser, Model model) {
-        model.addAttribute("news1", newsService.newsList(sessionUser.getId()));
+        model.addAttribute("news1", newsService.findByMemberId(sessionUser.getId()));
         return "mypage-member";
     }
 
@@ -142,7 +142,25 @@ public class MemberController {
             return "error/404";
         }
     }
-
+    
+    // 비밀번호 변경 페이지 - 현재 비밀번호 확인 폼
+    @GetMapping("/checkPassword.do")
+    public String checkPasswordForm() {
+    	return "checkPassword-member";
+    }
+    
+    // 비밀번호 변경 페이지 - 현재 비밀번호 확인
+    @PostMapping("/checkPassword.do")
+    public String checkPassword(RedirectAttributes attr, MemberVO vo, @LoginUser SessionUser user) {
+    	if (passwordEncoder.matches(vo.getPassword(), user.getPassword())) {
+    		return "redirect:changePassword.do";
+    	} else {
+            String message = "비밀번호가 일치하지 않습니다.";
+            attr.addFlashAttribute("message", message);
+            return "redirect:checkPassword.do";
+        }
+    }
+    
     // 비밀번호 변경 페이지
     @GetMapping("/changePassword.do")
     public String changePassword() {
@@ -155,7 +173,8 @@ public class MemberController {
         vo.setPassword(passwordEncoder.encode(password1));
         int n = memberService.updatePassword(vo);
         if (n != 0) {
-            return "redirect:memberChangeInfo.do";
+        	SecurityContextHolder.clearContext();
+            return "redirect:main.do";
         } else {
             return "error/404";
         }

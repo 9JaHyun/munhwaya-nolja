@@ -44,8 +44,10 @@
         <div align="center" style="margin-top: 80px;">
         		<!-- 프로필사진 삭제 버튼 -->
         		<div align="center" style="position: absolute; right: 362px; top: 275px;" >
-	            	<p onclick="basicImgFn()" class="tbutton color2 small"><span>삭제</span></p>
-	            </div>	
+	            	<p onclick="basicImgFn()" class="tbutton color2 small" id="delBtn">
+	            	<span>삭제</span>
+	            	</p>
+	            </div>
             <!-- 변경할 프로필사진 썸네일 -->
             <c:choose>
                 <c:when test="${member.sname eq null}">
@@ -83,12 +85,20 @@
 			<input type="hidden" name="basicImgInput">
         </div>
         <div align="right">
+        	<button type="button" class="tbutton small" style="margin-right: 2px;" onclick="location.href='memberChangeInfo.do'"><span>뒤로가기</span></button>
             <button type="button" class="tbutton small" onclick="send();"><span>수정</span></button>
         </div>
     </form>
 </div>
 
 <script>
+
+	// 기본이미지 -> 삭제 버튼 숨김
+    var imageName = $("#imageName").val();
+	if (imageName == '') {
+		$("#delBtn").hide();
+		} 
+	
     function setThumbnail(event) {
         var reader = new FileReader();
         reader.onload = function (event) {
@@ -100,6 +110,9 @@
         var afterName = event.target.files[0].name;
         var beforeName = $("#imageName");
         beforeName.val(afterName);
+        // 삭제 버튼 보이기
+        $("#delBtn").show();
+         
     }
 
     function send() {
@@ -136,5 +149,6 @@
      	frm.basicImgInput.value = "basic";
      	frm.file.value = null;
      	$("#imageName").val("기본이미지");
+     	$("#delBtn").hide();
 	}
 </script>

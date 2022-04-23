@@ -361,6 +361,13 @@ td{
 	}());
 	/* ]]> */
 
+	$(document).ready(function() {     
+        $('#myModal').on('show.bs.modal', function(event) {   
+        	
+        	musicid = $(event.relatedTarget).data('musicid');
+        });
+    });
+
 	function buy() {
 		 var id = $(event.target).data('musicid');
 	  $.ajax ({
@@ -378,7 +385,6 @@ td{
 		    		        data : {"id" : id},                   
 		    		        dataType : "text",
 		    		        success : function(data) {
-		    		        console.log(data);
 		    		        	alert("장바구니에 담았습니다.");
 		    		        },
 		    		        error: function(xhr, status, error){

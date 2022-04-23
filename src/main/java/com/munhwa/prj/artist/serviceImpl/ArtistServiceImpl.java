@@ -100,22 +100,4 @@ private ArtistMapper map;
 		// TODO Auto-generated method stub
 		return map.getStatus(memberId);
 	}
-
-	
-
-
-	
-
-
-
-
-	
-
-//	@Override
-//	public List<ArtDetailVO2> musicListPage(Criteria cri) {
-//		// TODO Auto-generated method stub
-//		return map.musicListPage(cri);
-//	}
-
-	
 }

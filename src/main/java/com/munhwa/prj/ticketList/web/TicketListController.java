@@ -1,21 +1,5 @@
 package com.munhwa.prj.ticketList.web;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageConfig;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.performance.vo.PerformanceVO;
-import com.munhwa.prj.ticketList.service.TicketListService;
-import com.munhwa.prj.ticketList.vo.TicketListVO;
-import com.munhwa.prj.wallet.service.ProfitService;
-import com.munhwa.prj.wallet.service.UsageService;
-import com.munhwa.prj.wallet.vo.UsageVO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,10 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -43,6 +28,25 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
+import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.performance.service.PerformanceService;
+import com.munhwa.prj.performance.vo.PerformanceVO;
+import com.munhwa.prj.ticketList.service.TicketListService;
+import com.munhwa.prj.ticketList.vo.TicketListVO;
+import com.munhwa.prj.wallet.service.ProfitService;
+import com.munhwa.prj.wallet.service.UsageService;
+import com.munhwa.prj.wallet.vo.UsageVO;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -69,7 +73,7 @@ public class TicketListController {
 		String memberId = user.getId();
 		List<TicketListVO> list = ticketListDao.ticketListSelectList(memberId);
 		model.addAttribute("ticketLists", list);
-		return "ticketList/ticketList";
+		return "ticketList-memberTicket";
 	}
 
 	@RequestMapping("/ticketListSelect.do")
@@ -78,19 +82,21 @@ public class TicketListController {
 		vo = ticketListDao.ticketListSelect(vo);
 		model.addAttribute("nickname", nickname);
 		model.addAttribute("ticket", vo);
-		return "ticketList/ticketListSelect";
+		return "ticketListSelect-memberTicket";
 	}
 	
 	@Transactional
 	@RequestMapping("/ticketListInsert.do")
-	public String ticketListInsert(@LoginUser SessionUser user, int id, int person, HttpServletRequest req,
-			HttpServletResponse response) throws WriterException, IOException {
+	public String ticketListInsert(@LoginUser SessionUser user, int id, int person, HttpServletRequest req) throws WriterException, IOException {
 		String memberId = user.getId();
+		Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("v_member_id", memberId);
 		paramMap.put("v_performance_id", id);
 		paramMap.put("v_person", person);
+		paramMap.put("v_time", useDate);
 
+		
 		int ticketId = ticketListDao.ticketListInsert(paramMap);
 		log.info("ticketId={}", ticketId);
 		String qr = makeQR(req, ticketId);
@@ -106,7 +112,6 @@ public class TicketListController {
 		ticketListDao.qrcodeUpdate(vo);
 
 
-		Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 
 		List<UsageVO> resultUsageList = new ArrayList<>();
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -117,6 +122,7 @@ public class TicketListController {
 		usageVO.setPlace("U02");
 		usageVO.setMemberId(memberId);
 		usageVO.setPks(vo.getId());
+		usageVO.setName(vo.getPerformancevo().getName());
 
 		resultUsageList.add(usageVO);
 
@@ -125,6 +131,7 @@ public class TicketListController {
 		param.put("v_ticket_list_id", vo.getId());
 		param.put("v_profit_at", useDate);
 		param.put("v_artist_id", vo.getPerformancevo().getArtistId());
+		param.put("v_name", vo.getPerformancevo().getName());
 		
 		// 사용 내역 남기기
 		usageDao.insertUsage(resultUsageList);
@@ -133,13 +140,6 @@ public class TicketListController {
 		memberDao.updateMileagePerformance(param);
 
 		user.setMileage(user.getMileage() - vo.getPerformancevo().getPrice() * person);
-		
-		PrintWriter out = response.getWriter();
-		response.setContentType("text/html; charset=utf-8");
-		out.println("<script language='javascript'>");
-		out.println("alert('예매가 완료되었습니다.');");
-		out.println("</script>");
-		out.flush();
 
 		return "home/home"; // 메인화면경로 넣어줘야함
 	}
@@ -151,7 +151,7 @@ public class TicketListController {
 		try (DatagramSocket r = new DatagramSocket()) {
 			r.connect(InetAddress.getByName("8.8.8.8"), 10002);
 			String t = req.getRequestURI();
-			qrURI = r.getLocalAddress().getHostAddress() + "/prj/ticketCheck/" + ticketId;
+			qrURI = r.getLocalAddress().getHostAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (SocketException e1) {

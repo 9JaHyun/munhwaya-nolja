@@ -84,31 +84,44 @@
 		<div class="row row-fluid clearfix mbf">
 				<div class="posts">
 					<div class="def-block">
-						<h4> 검색결과 </h4><span class="liner"></span>
+						<h4> 검색결과 </h4>
+						<button type="button" class="tbutton medium" onclick="ListaddCart()" style="font-size:10px; margin-bottom:7px; margin-left: 7px">
+							<span>선택구매</span>
+						</button>
+						<span class="liner"></span>
 						<div class="products shop clearfix">
 							<div class="grid_12">
 									<div class="bag_table">
 										<table class="shop_table footable tablet footable-loaded" style="width:100%;">
 											<thead>
 												<tr>
+													<th style="width: 50px;" ><input style="margin-right:30px" type="checkbox" id="allCheck"></th>
 													<th></th>
 													<th style="width: 300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
 													<th><h4>앨범</h4></th>
-													<th><h4>다운로드</h4></th>
+													<th><h4>구매</h4></th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="music" items="${musicSelectListByTitle1}">
 												<tr class="cart_table_item" style="text-align: center; font-size:medium;">
+													<c:choose>
+					                            		<c:when test="${!music.purchase }">
+															<td style="vertical-align: middle;"><input class="all" style="margin-right:30px" name="buyCheck" type="checkbox" value="${music.id }"></td>
+														</c:when>
+														<c:otherwise>
+				                                           <td></td>
+				                                    	</c:otherwise>
+												</c:choose>
 													<td class="product-thumbnail" style="width:70px;">
 													<a href="streaming?id=${music.id }"><img src="api/picture/${music.picture }" alt="#" style="max-width:70px; min-width:70px; max-height :80px; min-height:80px; margin: 10px 0px 10px 0px;"></a>
 													</td>
 													<td class="product-name">
-														${music.title}
+														<a href="streaming?id=${music.id }">${music.title}</a>
 													</td>
 													<td class="product-name">
-														${music.artName }
+														<a href="artistDetail?artId=${music.artId }">${music.artName }</a>
 													</td>
 													<td class="product-name">
 														${music.title }
@@ -182,7 +195,6 @@
                 data: {"id": id},
                 dataType: "text",
                 success: function (data) {
-                    console.log(data);
                     alert("장바구니에 담았습니다.");
                 },
                 error: function (xhr, status, error) {
@@ -198,4 +210,41 @@
         moveForm.pageNum.value = num;
         moveForm.submit();
      };
+     
+     $('#allCheck').change( function(){
+ 	    var imChecked = $(this).is(":checked");
+ 	    if(imChecked){
+ 	        $('.all').prop('checked',true);
+ 	    } else {
+ 	        $('.all').prop('checked',false);
+ 	    }
+ 	});
+
+ 	function ListaddCart() {
+ 		let idList = []
+ 		$('.all').each(function(index, item){
+ 			if($(this).is(":checked")) {
+ 				idList.push($(this).val())
+ 			} 
+ 		})
+ 		var confirm1 = confirm('장바구니에 담으시겠습니까?')
+ 	     if(confirm1) {
+ 	          $.ajax ({
+ 	            url : "cart/add",
+ 	            type : "post",
+ 	            contentType:'application/x-www-form-urlencoded;charset=utf-8',
+ 	    		traditional:true,
+ 	            data : {"id" : idList},                   
+ 	            dataType : "text",
+ 	            success : function(data) {
+ 	            	 alert(data);
+ 	            },
+ 	            error: function(xhr, status, error){
+ 	            	alert("통신실패"); 	            }
+ 	         }) 
+ 	         
+ 	      } else {
+ 	         alert("취소")
+ 	      }
+ 	}
 </script>	

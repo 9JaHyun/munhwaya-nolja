@@ -89,7 +89,7 @@ button {
 <div class="background"></div>
 <form method="post" id="frm" action="signup.do" onsubmit="return send()">
 
-	<h3 style="margin-bottom: 40px;">Sign Up</h3>
+	<h3 style="margin-bottom: 40px;">SIGN UP</h3>
 	
 	<!-- 아이디 -->
 	<h5 style="margin-bottom: 10px;">ID</h5>

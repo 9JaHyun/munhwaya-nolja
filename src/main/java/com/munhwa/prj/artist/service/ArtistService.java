@@ -12,7 +12,6 @@ import com.munhwa.prj.common.paging.entity.Criteria;
 
 public interface ArtistService {
 
-
     List<ArtistVO> selectArtistList();
     List<ArtDetailVO> findMusic(@Param("cri") Criteria cri, @Param("id") int artistId);
 //    List<ArtDetailVO2> musicListPage(@Param("cri") Criteria cri, @Param("artistId")int id);
