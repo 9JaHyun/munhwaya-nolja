@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+	
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
@@ -27,65 +29,70 @@ label {
 	display: block;
 }
 </style>
-
-<div align="right" style="margin-bottom: 50px;">
-	<h4>아티스트 승급신청</h4>
-	<div class="grid_12 tt" style="margin-top: 70px;">
-		<ul class="forum-items" style="text-align: left;">
-			<li><i class="icon-comment-alt"></i> <a href="changePassword.do">승급
-					신청</a>
-				<div class="topic-time">아티스트 승급에 필요한 인증사항을 입력해주세요.</div></li>
-		</ul>
+	<div align="right" style="margin-bottom: 50px;">
+		<h4>아티스트 승급신청</h4>
+		<div class="grid_12 tt" style="margin-top: 70px;">
+			<ul class="forum-items" style="text-align: left;">
+				<li><i class="icon-comment-alt"></i>승급 신청</a>
+					<div class="topic-time">아티스트 승급에 필요한 인증사항을 입력해주세요.</div></li>
+			</ul>
+		</div>
 	</div>
-</div>
-<!-- 아티스트 승급 신청에 필요한 인증 -->
-<div style="padding-top: 5%;">
-	<div style="margin: 100px 0px 10px 0px; border: none;">
-		<br>
-		<form id="info" name="info" method="post" action="artistRequest"
-			enctype="multipart/form-data" onsubmit="return chk_request()">
-			<label id="request-label"><div class="sort">작업물 설명란</div> <textarea
-					id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
-			</label><br> <label><div class="sort">작업물 인증</div> <input
-				type="file" id="file" name="file" accept="image/png, image/jpeg"></label><br>
-
-			<div class="sort">
-				<label>본인인증</label>
-			</div>
-			<div class="filebox">
-				<span>폰번호 입력&emsp;&emsp;<input type="text" id="phone"
-					name="phone" placeholder="번호를 입력하세요.(-빼고 입력)"></span> &emsp;
-				<p id='phoneChk' class="doubleChk tbutton">인증번호 받기</p>
-				<br>
-			</div>
-			<br> <span class="point successPhoneChk" style="color: #FFFFE0;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-				폰 번호 입력 후 인증번호 받기 버튼을 클릭 하세요.</span><br>
-			<div class="filebox">
-				<span>인증번호 입력&emsp;<input type="text" id="phone2"
-					name="phone2" placeholder="인증번호를 입력하세요." disabled required /></span>
-				&emsp;
-				<p id="phoneChk2" class="doubleChk tbutton" style="visibility: hidden;">확인</p>
-				<br>
-			</div>
-			<p>
-				<input type="hidden" id="phoneDoubleChk" />
-			</p>
-
-			<!-- 신청, 취소 버튼 -->
-			<div align="center" style="margin: 3em 0em 0em 0em;">
-				<input type='submit'
-					style="padding: 0.2em 1.1em 0.08em 1em; position: relative; bottom: 8px; margin: 1em 1em 1.1em 0em;"
-					value="신청" class="tbutton small">
-				<!-- <a href="mypage.do" onsubmit="return chk_request()" class="tbutton small"><span>신청</span></a>&emsp; -->
-				<a href="javascript:window.history.back();" class="tbutton small"><span>취소</span></a>
-				<!-- 클릭시 뒤로가기-->
-			</div>
-		</form>
+	<!-- 아티스트 승급 신청에 필요한 인증 -->
+	<div style="padding-top: 5%;">
+		<div style="margin: 100px 0px 10px 0px; border: none;">
+			<br>
+			<form id="info" name="info" method="post" action="artistRequest"
+				enctype="multipart/form-data" onsubmit="return chk_request()">
+				<label id="request-label"><div class="sort">작업물 설명란</div> <textarea
+						id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
+				</label><br> <label><div class="sort">작업물 인증</div> <input
+					type="file" id="file" name="file" accept="image/png, image/jpeg"></label><br>
+	
+				<div class="sort">
+					<label>본인인증</label>
+				</div>
+				<div class="filebox">
+					<span>폰번호 입력&emsp;&emsp;<input type="text" id="phone"
+						name="phone" placeholder="번호를 입력하세요.(-빼고 입력)"></span> &emsp;
+					<p id='phoneChk' class="doubleChk tbutton">인증번호 받기</p>
+					<br>
+				</div>
+				<br> <span class="point successPhoneChk" style="color: #FFFFE0;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+					폰 번호 입력 후 인증번호 받기 버튼을 클릭 하세요.</span><br>
+				<div class="filebox">
+					<span>인증번호 입력&emsp;<input type="text" id="phone2"
+						name="phone2" placeholder="인증번호를 입력하세요." disabled required /></span>
+					&emsp;
+					<p id="phoneChk2" class="doubleChk tbutton" style="visibility: hidden;">확인</p>
+					<br>
+				</div>
+				<p>
+					<input type="hidden" id="phoneDoubleChk" />
+				</p>
+	
+				<!-- 신청, 취소 버튼 -->
+				<div align="center" style="margin: 3em 0em 0em 0em;">
+					<input type='submit'
+						style="padding: 0.2em 1.1em 0.08em 1em; position: relative; bottom: 8px; margin: 1em 1em 1.1em 0em;"
+						value="신청" class="tbutton small">
+					<!-- <a href="mypage.do" onsubmit="return chk_request()" class="tbutton small"><span>신청</span></a>&emsp; -->
+					<a href="javascript:window.history.back();" class="tbutton small"><span>취소</span></a>
+					<!-- 클릭시 뒤로가기-->
+				</div>
+			</form>
+		</div>
 	</div>
-</div>
-<br>
+	<br>
 
 <script>
+	$(document).ready(function(){
+		console.log('page load')
+		if('${pro.status}' != null){
+			alert('이미 신청을 완료했습니다. 신청현황 페이지로 이동합니다.');
+			location.href = 'artStatus';
+		}
+	})
 <!-- 유효성 검사-->
 			<!-- 유효성 검사-->
 		function chk_request(){

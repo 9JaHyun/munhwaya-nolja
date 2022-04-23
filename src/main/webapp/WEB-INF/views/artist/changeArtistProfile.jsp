@@ -115,7 +115,7 @@
 				<option value="G04" selected>R&B/Soul</option>
 			</c:if>
 			</select><br> <br> <label>소개글<br> <textarea
-					id="content" name="content" placeholder="내용을 입력해 주세요."></textarea>
+					id="content" name="content" placeholder="내용을 입력해 주세요.">${artist.content }</textarea>
 			</label>
 		</div>
 
@@ -177,6 +177,10 @@
 						data : data,
 						contentType : false,
 						processData : false,
+						success : function(data){
+							console.log('redirect to ' + data);
+							window.location.href = data;
+						}
 					});
 
 				}
