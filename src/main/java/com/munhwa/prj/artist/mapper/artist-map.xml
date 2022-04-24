@@ -158,14 +158,16 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 
-	<select id="getStatus" resultType="String">
-		SELECT STATUS FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
-	</select>
+	
 
 	<select id="artIdByAlbId" resultType="int" parameterType="int">
 		SELECT ARTIST_ID 
         FROM ALBUM 
         WHERE ID=#{albumId}
+	</select>
+	
+	<select id="getStatus" resultType="String">
+		SELECT STATUS FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
 	</select>
 
 </mapper>

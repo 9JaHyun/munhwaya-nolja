@@ -45,14 +45,16 @@
 		</div>
 		<div align="center" style="margin: 20px 0px 100px 0px;">
 			<input type="hidden" id="originalName" name="originalName"
-				value="${artist.name}"> <label><div class="sort">활동명&emsp;</div>
+				value="${artist.name}"> <label>
+				<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:3em;">활동명&emsp;</div>
 				<input type="text" id="name" name="name" placeholder=" 활동명을 입력하세요."
-				value="${artist.name}"></label>
+				value="${artist.name}">
+				</label>
 			<ul>
 				<!-- 아티스트 상세에 한번에 두개의 내용이 들어가므로 목록 묶음 처리 -->
-				<label>활동정보 선택</label>
+				<label style="font-size: 15px; color: white; padding: 0.5em; margin-top:2.5em;">< 활동정보 선택 ></label>
 
-				<label>성별<br> <select id="gender" name="gender"></label>
+				<label style="font-size: 14px; color: white; padding: 0.5em;">성별<br> <select id="gender" name="gender"></label>
 				<!-- select box 수직 정렬 -->
 				<option>선택</option>
 				<c:if test="${artist.gender == 'S01'}">
@@ -73,7 +75,7 @@
 				</select>
 				<br>
 
-				<label>활동유형<br> <select id="type" name="type"></label>
+				<label style="font-size: 14px; color: white; padding: 0.5em;">활동유형<br> <select id="type" name="type"></label>
 				<br>
 				<c:if test="${artist.type == 'T01'}">
 					<option value="T01" selected>솔로</option>
@@ -85,7 +87,7 @@
 				</c:if>
 				</select>
 			</ul>
-			<br> <label>주요활동 장르<br> <select id="genre"
+			<br> <label style="font-size: 14px; color: white; padding: 0.5em;">주요활동 장르<br> <select id="genre"
 				name="genre"></label>
 			<c:if test="${artist.genre == 'G01'}">
 				<option>선택</option>
@@ -114,13 +116,13 @@
 				<option value="G03">랩/힙합</option>
 				<option value="G04" selected>R&B/Soul</option>
 			</c:if>
-			</select><br> <br> <label>소개글<br> <textarea
+			</select><br> <br> <label style="font-size: 14px; color: white; padding: 0.7em;">소개글<br> <textarea
 					id="content" name="content" placeholder="내용을 입력해 주세요.">${artist.content }</textarea>
 			</label>
 		</div>
 
-		<div align="right">
-			<input type="button" class="tbutton small" value="수정"
+		<div align="right" style="margin-top:-5em;">
+			<input type="button" style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" class="tbutton small" value="수정"
 				onclick="send()">
 			<button
 				style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;"

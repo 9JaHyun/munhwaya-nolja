@@ -126,6 +126,28 @@
 	       </span>
 	      </div>
  </div>
+ 
+ <!-- 아티스트 승급 재신청 -->
+ 	<div style="padding-top: 5%;">
+		<div style="margin: 100px 0px 10px 0px; border: none;">
+			<br>
+			<form id="info" name="info" method="post" action="artistRequest"
+				enctype="multipart/form-data" onsubmit="return chk_request()">
+				<label id="request-label"><div class="sort">작업물 설명란</div> <textarea
+						id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
+				</label><br> <label><div class="sort">작업물 인증</div> <input
+					type="file" id="file" name="file" accept="image/png, image/jpeg"></label><br>
+			
+			<!-- 신청, 취소 버튼 -->
+				<div align="right" style="margin-top:-6em">
+					<input type="submit" style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" value="등록" class="tbutton small" onclick=""/>
+					<button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypage.do'" class="tbutton small" >취소</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	
 <h5 style="margin-top:30px; margin-left:20px; width:100%;" id="text1"></h5>
 </div>
 </div>
