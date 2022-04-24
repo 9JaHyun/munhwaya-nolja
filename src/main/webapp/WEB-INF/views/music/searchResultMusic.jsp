@@ -99,8 +99,8 @@
 													<th></th>
 													<th style="width: 300px;"><h4>제목</h4></th>
 													<th><h4>가수</h4></th>
-													<th><h4>앨범</h4></th>
-													<th><h4>구매</h4></th>
+													<th><h4>장르</h4></th>
+													<th style="width: 200px"><h4>구매</h4></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -124,7 +124,14 @@
 														<a href="artistDetail?artId=${music.artId }">${music.artName }</a>
 													</td>
 													<td class="product-name">
-														${music.title }
+														<span>
+															<c:choose>
+						                                        <c:when test="${music.genre eq 'G01'}">발라드</c:when>
+						                                        <c:when test="${music.genre eq 'G02'}">댄스</c:when>
+						                                        <c:when test="${music.genre eq 'G03'}">랩/힙합</c:when>
+						                                        <c:when test="${music.genre eq 'G04'}">R&B/Soul</c:when>
+						                                    </c:choose> 
+														</span>
 													</td>
 													<td class="product-name">
 														<c:choose>
@@ -203,7 +210,7 @@
             })
 
         } else {
-            alert("삭제취소")
+            alert("취소")
         }
     }
     function paging(num) {
@@ -240,9 +247,9 @@
  	            	 alert(data);
  	            },
  	            error: function(xhr, status, error){
- 	            	alert("통신실패"); 	            }
+ 	            	alert("곡을 선택해주세요"); 	            }
  	         }) 
- 	         
+ 	        $('.all').prop('checked',false);
  	      } else {
  	         alert("취소")
  	      }

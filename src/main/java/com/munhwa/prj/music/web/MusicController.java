@@ -73,7 +73,11 @@ public class MusicController {
 	@GetMapping("/searchResult")
 	public String searchResult(String title, Model model, Criteria cri) {
 		title = title.trim();
-		model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title,cri));
+		if(title.isEmpty()) {
+			model.addAttribute("checkM", 0);
+			model.addAttribute("checkA", 0);
+		}else {
+			model.addAttribute("musicSelectListByTitle", musicDAO.musicSelectByTitle(title,cri));
 		if(musicDAO.musicSelectByTitle(title,cri).size() == 0) {
 			model.addAttribute("checkM", 0);
 		} else {
@@ -85,6 +89,9 @@ public class MusicController {
 		} else {
 			model.addAttribute("checkA", 1);
 		}
+		}
+			
+		
 		model.addAttribute("title", title);
 		return "music/searchResult";
 	}
@@ -120,7 +127,6 @@ public class MusicController {
 		int total = musicDAO.getCountByList3(title);
 	    PageDTO pageMake = new PageDTO(cri, total);
 	    model.addAttribute("pageMaker", pageMake);
-	    
 		return "music/searchResultMusic";
 	}
 
