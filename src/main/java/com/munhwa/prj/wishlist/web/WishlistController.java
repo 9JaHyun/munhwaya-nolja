@@ -107,7 +107,6 @@ public class WishlistController {
     @PostMapping("changeOrders.do")
     @ResponseBody
     public String changeOrders(@RequestParam int id, int from, int to) {
-    	System.out.println(id + "," + from + "," + to);
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("v_wishlist_id", id);
         paramMap.put("v_to", to);

@@ -1,28 +1,5 @@
 package com.munhwa.prj.wallet.web;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
@@ -41,6 +18,24 @@ import com.munhwa.prj.wallet.service.ProfitService;
 import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.ProfitVO;
 import com.munhwa.prj.wallet.vo.UsageVO;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 //@Slf4j
 @Controller
 public class WalletController {
@@ -266,14 +261,10 @@ public class WalletController {
 	@RequestMapping("/refundOfMusic.do")
 	@ResponseBody
 	public String refundOfMusic(@LoginUser SessionUser user, Model model, @RequestParam int id, @RequestParam String place) {
-		System.out.println("--------------------"+id +"-----------------"+place);
 		String memberId = user.getId();
 		List<UsageVO> usages = usageDao.selectById(id, place);
 		Map<String,Object> param = new HashMap<String, Object>();
 		for(UsageVO usage : usages) {
-			System.out.println(usage.getPks());
-			System.out.println(usage.getMileage());
-			System.out.println(usage.getName());
 			param.put("v_member_id", memberId);
 			param.put("v_music_id", usage.getPks());
 			param.put("v_mileage", usage.getMileage());
@@ -290,7 +281,6 @@ public class WalletController {
 	
 	@RequestMapping("/refundOfPerformance.do")
 	public String refundOfPerformance(@LoginUser SessionUser user, Model model, @RequestParam int id, @RequestParam String place) {
-		System.out.println("--------------------"+id +"-----------------"+place);
 		String memberId = user.getId();
 		List<UsageVO> usages = usageDao.selectById(id, place);
 		Map<String,Object> param = new HashMap<String, Object>();
@@ -322,14 +312,11 @@ public class WalletController {
 	@ResponseBody
 	public List<UsageVO> usagePurchasedMusic(@LoginUser SessionUser user, @RequestBody List<RefundRequestDto> pkList) {
 		String memberId = user.getId();
-		System.out.println(pkList);
 		List<Integer> idList = pkList.stream()
 				.map(RefundRequestDto::getPks)
 				.collect(Collectors.toList());
 		
 		List<UsageVO> result = usageDao.selectByMusicOfId(idList, memberId);
-		System.out.println(result);
-		
 		return result;
 	}
 	

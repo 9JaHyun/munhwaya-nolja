@@ -13,7 +13,6 @@ public interface PromotionRequestService {
 	int promotionRequestInsert(PromotionRequestVO vo);
 	int promotionRequestDelete(PromotionRequestVO vo);
 	int promotionRequestUpdate(Map<String,Object> vo);
-	
 	/* 승급신청 리스트 총 갯수 */
     int getTotal(Criteria cri);
 }
