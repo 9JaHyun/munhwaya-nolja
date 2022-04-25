@@ -1,6 +1,8 @@
 package com.munhwa.prj.member.web;
 
 import com.munhwa.prj.artist.service.ArtistService;
+import com.munhwa.prj.artist.service.PromotionRequestService;
+import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.code.entity.Genre;
 import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.service.FileUtils;
@@ -11,6 +13,8 @@ import com.munhwa.prj.member.vo.Auth;
 import com.munhwa.prj.member.vo.MemberVO;
 import com.munhwa.prj.news.service.NewsService;
 import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +32,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class MemberController {
 
+	@Autowired private PromotionRequestService promotionRequestSerivce;
+	
     private final MemberService memberService;
     private final NewsService newsService;
     private final ArtistService artistService;
@@ -56,7 +62,10 @@ public class MemberController {
     // 회원정보 변경 페이지
     @GetMapping("/memberChangeInfo.do")
     public String memberChangeInfo(@LoginUser SessionUser user, Model model) {
+    	PromotionRequestVO vo = new PromotionRequestVO();
+
     	model.addAttribute("artists", artistService.findByMemberId(user.getId()));
+        model.addAttribute("pro", promotionRequestSerivce.promotionRequestSelect(user.getId()));
         return "memberChangeInfo-member";
     }
 

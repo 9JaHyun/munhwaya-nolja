@@ -5,25 +5,39 @@
     <h4>회원정보 변경</h4>
     <div class="grid_12 tt" style="border: none; padding-top: 150px; padding-bottom: 150px;">
         <ul class="forum-items">
-            <li>
-                <i class="icon-comment-alt"></i>
                 <c:choose>
-                    <c:when test="${member.role  eq 'R01'}">
+                    <c:when test="${member.role  eq 'R01' && pro.status ne null}">
+                                        <li>
+		                <i class="icon-comment-alt"></i>
                         <a href="changeProfile.do">프로필 변경</a>
+                        <div class="topic-time">프로필 이미지와 닉네임을 변경합니다.</div>
+                    </li>
+                    <li>
+                        <i class="icon-comment-alt"></i>
+                        <a href="artStatus">승급 진행상황</a>
+                        <div class="topic-time">아티스트 승급 진행상황을 확인합니다.</div>
+                    </li>
                     </c:when>
                     <c:otherwise>
                     	 <c:choose>
                     		<c:when test="${artists.name eq null}">
-                    			<a href="#">프로필 등록</a>
+                    	<li>
+                    		<i class="icon-comment-alt"></i>
+                    		<a href="artistProfileForm">프로필 등록</a>
+                    		 <div class="topic-time">프로필 이미지와 닉네임을 변경합니다.</div>
+                    	</li>
                     		</c:when>
                     		<c:otherwise>
-                    			<a href="#">프로필 수정</a>
+                    	<li>
+                    			<i class="icon-comment-alt"></i>
+                    			<a href="changeArtistProfileForm">프로필 수정</a>
+                    			    <div class="topic-time">프로필 이미지와 닉네임을 변경합니다.</div>
+                    	</li>
                     		</c:otherwise>
                     	</c:choose>
                     </c:otherwise>
-                </c:choose>                
-
-                <div class="topic-time">프로필 이미지와 닉네임을 변경합니다.</div>
+                </c:choose>                	
+            
             </li>
             <li>
                 <i class="icon-comment-alt"></i>
