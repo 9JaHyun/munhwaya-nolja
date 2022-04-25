@@ -32,26 +32,26 @@
                 <h5>위시리스트가 존재하지 않습니다.</h5>
             </div>
         </c:if>
-        <c:forEach items="${wishlists}" var="wishlist">
+        <c:forEach items="${wishlists}" var="album">
             <div class="js-load">
                 <div class="mbf clearfix">
                     <div class="toggle-head"
                          style="cursor: auto; border-bottom: 1px solid #CCC;">
                         <!-- 위시리스트 삭제 버튼 -->
                         <div align="right">
-                            <a><i onclick="delWishFnc(${wishlist.id})"
-                                  class="icon-remove" id="${wishlist.id}"></i></a>
+                            <a><i onclick="delWishFnc(${album.id})"
+                                  class="icon-remove" id="${album.id}"></i></a>
                         </div>
                         <div style="position: relative;" align="left">
                             <!-- 위시리스트 이름 > 곡목록 -->
                             <h5>
-                                <a data-wname="${wishlist.name}"
-                                   href="wishlistMusic.do?id=${wishlist.id }&name=${wishlist.name}">
-                                        ${wishlist.name}&nbsp;&nbsp;[${wishlist.count}]</a>
+                                <a data-wname="${album.name}"
+                                   href="wishlistMusic.do?id=${album.id }&name=${album.name}">
+                                        ${album.name}&nbsp;&nbsp;[${album.count}]</a>
                             </h5>
                             <!-- 위시리스트 재생 버튼 -->
                             <c:choose>
-                                <c:when test="${wishlist.count eq 0}">
+                                <c:when test="${album.count eq 0}">
                                     <div
                                             style="position: absolute; float: left; left: 520px; bottom: -5px;">
                                         <a href="chart"><i
@@ -62,7 +62,7 @@
                                 <c:otherwise>
                                     <div
                                             style="position: absolute; float: left; left: 520px; bottom: -5px;">
-                                        <a href="streamingWishList?id=${wishlist.id}"><i
+                                        <a href="streamingWishList?id=${album.id}"><i
                                                 class="icon-play-sign"
                                                 style="font-size: 35px; float: right;"></i></a>
                                     </div>

@@ -102,24 +102,42 @@ ${musicList[0].lyric}
 
 
 <script>
-var myPlaylist = []
-<c:forEach items="${musicList}" var = "music">
-	myPlaylist.push({
-					writer: '${music.writer}',
-					composing: '${music.composing}',
-					arrangement: '${music.arrangement}',
-					musicId: '${music.id}',
-					mp3 : '${music.fileId}',
-					title : '${music.title}',
-					artist : '${music.artName}',
-					rating: 5,
-					buy:'#',
-					price:'',
-					duration : '${music.time}',
-					cover:'api/picture/${music.picture }'
-					})
-</c:forEach>
 jQuery(document).ready(function () {
+var myPlaylist = []
+let fileId = 0;
+
+<c:forEach items="${musicList}" var = "music">
+	fileId = '${music.fileId}'
+	console.log(fileId)
+		$.ajax({
+			type: "GET", 
+			async: false,
+			url:"getFiles/"+fileId,
+			dataType:"json", 
+			error : function(a, b, c){
+				alert("통신실패");
+			},
+			success: function (result) {
+						let fileName = result.sname
+						console.log(fileName)
+						myPlaylist.push({
+										writer: '${music.writer}',
+										composing: '${music.composing}',
+										arrangement: '${music.arrangement}',
+										musicId: '${music.id}',
+										mp3 : "/prj/api/file/"+fileName,
+										title : '${music.title}',
+										artist : '${music.artName}',
+										rating: 5,
+										buy:'#',
+										price:'',
+										duration : '${music.time}',
+										cover:'api/picture/${music.picture }'
+										})
+						}
+		})
+</c:forEach>
+
 	$('.music-player-list').ttwMusicPlayer(myPlaylist, {
 		currencySymbol: '',
 		buyText:'구매',
@@ -183,16 +201,16 @@ function addWishList() {
         <h4 class="modal-title" id="myModalLabel">위시리스트 선택</h4>
       </div>
       <div id="activeAdd" class="modal-body def-block">
-        <c:forEach items="${wishlists}" var="wishlist">
+        <c:forEach items="${wishlists}" var="album">
 		<div class="mbf clearfix">
 			<ul>
 				<li>
 					<!-- 위시리스트 이름 -->
 					<div class="toggle-head" style="padding-bottom:20px;">
 						<h5 style="margin:0px;">
-							${wishlist.name}
+							${album.name}
 							<button onclick="addWishList()" class="tbutton small" style="float:right;">
-								<span data-wishid="${wishlist.id}">선택</span>
+								<span data-wishid="${album.id}">선택</span>
 							</button>
 						</h5>
 					</div>

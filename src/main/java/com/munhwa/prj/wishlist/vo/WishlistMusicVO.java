@@ -10,5 +10,4 @@ public class WishlistMusicVO {
 	private String title;
 	private int orders;
 	private String artName;
-
 }

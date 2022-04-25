@@ -105,7 +105,7 @@
                                         <th style="width: 300px;"><h4>제목</h4></th>
                                         <th style="width: 150px;"><h4>가수</h4></th>
                                         <th style="width: 200px;"><h4>장르</h4></th>
-                                        <th><h4>다운로드</h4></th>
+                                        <th><h4>구매</h4></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -271,9 +271,9 @@
     	            	 alert(data);
     	            },
     	            error: function(xhr, status, error){
-    	            	alert("통신실패"); 	            }
+    	            	alert("곡을 선택해주세요"); 	            }
     	         }) 
-    	         
+    	         $('.all').prop('checked',false);
     	      } else {
     	         alert("취소")
     	      }

@@ -177,16 +177,16 @@
         <h4 class="modal-title" id="myModalLabel">위시리스트 선택</h4>
       </div>
       <div class="modal-body def-block">
-        <c:forEach items="${wishlists}" var="wishlist">
+        <c:forEach items="${wishlists}" var="album">
 		<div class="mbf clearfix">
 			<ul>
 				<li>
 					<!-- 위시리스트 이름 -->
 					<div class="toggle-head">
 						<h5 style="margin:0px;">
-							${wishlist.name}
+							${album.name}
 							<button  class="tbutton small" style="margin-left:90%">
-								<span onclick="addWishList()" data-wishid="${wishlist.id}">선택</span>
+								<span onclick="addWishList()" data-wishid="${album.id}">선택</span>
 							</button>
 						</h5>
 					</div>
@@ -227,7 +227,7 @@ function addWishList() {
 			alert("추가되었습니다");
 		},
 		error : function(){
-			alert("통신실패");
+			alert("이미 추가한 곡이 있습니다.");
 		}
 	}) 
 }
@@ -289,9 +289,9 @@ function ListaddCart() {
             	 alert(data);
             },
             error: function(xhr, status, error){
-            	alert("통신실패"); 	            }
+            	alert("곡을 선택해주세요"); 	            }
          }) 
-         
+	     $('.all').prop('checked',false);
       } else {
          alert("취소")
       }

@@ -54,9 +54,17 @@
   <definition name="*-memberTicket" extends="memberTemplate">
     <put-attribute name="body" value="/WEB-INF/views/ticketList/{1}.jsp"/>
   </definition>
+  
+    <definition name="*-performance" extends="memberTemplate">
+    <put-attribute name="body" value="/WEB-INF/views/performance/{1}.jsp"/>
+  </definition>
 
   <definition name="*-admin" extends="listTemplate">
     <put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp"/>
+  </definition>
+  
+  <definition name="*-performanceArtist" extends="listTemplate">
+    <put-attribute name="body" value="/WEB-INF/views/performance/{1}.jsp"/>
   </definition>
 
 </tiles-definitions>

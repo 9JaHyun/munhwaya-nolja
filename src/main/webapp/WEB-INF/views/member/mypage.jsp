@@ -2,8 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
-
 <style>
     .js-load {
         display: none;
@@ -13,7 +11,6 @@
         display: revert;
     }
 </style>
-
 
 <div align="right" style="margin-bottom: 50px;">
     <h4>새소식</h4>

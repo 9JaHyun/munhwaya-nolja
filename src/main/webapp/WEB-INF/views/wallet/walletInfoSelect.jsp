@@ -83,11 +83,11 @@ if (request.getProtocol().equals("HTTP/1.1"))
 				style="color: white;">
 				시작일&nbsp;&nbsp; <input type="date" id="startDate" name="startDate"
 					style="margin-bottom: 0px; margin-right: 20px; width: 100px;"
-					value="${startDate}" max="${endDate}"> 종료일&nbsp;&nbsp;&nbsp;&nbsp; <input
-					type="date" id="endDate" name="endDate"
-					style="margin-bottom: 0px; width: 100px" value="${endDate }" >
-				<input type="submit" value="검색" class="tbutton small" id="click"
-					style="height: 30px; width: 50px">
+					value="${startDate}" max="${endDate}">
+				종료일&nbsp;&nbsp;&nbsp;&nbsp; <input type="date" id="endDate"
+					name="endDate" style="margin-bottom: 0px; width: 100px"
+					value="${endDate }"> <input type="submit" value="검색"
+					class="tbutton small" id="click" style="height: 30px; width: 50px">
 			</form>
 			<div style="color: white; margin-top: 10px; margin-bottom: 10px;">
 				기간별 충전액&nbsp;&nbsp;<input type="text" id="sumMileage"
@@ -95,7 +95,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 					style="height: 20px; width: 80px; margin-bottom: 0px;">
 			</div>
 		</div>
-		<table class="table" style="word-break:break-all;">
+		<table class="table" style="word-break: break-all;">
 			<thead>
 				<tr>
 					<th scope="col">충전 일자</th>
@@ -115,27 +115,24 @@ if (request.getProtocol().equals("HTTP/1.1"))
 			</tbody>
 		</table>
 	</div>
-	<div class="pageInfo_wrap">
-		<div class="pageInfo_area" style="margin-left:auto; margin-top:30px; width:660px;">
-			<ul id="pageInfo" class="pageInfo">
-				<!-- 이전페이지 버튼 -->
-				<c:if test="${pageMaker.prev}">
-					<li class="pageInfo_btn previous"><a href="#"
-						onclick="paging(${pageMaker.startPage-1})" style="border : 1px solid white; padding:5px 5px;">Previous</a></li>
-				</c:if>
-				<!-- 각 번호 페이지 버튼 -->
-				<c:forEach var="num" begin="${pageMaker.startPage}"
-					end="${pageMaker.endPage}">
-					<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
-						href="#" onclick="paging(${num})" style="border : 1px solid white; padding:5px 5px;">${num}</a></li>
-				</c:forEach>
-				<!-- 다음페이지 버튼 -->
-				<c:if test="${pageMaker.next}">
-					<li class="pageInfo_btn next"><a href="#"
-						onclick="paging(${pageMaker.endPage + 1})" style="border : 1px solid white; padding:5px 5px;">Next</a></li>
-				</c:if>
-			</ul>
-		</div>
+	<div class="pagination-tt clearfix"
+		style="display: flex; justify-content: center;">
+		<ul>
+			<!-- 이전페이지 버튼 -->
+			<c:if test="${pageMaker.prev}">
+				<li><a href="${pageMaker.startPage-1}">Previous</a></li>
+			</c:if>
+			<!-- 각 번호 페이지 버튼 -->
+			<c:forEach var="num" begin="${pageMaker.startPage}"
+				end="${pageMaker.endPage}">
+				<li style="border: 1px solid white; margin-left: 5px;"><a
+					href="#" onclick="paging(${num})" class="deactive">${num}</a></li>
+			</c:forEach>
+			<!-- 다음페이지 버튼 -->
+			<c:if test="${pageMaker.next}">
+				<li><a href="${pageMaker.endPage + 1 }">Next</a></li>
+			</c:if>
+		</ul>
 	</div>
 
 	<form id="moveForm" method="get" action="walletInfoSelect.do">
@@ -148,11 +145,10 @@ if (request.getProtocol().equals("HTTP/1.1"))
 	<div align="right">
 		<a href="walletInfo.do" class="tbutton small" style="margin-top: 50px"><span>뒤로가기</span></a>
 	</div>
-</div>
 
-<!-- def block -->
-<!-- span8 posts -->
-<script>
+	<!-- def block -->
+	<!-- span8 posts -->
+	<script>
 	
 	function paging(num) {
 		moveForm.pageNum.value = num;

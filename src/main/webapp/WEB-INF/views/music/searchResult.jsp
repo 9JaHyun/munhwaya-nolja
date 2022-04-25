@@ -35,6 +35,7 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
+						<c:if test="${checkM eq 1 }">
 						<a href="searchResultMusic?title=${title}">
 							<h3>검색결과</h3>
 							<span class="liner"></span> 
@@ -42,6 +43,7 @@
 								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
 							</h4>
 						</a>
+						</c:if>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
@@ -71,6 +73,7 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
+						<c:if test="${checkA eq 1 }">
 						<a href="searchResultAlbum?title=${title}">
 							<h3>검색결과</h3>
 							<span class="liner"></span> 
@@ -78,6 +81,7 @@
 								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
 							</h4>
 						</a>
+						</c:if>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">

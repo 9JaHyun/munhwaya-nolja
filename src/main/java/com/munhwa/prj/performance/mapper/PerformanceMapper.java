@@ -18,14 +18,18 @@ public interface PerformanceMapper {
 	int performanceInsert(PerformanceVO vo);
 	
 	PerformanceVO performanceSelect(PerformanceVO vo);
+
+	List<PerformanceVO> selectPerformanceByArtistId(String memberId);
 	
+	PerformanceVO detailPerformance(int id);
+	
+	int updatePerformance(PerformanceVO vo);
+
     /* 게시판 총 갯수 */
-    public int admingetTotal(Criteria cri);
+    int admingetTotal(Criteria cri);
     
-    public int getTotal(Criteria cri);
+    int getTotal(Criteria cri);
     
     int performanceUpdate(Map<String, Object> paramMap);
-	
-	//public List<PerformanceVO> getListPaging(Criteria cri);
 	
 }
