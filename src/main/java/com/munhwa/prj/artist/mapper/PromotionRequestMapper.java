@@ -22,7 +22,9 @@ public interface PromotionRequestMapper {
     /* 승급신청 리스트 총 갯수 */
     int getTotal(Criteria cri);
     
-    
     String getStatus(String memberId);
-    String artStatusUpdate(PromotionRequestDTO dto);
+    
+    int artStatusUpdate(PromotionRequestVO vo);
+
+    int updateGroupId(PromotionRequestVO vo);
 }

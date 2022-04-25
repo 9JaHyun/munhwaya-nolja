@@ -29,15 +29,9 @@ public interface ArtistService {
 
     int albumCnt(int vo);
 
-    int getTotal(@Param("cri") Criteria cri, @Param("artistId") int id);
-
-    int getTotal2(@Param("cri") Criteria cri, @Param("artistId") int artistId);
-
-    int artIdByAlbId(int albumId);
-
-    String getStatus(String memberId);
-
-    String artistOfName(String memberId);
-
-    int artistOfId(String memberId);
+	int getTotal(@Param("cri") Criteria cri, @Param("artistId") int id);
+	
+	int getTotal2(@Param("cri") Criteria cri, @Param("artistId") int artistId);
+	
+	int artIdByAlbId(int albumId);
 }

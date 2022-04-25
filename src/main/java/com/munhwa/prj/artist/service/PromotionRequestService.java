@@ -23,5 +23,7 @@ public interface PromotionRequestService {
     
     String getStatus(String memberId);
   
-	  String artStatusUpdate(PromotionRequestDTO dto);
+	int artStatusUpdate(PromotionRequestVO dto);
+	  
+	int updateGroupId(PromotionRequestVO vo);
 }

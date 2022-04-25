@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PromotionRequestVO {
+	private int id;
 	private String memberId;
 	private String identify;
 	private String artwork;

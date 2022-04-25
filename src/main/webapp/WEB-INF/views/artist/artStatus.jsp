@@ -97,9 +97,10 @@
   }
  } 
 textarea {
-    width:400px;
+    width:350px;
     height: 100px;
 	resize: none;
+	margin-left : 5em;
 }
 
 </style>
@@ -126,26 +127,56 @@ textarea {
  <!-- 아티스트 승급 재신청 -->
  	<br>
  	<div>
-		<h3 style="margin-bottom:30px; margin-top:40px;">아티스트 승급 신청한 정보</h3>
-		<div style="margin-top:30px;">
-	
-			<form id="info" name="info" method="post" action="artistRequest" enctype="multipart/form-data" onsubmit="return chk_request()">
-				<label id="request-label">
-					<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; ">작업물 설명란</div> 
-					<textarea id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
-				</label>
+			<div style="margin-top:30px;">
 				<br> 
 				<label>
-					<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">작업물 인증</div> 
-					<input type="file" id="file" name="file" accept="image/png, image/jpeg" disabled ="disabled" >
+					<c:choose>
+						<c:when test="${status eq 'A01' }"> <!-- 승인 -->
+							<a class="tbutton medium" href="mypage.do">마이페이지로</a>
+						</c:when>
+						
+						<c:when test="${status eq 'A02' }"> <!-- 거절(재신청) -->
+								<form id="info" name="info" method="post" action="artistRequestUpdate" enctype="multipart/form-data" onsubmit="return chk_request()">
+									
+									
+									<label id="request-label">
+										<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; ">작업물 설명란</div> 
+										<textarea id="artwork" name="artwork" placeholder="내용을 재입력하세요."></textarea>
+									</label>
+									
+									
+									<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">작업물 재인증</div> 
+										<input type="file" id="files" name="files" multiple="multiple" accept="image/*">
+									
+									
+									<div id="submitBtn" align="right" style="margin-top:2em">
+										<input type="submit" style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" value="재신청" class="tbutton small" onclick=""/>
+										<button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypage.do'" class="tbutton small" >취소</button>
+									</div>
+								</form>
+						</c:when>
+						
+						<c:when test="${status eq 'A03' }"> <!-- 대기(다운로드) -->
+									<label id="request-label">
+										<div class="sort" style="font-size: 14px; color: white; padding: 0.5em;margin-left: 4em; ">작업물 설명란</div> 
+										<textarea id="artwork" name="artwork" placeholder="내용을 입력하세요.">${status2.getArtwork()}</textarea>
+									</label>
+									<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:3em; margin-left:3em; ">작업물 인증</div> 
+									<c:forEach begin="0" items="${files }" var="file">
+										<span style="margin-left: 1em;">${file.oname }</span>
+										<button type="button" onclick="location.href='api/attach/${file.id}'" class="tbutton medium" style="font-size:10px">
+											<span>다운로드</span>
+										</button>
+									</c:forEach>
+						</c:when>
+					</c:choose>
 				</label>
 				<br>
 					
 			<!-- 신청, 취소 버튼 -->
-				<div align="right" style="margin-top:2em">
-					<input type="submit" style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" value="재신청" class="tbutton small" onclick=""/>
-					<button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypage.do'" class="tbutton small" >취소</button>
-				</div>
+			<c:if test="${status eq 'A02' }">
+				
+			</c:if>
 			</form>
 		</div>
 	</div>
@@ -176,7 +207,8 @@ $(window).load(function(){
 	}
 	
 	if('${status}' == 'A03') {
-		$("#artwork").attr("readonly","readonly")
+		$("#artwork").attr("readonly","readonly");
+		
 	} 
 	
 });

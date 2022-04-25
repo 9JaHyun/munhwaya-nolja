@@ -30,7 +30,8 @@ public class PromotionRequestServiceImpl implements PromotionRequestService {
     @Override
     public int promotionRequestInsert(PromotionRequestVO vo) {
         vo.setCreatedAt(new Date());
-        return map.promotionRequestInsert(vo);
+        map.promotionRequestInsert(vo);
+        return vo.getId();
     }
 
     @Override
@@ -56,11 +57,14 @@ public class PromotionRequestServiceImpl implements PromotionRequestService {
 	}
 
 	@Override
-	public String artStatusUpdate(PromotionRequestDTO dto) {
+	public int artStatusUpdate(PromotionRequestVO vo) {
 		// TODO Auto-generated method stub
-		return map.artStatusUpdate(dto);
+		return map.artStatusUpdate(vo);
 	}
 
-	
-
+	@Override
+	public int updateGroupId(PromotionRequestVO vo) {
+		// TODO Auto-generated method stub
+		return map.updateGroupId(vo);
+	}
 }
