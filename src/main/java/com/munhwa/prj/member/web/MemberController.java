@@ -63,10 +63,9 @@ public class MemberController {
     @GetMapping("/memberChangeInfo.do")
     public String memberChangeInfo(@LoginUser SessionUser user, Model model) {
     	PromotionRequestVO vo = new PromotionRequestVO();
-    	vo.setMemberId(user.getId());
-    			
+
     	model.addAttribute("artists", artistService.findByMemberId(user.getId()));
-        model.addAttribute("pro", promotionRequestSerivce.promotionRequestSelect(vo));
+        model.addAttribute("pro", promotionRequestSerivce.promotionRequestSelect(user.getId()));
         return "memberChangeInfo-member";
     }
 

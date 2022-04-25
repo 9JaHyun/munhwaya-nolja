@@ -130,7 +130,7 @@ public class MemberServiceImpl implements MemberService {
             email.setHtmlMsg(msg);
             email.send();
         } catch (Exception e) {
-            System.out.println("메일발송 실패 : " + e);
+            e.printStackTrace();
         }
     }
 

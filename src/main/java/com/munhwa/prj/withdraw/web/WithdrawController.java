@@ -64,8 +64,6 @@ public class WithdrawController {
         TokenResponseDTO result = restTemplate.exchange(
                 BASE_URL + "/oauth/2.0/token",
                 HttpMethod.POST, param, TokenResponseDTO.class).getBody();
-        System.out.println("----------"+result.getAccess_token());
-
         return result;
     }
 }

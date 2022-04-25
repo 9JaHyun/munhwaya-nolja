@@ -119,9 +119,6 @@ public class PerformanceController {
     	int sdatetime4 = Integer.parseInt(sdatetime3);
     	int edatetime4 = Integer.parseInt(edatetime3);
     	
-    	System.out.println("==========Sdate"+sdatetime);
-    	System.out.println("==========Sdate tt"+sdatetime3);
-    	System.out.println("==========Edate tt"+edatetime3);
     	Date date = new Date();
     	
     	// 중복 확인

@@ -1,25 +1,5 @@
 package com.munhwa.prj.artist.web;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import org.apache.ibatis.annotations.Param;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
 import com.munhwa.prj.artist.service.ArtistService;
@@ -39,8 +19,23 @@ import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
 import com.munhwa.prj.wishlist.service.WishlistService;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
-
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /*
  * 작성자:차주연
@@ -73,8 +68,7 @@ public class ArtistController {
 		// 해당 아티스트 정보 찾아서 상세정보 페이지로 보내기
 		ArtistVO artist = artistDao.findByArtistId(artId); 
 		model.addAttribute("artist", artist);
-		
-		
+
 		if(musicPageNum == null) {
 			musicPageNum=1;
 			musicAmount=10;
@@ -208,9 +202,7 @@ public class ArtistController {
     // 회원 -> 아티스트 승급 신청 폼 호출
  	@RequestMapping("/artistRequestForm")
  	public String artistRequestForm(@LoginUser SessionUser user, Model model) {
- 		PromotionRequestVO vo = new PromotionRequestVO();
- 		vo.setMemberId(user.getId());
- 		model.addAttribute("pro", promotionRequestDao.promotionRequestSelect(vo));
+ 		model.addAttribute("pro", promotionRequestDao.promotionRequestSelect(user.getId()));
  		return "artistRequest-artist";
  	}
 
@@ -251,15 +243,7 @@ public class ArtistController {
 							
 			return ResponseEntity.ok().body(data);
 	}
-	
-//	@PostMapping("/user/mocksms")  // 훼이크 문자용 
-//	public ResponseEntity<String> timertest(String phoneNumber) throws NoSuchAlgorithmException, URISyntaxException,
-//			UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
-//			String data = "1";
-//		
-//			return ResponseEntity.ok().body(data);
-//	}
-						
+
 	private String createRandomNumber() {
 			
 			Random random = new Random(); // 랜덤 함수 선언
@@ -276,36 +260,13 @@ public class ArtistController {
 			return resultNum;
 	}
 	}
-	
-	
-	/* @RequestParam(value="memberId", required=false) String memberId*/
-	/*@RequestParam(value="memberId", required=false) String memberId, @RequestParam("status")*/
-	
+
 	@RequestMapping("/artStatus")
 	public String artStatus(@LoginUser SessionUser user, Model model) {
 		model.addAttribute("status", artistDao.getStatus(user.getId()));
-		
-		
-//		String userId = user.getId();
-//		String memId = vo.getMemberId();
-//		
-//		if(userId == memId) {
-//		    PromotionRequestVO pro = artistDao.getStatus("status", status);
-//			model.addAttribute(pro);
-//		}else {
-//			System.out.println("연결실패");
-//			
-//		}
-		//vo.setMemberId(user.getId());
-		//String id2 = memberId.getParameter(memberId);
-		//PromotionRequestVO pro = artistDao.getStatus(memberId, status);
-		//int pro = artistDao.getStatus(user.getId(), status);
-		
-		//String pro = artistDao.getStatus(user.getId(), status); // user 세션에 있는 승인 상태를 artStatus에 뿌리기.
-		return "artStatus-artist";
-		
-	}
 
+		return "artStatus-artist";
+	}
 }
 
 
