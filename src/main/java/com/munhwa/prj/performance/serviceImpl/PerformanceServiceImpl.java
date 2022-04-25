@@ -84,4 +84,19 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return performanceMapper.getTotal(cri);
 	}
 
+	@Override
+	public List<PerformanceVO> selectPerformanceByArtistId(String memberId) {
+		return performanceMapper.selectPerformanceByArtistId(memberId);
+	}
+
+	@Override
+	public PerformanceVO detailPerformance(int id) {
+		return performanceMapper.detailPerformance(id);
+	}
+
+	@Override
+	public int updatePerformance(PerformanceVO vo) {
+		return performanceMapper.updatePerformance(vo);
+	}
+
 }

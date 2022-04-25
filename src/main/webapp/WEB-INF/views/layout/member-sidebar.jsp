@@ -99,6 +99,8 @@
                         <li><a href="${rootPath}/ticketList.do"><i class="icon-caret-right"> </i>구매한
                             공연</a>
                         </li>
+                        <li><a href="${rootPath}/performanceByArtistId"><i class="icon-caret-right"> </i>신청한 공연</a>
+                        </li>
                         <li><a href="${rootPath}/performanceInsertForm.do"><i
                                 class="icon-caret-right"> </i>아티스트 공연 등록 신청</a></li>
                         <li><a href="${rootPath}/ticketList.do"><i class="icon-caret-right"> </i>구매한
