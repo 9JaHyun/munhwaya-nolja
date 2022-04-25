@@ -100,7 +100,7 @@
 		parameterType="com.munhwa.prj.charge.vo.ChargeVO">
 		INSERT INTO charge_history(id, charge_at, mileage, type,
 		member_id)
-		VALUES (charge_history_seq.nextval, SYSDATE, #{mileage},
+		VALUES (charge_history_seq.nextval, #{chargeAt}, #{mileage},
 		#{type},
 		#{memberId})
 	</insert>
