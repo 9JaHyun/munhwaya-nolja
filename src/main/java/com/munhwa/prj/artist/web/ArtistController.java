@@ -1,34 +1,14 @@
 package com.munhwa.prj.artist.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
-import com.munhwa.prj.artist.service.ArtistService;
-import com.munhwa.prj.artist.service.PromotionRequestService;
-import com.munhwa.prj.artist.serviceImpl.PromotionRequestServiceImpl;
-import com.munhwa.prj.artist.serviceImpl.SmsServiceImpl;
-import com.munhwa.prj.artist.vo.ArtDetailVO;
-import com.munhwa.prj.artist.vo.ArtDetailVO2;
-import com.munhwa.prj.artist.vo.ArtistVO;
-import com.munhwa.prj.artist.vo.PromotionRequestVO;
-import com.munhwa.prj.common.file.entity.UploadFile;
-import com.munhwa.prj.common.file.service.FileUtils;
-import com.munhwa.prj.common.file.service.UploadFileService;
-import com.munhwa.prj.common.paging.entity.Criteria;
-import com.munhwa.prj.common.paging.entity.PageDTO;
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.entity.SessionUser;
-import com.munhwa.prj.member.service.MemberService;
-import com.munhwa.prj.member.vo.MemberVO;
-import com.munhwa.prj.wishlist.service.WishlistService;
-import com.munhwa.prj.wishlist.vo.WishlistVO;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +19,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
+import com.munhwa.prj.artist.service.ArtistService;
+import com.munhwa.prj.artist.service.PromotionRequestService;
+import com.munhwa.prj.artist.serviceImpl.SmsServiceImpl;
+import com.munhwa.prj.artist.vo.ArtDetailVO;
+import com.munhwa.prj.artist.vo.ArtDetailVO2;
+import com.munhwa.prj.artist.vo.ArtistVO;
+import com.munhwa.prj.artist.vo.PromotionRequestVO;
+import com.munhwa.prj.common.file.entity.UploadFile;
+import com.munhwa.prj.common.file.entity.UploadFileVO;
+import com.munhwa.prj.common.file.service.FileUtils;
+import com.munhwa.prj.common.file.service.UploadFileService;
+import com.munhwa.prj.common.paging.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.PageDTO;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
+import com.munhwa.prj.member.service.MemberService;
+import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.wishlist.service.WishlistService;
+import com.munhwa.prj.wishlist.vo.WishlistVO;
+
+import lombok.RequiredArgsConstructor;
+
 /*
  * 작성자:차주연
  * 작성일자:2022/04/05
@@ -48,7 +52,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ArtistController {
 
-	private final ArtistService artistDao;
+	private final ArtistService artistService;
 	private final WishlistService wishlistDao;
 	private final FileUtils fileUtils;
 	private final UploadFileService uploadService;
@@ -66,7 +70,7 @@ public class ArtistController {
 		// 아티스트 아이디로 찾아올것
 
 		// 해당 아티스트 정보 찾아서 상세정보 페이지로 보내기
-		ArtistVO artist = artistDao.findByArtistId(artId);
+		ArtistVO artist = artistService.findByArtistId(artId);
 		model.addAttribute("artist", artist);
 
 		if (musicPageNum == null) {
@@ -85,14 +89,14 @@ public class ArtistController {
 
 		model.addAttribute("musicList", list);
 		// 곡 전체 개수 구하기
-		int total = artistDao.getTotal(musicCri, artist.getId()); // Creiteria 클래스 정보(PageNum:현재페이지, amount: 수량), 해당
+		int total = artistService.getTotal(musicCri, artist.getId()); // Creiteria 클래스 정보(PageNum:현재페이지, amount: 수량), 해당
 																	// 아티스트 아이디(aritstId로 곡 갯수 세아림)
 		PageDTO pageMaker = new PageDTO(musicCri, total); // PageDTO의 (현재 페이지: 페이지당 게시물 표시수) , total(현재페이지, 수량)
 		model.addAttribute("pageMaker", pageMaker);
 
 		Criteria albumCri = new Criteria(albumPageNum, albumAmount); // 어마운트는 보여질 게시물 수
 		// 앨범 목록의 데이터를 담아서 페이징 처리
-		List<ArtDetailVO2> album = artistDao.albumInfo(albumCri, artist.getId());
+		List<ArtDetailVO2> album = artistService.albumInfo(albumCri, artist.getId());
 		albumCri.setAmount(3); // 앨범 게시물 수 3개 호출
 		model.addAttribute("album", album);
 
@@ -121,7 +125,7 @@ public class ArtistController {
 	@ResponseBody
 	@RequestMapping("checkBuy")
 	public int checkBuy(@LoginUser SessionUser user, @RequestParam int id) {
-		int r = artistDao.checkBuy(user.getId(), id);
+		int r = artistService.checkBuy(user.getId(), id);
 		return r;
 
 	}
@@ -144,7 +148,7 @@ public class ArtistController {
 	public String artistProfile(@LoginUser SessionUser user, ArtistVO vo, Model model) {
 		vo.setMemberId(user.getId());
 
-		int pro = artistDao.insertArtist(vo);
+		int pro = artistService.insertArtist(vo);
 		if (pro != 0) {
 			MemberVO member = new MemberVO();
 			member.setId(vo.getMemberId());
@@ -164,7 +168,7 @@ public class ArtistController {
 	// 아티스트 정보 수정 폼 호출
 	@RequestMapping("/changeArtistProfileForm")
 	public String changeArtistProfileForm(@LoginUser SessionUser user, Model model) {
-		ArtistVO artist = artistDao.findByMemberId(user.getId());
+		ArtistVO artist = artistService.findByMemberId(user.getId());
 
 		model.addAttribute("artist", artist);
 		return "changeArtistProfile-artist";
@@ -187,7 +191,7 @@ public class ArtistController {
 			user.setSname(artist.getImage());
 		}
 		artist.setMemberId(user.getId());
-		int result = artistDao.updateArtist(artist);
+		int result = artistService.updateArtist(artist);
 		if (result != 0) { // artist에 값이 있으면
 
 			member.setId(artist.getMemberId());
@@ -208,26 +212,59 @@ public class ArtistController {
 		return "artistRequest-artist";
 	}
 
-//	// 아티스트 승급 신청
-//	@RequestMapping("/artistRequest")
-//	public String artistRequest(@LoginUser SessionUser user, PromotionRequestVO vo, Model model, List<MultipartFile> file)
-//			throws IOException { 
-//		if (file != null && file.size() != 0) {
-//			List<UploadFile> uploadFiles = fileUtils.storeFiles(file); // common.entity패키지 확인하면 있음
-//			uploadService.
-////			vo.setFileGroupId(uploadFile.getStoredFileName()); // getStoredFileName : 사진 저장 경로
-//		}
-//		// ArtistVO vo = new ArtistVO();
-////		vo.setMemberId(user.getId());
-//		// vo.setMemberId("mjerrami@about.me"); // 임시
-////		vo.setIdentify(null);
-////		vo.setStatus("A03");
-//		int req = promotionRequestDao.promotionRequestInsert(vo);
-//		model.addAttribute("message", "아티스트 승급 신청을 요청했습니다.\r\n운영자로부터의 응답시까지 대기바랍니다.");
-//
-//		return "artist/myPageMove";
-//	}
+	// 아티스트 승급 신청
+	@RequestMapping("/artistRequest")
+	public String artistRequest(@LoginUser SessionUser user, PromotionRequestVO vo, Model model, List<MultipartFile> files)
+			throws IOException { 
+		model.addAttribute("pro", promotionRequestDao.getStatus(user.getId()));
+		vo.setMemberId(user.getId());
+		vo.setStatus("A03");
+		int id = promotionRequestDao.promotionRequestInsert(vo); //프로모션 아이디반환
+        if (files != null && files.size() != 0) {
+            List<UploadFile> uploadFiles = fileUtils.storeFiles(files); //속성 쓸수있는 파일로 변환
+            uploadFiles.forEach(uploadFile -> {
+            	String groupId = uploadService.save(uploadFile, "promotion", id); //"타입" 과 id로 groupId 생성, file의 속성으로 insert
+                vo.setFileGroupId(groupId);
+            });
+            promotionRequestDao.updateGroupId(vo); //프로모션테이블의 groupId 업데이트
+            
+        }
 
+		model.addAttribute("message", "아티스트 승급 신청을 요청했습니다.\r\n운영자로부터의 응답시까지 대기바랍니다.");
+
+		return "artist/myPageMove";
+	}
+	
+	// 재신청
+	@RequestMapping("/artistRequestUpdate")
+	public String artistRequestUpdate(@LoginUser SessionUser user, PromotionRequestVO vo, Model model, List<MultipartFile> files)
+			throws IOException { 
+		//넘어오는 값 : artwork, files
+		String artWork = vo.getArtwork();
+		
+		//업로드파일의 그룹아이디일치하는 데이터 지우기
+		vo = promotionRequestDao.promotionRequestSelect(user.getId()); //기존 promotionVO의 정보가져오기
+		uploadService.deleteByGroupId(vo.getFileGroupId()); //업로드파일의 파일들 지우기
+		int id = vo.getId();
+		
+		//업데이트(status, artwork)
+		vo.setArtwork(artWork);
+		vo.setStatus("A03");
+		promotionRequestDao.artStatusUpdate(vo);
+		
+		//파일업데이트
+        if (files != null && files.size() != 0) {
+            List<UploadFile> uploadFiles = fileUtils.storeFiles(files); //속성 쓸수있는 파일로 변환
+            uploadFiles.forEach(uploadFile -> {	// 그룹아이디 생성해서 DB 넣기
+            	String groupId = uploadService.save(uploadFile, "promotion", id); //"타입" 과 id로 groupId 생성, file의 속성으로 insert, 기존 id를 입력
+            });
+        }
+
+		model.addAttribute("message", "아티스트 승급 신청을 요청했습니다.\r\n운영자로부터의 응답시까지 대기바랍니다.");
+
+		return "artist/myPageMove";
+	}
+	
 	// 아티스트 승급 진행상황, 재신청
 	@RequestMapping("/artStatus")
 	public String artStatus(@LoginUser SessionUser user, Model model, PromotionRequestDTO dto, MultipartFile file)
@@ -236,8 +273,11 @@ public class ArtistController {
 		
 		//폼 채울거 가져오기
 		PromotionRequestVO vo = promotionRequestDao.promotionRequestSelect(user.getId());
+		model.addAttribute("status2", vo);
 		
-		
+		//그룹아이디로 파일 이름 가져오기
+		List<UploadFileVO> list = uploadService.findByGroupId(vo.getFileGroupId());
+		model.addAttribute("files", list);
 //		if (file != null && file.getSize() != 0) {
 //			UploadFile uploadFile = fileUtils.storeFile(file); // common.entity패키지 확인하면 있음
 //			pro.setFileGroupId(uploadFile.getStoredFileName()); // getStoredFileName : 사진 저장 경로
@@ -265,7 +305,7 @@ public class ArtistController {
 // 	    		user.setSname(artist.getImage());
 // 	    	}
 // 	    	artist.setMemberId(user.getId());
-// 	    	int result = artistDao.updateArtist(artist);
+// 	    	int result = artistService.updateArtist(artist);
 // 	    	if(result != 0) { // artist에 값이 있으면
 	//
 // 	    		member.setId(artist.getMemberId());
@@ -283,7 +323,7 @@ public class ArtistController {
 // 		String memId = vo.getMemberId();
 // 		
 // 		if(userId == memId) {
-// 		    PromotionRequestVO pro = artistDao.getStatus("status", status);
+// 		    PromotionRequestVO pro = artistService.getStatus("status", status);
 // 			model.addAttribute(pro);
 // 		}else {
 // 			System.out.println("연결실패");
@@ -291,10 +331,10 @@ public class ArtistController {
 // 		}
 	// vo.setMemberId(user.getId());
 	// String id2 = memberId.getParameter(memberId);
-	// PromotionRequestVO pro = artistDao.getStatus(memberId, status);
-	// int pro = artistDao.getStatus(user.getId(), status);
+	// PromotionRequestVO pro = artistService.getStatus(memberId, status);
+	// int pro = artistService.getStatus(user.getId(), status);
 
-	// String pro = artistDao.getStatus(user.getId(), status); // user 세션에 있는 승인 상태를
+	// String pro = artistService.getStatus(user.getId(), status); // user 세션에 있는 승인 상태를
 	// artStatus에 뿌리기.
 }
 
