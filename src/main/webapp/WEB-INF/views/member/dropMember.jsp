@@ -6,6 +6,7 @@
     <div class="grid_12 tt" style="margin-top: 70px;">
         <ul class="forum-items" style="text-align: left;">
             <li><i class="icon-ok"></i><a>회원 탈퇴를 위해 정보를 입력해주세요.</a></li>
+            회원정보를 포함한 활동내역은 탈퇴 즉시 소멸되며, 다시 복구할 수 없습니다.
         </ul>
     </div>
 </div>

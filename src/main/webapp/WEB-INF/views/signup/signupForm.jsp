@@ -171,7 +171,7 @@ function send() {
 			 alert("비밀번호가 서로 일치하지 않습니다.");
 			 return false;
 			}else if (!tel.match(regPhone)) {
-			 alert("적절하지 않은 휴대폰번호 양식입니다.");
+			 alert("적절하지 않은 전화번호 양식입니다.");
 			 return false;
 			}else if (genre === null){
 			 alert("관심 장르를 선택해주세요.");

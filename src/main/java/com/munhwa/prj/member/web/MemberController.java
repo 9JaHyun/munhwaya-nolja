@@ -164,7 +164,7 @@ public class MemberController {
         int n = memberService.updatePassword(vo);
         if (n != 0) {
         	SecurityContextHolder.clearContext();
-            return "redirect:main.do";
+            return "redirect:home.do";
         } else {
             return "error/404";
         }

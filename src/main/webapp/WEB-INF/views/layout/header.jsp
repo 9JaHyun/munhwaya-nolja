@@ -15,11 +15,19 @@
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                 <a href="${rootPath}/mypage.do" class="tbutton color2 small"
-                   style="background-color: #4c4c4c; margin-right: 6px;"> <span>마이페이지</span></a>
-                <div id="cart" style="float: right; margin-left: 10px">
-                    <a href="${rootPath}/cart"><i class="icon-shopping-cart"
-                                                  style="font-size: 25px"></i></a>
-                </div>
+                   style="background-color: #4c4c4c; margin-right: 6px;"> 
+                   <span>
+                		<c:choose>
+                			<c:when test="${member.role eq 'R03'}">관리페이지</c:when>
+                			<c:otherwise>마이페이지</c:otherwise>
+                		</c:choose> 
+                   </span></a>
+                <c:if test="${member.role ne 'R03'}">
+	                <div id="cart" style="float: right; margin-left: 10px">
+	                    <a href="${rootPath}/cart"><i class="icon-shopping-cart"
+	                                                  style="font-size: 25px"></i></a>
+	                </div>       
+                </c:if>
                 <div style="float: right;">
                     <form action="${rootPath}/logout" method="post">
                         <button class="sign-btn tbutton small" type="submit">

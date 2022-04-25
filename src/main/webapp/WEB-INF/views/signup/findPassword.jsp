@@ -140,6 +140,7 @@ button {
 					id : $("#id").val()
 				},
 				beforeSend : function() {
+					alert('해당 아이디로 메일을 전송합니다.');
 		       		$("#div_ajax_load_image").show();
            	 	},
            	 	complete : function() {

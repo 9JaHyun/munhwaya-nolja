@@ -99,7 +99,7 @@ public class MemberServiceImpl implements MemberService {
 
         // 보내는 사람 EMail, 제목, 내용
         String fromEmail = email;
-        String fromName = "문화야놀자";
+        String fromName = "CCC";
         String subject = "";
         String msg = "";
 
