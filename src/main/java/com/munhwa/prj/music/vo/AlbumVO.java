@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.munhwa.prj.artist.vo.ArtistVO;
+
 import lombok.Data;
 
 @Data
@@ -23,5 +25,5 @@ public class AlbumVO {
 	private int artistId;
 	private int score;
 	private int hit;
-	private List<MusicVO> musicVO;
+	
 }

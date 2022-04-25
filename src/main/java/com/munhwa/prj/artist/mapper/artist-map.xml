@@ -169,5 +169,16 @@
 	<select id="getStatus" resultType="String">
 		SELECT STATUS FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
 	</select>
-
+	
+	<select id="artistOfName" resultType="String" parameterType="String">
+		SELECT NAME
+		FROM ARTIST
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	<select id="artistOfId" resultType="int" parameterType="String">
+		SELECT ID
+		FROM ARTIST
+		WHERE MEMBER_ID = #{memberId}
+	</select>
 </mapper>

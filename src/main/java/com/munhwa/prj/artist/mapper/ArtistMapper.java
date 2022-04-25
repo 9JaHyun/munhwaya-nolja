@@ -29,4 +29,6 @@ public interface ArtistMapper {
 	String getStatus(String memberId);
 	int artIdByAlbId(int albumId);
    // int chkName(String name);
+	String artistOfName(String memberId);
+	int artistOfId(String memberId);
 }

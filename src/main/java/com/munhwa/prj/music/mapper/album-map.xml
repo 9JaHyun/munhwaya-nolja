@@ -97,4 +97,29 @@
                                  AND ROWNUM=1))
 	</select>
 	
+	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO">
+		INSERT INTO ALBUM (ID, ALB_NAME, ART_NAME, RELEASE_AT, GENRE, CONTENT, PICTURE, ARTIST_ID)
+		VALUES (album_seq.nextval, #{albName}, 
+		#{artName},
+		#{releaseAt},
+		#{genre},
+		#{content},
+		#{picture},
+		#{artistId})
+	</insert>
+	
+	<select id="albumSelectListByMemberId" resultMap="albumResultMap">
+		SELECT AL.ID, AL.ALB_NAME
+		FROM ALBUM AL, ARTIST A
+		WHERE A.ID = AL.ARTIST_ID
+		AND A.MEMBER_ID = #{memberId} 
+	</select>
+	
+	<select id="albumPicture" resultType="String">
+		SELECT AL.PICTURE
+		FROM ALBUM AL, ARTIST A
+		WHERE A.ID = AL.ARTIST_ID
+		AND A.MEMBER_ID = #{memberId}
+		AND AL.ID = #{id}
+	</select>
 </mapper>

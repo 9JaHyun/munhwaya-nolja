@@ -31,5 +31,8 @@ public interface AlbumService {
 	int getCountByList(int id);
 	
 	int getCountByList4(String title);
-
+	
+	List<AlbumVO> albumSelectListByMemberId(String memberId);
+	
+	String albumPicture(String memberId, int id);
 }

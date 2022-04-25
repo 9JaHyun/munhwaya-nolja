@@ -36,5 +36,7 @@ public interface ArtistService {
     String getStatus(String memberId);
 
     int artIdByAlbId(int albumId);
-
+    
+	String artistOfName(String memberId);
+	int artistOfId(String memberId);
 }

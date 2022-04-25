@@ -1,5 +1,24 @@
 package com.munhwa.prj.artist.web;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
 import com.munhwa.prj.artist.service.ArtistService;
@@ -11,31 +30,20 @@ import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.service.FileUtils;
+import com.munhwa.prj.common.file.service.UploadFileService;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.music.service.AlbumService;
+import com.munhwa.prj.music.vo.AlbumVO;
+import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.wishlist.service.WishlistService;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Random;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 /*
  * 작성자:차주연
@@ -49,8 +57,11 @@ public class ArtistController {
 	private final ArtistService artistService;
 	private final WishlistService wishlistService;
 	private final FileUtils fileUtils;
+    @Autowired
+    private UploadFileService uploadService;
 	private final PromotionRequestService promotionRequestService;
 	private final MemberService memberService;
+	private final AlbumService albumService;
 
 	// 아티스트 상세정보
 	
@@ -268,6 +279,41 @@ public class ArtistController {
 		model.addAttribute("status", artistService.getStatus(user.getId()));
 
 		return "artStatus-artist";
+	}
+	
+	// 아티스트 앨범 등록 폼 호출
+	@RequestMapping("/insertAlbumForm.do")
+	public String insertAlbumForm(@LoginUser SessionUser user, Model model) {		
+		return "insertAlbumForm-artist";
+	}
+	
+	// 아티스트 앨범 등록 
+	@RequestMapping("/insertAlbum.do")
+	public String insertAlbum(@LoginUser SessionUser user, Model model, AlbumVO vo) {
+		String memberId = user.getId();
+		vo.setArtistId(Integer.parseInt(String.valueOf(artistService.artistOfId(memberId))));
+		vo.setArtName(artistService.artistOfName(memberId));
+		albumService.albumInsert(vo);
+		return "insertAlbumForm-artist";
+	}
+	
+	// 아티스트 곡 등록 폼 호출
+	@RequestMapping("/insertMusicForm.do")
+	public String insertMusicForm(@LoginUser SessionUser user, Model model) {
+		String memberId = user.getId();
+		model.addAttribute("albumIds", albumService.albumSelectListByMemberId(memberId));
+		return "insertMusicForm-artist";
+	}
+	
+	@RequestMapping("/insertMusic.do")
+	public String insertMusic(@LoginUser SessionUser user, MusicVO vo, MultipartFile file) throws IOException {
+		String memberId = user.getId();
+		UploadFile uploadfile = fileUtils.storeFile(file);
+//		vo.setFileId(uploadfile.getStoredFileName());
+		vo.setArtName(artistService.artistOfName(memberId));
+		vo.setPicture(albumService.albumPicture(memberId, vo.getAlbumId()));
+		
+		return "insertMusicForm-artist";
 	}
 }
 
