@@ -31,4 +31,8 @@ public interface AlbumMapper {
 	int getCountByList(int id);
 	
 	int getCountByList4(String title);
+	
+	List<AlbumVO> albumSelectListByMemberId(String memberId);
+	
+	String albumPicture(@Param("memberId") String memberId, @Param("id") int id);
 }

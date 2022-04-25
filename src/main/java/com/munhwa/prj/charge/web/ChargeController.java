@@ -2,6 +2,10 @@ package com.munhwa.prj.charge.web;
 
 
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,19 +33,15 @@ public class ChargeController {
 	@ResponseBody
 	public MemberVO plusMileage(@LoginUser SessionUser user, MemberVO vo, ChargeVO cvo, Model model) {
 		String memberId = user.getId();
-    
+		Date useDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 		model.addAttribute("memberId", memberId);
 		vo.setId(memberId);
 		memberDao.plusMileage(vo);
+		cvo.setChargeAt(useDate);
 		chargeDao.insertCharge(cvo);
     
 		user.setMileage(user.getMileage() + cvo.getMileage());
 		return vo;
 	}
-	
-//	public ChargeVO insertCharge(ChargeVO vo) {
-//		chargeDao.insertCharge(vo);
-//		return vo;
-//	}
-	
+		
 }	

@@ -38,6 +38,7 @@ import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.music.service.AlbumService;
 import com.munhwa.prj.wishlist.service.WishlistService;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
 
@@ -211,7 +212,7 @@ public class ArtistController {
 		model.addAttribute("pro", promotionRequestDao.getStatus(user.getId()));
 		return "artistRequest-artist";
 	}
-
+  
 	// 아티스트 승급 신청
 	@RequestMapping("/artistRequest")
 	public String artistRequest(@LoginUser SessionUser user, PromotionRequestVO vo, Model model, List<MultipartFile> files)
@@ -278,6 +279,7 @@ public class ArtistController {
 		//그룹아이디로 파일 이름 가져오기
 		List<UploadFileVO> list = uploadService.findByGroupId(vo.getFileGroupId());
 		model.addAttribute("files", list);
+
 //		if (file != null && file.getSize() != 0) {
 //			UploadFile uploadFile = fileUtils.storeFile(file); // common.entity패키지 확인하면 있음
 //			pro.setFileGroupId(uploadFile.getStoredFileName()); // getStoredFileName : 사진 저장 경로
@@ -285,7 +287,7 @@ public class ArtistController {
 //		pro.setMemberId(user.getId());
 //		pro.setIdentify(null);
 //		pro.setStatus("A03");
-		
+
 // 		int statusUpdate = promotionRequestDao.artStatusUpdate(pro);
 // 			if(statusUpdate == 1) {	
 // 				model.addAttribute("message", "아티스트 승급 재신청을 요청했습니다.\r\n운영자로부터의 응답시까지 수일이 소요될 수 있으니 대기바랍니다.");
@@ -338,25 +340,29 @@ public class ArtistController {
 	// artStatus에 뿌리기.
 }
 
-// 아티스트 승급페이지 본인인증
-@RestController
-@RequiredArgsConstructor
-class SmsController {
-	private final SmsServiceImpl smsServiceImpl;
 
-	@PostMapping("/user/sms")
-	public ResponseEntity<SmsResponse> test(String phoneNumber) throws NoSuchAlgorithmException, URISyntaxException,
-			UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
+    // 아티스트 승급페이지 본인인증
+    @RestController
+    @RequiredArgsConstructor
+    class SmsController {
 
-		ServerRequest request = new ServerRequest();
-		request.setRecipientPhoneNumber(phoneNumber);
-		String randomNumber = createRandomNumber();
-		request.setContent("본인확인 인증번호는 " + randomNumber + " 입니다.");
-		SmsResponse data = smsServiceImpl.sendSms(request.getRecipientPhoneNumber(), request.getContent());
-		data.setContent(randomNumber);
+        private final SmsServiceImpl smsServiceImpl;
 
-		return ResponseEntity.ok().body(data);
-	}
+        @PostMapping("/user/sms")
+        public ResponseEntity<SmsResponse> test(String phoneNumber)
+              throws NoSuchAlgorithmException, URISyntaxException,
+              UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
+
+            ServerRequest request = new ServerRequest();
+            request.setRecipientPhoneNumber(phoneNumber);
+            String randomNumber = createRandomNumber();
+            request.setContent("본인확인 인증번호는 " + randomNumber + " 입니다.");
+            SmsResponse data = smsServiceImpl.sendSms(request.getRecipientPhoneNumber(),
+                  request.getContent());
+            data.setContent(randomNumber);
+
+            return ResponseEntity.ok().body(data);
+        }
 
 //	@PostMapping("/user/mocksms")  // 훼이크 문자용 
 //	public ResponseEntity<String> timertest(String phoneNumber) throws NoSuchAlgorithmException, URISyntaxException,
@@ -366,18 +372,19 @@ class SmsController {
 //			return ResponseEntity.ok().body(data);
 //	}
 
-	private String createRandomNumber() {
-		Random random = new Random(); // 랜덤 함수 선언
-		int createNum = 0; // 1자리 난수
-		String ranNum = ""; // 1자리 난수 형변환 변수
-		int letter = 4; // 난수 자릿수:6
-		String resultNum = ""; // 결과 난수
+        private String createRandomNumber() {
+            Random random = new Random(); // 랜덤 함수 선언
+            int createNum = 0; // 1자리 난수
+            String ranNum = ""; // 1자리 난수 형변환 변수
+            int letter = 4; // 난수 자릿수:6
+            String resultNum = ""; // 결과 난수
 
-		for (int i = 0; i < letter; i++) {
-			createNum = random.nextInt(9); // 0부터 9까지 올 수 있는 1자리 난수 생성
-			ranNum = Integer.toString(createNum); // 1자리 난수를 String으로 형변환
-			resultNum += ranNum; // 생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
-		}
-		return resultNum;
-	}
+            for (int i = 0; i < letter; i++) {
+                createNum = random.nextInt(9); // 0부터 9까지 올 수 있는 1자리 난수 생성
+                ranNum = Integer.toString(createNum); // 1자리 난수를 String으로 형변환
+                resultNum += ranNum; // 생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
+            }
+            return resultNum;
+        }
+    }
 }
