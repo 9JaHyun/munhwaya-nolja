@@ -100,4 +100,10 @@ private ArtistMapper map;
 		// TODO Auto-generated method stub
 		return map.getStatus(memberId);
 	}
+
+	@Override
+	public int artIdByAlbId(int albumId) {
+		// TODO Auto-generated method stub
+		return map.artIdByAlbId(albumId);
+	}
 }

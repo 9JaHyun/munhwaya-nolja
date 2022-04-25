@@ -227,7 +227,7 @@ function addWishList() {
 			alert("추가되었습니다");
 		},
 		error : function(){
-			alert("통신실패");
+			alert("이미 추가한 곡이 있습니다.");
 		}
 	}) 
 }
@@ -289,9 +289,9 @@ function ListaddCart() {
             	 alert(data);
             },
             error: function(xhr, status, error){
-            	alert("통신실패"); 	            }
+            	alert("곡을 선택해주세요"); 	            }
          }) 
-         
+	     $('.all').prop('checked',false);
       } else {
          alert("취소")
       }
