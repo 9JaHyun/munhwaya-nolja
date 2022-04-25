@@ -125,13 +125,7 @@
 			<input type="button" style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" class="tbutton small" value="수정"
 				onclick="send()">
 			<button
-				style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;"
-				onclick="location.href='home.do'" class="tbutton small">취소</button>
-			<!--  onclick="send();" -->
-
-			<!-- 		<button type="button" class="tbutton small" onclick="send(); "> -->
-			<!-- 			<span>수정</span> -->
-			<!-- 		</button> -->
+				style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='home.do'" class="tbutton small">취소</button>
 		</div>
 	</form>
 

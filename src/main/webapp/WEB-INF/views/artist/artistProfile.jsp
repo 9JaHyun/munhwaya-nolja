@@ -4,7 +4,7 @@
 <style>
 	textarea {
 	padding-left:1em;
-    width: 70%;
+    width: 55%;
     height: 7em;
     border: none;
     resize: none;
@@ -74,7 +74,7 @@
 	</div>
 </div>
 <br>
-		<div align="right" style="margin-top:-6em">
+		<div align="right" style="margin-top:-6em; margin-bottom:1em";>
 			<input type="submit" style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" value="등록" class="tbutton small" onclick=""/>
 			<button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypage.do'" class="tbutton small" >취소</button>
 		</div>
