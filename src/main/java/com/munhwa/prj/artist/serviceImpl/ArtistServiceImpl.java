@@ -96,8 +96,10 @@ private ArtistMapper map;
 	}
 
 	@Override
-	public String getStatus(String memberId) {
+	public int artIdByAlbId(int albumId) {
 		// TODO Auto-generated method stub
-		return map.getStatus(memberId);
+		return map.artIdByAlbId(albumId);
 	}
+
+	
 }

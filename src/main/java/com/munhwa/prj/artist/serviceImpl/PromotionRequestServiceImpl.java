@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.munhwa.prj.artist.mapper.PromotionRequestMapper;
 import com.munhwa.prj.artist.service.PromotionRequestService;
 import com.munhwa.prj.artist.vo.PromotionRequestVO;
+import com.munhwa.prj.artist.web.PromotionRequestDTO;
 import com.munhwa.prj.common.paging.entity.Criteria;
 
 @Repository("promotionRequestDao")
@@ -49,5 +50,18 @@ public class PromotionRequestServiceImpl implements PromotionRequestService {
 		return map.getTotal(cri);
 	}
 
+	@Override
+	public String getStatus(String memberId) {
+		// TODO Auto-generated method stub
+		return map.getStatus(memberId);
+	}
+
+	@Override
+	public String artStatusUpdate(PromotionRequestDTO dto) {
+		// TODO Auto-generated method stub
+		return map.artStatusUpdate(dto);
+	}
+
+	
 
 }

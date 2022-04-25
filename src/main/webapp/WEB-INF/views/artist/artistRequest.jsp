@@ -42,12 +42,12 @@ label {
 	<div style="padding-top: 5%;">
 		<div style="margin: 100px 0px 10px 0px; border: none;">
 			<br>
-			<form id="info" name="info" method="post" action="artistRequest"
-				enctype="multipart/form-data" onsubmit="return chk_request()">
-				<label id="request-label"><div class="sort">작업물 설명란</div> <textarea
-						id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
-				</label><br> <label><div class="sort">작업물 인증</div> <input
-					type="file" id="file" name="file" accept="image/png, image/jpeg"></label><br>
+			<form id="info" name="info" method="post" action="artistRequest" enctype="multipart/form-data" onsubmit="return chk_request()">
+				<label id="request-label"><div class="sort">작업물 설명란</div> 
+				<textarea id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
+				</label><br> <label><div class="sort">작업물 인증</div>  이미지 밑에 아스카
+				<label><div class="sort">작업물 인증</div>  이미지 밑에 아스카
+				<input type="file" multiple="multiple" name="imageFiles" accept="image/*" ></label><br> 
 	
 				<div class="sort">
 					<label>본인인증</label>
@@ -87,14 +87,12 @@ label {
 
 <script>
 	$(document).ready(function(){
-		console.log('page load')
-		if('${pro.status}' != null){
+		if('${pro}' != "" ){	// status칼럼에 값이있다 (A01-A03)
 			alert('이미 신청을 완료했습니다. 신청현황 페이지로 이동합니다.');
 			location.href = 'artStatus';
-		}
+		}//alert창이 안뜬다 => ${pro} -> "" => status칼럼에 값이없다.
 	})
 <!-- 유효성 검사-->
-			<!-- 유효성 검사-->
 		function chk_request(){
 			
  			if(!document.info.artwork.value){
