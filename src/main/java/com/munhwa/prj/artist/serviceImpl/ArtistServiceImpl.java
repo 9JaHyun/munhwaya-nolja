@@ -13,76 +13,87 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArtistServiceImpl implements ArtistService {
 
-    @Autowired
-    private ArtistMapper map;
+  @Autowired
+  private ArtistMapper map;
+	
+	@Override
+	public int getTotal(Criteria cri, int id) {
+		// TODO Auto-generated method stub
+		return map.getTotal(cri,id);
+	}
+	
+	@Override
+	public List<ArtistVO> selectArtistList() {
+		// TODO Auto-generated method stub
+		return map.selectArtistList();
+	}
+	
+	@Override
+	public int insertArtist(ArtistVO vo) {
+		// TODO Auto-generated method stub
+		return map.insertArtist(vo);
+	}
+	
+	@Override
+	public int updateArtist(ArtistVO vo) {
+		// TODO Auto-generated method stub
+		return map.updateArtist(vo);
+	}
 
-    @Override
-    public int getTotal(Criteria cri, int id) {
-        return map.getTotal(cri, id);
-    }
+//	@Override
+//	public int chkNick(String name) {
+//		// TODO Auto-generated method stub
+//		return map.chkName(name);
+//	}
 
-    @Override
-    public List<ArtistVO> selectArtistList() {
-        return map.selectArtistList();
-    }
+	@Override
+	public List<ArtDetailVO> findMusic(Criteria cri, int id) {
+		// TODO Auto-generated method stub
+		return map.findMusic(cri,id);
+	}
 
-    @Override
-    public int insertArtist(ArtistVO vo) {
-        return map.insertArtist(vo);
-    }
+	@Override
+	public int checkBuy(String id, int musicId) {
+		return map.checkBuy(id, musicId);
+	}
 
-    @Override
-    public int updateArtist(ArtistVO vo) {
-        return map.updateArtist(vo);
-    }
+	@Override
+	public int musicCnt(int vo) {
+		// TODO Auto-generated method stub
+		return map.musicCnt(vo);
+	}
 
-    @Override
-    public List<ArtDetailVO> findMusic(Criteria cri, int id) {
-        return map.findMusic(cri, id);
-    }
+	@Override
+	public int albumCnt(int vo) {
+		// TODO Auto-generated method stub
+		return map.albumCnt(vo);
+	}
 
-    @Override
-    public int checkBuy(String id, int musicId) {
-        return map.checkBuy(id, musicId);
-    }
+	@Override
+	public List<ArtDetailVO2> albumInfo(Criteria cri, int artistId) {
+		// TODO Auto-generated method stub
+		return map.albumInfo(cri, artistId);
+	}
 
-    @Override
-    public int musicCnt(int vo) {
-        return map.musicCnt(vo);
-    }
+	@Override
+	public int getTotal2(Criteria cri, int artistId) {
+		// TODO Auto-generated method stub
+		return map.getTotal2(cri, artistId);
+	}
 
-    @Override
-    public int albumCnt(int vo) {
-        return map.albumCnt(vo);
-    }
+	@Override
+	public ArtistVO findByArtistId(int artId) {
+		return map.findByArtistId(artId);
+	}
 
-    @Override
-    public List<ArtDetailVO2> albumInfo(Criteria cri, int artistId) {
-        return map.albumInfo(cri, artistId);
-    }
+	@Override
+	public ArtistVO findByMemberId(String id) {
+		return map.findByMemberId(id);
+	}
 
-    @Override
-    public int getTotal2(Criteria cri, int artistId) {
-        return map.getTotal2(cri, artistId);
-    }
-
-    @Override
-    public ArtistVO findByArtistId(int artId) {
-        return map.findByArtistId(artId);
-    }
-
-    @Override
-    public ArtistVO findByMemberId(String id) {
-        return map.findByMemberId(id);
-    }
-
-    @Override
-    public String getStatus(String memberId) {
-        return map.getStatus(memberId);
-    }
-
-    @Override
-    public int artIdByAlbId(int albumId) {
-        return map.artIdByAlbId(albumId);
-    }
+	@Override
+	public int artIdByAlbId(int albumId) {
+		// TODO Auto-generated method stub
+		return map.artIdByAlbId(albumId);
+	}
 }

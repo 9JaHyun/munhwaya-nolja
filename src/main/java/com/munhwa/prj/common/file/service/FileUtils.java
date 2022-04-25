@@ -23,6 +23,7 @@ public class FileUtils {
         String originalFileName = multipartFile.getOriginalFilename();
         String storedFileName = createStoredFileName(originalFileName);
         multipartFile.transferTo(new File(getFullPath(storedFileName)));
+      
         return new UploadFile(originalFileName, storedFileName);
     }
 
