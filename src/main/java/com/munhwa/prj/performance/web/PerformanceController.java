@@ -131,33 +131,33 @@ public class PerformanceController {
 		// 이미 그날에 공연이 존재하는가
     	if(result) {
     		red.addAttribute("message", "해당 일자에 공연이 존재합니다.");
-    		return "redirect:performanceInsertForm.do";
+    		return "redirect:performanceInsertForm.do?#frm";
     	}
     	
     	// 시작시간이 종료시간보다 이전이여야함
     	if(sdatetime4 > edatetime4) {
     		red.addAttribute("message", "시작시간이 종료시간보다 이전이여야 합니다.");
-    		return "redirect:performanceInsertForm.do";
+    		return "redirect:performanceInsertForm.do?#frm";
     	}
     	
     	// 오늘날짜보다 이전에는 등록 불가
     	if(vo.getSdate().before(date)) {		
     		red.addAttribute("message", "등록일자는 항상 오늘날짜보다 이후여야 합니다.");
-    		return "redirect:performanceInsertForm.do";
+    		return "redirect:performanceInsertForm.do?#frm";
     	}
     	
     	// 공연은 항상 당일치기
     	if(!sdate.equals(edate)) {
     		red.addAttribute("message", "시작날짜와 종료날짜가 같아야 합니다.");
-    		return "redirect:performanceInsertForm.do";
+    		return "redirect:performanceInsertForm.do?#frm";
 		}
     	
     	red.addAttribute("message", "공연 신청이 완료되었습니다.");
 		int n = performanceDao.performanceInsert(vo);    			    			
 		if( n != 0 ) {
-			return "redirect:performanceInsertForm.do";    			
+			return "redirect:performanceInsertForm.do?#frm";    			
 		}
-		return "redirect:performanceInsertForm.do"; 
+		return "redirect:performanceInsertForm.do?#frm"; 
 	}
 
 	@RequestMapping("/performanceList.do")
