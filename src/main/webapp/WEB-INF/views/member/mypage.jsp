@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 
 <style>
     .js-load {
@@ -17,6 +19,14 @@
     <h4>새소식</h4>
 </div>
 
+<c:if test="${not empty news1}">
+	<div align="right" style="margin-bottom: 25px;">
+		<button class="tbutton small" onclick="location.href='deleteNewsAll.do'">
+		   	<span>전체삭제</span>
+		</button>
+	</div>
+</c:if>
+
 <div align="center">
     <div id="js-load">
         <div class="mbf clearfix">
@@ -27,40 +37,47 @@
             </c:if>
             <c:forEach items="${news1}" var="news">
                 <c:choose>
-                    <c:when test="${news.code eq 'feed'}">
+                    <c:when test="${news.code eq 'N01'}">
                         <div class="js-load">
                             <div class="notification-box notification-box-success">
                                 <p>
-                                    <i class="icon-ok"></i>${news.artistName}님이
-                                    <c:if test="${news.code eq 'feed'}">피드</c:if>를 등록하셨습니다.
+                                    <i class="icon-ok"></i><a href="#">${news.artistName}님이
+                                    <c:if test="${news.code eq 'N01'}">피드</c:if>를 등록하셨습니다.&nbsp;&nbsp;
+                                    <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
                                 </p>
                                 <a href="#"
                                    class="notification-close notification-close-success"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
-                    <c:when test="${news.code eq 'album'}">
+                    <c:when test="${news.code eq 'N02'}">
                         <div class="js-load">
                             <div class="notification-box notification-box-info">
                                 <p>
-                                    <i class="icon-ok"></i>${news.artistName}님이
-                                    <c:if test="${news.code eq 'album'}">앨범</c:if>을 등록하셨습니다.
+                                    <i class="icon-ok"></i><a href="#">${news.artistName}님이
+                                    <c:if test="${news.code eq 'N02'}">앨범</c:if>을 등록하셨습니다.&nbsp;&nbsp;
+                                    <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
                                 </p>
                                 <a href="#" class="notification-close notification-close-info"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
-                    <c:when test="${news.code eq 'performance'}">
+                    <c:when test="${news.code eq 'N03'}">
                         <div class="js-load">
                             <div class="notification-box notification-box-error">
                                 <p>
-                                    <i class="icon-ok"></i>${news.artistName}님이
-                                    <c:if test="${news.code eq 'performance'}">공연</c:if>을 등록하셨습니다.
+                                    <i class="icon-ok"></i><a onclick="performanceSearch(${news.pks}); delNewsFnc(${news.id});">${news.artistName}님이
+                                    <c:if test="${news.code eq 'N03'}">공연</c:if>을 등록하셨습니다.&nbsp;&nbsp;
+                                    <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
                                 </p>
+
                                 <a href="#" class="notification-close notification-close-error"><i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:when>
@@ -68,12 +85,14 @@
                         <div class="js-load">
                             <div class="notification-box notification-box-warning">
                                 <p>
-                                    <i class="icon-ok"></i>${news.artistName}님이
-                                    <c:if test="${news.code eq 'post'}">게시글</c:if>을 등록하셨습니다.
+                                    <i class="icon-ok"></i><a href="#">${news.artistName}님이
+                                    <c:if test="${news.code eq 'N04'}">게시글</c:if>을 등록하셨습니다.&nbsp;&nbsp;
+                                    <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
                                 </p>
                                 <a href="#"
                                    class="notification-close notification-close-warning"> <i
-                                        class="icon-remove" onclick="delNewsFnc(${news.id})"></i></a>
+                                        class="icon-remove"
+                                        onclick="delNewsFnc(${news.id})"></i></a>
                             </div>
                         </div>
                     </c:otherwise>
@@ -87,22 +106,33 @@
     </div>
 </div>
 
-<script>
-    function delNewsFnc(id) {
+<div>
+	<form id = "frm" action="performanceSelect.do" method="post">
+		<input type="hidden" id="id" name="id">
+	</form>
+</div>
 
+<script>
+	function performanceSearch(n) {
+		frm.id.value = n;
+		frm.submit();
+	}
+	
+    function delNewsFnc(id) {
         $.ajax({
-            type : "POST",
-            url : "deleteNews.do",
-            data : JSON.stringify({"id": id}),
-            contentType : "application/json"
+            type: "POST",
+            url: "deleteNews.do",
+            data: JSON.stringify({"id": id}),
+            contentType: "application/json"
         })
         .done(() => {
+        	load('#js-load', '1');
         });
     }
 
     $(window).on('load', function () {
         // 기본 갯수
-        load('#js-load', '5');
+        load('#js-load', '7');
         $("#js-btn-wrap .button").on("click", function () {
             // 증가 갯수
             load('#js-load', '3', '#js-btn-wrap');
@@ -121,4 +151,5 @@
         }
         $(list + ":lt(" + total_cnt + ")").addClass("active");
     }
+
 </script>

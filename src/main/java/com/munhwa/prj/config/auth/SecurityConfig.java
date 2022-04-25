@@ -46,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .and()
               .authorizeRequests(request -> request
                     .antMatchers("/", "/home.do", "/signup.do", "/resources/**", "/css/**",
-                          "/js/**", "/*signup*", "/idChk", "/nickChk").permitAll()
+                          "/js/**", "/*signup*", "/chkId", "/chkNick", "/findId", "/findPassword", "/findIdResult"
+                          ,"/findpw").permitAll()
                     .antMatchers("/member/**").access("hasRole('ROLE_R01')") // member
                     .antMatchers("/artist/**").access("hasRole('ROLE_R02')") // artist
                     .antMatchers("/admin/**").access("hasRole('ROLE_R03')")  // admin
@@ -56,9 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .formLogin(login -> login
                     .loginPage("/signin").permitAll()
                     .defaultSuccessUrl("/", false)
-                    .failureUrl("/signin")
-                    .successHandler(loginSuccessHandler())
-                    .failureHandler(loginFailureHandler()))
+                    .successHandler(loginSuccessHandler()))
+//                    .failureHandler(loginFailureHandler()))
               .logout(logout -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/home.do")
@@ -142,15 +142,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")
               .clientSecret("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")
               .scope("profile", "email")
-              .build();
-    }
-
-    // 미구현
-    private ClientRegistration faceBookClientRegistration() {
-        return CommonOAuth2Provider.FACEBOOK.getBuilder("faceBook")
-              .clientId("1022442908968-5nuhth78ov1dmdn6676c9gq93hdvppeo.apps.googleusercontent.com")
-              .clientSecret("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")
-              .scope("email", "nickname", "profile_image")
               .build();
     }
 

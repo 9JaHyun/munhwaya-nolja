@@ -10,8 +10,8 @@ public class MusicVO {
 	private String artName;
 	private String genre;
 	private String lyric;
-	private int likeIt;
-	private String fileName;
+	private int downloadCnt;
+	private int fileId;
 	private String title;
 	private int price;
 	private int albumId;
@@ -19,4 +19,6 @@ public class MusicVO {
 	private String writer;
 	private String composing;
 	private String arrangement;
+	private String picture;
+	private int orders;
 }

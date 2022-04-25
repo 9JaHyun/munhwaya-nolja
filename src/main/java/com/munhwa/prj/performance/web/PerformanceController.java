@@ -1,5 +1,14 @@
 package com.munhwa.prj.performance.web;
 
+import com.munhwa.prj.artist.service.ArtistService;
+import com.munhwa.prj.artist.vo.ArtistVO;
+import com.munhwa.prj.common.file.service.FileUtils;
+import com.munhwa.prj.common.paging.entity.Criteria;
+import com.munhwa.prj.common.paging.entity.PageDTO;
+import com.munhwa.prj.config.auth.LoginUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
+import com.munhwa.prj.performance.service.PerformanceService;
+import com.munhwa.prj.performance.vo.PerformanceVO;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,51 +16,42 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.munhwa.prj.common.service.FileUtils;
-import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
-import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.performance.vo.Criteria;
-import com.munhwa.prj.performance.vo.PageMakeDTO;
-import com.munhwa.prj.performance.vo.PerformanceVO;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class PerformanceController {
-	@Autowired
-	private PerformanceService performanceDao;
 
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	private final PerformanceService performanceDao;
+	private final ArtistService artistDao;
+	private final FileUtils fileUtils;
+	private final SimpleDateFormat format;
 
-	// @Autowired
-	// private ArtistService artistDao;
+	public PerformanceController(
+		PerformanceService performanceDao, ArtistService artistDao,
+		FileUtils fileUtils) {
+		this.performanceDao = performanceDao;
+		this.artistDao = artistDao;
+		this.fileUtils = fileUtils;
+		this.format = new SimpleDateFormat("yyyy-MM-dd");
+	}
 
-	@Autowired
-	private FileUtils fileUtils;
 
 	@GetMapping("/performance")
 	public String performance(Model model, Criteria cri) {
+		cri.setAmount(9);
 		List<PerformanceVO> list = performanceDao.performanceSelectList(cri);
 
-		List<PerformanceVO> result = list.stream().filter(p -> p.getStatus().equals("승인")).collect(Collectors.toList());
-
-		model.addAttribute("performances", result);
-
+		model.addAttribute("performances", list);
 		int total = performanceDao.getTotal(cri);
-
-		PageMakeDTO pageMake = new PageMakeDTO(cri, total);
+		PageDTO pageMake = new PageDTO(cri, total);
 
 		model.addAttribute("pageMake", pageMake);
 
-		// model.addAttribute("list", performanceDao.getListPaging(cri));
 		return "performance/performance";
 	}
 
@@ -60,14 +60,18 @@ public class PerformanceController {
 		vo = performanceDao.performanceSelect(vo);
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("v_per_id", vo.getId());
-		// int n = performanceDao.performanceUpdate(paramMap);
+
 		model.addAttribute("performance", vo);
 		model.addAttribute("mileage", user.getMileage());
+		model.addAttribute("artistname", vo.getArtistName());
 		return "performance/performanceSelect";
 	}
 
 	@RequestMapping("/performanceInsertForm.do")
-	public String performanceInsertForm() {
+	public String performanceInsertForm(@LoginUser SessionUser user, Model model, String message) {
+		ArtistVO artist = artistDao.findByMemberId(user.getId());
+		model.addAttribute("artist", artist);
+		model.addAttribute("message", message);
 		return "performance/performanceInsertForm";
 	}
 
@@ -90,28 +94,68 @@ public class PerformanceController {
 
 	// 공연신청
 	@RequestMapping("/performanceInsert.do")
-    public String performanceInsert(PerformanceVO vo, Date date) throws IOException {
-
-    	vo.setArtistId(42);
-//    	fileUtils.storeFile(null)
-    	vo.getImage();
+    public String performanceInsert(PerformanceVO vo, RedirectAttributes red) throws IOException {
+    	String sdate = String.valueOf(vo.getSdate()).substring(0,10);
+    	String edate = String.valueOf(vo.getEdate()).substring(0,10);
+    
+    	String sdatetime = String.valueOf(vo.getSdate()).substring(11,19);
+    	String edatetime = String.valueOf(vo.getEdate()).substring(11,19);
     	
-    	boolean result = performanceDao.findAll()
+    	String sdatetime2[] = sdatetime.split(":");
+    	String edatetime2[] = edatetime.split(":");
+    	
+    	String sdatetime3 = ""; 
+    	for(int i = 0; i < sdatetime2.length; i++) {
+    		sdatetime3 += sdatetime2[i];
+    	}
+    	
+    	String edatetime3 = ""; 
+    	for(int i = 0; i < edatetime2.length; i++) {
+    		edatetime3 += edatetime2[i];
+    	}
+    	
+    	int sdatetime4 = Integer.parseInt(sdatetime3);
+    	int edatetime4 = Integer.parseInt(edatetime3);
+    	
+    	Date date = new Date();
+    	
+    	// 중복 확인
+		boolean result = performanceDao.findAll()
     						.stream()
     						.map(PerformanceVO::getSdate)
     						.map(d -> date2String(d))
     						.anyMatch(d -> d.equals(date2String(vo.getSdate())));
     	
+		// 이미 그날에 공연이 존재하는가
     	if(result) {
-    		return "performance/calendarError";
-    	} else {
-    		int n = performanceDao.performanceInsert(vo);
-	    	if( n != 0 ) {
-	    		return "redirect:performance";    			
-	    	}
-	    	return"performance/performanceError";
+    		red.addAttribute("message", "해당 일자에 공연이 존재합니다.");
+    		return "redirect:performanceInsertForm.do?#frm";
     	}
-
+    	
+    	// 시작시간이 종료시간보다 이전이여야함
+    	if(sdatetime4 > edatetime4) {
+    		red.addAttribute("message", "시작시간이 종료시간보다 이전이여야 합니다.");
+    		return "redirect:performanceInsertForm.do?#frm";
+    	}
+    	
+    	// 오늘날짜보다 이전에는 등록 불가
+    	if(vo.getSdate().before(date)) {		
+    		red.addAttribute("message", "등록일자는 항상 오늘날짜보다 이후여야 합니다.");
+    		return "redirect:performanceInsertForm.do?#frm";
+    	}
+    	
+    	// 공연은 항상 당일치기
+    	if(!sdate.equals(edate)) {
+    		red.addAttribute("message", "시작날짜와 종료날짜가 같아야 합니다.");
+    		return "redirect:performanceInsertForm.do?#frm";
+		}
+    	
+    	red.addAttribute("message", "공연 신청이 완료되었습니다.");
+		int n = performanceDao.performanceInsert(vo);    			    			
+		if( n != 0 ) {
+			return "redirect:performanceInsertForm.do?#frm";    			
+		}
+		return "redirect:performanceInsertForm.do?#frm"; 
 	}
 
 	@RequestMapping("/performanceList.do")
@@ -120,6 +164,8 @@ public class PerformanceController {
     	model.addAttribute("performance", vo);
     	return "performance/performanceList";
     }
+
+
 
 	private String date2String(Date date) {
     	return format.format(date);

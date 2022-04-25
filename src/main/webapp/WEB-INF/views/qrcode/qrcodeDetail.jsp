@@ -28,7 +28,8 @@
 .ticket__header {
 	margin: 0;
 	padding: 1.5em;
-	background: #f4f5f6;
+	background: rgb(235,209,213);
+	background: linear-gradient(90deg, rgba(235,209,213,1) 0%, rgba(226,185,190,1) 23%, rgba(203,29,37,1) 59%, rgba(238,10,16,1) 91%);
 }
 
 .ticket__co span,
@@ -57,11 +58,12 @@
 	font-size: 2.5em;
 	font-variation-settings: "wght" 500, "wdth" 75;
 	letter-spacing: -.01em;
+	color: white;
 }
 
 .ticket__co-subname {
 	font-variation-settings: "wght" 700;
-	color: #506072;
+	color: white;
 }
 
 .ticket__body {
@@ -192,31 +194,30 @@
   <div class="ticket" aria-hidden="true">
     <div class="ticket__header">
       <div>
-        <span class="ticket__co-name" style="margin-left: 10px;">모바일티켓</span><br>
-        <span class="u-upper ticket__co-subname">yedam cinema</span>
+        <span class="ticket__co-name" style="margin-left: 10px;">예담콘서트</span><br>
+        <span class="u-upper ticket__co-subname">yedam concert</span>
       </div>
     </div>
     <div class="ticket__body">
       <p class="ticket__route" style="margin-top:0px;">${ticket.performancevo.name }</p>
-      <p class="ticket__description">${ticket.performancevo.location }</p>
       <div class="ticket__timing">
         <p>
           <span class="u-upper ticket__small-label">공연일</span>
-          <span class="ticket__detail"><fmt:formatDate pattern = "E요일 dd" value = "${ticket.performancevo.sdate }" /></span>
+          <span class="ticket__detail"><fmt:formatDate pattern = "MM월 dd일" value = "${ticket.performancevo.sdate }" /><br>
+          <fmt:formatDate pattern = "E요일" value = "${ticket.performancevo.sdate }" /></span>
         </p>
         <p>
-          <span class="u-upper ticket__small-label">공연시작시간</span>
-          <span class="ticket__detail"><fmt:formatDate pattern = "HH시 MM분" value = "${ticket.performancevo.sdate }" /></span>
+          <span class="u-upper ticket__small-label">공연시간</span>
+          <span class="ticket__detail"><fmt:formatDate pattern = "HH시 mm분" value = "${ticket.performancevo.sdate }" /><br> ~
+          <fmt:formatDate pattern = "HH시 mm분" value = "${ticket.performancevo.edate }" /></span>
         </p>
         <p>
-          <span class="u-upper ticket__small-label">공연종료시간</span>
-          <span class="ticket__detail"><fmt:formatDate pattern = "HH시 MM분" value = "${ticket.performancevo.edate }" /></span>
+          <span class="u-upper ticket__small-label">입장관객수</span><br>
+          <span class="ticket__detail">${ticket.person }명</span>
         </p>
       </div><br>
-      <a><MARQUEE behavior="scroll" bgColor="black" style="color:white; height:40px; font-size:20pt;">입장이 완료되었습니다.</MARQUEE></a>
-      <p class="ticket__fine-print" style="text-align: left;">ㆍ공연취소/변경은 불가능합니다</p>
-      <p class="ticket__fine-print" style="text-align: left;">ㆍ아티스트의 사정에 의해 본 공연 시작이<br>&nbsp;&nbsp;&nbsp;10여분 정도 차이 날 수 있습니다.</p>
-      <p class="ticket__fine-print" style="text-align: left;">ㆍ공연관 에티켓을 준수하여 즐거운 관람하세요.</p>
+      <p class="ticket__description">${ticket.performancevo.location }</p>
+      <a><MARQUEE behavior="scroll" bgColor="black" style="color:white; height:40px; font-size:20pt; margin-bottom:20px;">입장이 완료되었습니다.</MARQUEE></a>
       <span id="dpTime">현재시각 01:44:40</span>
     </div>
   </div>

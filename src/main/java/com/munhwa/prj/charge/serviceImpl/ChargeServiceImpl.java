@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 import com.munhwa.prj.charge.mapper.ChargeMapper;
 import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
-import com.munhwa.prj.common.vo.Criteria;
+import com.munhwa.prj.common.paging.entity.Criteria;
 
-@Service("chargeDao")
+@Service
 public class ChargeServiceImpl implements ChargeService {
 	@Autowired
 	private ChargeMapper map;
 	
 	@Override
-	public List<ChargeVO> findByMemberId(String memberId, Criteria cri) {
-		return map.selectChargeListByMemberId(memberId,cri);
+	public List<ChargeVO> findByMemberId(String memberId, Criteria cri, String startDate, String endDate) {
+		return map.selectChargeListByMemberId(memberId,cri,startDate,endDate);
 	}
 
 	@Override
@@ -26,8 +26,14 @@ public class ChargeServiceImpl implements ChargeService {
 	}
 
 	@Override
-	public int getCountByChargeId(String id) {
-		return map.getCountByChargeId(id);
+	public Integer getCountByMileage(String id, String startDate, String endDate) {
+		return map.getCountByMileage(id, startDate, endDate);
 	}
+
+	@Override
+	public Integer getCountByChargeId(String id, String startDate, String endDate) {
+		return map.getCountByChargeId(id,startDate,endDate);
+	}
+
 
 }

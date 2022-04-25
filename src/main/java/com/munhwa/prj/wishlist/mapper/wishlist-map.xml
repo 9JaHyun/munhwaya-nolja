@@ -6,11 +6,15 @@
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="memberId" column="member_id" />
+		<result property="count" column="count" />
 	</resultMap>
 	
 	<resultMap type="com.munhwa.prj.wishlist.vo.WishlistMusicVO" id="wishlistMusicResultMap">
 		<id property="wishlistId" column="wishlist_id"/>
 		<result property="musicId" column="music_id"/>
+		<result property="title" column="title"/>
+		<result property="orders" column="orders"/>
+		<result property="artName" column="art_name"/>
 	</resultMap>
 	
 	<resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
@@ -18,8 +22,8 @@
 		<result property="artName" column="ART_NAME"/>
 		<result property="genre" column="GENRE"/>
 		<result property="lyric" column="LYRIC"/>
-		<result property="likeIt" column="LIKE_IT"/>
-		<result property="fileName" column="FILE_NAME"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
 		<result property="title" column="TITLE"/>
 		<result property="price" column="PRICE"/>
 		<result property="albumId" column="ALBUM_ID"/>
@@ -27,14 +31,15 @@
 		<result property="writer" column="WRITER"/>
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
+		<result property="picture" column="PICTURE"/>
 	</resultMap>
 
 	<!-- 위시리스트 리스트 -->
 	<select id="wishlistList" resultMap="wishlistResultMap">
-		SELECT ID, NAME, MEMBER_ID
-		FROM WISHLIST
-		WHERE MEMBER_ID = #{memberId}
-		ORDER BY ID
+		SELECT w.ID, w.NAME, w.MEMBER_ID, (select COUNT(*) from wishlist_music where wishlist_id = w.id) as count
+		FROM WISHLIST w
+		WHERE w.MEMBER_ID = #{memberId}
+		ORDER BY ID DESC
 	</select>
 
 	<!-- 위시리스트 삭제 -->
@@ -42,33 +47,48 @@
 	DELETE FROM WISHLIST
 	WHERE ID = #{id}
 	</delete>
+	
+	<!-- 위시리스트 생성 -->
+	<insert id="createWishList" statementType = "CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call createwishlist (
+			#{v_name, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{p_id, mode=OUT, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>
+	</insert>
 
 	<!-- 위시리스트 곡 리스트 -->
-	<select id="wishlistMusicList" parameterType="String" resultMap="musicResultMap" >
-	SELECT *
-	FROM MUSIC
-	WHERE ID IN (SELECT MUSIC_ID
-				FROM WISHLIST_MUSIC
-				WHERE WISHLIST_ID IN (SELECT ID
-									  FROM WISHLIST
-									  WHERE MEMBER_ID = #{memberId}
-									  AND ID = #{wishlistId}))
+	<select id="wishlistMusicList" parameterType="String" resultMap="wishlistMusicResultMap" >
+   		SELECT M.ID AS music_id, M.TITLE AS TITLE, M.ART_NAME AS ART_NAME, WM.ORDERS AS ORDERS
+	   	FROM MUSIC M, (SELECT MUSIC_ID, ORDERS
+			           FROM WISHLIST_MUSIC
+			           WHERE WISHLIST_ID = (SELECT ID
+			                             	FROM WISHLIST
+			                            	WHERE MEMBER_ID = #{memberId}
+			                                AND ID = #{wishlistId})) WM
+		WHERE ID IN WM.MUSIC_ID
+		ORDER BY ORDERS
 	</select>
 
 	<!-- 위시리스트 한건 등록 -->
-	<insert id="insertWishlist" parameterType="int"> 
-		INSERT INTO WISHLIST_MUSIC 
-		VALUES(#{wishId},#{musicId})
+	<insert id="insertWishlist" parameterType="int">
+		INSERT INTO WISHLIST_MUSIC
+		VALUES(#{wishId},#{musicId}, (select NVL2(max(orders), max(orders) + 1, 1)
+		from wishlist_music
+		where wishList_id = #{wishId}))
 	</insert>
-	
+
 	<!-- 위시리스트 다건 등록 -->
-	<insert id="insertWishlist2" statementType = "CALLABLE" parameterType="map" >
-		<![CDATA[
-			{ call add_2_wishlist (
-			#{v_wishlist_id, mode=IN, jdbcType=INTEGER, javaType=int},
-			#{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int}
-			)}
-		]]>
+	<insert id="insertWishlist2" statementType="CALLABLE"
+		parameterType="map">
+      <![CDATA[
+         { call add_2_wishlist (
+         #{v_wishlist_id, mode=IN, jdbcType=INTEGER, javaType=int},
+         #{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int}
+         )}
+      ]]>
 	</insert>
   
 	<!-- 위시리스트 곡 삭제 -->
@@ -77,4 +97,21 @@
 	WHERE WISHLIST_ID = #{wishId} 
 	AND MUSIC_ID = #{musicId}
 	</delete>
+	
+	<!-- 마이페이지 - 위시리스트 추가 -->
+	<insert id="addWishlist" parameterType="com.munhwa.prj.wishlist.vo.WishlistVO">
+		INSERT INTO WISHLIST
+		VALUES (wishlist_seq.nextval, #{name}, #{memberId})
+	</insert>
+	
+	<!-- 위시리스트 곡 순서변경 -->
+	<update id="updateMusicOrders" statementType="CALLABLE" parameterType="map">
+		<![CDATA[
+			{ call update_order_proc (
+			#{v_wishlist_id, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{v_to, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{v_from, mode=IN, jdbcType=INTEGER, javaType=int}
+			)}
+		]]>	
+	</update>
 </mapper>

@@ -1,7 +1,7 @@
 package com.munhwa.prj.likeArtist.web;
 
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.likeArtist.service.LikeArtistService;
 import com.munhwa.prj.likeArtist.vo.LikeArtistVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +28,9 @@ public class LikeArtistController {
 	// 좋아요 한 아티스트 삭제
 	@ResponseBody
     @RequestMapping("/deleteLikeArtist.do")
-    public String deleteLikeArtist(@RequestBody ArtistDeleteReqeustDto dto) {
+    public String deleteLikeArtist(@LoginUser SessionUser user, @RequestBody ArtistDeleteReqeustDto dto) {
     	LikeArtistVO vo = new LikeArtistVO();
-    	vo.setMemberId("test1@gmail.com");
+    	vo.setMemberId(user.getId());
     	vo.setArtistId(dto.getArtistId());
     	
     	likeArtistDao.deleteLikeArtist(vo);

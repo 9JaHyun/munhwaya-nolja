@@ -1,10 +1,10 @@
 package com.munhwa.prj.post.web;
 
-import com.munhwa.prj.common.entity.UploadFile;
-import com.munhwa.prj.common.service.FileUtils;
-import com.munhwa.prj.common.service.UploadFileService;
+import com.munhwa.prj.common.file.entity.UploadFile;
+import com.munhwa.prj.common.file.service.FileUtils;
+import com.munhwa.prj.common.file.service.UploadFileService;
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.post.service.PostService;
 import com.munhwa.prj.post.vo.PostVO;
 import com.munhwa.prj.post.web.dto.PostUpdateRequestDto;

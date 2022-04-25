@@ -20,9 +20,25 @@
 	</select>
 	
 	<select id="albumSelectListByRelease" resultMap="albumResultMap">
-		SELECT *
-		FROM ALBUM
-		WHERE RELEASE_AT BETWEEN SYSDATE-365 AND SYSDATE
+		<![CDATA[
+		SELECT ID, PICTURE, ALB_NAME, ART_NAME, RELEASE_AT, GENRE
+		FROM (  SELECT 
+        		RANK() OVER (ORDER BY RELEASE_AT DESC) AS RN,
+        		ID, PICTURE, ALB_NAME, ART_NAME, RELEASE_AT, GENRE
+				FROM ALBUM
+				WHERE RELEASE_AT BETWEEN SYSDATE AND SYSDATE+7)
+	    WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	    AND RN <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
+	</select>
+	
+	<select id="getCountByList" resultType="int">
+	  <![CDATA[
+	      SELECT COUNT(ID)
+	      FROM (SELECT ID
+				FROM ALBUM
+				WHERE RELEASE_AT BETWEEN SYSDATE AND SYSDATE+7)
+      ]]>
 	</select>
 	
 	<select id="albumSelectListByWishList" parameterType="int" resultMap="albumResultMap">
@@ -35,6 +51,26 @@
                                  WHERE WISHLIST_ID=#{id}))
 	</select>
 	
+	<select id="albumSelectByTitle" resultMap="albumResultMap">
+		<![CDATA[
+		SELECT ID, ALB_NAME, ART_NAME, PICTURE
+		FROM (SELECT 
+                ROWNUM AS RN,
+                ID, ALB_NAME, ART_NAME, PICTURE 
+			  FROM ALBUM 
+			  WHERE UPPER(ALB_NAME) LIKE UPPER('%'||#{title}||'%'))
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
+	</select>
+	
+	<select id="getCountByList4" resultType="int">
+	  <![CDATA[
+	      SELECT COUNT(ID)
+		  FROM ALBUM
+		  WHERE UPPER(ALB_NAME) LIKE UPPER('%'||#{title}||'%')
+      ]]>
+	</select>
 	
 	<select id="albumSelect" parameterType="int" resultMap="albumResultMap">
 		SELECT *
@@ -60,29 +96,5 @@
                                  WHERE WISHLIST_ID=#{id}
                                  AND ROWNUM=1))
 	</select>
-	
-	<insert id="albumInsert" parameterType="com.munhwa.prj.music.vo.AlbumVO"><!-- 컬럼명 -->
-		INSERT INTO ALBUM
-		VALUES(ALBUM_SEQ.NEXTVAL, 
-			   #{albName}, 
-			   #{artName}, 
-			   #{releaseAt},
-			   #{genre},
-			   #{content},
-			   #{picture},
-			   #{artistId},
-			   #{score},
-			   #{hit}
-			   )
-	</insert>
-	
-	<update id="albumUpdate" parameterType="com.munhwa.prj.music.vo.AlbumVO">
-		UPDATE ALBUM
-	</update>
-	
-	<delete id="albumDelete" parameterType="com.munhwa.prj.music.vo.AlbumVO">
-		DELETE FROM ALBUM
-		WHERE ID = #{id}
-	</delete>
 	
 </mapper>

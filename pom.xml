@@ -222,14 +222,20 @@
 			<version>2.13.2</version>
 		</dependency>
 		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.13.2</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		<!-- mail api -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>2.13.2</version>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-email</artifactId>
+		    <version>1.5</version>
 		</dependency>
 
 		<!-- Test -->
@@ -264,6 +270,7 @@
 				<configuration>
 					<source>${java-version}</source>
 					<target>${java-version}</target>
+					<encoding>UTF-8</encoding>
 					<compilerArgument>-Xlint:all</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
@@ -278,21 +285,16 @@
 				</configuration>
 			</plugin>
 		</plugins>
-
-		<!-- IntelliJ Resource Root Path Configuration -->
 		<resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.properties</include>
-				</includes>
-			</resource>
-		</resources>
+		    <resource>
+			<directory>src/main/resources</directory>
+		    </resource>			
+		    <resource>
+			<directory>src/main/java</directory>
+			<includes>
+				<include>**/*.xml</include>
+			</includes>
+		    </resource>
+        	</resources>
 	</build>
 </project>

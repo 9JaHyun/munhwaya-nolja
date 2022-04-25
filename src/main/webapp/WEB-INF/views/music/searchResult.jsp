@@ -2,10 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
+<style>
+	span{
+		color: #D0D0D0;
+	}
+</style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 1500px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="" style="height: 1700px;">
 	</div>
 		
 	<!-- content -->
@@ -17,7 +21,7 @@
 				<div class="search">
 					<form action="searchResult" id="search" method="get" >
 						<input  id="title" name="title" type="text"
-							style="font-size:small; width: 1000px; height: 60px; " value=""
+							style="font-size:small; width: 1000px; height: 60px; "
 							placeholder="노래명, 앨범명 입력">
 						<button type="submit" style="margin-top:15px; margin-right:10px;">
 							<i class="icon-search" style="font-size: 25px;"></i>
@@ -31,6 +35,7 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
+						<c:if test="${checkM eq 1 }">
 						<a href="searchResultMusic?title=${title}">
 							<h3>검색결과</h3>
 							<span class="liner"></span> 
@@ -38,15 +43,23 @@
 								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
 							</h4>
 						</a>
+						</c:if>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-								<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
-									<a href="streaming?id=${music.musicId }" class="grid_3">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>${music.musicTitle }</strong>${music.musicArtistName }</span>
-									</a>
-								</c:forEach>
+								<c:choose>
+									<c:when test="${checkM eq 0}">
+												<span><strong>검색결과가 없습니다</strong></span>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="music" items="${musicSelectListByTitle}" begin="0" end="7">
+											<a href="streaming?id=${music.id }" class="grid_3">
+												<img src="api/picture/${music.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
+												<span><strong>${music.title }</strong>${music.artName}</span>
+											</a>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->
@@ -60,25 +73,31 @@
 			<!-- 왼쪽하단 메인 -->	
 			<div class="posts">
 					<div class="def-block">
+						<c:if test="${checkA eq 1 }">
 						<a href="searchResultAlbum?title=${title}">
 							<h3>검색결과</h3>
 							<span class="liner"></span> 
-							<h4>수록앨범
+							<h4>앨범
 								<span><i class="icon-angle-right" style="font-size:large;"></i></span>
 							</h4>
 						</a>
+						</c:if>
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-								<c:forEach var="album" items="${musicSelectListByTitle}" begin="0" end="7">
-									<a class="grid_3" href="albumInfo?id=${album.albumId }">
-										<img src="resources/images/bg/musicBg3.jpg" alt="#">
-										<span><strong>${album.albumTitle }</strong>${album.albumArtistName }</span>
-									</a>
-								<%-- <form action="#" method="post">
-									<input type="hidden" value="${album.albumId }" name="albumId">
-								</form> --%>
-							</c:forEach>
+								<c:choose>
+									<c:when test="${checkA eq 0}">
+												<span><strong>검색결과가 없습니다</strong></span>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="album" items="${albumSelectListByTitle}" begin="0" end="7">
+											<a class="grid_3" href="albumInfo?id=${album.id }">
+												<img src="api/picture/${album.picture}" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
+												<span><strong>${album.albName }</strong>${album.artName}</span>
+											</a>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 								</div><!-- video grid -->
 							</li><!-- tab content -->
 						</ul><!-- end tabs -->
@@ -86,5 +105,6 @@
 				</div><!-- posts -->
 			<!-- 왼쪽하단 메인 끝-->	
 		</div>
-	</div>
-		<!-- content끝 -->
+</div>
+<!-- content끝 -->
+

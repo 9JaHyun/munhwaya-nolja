@@ -79,8 +79,7 @@
             markup = {/*$('<li>')->이벤트등록 DOM으로 생성*/
                 listItem:`<li class="track" onclick="change()"> 
                             <span class="title"></span>
-                            <span class="duration"></span>
-                            <button onclick="addCart2()" class="buy not-active tbutton small" target="_blank"></button>
+                            <span class="duration" style="margin-left:100px"></span>
                           </li>`,
                 ratingBar:'<span class="rating-level rating-bar"></span>'
             };
@@ -221,7 +220,7 @@
 
                     //since $ratings refers to a specific object, if we just use .html($ratings) we would be moving the $rating object from one list item to the next
                     $track.find(cssSelector.rating).html($ratings.clone());
-					/*console.log(trackId(j));*/
+
                     $track.find(cssSelector.title).html(trackName(j)).attr("data-musicid",trackId(j));
 					$track.find(cssSelector.title).attr("data-writer",trackWriter(j));
 					$track.find(cssSelector.title).attr("data-composing",trackComposing(j));
@@ -400,9 +399,7 @@
                         '        </div>' +
 						'			<p class="single_variation_wrap" style="text-align:right; vertical-align:middle;">' +
 						'					<button id="b1" class="tbutton small" data-toggle="modal" data-target="#myModal"><span id="s1" >위시리스트 추가</span></button>' +
-						'					<button class="tbutton small"><span>공유</span></button>' +
-						'					<button class="tbutton small" onclick="addCart()"><span>구매</span></button>' +
-						'					<i onclick="likeIt()" class="icon-heart" style="font-size: 25px; margin-right:10px;"></i>' +
+						'					<button id="b2" class="tbutton small" onclick="addCart()"><span>구매</span></button>' +
 						'			</p>' +	
                         '        <div class="player-controls" style="width:93%">' +
                         '            <div class="main">' +

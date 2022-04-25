@@ -9,10 +9,10 @@
 </div>
 <!-- under header -->
 
-<div class="row row-fluid clearfix mbf" style="width:100%;">
-	<div class="span8 posts" style="width:600px; margin-left:200px; margin-right:100px;">
-		<div class="def-block"
-			style="width: 600px; border: 3px solid white;">
+<div class="row row-fluid clearfix mbf" style="width: 100%;">
+	<div class="span8 posts"
+		style="width: 600px; margin-left: 200px; margin-right: 100px;">
+		<div class="def-block" style="width: 600px; border: 3px solid white;">
 			<div align="center">
 				<div>
 					<h1>아티스트 공연 신청</h1>
@@ -23,14 +23,16 @@
 						<div>
 							<table border="1">
 								<tr>
+									<td width="300" hidden><a>아티스트 이름</a> <input
+										name="artistId" style="width: 500px" type="text"
+										value="${artist.id}" readonly="readonly"></td>
 									<td width="300"><a>아티스트 이름</a> <input style="width: 500px"
-										type="text" value="${artist}" readonly="readonly"></td>
+										type="text" value="${artist.name}" readonly="readonly"></td>
 								</tr>
 								<tr>
-									<td width="300"><a>공연장소</a> <select id="location"
-										name="location" required="required" style="width: 515px">
-											<option value="대구광역시">대구광역시</option>
-									</select></td>
+									<td width="300"><a>공연장소</a> <input style="width: 500px"
+										type="text" name="location" id="location" value="예담 소극장"
+										readonly="readonly"></td>
 								</tr>
 								<tr>
 									<td width="300"><a>공연 시작 시간</a> <input
@@ -78,63 +80,78 @@
 		</div>
 	</div>
 	<!-- span8 posts -->
-<div class="span4 sidebar">
-	<div class="def-block widget" style="width:700px; height:730px;">
-		<h4>공연일정</h4>
-		<span class="liner"></span>
-		<div id='calendar'></div>
+	<div class="span4 sidebar">
+		<div class="def-block widget" style="width: 750px; height: 730px;">
+			<h4>공연일정</h4>
+			<span class="liner"></span>
+			<div id='calendar'></div>
+		</div>
+		<!-- widget shop cart -->
 	</div>
-	<!-- widget shop cart -->
-</div>
-<!-- span4 sidebar -->
+	<!-- span4 sidebar -->
 </div>
 <!-- row clearfix -->
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    $(function () {
-        var request = $.ajax({
-            url: "performances.do",
-            method: "GET",
-            dataType: "json",
-            contentType: "application/json"
-        });
-
-        request.done(function (data) {
-            console.log(data); // log 로 데이터 찍어주기.
-
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialDate: '2022-04-11',
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title'
-                },
-                editable: true,
-                droppable: true, // this allows things to be dropped onto the calendar
-                drop: function (arg) {
-                    // is the "remove after drop" checkbox checked?
-                    if (document.getElementById('drop-remove').checked) {
-                        // if so, remove the element from the "Draggable Events" list
-                        arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-                    }
-                },
-                /**
-                 * data 로 값이 넘어온다. log 값 전달.
-                 */
-                events: data
-            });
-
-            calendar.render();
-        });
-
-        request.fail(function( jqXHR, textStatus ) {
-            alert( "Request failed: " + textStatus );
-        });
-    });
-
+$(document).ready(function(){
+	var message = "${message}"
+	   if(message != null && message.length > 0) {
+		   alert(message);
+	   }
 });
+
+	document
+			.addEventListener(
+					'DOMContentLoaded',
+					function() {
+						$(function() {
+							var request = $.ajax({
+								url : "performances.do",
+								method : "GET",
+								dataType : "json",
+								contentType : "application/json"
+							});
+
+							request
+									.done(function(data) {
+
+										var calendarEl = document
+												.getElementById('calendar');
+
+										var calendar = new FullCalendar.Calendar(
+												calendarEl,
+												{
+													initialDate : '2022-04-11',
+													initialView : 'dayGridMonth',
+													headerToolbar : {
+														left : 'prev,next today',
+														center : 'title'
+													},
+													editable : true,
+													droppable : true, // this allows things to be dropped onto the calendar
+													drop : function(arg) {
+														// is the "remove after drop" checkbox checked?
+														if (document
+																.getElementById('drop-remove').checked) {
+															// if so, remove the element from the "Draggable Events" list
+															arg.draggedEl.parentNode
+																	.removeChild(arg.draggedEl);
+														}
+													},
+													/**
+													 * data 로 값이 넘어온다. log 값 전달.
+													 */
+													events : data
+												});
+
+										calendar.render();
+									});
+
+							request.fail(function(jqXHR, textStatus) {
+								alert("Request failed: " + textStatus);
+							});
+						});
+
+					});
 </script>

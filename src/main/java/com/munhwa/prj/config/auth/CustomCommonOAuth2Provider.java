@@ -33,29 +33,9 @@ public enum CustomCommonOAuth2Provider {
             builder.scope("profile", "email");
             builder.authorizationUri("https://nid.naver.com/oauth2.0/authorize");
             builder.tokenUri("https://nid.naver.com/oauth2.0/token");
-//            builder.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs");
-//            builder.issuerUri("https://accounts.google.com");
             builder.userInfoUri("https://openapi.naver.com/v1/nid/me");
             builder.userNameAttributeName("response");
             builder.clientName("Naver");
-            return builder;
-        }
-
-    },
-
-    KAKAO {
-        @Override
-        public Builder getBuilder(String registrationId) {
-            ClientRegistration.Builder builder = getBuilder(registrationId,
-                  ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            builder.scope("openid", "profile", "email");
-            builder.authorizationUri("https://accounts.google.com/o/oauth2/v2/auth");
-            builder.tokenUri("https://www.googleapis.com/oauth2/v4/token");
-            builder.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs");
-            builder.issuerUri("https://accounts.google.com");
-            builder.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo");
-            builder.userNameAttributeName(IdTokenClaimNames.SUB);
-            builder.clientName("Google");
             return builder;
         }
 

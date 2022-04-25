@@ -2,39 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.munhwa.prj.charge.mapper.ChargeMapper">
-  <resultMap type="com.munhwa.prj.charge.vo.ChargeVO" id="chargeResultMap">
-    <id property="id" column="id"/>
-    <result property="chargeAt" column="charge_at"/>
-    <result property="mileage" column="mileage"/>
-    <result property="type" column="type"/>
-    <result property="memberId" column="member_id"/>
-    <collection property="commonCodevo" resultMap="commonResultMap"/>
-  </resultMap>
-  
-  <resultMap type="com.munhwa.prj.common.vo.CommonCodeVO" id="commonResultMap">
-  	<id property="id" column="id"/>
-  	<result property="name" column="name"/>
-  </resultMap>
-  
-<!--   <select id="selectChargeListByMemberId" parameterType="String" resultMap="chargeResultMap"> -->
-<!--   	select a.id as cartId,  -->
-<!--         a.charge_at,  -->
-<!--         a.mileage,  -->
-<!--         a.type,  -->
-<!--         a.member_id,  -->
-<!--         b.id,  -->
-<!--         b.name -->
-<!-- 	from charge_history a,  -->
-<!-- 		 common_code b -->
-<!-- 	where a.type = b.id -->
-<!-- 	and a.member_id = #{id} -->
-<!--   </select> -->
-  
-  <select id="selectChargeListByMemberId" resultMap="chargeResultMap">
+	<resultMap type="com.munhwa.prj.charge.vo.ChargeVO"
+		id="chargeResultMap">
+		<id property="id" column="id" />
+		<result property="chargeAt" column="charge_at" />
+		<result property="mileage" column="mileage" />
+		<result property="type" column="type" />
+		<result property="memberId" column="member_id" />
+		<collection property="commonCodevo"
+			resultMap="commonResultMap" />
+	</resultMap>
+
+	<resultMap
+		type="com.munhwa.prj.common.code.entity.CommonCodeVO"
+		id="commonResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+	</resultMap>
+
+	<select id="selectChargeListByMemberId"
+		resultMap="chargeResultMap">
   	<![CDATA[
-  	select id, charge_at, mileage, name
+  		select id, charge_at, mileage, name
     from (select
-    	rownum rn,
+    	rank() OVER (order by a.charge_at desc) rank,
     	a.id, 
         a.charge_at, 
         a.mileage, 
@@ -42,34 +33,77 @@
     from charge_history a, 
 		 common_code b
 	where a.type = b.id
-		and rownum<= #{cri.pageNum} * #{cri.amount}
-		and a.member_id = #{memberId}    
+		and a.member_id = #{memberId} 
+	]]>
+		<choose>
+			<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and a.charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and a.charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+	<![CDATA[ 
 		order by id desc
     )
-	where rn > (#{cri.pageNum}-1) * #{cri.amount}
+	where rank > (#{cri.pageNum}-1) * #{cri.amount}
+	and rank<= #{cri.pageNum} * #{cri.amount}
   	]]>
-  	</select>
-  	
-  	<select id="getCountByChargeId" resultType="int">
+	</select>
+
+	<select id="getCountByChargeId" resultType="int">
   		<![CDATA[
   		select count(id)
   		from charge_history
   		where member_id = #{memberId}
   		]]>
-  	</select>
-  
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+	</select>
 
-<!--   <select id="selectCharge" resultMap="chargeResultMap"> -->
-<!--     SELECT id, TO_CHAR(charge_at, 'YYYY-MM-DD HH24:MI:SS'), mileage, type, member_id -->
-<!--     SELECT id, charge_at, mileage, type, member_id -->
-<!--     FROM charge_history -->
-<!--     WHERE member_id = #{memberId} -->
-<!--   </select> -->
-   <!-- 충전 내역 남기기  -->
-  <insert id="insertCharge" parameterType="com.munhwa.prj.charge.vo.ChargeVO">
-    INSERT INTO charge_history(id, charge_at, mileage, type, member_id)
-    VALUES (charge_history_seq.nextval, SYSDATE, #{mileage}, #{type}, #{memberId})
-  </insert>
-  
+	<select id="getCountByMileage" resultType="int">
+  		<![CDATA[
+   		select sum(mileage) 
+  		from charge_history 
+   		where member_id = #{memberId} 
+   		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and charge_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and charge_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<!-- 충전 내역 남기기 -->
+	<insert id="insertCharge"
+		parameterType="com.munhwa.prj.charge.vo.ChargeVO">
+		INSERT INTO charge_history(id, charge_at, mileage, type,
+		member_id)
+		VALUES (charge_history_seq.nextval, SYSDATE, #{mileage},
+		#{type},
+		#{memberId})
+	</insert>
+
 
 </mapper>

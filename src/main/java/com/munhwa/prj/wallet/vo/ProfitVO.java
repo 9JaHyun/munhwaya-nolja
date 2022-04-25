@@ -2,7 +2,8 @@ package com.munhwa.prj.wallet.vo;
 
 import java.util.Date;
 
-import com.munhwa.prj.common.vo.CommonCodeVO;
+import com.munhwa.prj.artist.vo.ArtistVO;
+import com.munhwa.prj.common.code.entity.CommonCodeVO;
 import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 
@@ -18,6 +19,9 @@ public class ProfitVO {
 	private String place;
 	private String memberId;
 	private int pks;
+	private String refund;
+	private String buyer;
+	private String name;
 	
 	private CommonCodeVO commonCodevo;
 	private MusicVO musicvo;

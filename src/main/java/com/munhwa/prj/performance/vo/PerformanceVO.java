@@ -1,6 +1,5 @@
 package com.munhwa.prj.performance.vo;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +25,8 @@ public class PerformanceVO {
 	private int artistId;
 	private int price;
 	private int person;
+	private String artistName;
+	private PerformancePersonalVO performancepersonalvo;
 
 	
 	public void accpetPerformance() {

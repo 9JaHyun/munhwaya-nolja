@@ -18,7 +18,19 @@
     <put-attribute name="body" value=""/>
     <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp"/>
   </definition>
-
+  
+    <definition name="qrcodeTemplate" template="/WEB-INF/views/layout/empty.jsp">
+    <put-attribute name="body" value=""/>
+  </definition>
+  
+  <definition name="listTemplate" template="/WEB-INF/views/layout/memberOverLayout.jsp">
+  	<put-attribute name="title" value="final"/>
+    <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp"/>
+    <put-attribute name="sidebar" value="/WEB-INF/views/layout/member-sidebar.jsp"/>
+    <put-attribute name="body" value=""/>
+    <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp"/>
+  </definition>
+  
   <definition name="*/*" extends="template">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
   </definition>
@@ -27,7 +39,7 @@
     <put-attribute name="body" value="/WEB-INF/views/member/{1}.jsp"/>
   </definition>
 
-  <definition name="*-memberWallet" extends="memberTemplate">
+  <definition name="*-memberWallet" extends="listTemplate">
     <put-attribute name="body" value="/WEB-INF/views/wallet/{1}.jsp"/>
   </definition>
 
@@ -35,10 +47,16 @@
     <put-attribute name="body" value="/WEB-INF/views/artist/{1}.jsp"/>
   </definition>
   
-
-
   <definition name="*-qrcode" extends="qrcodeTemplate">
     <put-attribute name="body" value="/WEB-INF/views/qrcode/{1}.jsp"/>
+  </definition>
+  
+  <definition name="*-memberTicket" extends="memberTemplate">
+    <put-attribute name="body" value="/WEB-INF/views/ticketList/{1}.jsp"/>
+  </definition>
+
+  <definition name="*-admin" extends="listTemplate">
+    <put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp"/>
   </definition>
 
 </tiles-definitions>

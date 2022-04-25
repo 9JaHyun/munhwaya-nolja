@@ -1,6 +1,7 @@
 package com.munhwa.prj.config.auth.service;
 
-import com.munhwa.prj.config.auth.OAuthAttributes;
+import com.munhwa.prj.common.code.entity.Genre;
+import com.munhwa.prj.config.auth.entity.OAuthAttributes;
 import com.munhwa.prj.member.mapper.MemberMapper;
 import com.munhwa.prj.member.vo.MemberVO;
 import java.util.Collections;
@@ -57,8 +58,9 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         MemberVO memberVO = Optional.ofNullable(findMember)
               .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
               .orElse(attributes.toEntity());
-
-        memberMapper.memberOAuthSignup(toMap(memberVO));
+        // 임시 장르 설정
+        memberVO.setGenre(Genre.G01.getKey());
+        memberMapper.insertMemberByProc(toMap(memberVO));
 
         // update 수정
         return memberVO;

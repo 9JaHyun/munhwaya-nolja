@@ -1,7 +1,7 @@
 package com.munhwa.prj.post.web;
 
 import com.munhwa.prj.config.auth.LoginUser;
-import com.munhwa.prj.config.auth.dto.SessionUser;
+import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.post.service.CommentService;
 import com.munhwa.prj.post.vo.CommentShowVO;
 import com.munhwa.prj.post.vo.CommentVO;

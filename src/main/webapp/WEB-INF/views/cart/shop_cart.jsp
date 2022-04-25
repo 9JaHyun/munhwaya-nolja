@@ -43,10 +43,12 @@ tr {
                                            cellspacing="0">
                                         <thead>
                                         <tr style="height:50px; color:white;">
+                                       		<th class="product-selectAll"><input type="checkbox" id="chkAll" style="float:left" onclick='selectAll(this)'></th>
                                             <th data-hide="phone" class="product-thumbnail" style="width:100px;">&nbsp;
                                             </th>
                                             <th class="product-song">곡 제목</th>
                                             <th class="product-name">아티스트</th>
+                                            <th class="product-genre">장르</th>
                                             <th class="product-subtotal">가격</th>
                                             <th class="product-remove">삭제</th>
                                         </tr>
@@ -54,8 +56,11 @@ tr {
                                         <tbody>
                                         <c:forEach items="${carts }" var="cart">
                                         <tr class="cart_table_item" style="height:50px; color:white;">
+                                        	<td class="product-select">
+                                        		<input type="checkbox" name="selId" value="${cart.value.price}" onclick="changeSum()">
+                                        	</td>
                                             <td class="product-thumbnail" >
-                                                <a href="#"><img src="resources/images/bg/musicBg3.jpg"
+                                                <a href="#"><img src="api/picture/${cart.value.picture }"
                                                                  alt="#" name="carts"  style="width:100px; height:100px; object-fit: cover;"></a>
                                             </td>
                                             <td class="product-name" style="text-align:center;">
@@ -64,7 +69,16 @@ tr {
                                         	<td class="product-name" style="text-align:center;">
 												<div class="artName" id="artName">${cart.value.artName }</div>	                                        	
 											</td>
-
+											<td class="product-name" style="text-align:center;">
+												<div class="genre" id="genre">
+												 <c:choose>
+                                                       <c:when test="${cart.value.genre eq 'G01'}">발라드</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G02'}">댄스</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G03'}">랩/힙합</c:when>
+                                                       <c:when test="${cart.value.genre eq 'G04'}">R&B/Soul</c:when>
+                                                 </c:choose> 
+												</div>
+											</td>
                                             <td class="product-name" style="text-align:center;">
                                                 <div class="price" id="price">${cart.value.price}</div>
                                             </td>
@@ -99,7 +113,7 @@ tr {
                             <tbody>
                             <tr class="cart-subtotal">
                                 <th><strong>보유중인 마일리지 </strong></th>
-                                <td><strong><span class="amount">&nbsp;&nbsp;&nbsp;${mileage}</span></strong></td>
+                                <td><strong><span class="amount" id="sessionMileage">&nbsp;&nbsp;&nbsp;${mileage}</span></strong></td>
                             </tr>
                             <tr class="total">
                                 <th><strong>총 가격</strong></th>
@@ -110,7 +124,7 @@ tr {
                           
                             <tr class="total">
                                 <th><strong>잔여 마일리지</strong></th>
-                                <td><strong>&nbsp;&nbsp;&nbsp;<span class="amount" id="minusMileage"></span></strong></td>
+                                <td>&nbsp;&nbsp;&nbsp;<strong><span class="amount" id="minusMileage"></span></strong></td>
                             </tr>
                             </tbody>
                         </table>
@@ -125,6 +139,15 @@ tr {
 </div>
 
 <script>
+function selectAll(selectAll)  {
+	  const checkboxes 
+	       = document.getElementsByName('selId');
+	  
+	  checkboxes.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked;
+	  })
+	  itemTotal();
+	}
 
 $(document).ready(function(){
 	
@@ -133,20 +156,28 @@ $(document).ready(function(){
 	});
 	
 function itemTotal() {
-	console.log("토탈들어옴?");
-	var price = document.getElementsByClassName("price").innerHTML
+//  var price = document.getElementsByClassName("price").innerHTML
 	var sum = 0;
 
-	for (var i = 0; i < document.getElementsByClassName("price").length; i++){
-		sum += parseInt(document.getElementsByClassName("price")[i].innerHTML)
-		
+	for (var i=0; i<$("[name='selId']:checked").length; i++) {
+	 	sum += parseInt($("[name='selId']:checked")[i].getAttribute('value'));
 	}
-// 	var summ = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(sum);
+	
 	document.getElementById("itemTotalPrice").innerHTML = sum;
 	document.getElementById("minusMileage").innerHTML = parseInt(${mileage}) - parseInt(document.getElementById("itemTotalPrice").innerHTML);
-/*  $("#totalPrice").val(sum); */	 
+	
+	var sumMileage = document.getElementById('itemTotalPrice').innerHTML;
+	var sumMileage2 = sumMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('itemTotalPrice').innerHTML = sumMileage2+'원';
+	
+	var minusMileage = document.getElementById('minusMileage').innerHTML;
+	var minusMileage2 = minusMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('minusMileage').innerHTML = minusMileage2+'원';
 }
 
+function changeSum() {
+	itemTotal();
+}
 
 
 function deleteCart(n) {
@@ -173,23 +204,31 @@ function deleteCart(n) {
 }
 
 function payCart() {
- 	if(${mileage} < document.getElementById("itemTotalPrice").innerHTML) {
+	if($("[name='selId']:checked").length == 0 ){
+		alert('구매할 곡이 없습니다. 카트에 곡을 담아주세요.');
+	} else {
+	var str = document.getElementById("itemTotalPrice").innerHTML.slice(0, -1);
+	var str2 = str.replace(",", "");
+ 	if(${mileage} < str2) {
 	alert("잔액이 부족합니다.")		
+	location.href="chargeForm.do";
 } else {
 	let list = [];
-	$("img[name='carts']").each(function(i){
-	var tr = $(this).parent().parent().parent();
+	$("[name='selId']:checked").each(function(i, checkbox){
+	
+	var tr = $(checkbox).parent().parent();
 	var td = $(tr).children();
 	var obj = {};
 	
-	var title = td.eq(1).text().trim(); 
-	var artName = td.eq(2).text().trim(); 
-	var price = td.eq(3).text().trim();
-	var id = td.eq(5).find("input").val();
+	var title = td.eq(2).text().trim(); 
+	var artName = td.eq(3).text().trim(); 
+	var price = td.eq(5).text().trim();
+	var price2 = price.substring(0, price.length - 1);
+	var id = td.eq(7).find("input").val();
 	
 	obj["title"] = title;
 	obj["artName"] = artName;
-	obj["price"] = price;
+	obj["price"] = price2;
 	obj["id"] = id;
 	
 	list.push(obj);
@@ -210,4 +249,14 @@ function payCart() {
 	        });
   
     }}
+}
+	var sessionMileage = document.getElementById('sessionMileage').textContent
+	var sessionMileage2 = sessionMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById('sessionMileage').textContent = sessionMileage2+'원';
+
+	for (var i=0; i<document.getElementsByClassName('price').length; i++) {
+		var listMileage = document.getElementsByClassName('price')[i].textContent
+		var listMileage2 = listMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		document.getElementsByClassName('price')[i].textContent = listMileage2+'원';
+ 	}
 </script>

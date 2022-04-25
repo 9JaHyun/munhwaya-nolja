@@ -72,7 +72,8 @@ a {
 	color: #fff;
 	text-decoration: none !important;
 	-webkit-transition: color 0.1s ease-in-out;
-	transition: color 0.1s ease-in-out
+	transition: color 0.1s ease-in-out;
+	text-transform: none;
 }
 a:hover {
 	color: #FF0078
@@ -84,7 +85,6 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: "Oswald", Tahoma, Arial;
 	font-weight: bold;
 	line-height: 1;
-	text-transform: uppercase;
 }
 h1 { font-size: 32px }
 h2 { font-size: 26px }
@@ -361,7 +361,7 @@ textarea {
 	width: 100%;
 }
 .under_header {
-	height: 375px;
+	height: 400px;
 }
 .under_header img {
 	width: 100%;
@@ -491,13 +491,12 @@ textarea {
 	margin: 0 20px 0 0;
 }
 .social a {
-	float: left;
 	text-align: center;
 	margin: 0 4px 0;
 	width: 26px;
 	height: 26px;
 	border-radius: 2px;
-	color: #ddd;
+	color: #fff;
 	-webkit-transition: all 0.2s ease;
 	transition: all 0.2s ease;
 }

@@ -7,5 +7,7 @@ public class WishlistMusicVO {
 	
 	private int wishlistId;
 	private int musicId;
-
+	private String title;
+	private int orders;
+	private String artName;
 }

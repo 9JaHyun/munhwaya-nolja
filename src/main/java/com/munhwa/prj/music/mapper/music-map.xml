@@ -6,8 +6,8 @@
 		<result property="artName" column="ART_NAME"/>
 		<result property="genre" column="GENRE"/>
 		<result property="lyric" column="LYRIC"/>
-		<result property="likeIt" column="LIKE_IT"/>
-		<result property="fileName" column="FILE_NAME"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
 		<result property="title" column="TITLE"/>
 		<result property="price" column="PRICE"/>
 		<result property="albumId" column="ALBUM_ID"/>
@@ -15,59 +15,115 @@
 		<result property="writer" column="WRITER"/>
 		<result property="composing" column="COMPOSING"/>
 		<result property="arrangement" column="ARRANGEMENT"/>
+		<result property="picture" column="PICTURE"/>
 	</resultMap>
-
+	
 	<select id="musicSelectList" resultMap="musicResultMap">
-		SELECT *
-		FROM MUSIC
-		ORDER BY LIKE_IT DESC
+		<![CDATA[
+		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE, ALBUM_ID
+		FROM (	SELECT
+				RANK() OVER (ORDER BY DOWNLOAD_CNT DESC) AS RN,
+				TITLE, ART_NAME, GENRE, ID, PICTURE, ALBUM_ID
+				FROM MUSIC )
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
 	</select>
 	
 	<select id="musicSelectListByGenre" parameterType="String" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC
 		WHERE GENRE = #{genre}
-		ORDER BY LIKE_IT DESC
+		ORDER BY DOWNLOAD_CNT DESC
 	</select>
 	
-	<select id="musicPersonalList" parameterType="String" resultMap="musicResultMap">
-		SELECT *
-		FROM MUSIC
-		WHERE GENRE=(SELECT GENRE
-					FROM MEMBER
-					WHERE ID=#{id})
-		ORDER BY LIKE_IT DESC
+	<select id="musicPersonalList" resultMap="musicResultMap">
+		<![CDATA[
+		SELECT ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT, ALBUM_ID
+		FROM (SELECT 
+        	  RANK() OVER (ORDER BY DOWNLOAD_CNT DESC) AS RN,
+        	  ID, PICTURE, TITLE, ART_NAME, GENRE, DOWNLOAD_CNT, ALBUM_ID
+			  FROM MUSIC
+			  WHERE GENRE=( SELECT GENRE
+							FROM MEMBER
+							WHERE ID=#{id}))
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
 	</select>
 	
-	<select id="musicSelectByTitle" parameterType="String" resultType="com.munhwa.prj.music.vo.SearchVO">
-		SELECT m.ID as musicId, m.TITLE as musicTitle, m.ART_NAME as musicArtistName, m.FILE_NAME as musicImage, 
-			   a.ID as albumId, a.ALB_NAME as albumTitle, a.ART_NAME as albumArtistName, a.PICTURE as albumImage
-		FROM MUSIC m 
-		JOIN ALBUM a 
-		ON(m.ALBUM_ID = a.ID)
-		WHERE UPPER(TITLE) LIKE UPPER('%'||#{title}||'%') 
+	<select id="getCountByList" resultType="int">
+	  <![CDATA[
+	      SELECT COUNT(ID)
+	      FROM (SELECT ID
+			    FROM MUSIC
+			    WHERE GENRE=(SELECT GENRE
+							  FROM MEMBER
+							  WHERE ID=#{id}))
+      ]]>
 	</select>
+	
+	<select id="musicSelectByTitle" resultMap="musicResultMap">
+ 		<![CDATA[
+ 		SELECT ID, TITLE, ART_NAME, FILE_ID, PICTURE, ALBUM_ID, GENRE
+		FROM (SELECT 
+        	  	ROWNUM AS RN,
+        	  	ID, TITLE, ART_NAME, FILE_ID, PICTURE, ALBUM_ID, GENRE
+			  FROM MUSIC
+			  WHERE UPPER(TITLE) LIKE UPPER('%'||#{title}||'%')) 
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+	     ]]>
+	</select>
+	
+	<select id="getCountByList3" resultType="int">
+	  <![CDATA[
+	      SELECT COUNT(ID)
+		  FROM MUSIC
+		  WHERE UPPER(TITLE) LIKE UPPER('%'||#{title}||'%')
+      ]]>
+	</select>
+	
 	
 	<select id="musicSelectByAlBum" parameterType="int" resultMap="musicResultMap">
 		SELECT *
 		FROM MUSIC m 
 		WHERE ALBUM_ID = #{id}
-		ORDER BY LIKE_IT DESC
+		ORDER BY DOWNLOAD_CNT DESC
 	</select>
 	
-	<select id="musicSelectListByPurchase" parameterType="String" resultMap="musicResultMap">
-		SELECT *
-		FROM MUSIC
-		WHERE ID IN (SELECT MUSIC_ID
-                     FROM PURCHASED_MUSIC
-                     WHERE MEMBER_ID = #{id})
+	<select id="musicSelectListByPurchase" resultMap="musicResultMap">
+		<![CDATA[
+		SELECT ID, PICTURE, TITLE, ART_NAME, PRICE, FILE_ID
+		FROM (SELECT 
+        	  ROWNUM AS RN,
+        	  ID, PICTURE, TITLE, ART_NAME, PRICE, FILE_ID
+			  FROM MUSIC
+			  WHERE ID IN (SELECT MUSIC_ID
+                           FROM PURCHASED_MUSIC
+                     	   WHERE MEMBER_ID = #{id}))
+	     WHERE RN > (#{cri.pageNum}-1) * #{cri.amount}
+	     AND RN <= #{cri.pageNum} * #{cri.amount}
+ 		]]>
+	</select>
+	
+	<select id="getCountByList2" resultType="int">
+	  <![CDATA[
+	      SELECT COUNT(ID)
+	      FROM (SELECT ID
+				FROM MUSIC
+				WHERE ID IN (SELECT MUSIC_ID
+                    		 FROM PURCHASED_MUSIC
+                    		 WHERE MEMBER_ID = #{id}))
+      ]]>
 	</select>
 	
 	<select id="musicSelectListByWishList" parameterType="int" resultMap="musicResultMap">
-		SELECT * FROM MUSIC
-		WHERE ID IN (SELECT MUSIC_ID
-        			 FROM WISHLIST_MUSIC
-        			 WHERE WISHLIST_ID=#{id})
+		SELECT * 
+		FROM MUSIC m JOIN WISHLIST_MUSIC w
+		ON(m.ID = w.MUSIC_ID)
+		WHERE w.WISHLIST_ID= #{id}
+		ORDER BY w.ORDERS
 	</select>
 	
 	<select id="musicSelectListByMusicId" parameterType="map" resultMap="musicResultMap">
@@ -98,41 +154,13 @@
 		AND ART_NAME = #{artName)
 	</select>
 	
-	<insert id="musicInsert" parameterType="com.munhwa.prj.music.vo.MusicVO">
-		INSERT INTO MUSIC
-		VALUES(MUSIC_SEQ.NEXTVAL, 
-			   #{artName}, 
-			   #{genre}, 
-			   #{lyric},
-			   #{likeIt},
-			   #{fileName},
-			   #{title},
-			   #{price},
-			   #{albumId},
-			   #{time},
-			   #{writer},
-			   #{composing},
-			   #{arrangement}
-			   )
-	</insert>
-	
-	<update id="updateLike" statementType = "CALLABLE" parameterType="map" >
+	<update id="statusUpdate" statementType = "CALLABLE" parameterType="map">
 		<![CDATA[
-			{ call updatelike (
-			#{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
-			#{v_music_id, mode=IN, jdbcType=INTEGER, javaType=int},
-			#{p_result, mode=OUT, jdbcType=INTEGER, javaType=int}
+			{ call STATUSUPDATE (
+			#{V_MUSIC_ID, mode=IN, jdbcType=INTEGER, javaType=int},
+			#{V_MEMBER_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
 			)}
 		]]>
 	</update>
-	
-	<update id="musicUpdate" parameterType="com.munhwa.prj.music.vo.MusicVO">
-		UPDATE MUSIC
-	</update>
-	
-	<delete id="musicDelete" parameterType="com.munhwa.prj.music.vo.MusicVO">
-		DELETE FROM MUSIC
-		WHERE ID = #{id}
-	</delete>
 	
 </mapper>

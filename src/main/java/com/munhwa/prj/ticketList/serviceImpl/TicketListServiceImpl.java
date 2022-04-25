@@ -1,18 +1,14 @@
 package com.munhwa.prj.ticketList.serviceImpl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.munhwa.prj.ticketList.mapper.TicketListMapper;
 import com.munhwa.prj.ticketList.service.TicketListService;
 import com.munhwa.prj.ticketList.vo.TicketListVO;
+import java.util.List;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Repository("ticketListDao")
+@Service
 public class TicketListServiceImpl implements TicketListService {
 
 	@Autowired
@@ -40,8 +36,13 @@ public class TicketListServiceImpl implements TicketListService {
 	}
 
 	@Override
-	public int qrcodeAttendance(int id) {
-		return mapper.qrcodeAttendance(id);
+	public int qrcodeAttendance(Map<String, Object> paramMapt) {
+		return mapper.qrcodeAttendance(paramMapt);
+	}
+
+	@Override
+	public int ticketListDelete(Map<String, Object> paramMap) {
+		return mapper.ticketListDelete(paramMap);
 	}
 
 }
