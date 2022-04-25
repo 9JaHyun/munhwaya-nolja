@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.munhwa.prj.post.mapper.PostMapper">
+  <resultMap type="com.munhwa.prj.post.vo.PostVO" id="postMap">
+    <id property="id" column="id"/>
+    <result property="title" column="title"/>
+    <result property="writer" column="writer"/>
+    <result property="content" column="content"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="hit" column="hit"/>
+    <result property="likeIt" column="like_It"/>
+    <result property="memberId" column="member_id"/>
+    <result property="fileGroupId" column="file_group_id"/>
+  </resultMap>
+
+  <insert id="insertPost">
+    INSERT INTO post(id, title, content, created_at, hit, member_id, writer, like_it)
+    VALUES (post_seq.nextval, #{title}, #{content}, sysdate, 0, #{memberId}, #{writer}, 0)
+    <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+      SELECT post_seq.currval
+      FROM dual
+    </selectKey>
+  </insert>
+
+  <update id="updatePost">
+    update post
+    <set>
+      <if test="title != null">title = #{title}</if>
+      <if test="content != null">content = #{content}</if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <delete id="deletePostById">
+    DELETE
+    FROM post
+    WHERE id = #{id}
+  </delete>
+
+  <select id="selectPosts" resultMap="postMap">
+    SELECT *
+    FROM post
+    ORDER BY created_at DESC
+  </select>
+
+  <select id="selectPostById" resultMap="postMap">
+    SELECT *
+    FROM post
+    WHERE id = #{id}
+  </select>
+
+  <update id="hitUpById">
+    UPDATE post
+    SET hit = hit + 1
+    WHERE id = #{id}
+  </update>
+
+  <select id="selectPostsByFilter" resultMap="postMap">
+    select id, title, content, created_at, hit, member_id, file_group_id, writer, updated_at
+    from (select rownum as row_no, temp.*
+    from (select *
+    from post
+    <where>
+      <if test="key.equals('member')">member_id LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('nickname')">AND writer LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('title')">AND title LIKE '%'||#{value}||'%'</if>
+    </where>
+    order by created_at desc
+    ) temp
+    ) last
+    <![CDATA[
+          WHERE last.row_no > (#{pageNum} -1) * #{amount}
+          AND last.row_no <= #{pageNum} * #{amount}
+    ]]>
+  </select>
+
+  <select id="selectRecPost" resultMap="postMap">
+    select id, title, content, created_at, hit, member_id, file_group_id, writer, updated_at
+    from (select rownum as row_no, temp.*
+    from (select *
+    from post
+    <where>
+      <if test="key.equals('no')"/>
+      <if test="key.equals('member')">AND member_id LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('nickname')">AND writer LIKE '%'||#{value}||'%'</if>
+      <if test="key.equals('title')">AND title LIKE '%'||#{value}||'%'</if>
+    </where>
+    <choose>
+      <when test="key.equals('asc')">
+        <if test="value.equals('hit')">order by hit asc</if>
+        <if test="value.equals('createdAt')">order by created_at asc</if>
+      </when>
+      <when test="key.equals('desc')">
+        <if test="value.equals('hit')">order by hit desc</if>
+        <if test="value.equals('likeIt')">order by likeIt asc</if>
+        <if test="value.equals('createdAt')">order by created_at desc</if>
+      </when>
+      <otherwise>
+        order by created_at desc
+      </otherwise>
+    </choose>
+    ) temp
+    ) last
+    <![CDATA[
+          WHERE last.row_no > (#{pageNum} -1) * #{amount}
+          AND last.row_no <= #{pageNum} * #{amount}
+    ]]>
+  </select>
+
+  <update id="likeIt" statementType="CALLABLE" parameterType="map">
+		<![CDATA[
+    { call accept_performance(
+      #{v_post_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string}
+      )}
+    ]]>
+	</update>
+</mapper>
