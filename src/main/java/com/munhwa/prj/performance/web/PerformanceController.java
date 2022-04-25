@@ -1,21 +1,5 @@
 package com.munhwa.prj.performance.web;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.common.file.service.FileUtils;
@@ -25,31 +9,45 @@ import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.performance.service.PerformanceService;
 import com.munhwa.prj.performance.vo.PerformanceVO;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class PerformanceController {
-	@Autowired
-	private PerformanceService performanceDao;
-	
-	@Autowired
-	private ArtistService artistDao;
 
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	private final PerformanceService performanceDao;
+	private final ArtistService artistDao;
+	private final FileUtils fileUtils;
+	private final SimpleDateFormat format;
 
-	@Autowired
-	private FileUtils fileUtils;
+	public PerformanceController(
+		PerformanceService performanceDao, ArtistService artistDao,
+		FileUtils fileUtils) {
+		this.performanceDao = performanceDao;
+		this.artistDao = artistDao;
+		this.fileUtils = fileUtils;
+		this.format = new SimpleDateFormat("yyyy-MM-dd");
+	}
+
 
 	@GetMapping("/performance")
 	public String performance(Model model, Criteria cri) {
-		
 		cri.setAmount(9);
 		List<PerformanceVO> list = performanceDao.performanceSelectList(cri);
-		
 
 		model.addAttribute("performances", list);
-
 		int total = performanceDao.getTotal(cri);
-
 		PageDTO pageMake = new PageDTO(cri, total);
 
 		model.addAttribute("pageMake", pageMake);
@@ -62,7 +60,7 @@ public class PerformanceController {
 		vo = performanceDao.performanceSelect(vo);
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("v_per_id", vo.getId());
-		// int n = performanceDao.performanceUpdate(paramMap);
+
 		model.addAttribute("performance", vo);
 		model.addAttribute("mileage", user.getMileage());
 		model.addAttribute("artistname", vo.getArtistName());
@@ -166,6 +164,8 @@ public class PerformanceController {
     	model.addAttribute("performance", vo);
     	return "performance/performanceList";
     }
+
+
 
 	private String date2String(Date date) {
     	return format.format(date);

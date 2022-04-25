@@ -10,7 +10,7 @@ import com.munhwa.prj.charge.service.ChargeService;
 import com.munhwa.prj.charge.vo.ChargeVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
 
-@Service("chargeDao")
+@Service
 public class ChargeServiceImpl implements ChargeService {
 	@Autowired
 	private ChargeMapper map;
