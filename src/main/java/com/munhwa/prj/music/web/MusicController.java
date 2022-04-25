@@ -1,24 +1,6 @@
 package com.munhwa.prj.music.web;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.munhwa.prj.artist.service.ArtistService;
-import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.entity.UploadFileVO;
 import com.munhwa.prj.common.file.service.FileUtils;
 import com.munhwa.prj.common.file.service.UploadFileService;
@@ -34,6 +16,19 @@ import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.music.vo.PurchaseVO2;
 import com.munhwa.prj.music.vo.etc.MusicChartDto;
 import com.munhwa.prj.wishlist.service.WishlistService;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MusicController {
@@ -50,6 +45,8 @@ public class MusicController {
     private UploadFileService uploadService;
     @Autowired
     private ArtistService artistService;
+    @Autowired
+    private FileUtils fileUtils;
 
     @GetMapping("/musicMain")
     public String musicMain(@LoginUser SessionUser user, Model model, Criteria cri) {
@@ -104,6 +101,16 @@ public class MusicController {
 
         List<Integer> musicList = purchaseService.purchaseSelectList(user.getId());
 
+        List<MusicChartDto> chartList = checkPurchasedMusic(list, musicList);
+        model.addAttribute("musicSelectListByTitle1", chartList);
+
+        int total = musicService.getCountByList3(title);
+        PageDTO pageMake = new PageDTO(cri, total);
+        model.addAttribute("pageMaker", pageMake);
+        return "music/searchResultMusic";
+    }
+
+    private List<MusicChartDto> checkPurchasedMusic(List<MusicVO> list, List<Integer> musicList) {
         List<MusicChartDto> chartList = new ArrayList<>();
 
         for (MusicVO vo : list) {
@@ -122,12 +129,7 @@ public class MusicController {
             dto.setArtId(artistService.artIdByAlbId(dto.getAlbumId()));
             chartList.add(dto);//구입여부가 들어잇는 vo2를 jsp에 표시할 리스트모델에 담음
         }
-        model.addAttribute("musicSelectListByTitle1", chartList);
-
-        int total = musicService.getCountByList3(title);
-        PageDTO pageMake = new PageDTO(cri, total);
-        model.addAttribute("pageMaker", pageMake);
-        return "music/searchResultMusic";
+        return chartList;
     }
 
     @GetMapping("/searchResultAlbum")
@@ -152,25 +154,7 @@ public class MusicController {
         List<Integer> musicList = purchaseService.purchaseSelectList(user.getId());
 
         //차트에 표시할 Dto를 담을 리스트
-        List<MusicChartDto> chartList = new ArrayList<>();
-
-        //차트의 음원리스트와
-        for (MusicVO vo : list) {
-
-            MusicChartDto dto = new MusicChartDto(vo); //차트리스트의 음원을 구입여부가있는 vo2에 넣어줌
-            int ids = dto.getId();
-            boolean isPurchased = false;
-
-            for (int id : musicList) {
-                if (ids == id) {
-                    isPurchased = true;
-                    break;
-                }
-            }
-            dto.setPurchase(isPurchased);
-            dto.setArtId(artistService.artIdByAlbId(dto.getAlbumId()));
-            chartList.add(dto);
-        }
+        List<MusicChartDto> chartList = checkPurchasedMusic(list, musicList);
         int total = 50;
         PageDTO pageMake = new PageDTO(cri, total);
         model.addAttribute("pageMaker", pageMake);
@@ -190,6 +174,13 @@ public class MusicController {
         return "music/releaseSoon";
     }
 
+    // 아티스트 앨범 폼 호출
+    @RequestMapping("/insertAlbumForm.do")
+    public String albumForm(@LoginUser SessionUser user, Model model) {
+        model.addAttribute("albums", albumService.albumSelectListByMemberId(user.getId()));
+        return "insertAlbumForm-artist";
+    }
+
     @GetMapping("/albumInfo")
     public String albumInfo(@LoginUser SessionUser user, Model model, int id) {
 
@@ -200,25 +191,7 @@ public class MusicController {
         List<Integer> musicList = purchaseService.purchaseSelectList(user.getId());
 
         //차트에 표시할 Dto를 담을 리스트
-        List<MusicChartDto> chartList = new ArrayList<>();
-
-        //차트의 음원리스트와
-        for (MusicVO vo : list) {
-
-            MusicChartDto dto = new MusicChartDto(vo); //차트리스트의 음원을 구입여부가있는 vo2에 넣어줌
-            int ids = dto.getId();
-            boolean isPurchased = false;
-
-            for (int id1 : musicList) {
-                if (ids == id1) {
-                    isPurchased = true;
-                    break;
-                }
-            }
-            dto.setPurchase(isPurchased);
-            dto.setArtId(artistService.artIdByAlbId(dto.getAlbumId()));
-            chartList.add(dto);
-        }
+        List<MusicChartDto> chartList = checkPurchasedMusic(list, musicList);
 
         model.addAttribute("selectAlbum", albumService.albumSelect(id));
         model.addAttribute("selectMusicByAlbum", chartList);
@@ -278,24 +251,7 @@ public class MusicController {
 
         List<Integer> musicList = purchaseService.purchaseSelectList(user.getId());
 
-        List<MusicChartDto> chartList = new ArrayList<>();
-
-        for (MusicVO vo : list) {
-
-            MusicChartDto dto = new MusicChartDto(vo);
-            int ids = dto.getId();
-            boolean isPurchased = false;
-
-            for (int id : musicList) {
-                if (ids == id) {
-                    isPurchased = true;
-                    break;
-                }
-            }
-            dto.setPurchase(isPurchased);
-            dto.setArtId(artistService.artIdByAlbId(dto.getAlbumId()));
-            chartList.add(dto);//구입여부가 들어잇는 vo2를 jsp에 표시할 리스트모델에 담음
-        }
+        List<MusicChartDto> chartList = checkPurchasedMusic(list, musicList);
 
         model.addAttribute("musicPersonalList", chartList);
 
@@ -370,24 +326,10 @@ public class MusicController {
         return albumService.albumSelectByMusicId(musicId);
     }
 
-
-    @ResponseBody
-    @PostMapping("/upload")
-    public String upload(MultipartFile file) throws IOException {
-        FileUtils utils = new FileUtils();
-        UploadFile uploadFile = utils.storeFile(file);
-        UploadFileVO vo = new UploadFileVO();
-        vo.setOname(uploadFile.getOriginalFileName());
-        vo.setSname(uploadFile.getStoredFileName());
-        uploadService.save(vo);
-        return "ok";
-    }
-
     @ResponseBody
     @GetMapping("/getFiles/{fileId}")
     public UploadFileVO getFileSname(@PathVariable int fileId) {
-        UploadFileVO vo = uploadService.findById(fileId);
-        return vo;
+        return uploadService.findById(fileId);
     }
 
     @ResponseBody

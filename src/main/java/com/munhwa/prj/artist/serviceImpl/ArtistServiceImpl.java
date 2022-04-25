@@ -18,26 +18,37 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public int getTotal(Criteria cri, int id) {
+        // TODO Auto-generated method stub
         return map.getTotal(cri, id);
     }
 
     @Override
     public List<ArtistVO> selectArtistList() {
+        // TODO Auto-generated method stub
         return map.selectArtistList();
     }
 
     @Override
     public int insertArtist(ArtistVO vo) {
+        // TODO Auto-generated method stub
         return map.insertArtist(vo);
     }
 
     @Override
     public int updateArtist(ArtistVO vo) {
+        // TODO Auto-generated method stub
         return map.updateArtist(vo);
     }
 
+//	@Override
+//	public int chkNick(String name) {
+//		// TODO Auto-generated method stub
+//		return map.chkName(name);
+//	}
+
     @Override
     public List<ArtDetailVO> findMusic(Criteria cri, int id) {
+        // TODO Auto-generated method stub
         return map.findMusic(cri, id);
     }
 
@@ -48,22 +59,31 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public int musicCnt(int vo) {
+        // TODO Auto-generated method stub
         return map.musicCnt(vo);
     }
 
     @Override
     public int albumCnt(int vo) {
+        // TODO Auto-generated method stub
         return map.albumCnt(vo);
     }
 
     @Override
     public List<ArtDetailVO2> albumInfo(Criteria cri, int artistId) {
+        // TODO Auto-generated method stub
         return map.albumInfo(cri, artistId);
     }
 
     @Override
     public int getTotal2(Criteria cri, int artistId) {
+        // TODO Auto-generated method stub
         return map.getTotal2(cri, artistId);
+    }
+
+    @Override
+    public String getStatus(String memberId) {
+        return map.getStatus(memberId);
     }
 
     @Override
@@ -77,12 +97,18 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public String getStatus(String memberId) {
-        return map.getStatus(memberId);
+    public int artIdByAlbId(int albumId) {
+        // TODO Auto-generated method stub
+        return map.artIdByAlbId(albumId);
     }
 
     @Override
-    public int artIdByAlbId(int albumId) {
-        return map.artIdByAlbId(albumId);
+    public String artistOfName(String memberId){
+        return map.artistOfName(memberId);
+    }
+
+    @Override
+    public int artistOfId (String memberId){
+        return map.artistOfId(memberId);
     }
 }
