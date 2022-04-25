@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class CartController {
 	@Autowired
-	private MusicService musicDAO;
+	private MusicService musicService;
 
 	//	@GetMapping("/shop/cart")
 	@RequestMapping("/cart")
@@ -40,7 +40,7 @@ public class CartController {
 		Map<String, List<Integer>> paramMap = new HashMap<>();
 		paramMap.put("musicIdList", id);
 
-		List<MusicVO> list = musicDAO.musicSelectListByMusicId(paramMap);
+		List<MusicVO> list = musicService.musicSelectListByMusicId(paramMap);
 
 		Map<Integer, MusicVO> cart = user.getCart();
 		int count = 0;

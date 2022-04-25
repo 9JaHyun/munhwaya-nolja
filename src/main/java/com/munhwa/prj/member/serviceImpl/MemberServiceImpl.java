@@ -11,7 +11,7 @@ import org.apache.commons.mail.HtmlEmail;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service("memberDao")
+@Service
 public class MemberServiceImpl implements MemberService {
 
     private final PasswordEncoder passwordEncoder;

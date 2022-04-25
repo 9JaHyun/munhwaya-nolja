@@ -1,14 +1,13 @@
 package com.munhwa.prj.cart.serviceImpl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.munhwa.prj.cart.mapper.CartMapper;
 import com.munhwa.prj.cart.service.CartService;
 import com.munhwa.prj.cart.vo.CartVO;
-@Repository("cartDao")
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class CartServiceImpl implements CartService {
 
 	@Autowired
