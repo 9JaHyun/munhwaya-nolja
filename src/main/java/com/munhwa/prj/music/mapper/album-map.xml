@@ -109,7 +109,7 @@
 	</insert>
 	
 	<select id="albumSelectListByMemberId" resultMap="albumResultMap">
-		SELECT AL.ID, AL.ALB_NAME
+		SELECT *
 		FROM ALBUM AL, ARTIST A
 		WHERE A.ID = AL.ARTIST_ID
 		AND A.MEMBER_ID = #{memberId} 

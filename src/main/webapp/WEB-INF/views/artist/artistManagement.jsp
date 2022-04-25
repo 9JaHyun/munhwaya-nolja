@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 <div align="right" style="margin-bottom: 50px; height: 400px;">
     <h4>회원정보 변경</h4>
 
@@ -27,13 +28,8 @@
             </li>
             <li>
                 <i class="icon-comment-alt"></i>
-                <a href="changeInfo.do">게시판 관리</a>
-                <div class="topic-time">게시판을 관리합니다.</div>
-            </li>
-            <li>
-                <i class="icon-comment-alt"></i>
-                <a href="dropMember.do">피드 관리</a>
-                <div class="topic-time">피드사항을 관리합니다.</div>
+                <a href="${rootPath}/performanceInsertForm.do">아티스트 공연 등록 신청</a>
+                <div class="topic-time">공연을 신청합니다.</div>
             </li>
             <li>
                 <i class="icon-comment-alt"></i>

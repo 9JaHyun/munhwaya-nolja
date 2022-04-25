@@ -91,12 +91,6 @@
                         <li><a href="${rootPath}/likeArtist.do"><i class="icon-caret-right"> </i>좋아요
                             한 아티스트</a>
                         </li>
-                         <li><a href="${rootPath}/insertAlbumForm.do"><i class="icon-caret-right"></i> 앨범 등록
-                            </a>
-                        </li>
-                        <li><a href="${rootPath}/insertMusicForm.do"><i class="icon-caret-right"></i> 곡 등록
-                            </a>
-                        </li>
                         <li><a href="${rootPath}/wishlist.do"><i class="icon-caret-right"> </i>위시리스트</a>
                         </li>
                         <li><a href="${rootPath}/walletInfo.do"><i class="icon-caret-right"> </i>지갑
@@ -105,10 +99,8 @@
                         <li><a href="${rootPath}/ticketList.do"><i class="icon-caret-right"> </i>구매한
                             공연</a>
                         </li>
-                        <li><a href="${rootPath}/performanceInsertForm.do"><i
-                                class="icon-caret-right"> </i>아티스트 공연 등록 신청</a></li>
-                        <li><a href="${rootPath}/ticketList.do"><i class="icon-caret-right"> </i>구매한
-                            공연</a>
+                        <li><a href="${rootPath}/artistManagement"><i
+                                class="icon-caret-right"> </i>아티스트 관리 페이지</a>
                         </li>
                     </c:when>
                     <c:when test="${member.role == 'R03' }">

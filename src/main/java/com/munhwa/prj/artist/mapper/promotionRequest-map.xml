@@ -63,7 +63,17 @@
 	<select id="getStatus" resultType="String">
 		SELECT STATUS FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
 	</select>
-	
+
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*) FROM PROMOTION_REQUEST
+		<where>
+			<if test="keyword != null">
+				AND MEMBER_ID LIKE '%'||#{keyword}||'%'
+			</if>
+		</where>
+	</select>
+
+
 	<update id="artStatusUpdate" parameterType="com.munhwa.prj.artist.web.PromotionRequestDTO">
 		UPDATE PROMOTION_REQUEST
 		<set>
