@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.munhwa.prj.common.file.mapper.UploadFileMapper">
+  <insert id="insertUploadFile" parameterType="com.munhwa.prj.common.file.entity.UploadFileVO">
+    INSERT INTO uploaded_files (id, oname, sname, file_group_id, extension)
+    VALUES (uploaded_file_seq.nextval, #{oname}, #{sname}, #{fileGroupId}, #{extension})
+  </insert>
+  <update id="updateUploadFile" parameterType="com.munhwa.prj.common.file.entity.UploadFileVO">
+    update uploaded_files
+    <set>
+      <if test="oname != null and sname != null">oname = #{oname}</if>
+      <if test="oname != null and sname != null">sname = #{sname}</if>
+    </set>
+    where;
+  </update>
+  <delete id="deleteUploadFile" parameterType="com.munhwa.prj.common.file.entity.UploadFileVO">
+    DELETE uploaded_files
+    WHERE id = #{id}
+  </delete>
+  <delete id="deleteUploadFileByGroupId" parameterType="string">
+    DELETE uploaded_files
+    WHERE file_group_id = #{fileGroupId}
+  </delete>
+  <select id="selectById" parameterType="int"
+    resultType="com.munhwa.prj.common.file.entity.UploadFileVO">
+    SELECT *
+    FROM uploaded_files
+    WHERE id = #{id}
+  </select>
+  <select id="selectByGroupId" parameterType="string"
+    resultType="com.munhwa.prj.common.file.entity.UploadFileVO">
+    SELECT *
+    FROM uploaded_files
+    WHERE file_group_id = #{id}
+  </select>
+</mapper>

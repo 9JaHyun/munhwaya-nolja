@@ -76,13 +76,11 @@
 
             var playing = false, markup, $myJplayer = {},$tracks,showHeight = 0,remainingHeight = 0,$tracksWrapper, $more;
 
-            markup = {
-                listItem:'<li class="track">' +
-                            '<span class="title"></span>' +
-                            '<span class="duration"></span>' +
-                            '<span class="rating"></span>' +
-                            '<a href="#" class="buy not-active" target="_blank"></a>' +
-                        '</li>',
+            markup = {/*$('<li>')->이벤트등록 DOM으로 생성*/
+                listItem:`<li class="track" onclick="change()"> 
+                            <span class="title"></span>
+                            <span class="duration" style="margin-left:100px"></span>
+                          </li>`,
                 ratingBar:'<span class="rating-level rating-bar"></span>'
             };
 
@@ -223,7 +221,11 @@
                     //since $ratings refers to a specific object, if we just use .html($ratings) we would be moving the $rating object from one list item to the next
                     $track.find(cssSelector.rating).html($ratings.clone());
 
-                    $track.find(cssSelector.title).html(trackName(j));
+                    $track.find(cssSelector.title).html(trackName(j)).attr("data-musicid",trackId(j));
+					$track.find(cssSelector.title).attr("data-writer",trackWriter(j));
+					$track.find(cssSelector.title).attr("data-composing",trackComposing(j));
+					$track.find(cssSelector.title).attr("data-arrangement",trackArrangement(j));
+				
 
                     $track.find(cssSelector.duration).html(duration(j));
 
@@ -381,9 +383,12 @@
                         '<span class="img"></span>' +
                         '            <span class="highlight"></span>' +
                         '        </div>' +
-                        '        <div class="track-info">' +
-                        '            <p class="title"></p>' +
-                        '            <p class="artist-outer">By <span class="artist"></span></p>' +
+                        '        <div class="track-info" style="margin-top:17px">' +
+                        '            <p class="title" id="title1"></p>' +
+                        '            <p class="artist-outer">가수: <span id="artName1" class="artist"></span></p>' +
+						'			 <p><span class="artist-outer" id="writer"></span></p>' +
+						'			 <p><span class="artist-outer" id="composing"></span></p>' +
+						'			 <p><span class="artist-outer" id="arrangement"></span></p>' +			 		
                         '            <div class="rating">' +
                         '                <span class="rating-level rating-star on"></span>' +
                         '                <span class="rating-level rating-star on"></span>' +
@@ -392,7 +397,11 @@
                         '                <span class="rating-level rating-star"></span>' +
                         '            </div>' +
                         '        </div>' +
-                        '        <div class="player-controls">' +
+						'			<p class="single_variation_wrap" style="text-align:right; vertical-align:middle;">' +
+						'					<button id="b1" class="tbutton small" data-toggle="modal" data-target="#myModal"><span id="s1" >위시리스트 추가</span></button>' +
+						'					<button id="b2" class="tbutton small" onclick="addCart()"><span>구매</span></button>' +
+						'			</p>' +	
+                        '        <div class="player-controls" style="width:93%">' +
                         '            <div class="main">' +
                         '                <div class="previous jp-previous"></div>' +
                         '                <div class="play jp-play"></div>' +
@@ -416,7 +425,7 @@
                         '                    <span class="jp-gui"></span>' +
                         '                </span>' +
                         '            </div>' +
-                        '            <div class="progress-wrapper">' +
+                        '            <div class="progress-wrapper" style="width:80%">' +
                         '                <div class="progress jp-seek-bar">' +
                         '                    <div class="elapsed jp-play-bar"></div>' +
                         '                </div>' +
@@ -477,6 +486,20 @@
             else if (!isUndefined(myPlaylist[index].oga))
                 return fileName(myPlaylist[index].oga);
             else return '';
+        }
+
+		function trackId(index) {
+              return myPlaylist[index].musicId;
+        }
+
+		function trackWriter(index) {
+              return myPlaylist[index].writer;
+        }
+		function trackComposing(index) {
+              return myPlaylist[index].composing;
+        }
+		function trackArrangement(index) {
+              return myPlaylist[index].arrangement;
         }
 
         function fileName(path) {

@@ -5,13 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Remix - Music & Band Site Template HTML5 and CSS3</title>
+    <title>CCC</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <!-- Seo Meta -->
     <meta name="description" content="Remix - Music & Band Site Template HTML5 and CSS3">
     <meta name="keywords"
           content="remix, music, light, dark, themeforest, multi purpose, band, css3, html5">
+
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="${resources}/bootstrap/css/bootstrap.min.css" media="screen"/>
@@ -26,16 +29,14 @@
     <link rel="shortcut icon" href="${resources}/images/favicon.ico">
     <link rel="apple-touch-icon" href="${resources}/images/apple-touch-icon.png">
 
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=EmulateIE8; IE=EDGE"/>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <link rel="stylesheet" type="text/css" href="${resources}/styles/icons/font-awesome-ie7.min.css"/>
-    <![endif]-->
 </head>
-<body>
-<tiles:insertAttribute name="header"/>
-<tiles:insertAttribute name="body"/>
-<tiles:insertAttribute name="footer"/>
+<body id="fluidGridSystem">
+<div id="layout" class="full">
+    <tiles:insertAttribute name="header"/>
+    <tiles:insertAttribute name="body"/>
+    <tiles:insertAttribute name="footer"/>
+</div>
+
 
 <script type="text/javascript" src="${resources}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${resources}/js/codevz.js"></script>
@@ -46,10 +47,10 @@
 <script type="text/javascript" src="${resources}/js/jquery.flexslider-min.js"></script>
 <script type="text/javascript" src="${resources}/js/jquery.jplayer.js"></script>
 <script type="text/javascript" src="${resources}/js/ttw-music-player-min.js"></script>
-<script type="text/javascript" src="${resources}/music/myplaylist.js"></script>
 <script type="text/javascript" src="${resources}/js/countdown.js"></script>
 <script type="text/javascript" src="${resources}/js/jquery.nicescroll.min.js"></script>
 <script type="text/javascript" src="${resources}/js/custom.js"></script>
+
 <script type="text/javascript">
     /* <![CDATA[ */
     $(document).ready(function () {
@@ -71,7 +72,6 @@
             function () {
                 // callback function
             });
-
     });
     /* ]]> */
 </script>

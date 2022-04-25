@@ -72,7 +72,8 @@ a {
 	color: #fff;
 	text-decoration: none !important;
 	-webkit-transition: color 0.1s ease-in-out;
-	transition: color 0.1s ease-in-out
+	transition: color 0.1s ease-in-out;
+	text-transform: none;
 }
 a:hover {
 	color: #FF0078
@@ -84,7 +85,6 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: "Oswald", Tahoma, Arial;
 	font-weight: bold;
 	line-height: 1;
-	text-transform: uppercase;
 }
 h1 { font-size: 32px }
 h2 { font-size: 26px }
@@ -351,7 +351,7 @@ textarea {
 /*	Header
 ----------------------------------------------------------------------------------------------------*/
 #header {
-	position: absolute;
+	position: relative;
 	z-index: 10000;
 	width: 100%;
 	background: rgba(0, 0, 0, 0.8);
@@ -361,7 +361,7 @@ textarea {
 	width: 100%;
 }
 .under_header {
-	height: 375px;
+	height: 400px;
 }
 .under_header img {
 	width: 100%;
@@ -491,13 +491,12 @@ textarea {
 	margin: 0 20px 0 0;
 }
 .social a {
-	float: left;
 	text-align: center;
 	margin: 0 4px 0;
 	width: 26px;
 	height: 26px;
 	border-radius: 2px;
-	color: #ddd;
+	color: #fff;
 	-webkit-transition: all 0.2s ease;
 	transition: all 0.2s ease;
 }
@@ -858,6 +857,7 @@ a > .sf-sub-indicator {
 }
 
 .ttw-music-player .rating {
+	display: none !important;
     height: 16px;
     margin: 20px 0 20px 0;
 }
@@ -1312,7 +1312,7 @@ li.track:hover .buy, .playing .buy {
 .liner {
 	display: block;
 	width: 100%;
-	border-bottom: 1px solid #080808;
+	border-bottom: 1px solid #FF0078;
 	box-shadow: 0 1px 0 rgba(34, 34, 34, 0.8);
 	-webkit-box-shadow: 0 1px 0 rgba(34, 34, 34, 0.8);
 	margin: -1px 0 20px;
@@ -3248,16 +3248,16 @@ a.notification-close {
 	margin-right: 10px;
 }
 .notification-box-info {
-	background-color: #65cad3;
+	background-color: #618d91;
 }
 .notification-box-success {
-	background-color: #1abc9c;
+	background-color: #2d7568;
 }
 .notification-box-warning {
-	background-color: #eed880;
+	background-color: #9f9052;
 }
 .notification-box-error {
-	background-color: #e06f6f;
+	background-color: #a86868;
 }
 
 /* 	Google Map

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.munhwa.prj.ticketList.mapper.TicketListMapper">
+	<resultMap type="com.munhwa.prj.ticketList.vo.TicketListVO"
+		id="ticketListResultMap">
+		<id property="id" column="id" />
+		<result property="performanceId" column="performance_id" />
+		<result property="memberId" column="member_id" />
+		<result property="qrcode" column="qrcode" />
+		<result property="attendance" column="attendance" />
+		<result property="person" column="person" />
+		<result property="time" column="time"/>
+		<collection property="performancevo"
+			resultMap="performanceResultMap"></collection>
+	</resultMap>
+
+	<resultMap type="com.munhwa.prj.performance.vo.PerformanceVO"
+		id="performanceResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="location" column="location" />
+		<result property="sdate" column="sdate" />
+		<result property="edate" column="edate" />
+		<result property="content" column="content" />
+		<result property="status" column="status" />
+		<result property="image" column="image" />
+		<result property="artistId" column="artist_id" />
+		<result property="price" column="price" />
+		<result property="person" column="person" />
+	</resultMap>
+	
+	<select id="ticketListSelectList"
+		parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
+		resultMap="ticketListResultMap">
+		SELECT T.ID,
+		T.TIME,
+		P.NAME,
+		P.SDATE,
+		P.EDATE,
+		P.LOCATION,
+		P.PRICE
+		FROM TICKET_LIST T,
+		MEMBER M,
+		PERFORMANCE P
+		WHERE T.MEMBER_ID = #{memberId}
+		AND T.PERFORMANCE_ID = P.ID
+		ORDER BY TIME DESC
+	</select>
+
+	<select id="ticketListSelect"
+		parameterType="com.munhwa.prj.ticketList.vo.TicketListVO"
+		resultMap="ticketListResultMap">
+		SELECT M.NICKNAME,
+		P.NAME,
+		P.SDATE,
+		P.EDATE,
+		P.LOCATION,
+		P.IMAGE,
+		P.PRICE,
+		T.PERSON,
+		T.MEMBER_ID,
+		T.QRCODE,
+		CC.NAME as ATTENDANCE
+		FROM TICKET_LIST T,
+		MEMBER M,
+		PERFORMANCE P,
+		COMMON_CODE CC
+		WHERE T.ID = #{id}
+		AND T.ATTENDANCE = CC.ID
+		AND T.MEMBER_ID = M.ID
+		AND T.PERFORMANCE_ID = P.ID
+	</select>
+
+	<select id="ticketListInsert" statementType="CALLABLE" parameterType="map" resultType="hashmap">
+	<![CDATA[
+        call TICKET (
+                #{v_member_id, mode=IN, jdbcType=VARCHAR, javaType=string},
+                #{v_performance_id, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{v_person, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{v_ticket_id, mode=OUT, jdbcType=INTEGER, javaType=int},
+                #{v_time, mode=IN, jdbcType=DATE, javaType=date}
+            )
+     ]]>
+	</select>
+	
+	<update id="qrcodeUpdate" parameterType="com.munhwa.prj.ticketList.vo.TicketListVO">
+		UPDATE TICKET_LIST
+		SET QRCODE = #{qrcode}
+		WHERE ID = #{id}
+	</update>
+	
+	<update id="qrcodeAttendance" statementType="CALLABLE" parameterType="map">
+	<![CDATA[
+		call USE_TICKET (
+                #{v_tic_id, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{v_pro_pks, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{v_tic_attendance, mode=IN, jdbcType=VARCHAR, javaType=string},
+                #{v_pro_buyer, mode=IN, jdbcType=VARCHAR, javaType=string}
+            )
+	]]>
+	</update>
+	
+</mapper>

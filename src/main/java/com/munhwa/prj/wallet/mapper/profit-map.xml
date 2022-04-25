@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.munhwa.prj.wallet.mapper.ProfitMapper">
+	<resultMap type="com.munhwa.prj.wallet.vo.ProfitVO" id="profitResultMap">
+		<id property="id" column="id"/>
+		<result property="profitAt" column="profit_at"/>
+		<result property="mileage" column="mileage"/>
+		<result property="place" column="place"/>
+		<result property="memberId" column="member_id"/>
+		<result property="pks" column="pks"/>
+		<result property="refund" column="refund"/>
+		<result property="buyer" column="buyer"/>
+		<result property="name" column="name"/>
+		<collection property="commonCodevo" resultMap="commonResultMap"/>
+		<collection property="musicvo" resultMap="musicResultMap" />
+		<collection property="artistvo" resultMap="artistResultMap" />
+		<collection property="performancevo" resultMap="performanceResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.munhwa.prj.common.code.entity.CommonCodeVO" id="commonResultMap">
+	  	<id property="id" column="id"/>
+	  	<result property="name" column="name"/>
+    </resultMap>
+    
+    <resultMap type="com.munhwa.prj.music.vo.MusicVO" id="musicResultMap">
+		<id property="id" column="ID" />
+		<result property="artName" column="ART_NAME"/>
+		<result property="genre" column="GENRE"/>
+		<result property="lyric" column="LYRIC"/>
+		<result property="downloadCnt" column="DOWNLOAD_CNT"/>
+		<result property="fileId" column="FILE_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="price" column="PRICE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="time" column="TIME"/>
+		<result property="writer" column="WRITER"/>
+		<result property="composing" column="COMPOSING"/>
+		<result property="arrangement" column="ARRANGEMENT"/>
+	</resultMap>
+    
+    <resultMap type="com.munhwa.prj.artist.vo.ArtistVO" id="artistResultMap">
+    	<id property="id" column="id"/>
+		<result property="image" column="image"/>
+		<result property="gender" column="gender"/>
+		<result property="genre" column="genre"/>
+		<result property="content" column="content"/>
+		<result property="type" column="type"/>
+		<result property="memberId" column="member_id"/>
+		<result property="name" column="name"/>
+    </resultMap>
+    
+    <resultMap type="com.munhwa.prj.performance.vo.PerformanceVO" id="performanceResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="pname"/>
+		<result property="location" column="location"/>
+		<result property="sdate" column="sdate"/>
+		<result property="edate" column="edate"/>
+		<result property="content" column="content"/>
+		<result property="status" column="status"/>
+		<result property="image" column="image"/>
+		<result property="artistId" column="artist_id"/>
+		<result property="price" column="price"/>
+		<result property="person" column="person"/>
+	</resultMap>
+	
+    <!-- 곡 수익 내역 --> 
+    <select id="selectProfitListMusic" resultMap="profitResultMap">
+		<![CDATA[
+   		select * 
+        from (select
+            dense_rank() over(order by p.profit_at desc, p.member_id, c.name) as rn,
+            p.profit_at,
+            sum(p.mileage) as mileage,
+            c.name,
+            p.refund,
+            LISTAGG(p.name, ', ') within group(order by p.name) as title
+        from profit_history p,
+        common_code c,
+        music m
+        where p.place = c.id
+            and p.pks = m.id
+				and p.member_id = #{memberId}
+				and p.place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and p.profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and p.profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+		<![CDATA[
+	           group by p.profit_at, p.member_id, c.name, p.refund
+	           order by p.profit_at desc
+                )
+	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
+        ]]>
+    </select>
+    
+    <select id="getCountByMusic" resultType="int">
+    	<![CDATA[
+		select count(id)
+		from profit_history
+		where member_id = #{memberId}
+		and place = 'U01'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+    </select>
+    
+    <select id="getSumByMusic" resultType="int">
+    	<![CDATA[
+		select sum(mileage)
+		from profit_history
+		where member_id = #{memberId}
+		and place = 'U01'
+		and (refund = 'B01' or refund = 'B03')
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+    </select>
+    
+    <!-- 공연 티켓 수익 내역 -->
+    <select id="selectProfitListPerformance" resultMap="profitResultMap">
+    	<![CDATA[
+    	select * 
+        from (select
+            dense_rank() over(order by p.profit_at desc, p.member_id, c.name) as rn,
+            p.profit_at,
+            sum(p.mileage) as mileage,
+            c.name,
+            p.refund,
+            p.buyer,
+            LISTAGG(p.name, ', ') within group(order by p.name) as pname
+          from profit_history p,
+        common_code c, 
+        performance pe
+        where p.place = c.id
+            and pe.name= p.name
+				and p.member_id = #{memberId}
+				and p.place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and p.profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and p.profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+		<![CDATA[
+	           group by p.profit_at, p.member_id, c.name, p.refund, p.buyer
+	           order by p.profit_at desc
+                )
+	     where rn> (#{cri.pageNum}-1) * #{cri.amount}
+	     and rn <= #{cri.pageNum} * #{cri.amount}
+	     ]]>
+    </select>
+    
+    <select id="getCountByPerformance" resultType="int">
+    	<![CDATA[
+		select count(id)
+		from profit_history
+		where member_id = #{memberId}
+		and place = 'U02'
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+    </select>
+    
+    <select id="getSumByPerformance" resultType="int">
+    	<![CDATA[
+		select sum(mileage)
+		from profit_history
+		where member_id = #{memberId}
+		and place = 'U02'
+		and (refund = 'B01' or refund = 'B03')
+		]]>
+		<choose>
+			<when
+				test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and profit_at BETWEEN TO_DATE(#{startDate},'YYYY-MM-DD') AND
+				TO_DATE(#{endDate}, 'YYYY-MM-DD')+0.5
+			</when>
+			<otherwise>
+				and profit_at BETWEEN TO_DATE('2022-01-01','YYYY-MM-DD')
+				AND
+				TO_DATE('2022-12-31', 'YYYY-MM-DD')+0.5
+			</otherwise>
+		</choose>
+    </select>
+    
+    <insert id="insertProfit" parameterType="com.munhwa.prj.wallet.vo.ProfitVO">
+		insert into profit_history(id, 
+								   profit_at, 
+								   mileage, 
+								   place,
+								   pks,
+								   buyer,
+								   name,
+								   member_id
+								   )
+		select profit_history_seq.nextval, 
+		#{profitAt}, #{mileage}, #{place}, #{pks}, #{buyer}, #{name}, a.member_id
+		from artist a, music m
+		where a.name = m.art_name
+		and m.Id = #{id}
+    </insert>
+</mapper>
