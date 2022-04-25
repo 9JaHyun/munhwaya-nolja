@@ -204,7 +204,7 @@ function deleteCart(n) {
 }
 
 function payCart() {
-	if($('.selId').length == 0 ){
+	if($("[name='selId']:checked").length == 0 ){
 		alert('구매할 곡이 없습니다. 카트에 곡을 담아주세요.');
 	} else {
 	var str = document.getElementById("itemTotalPrice").innerHTML.slice(0, -1);

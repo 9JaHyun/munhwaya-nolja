@@ -1,25 +1,5 @@
 package com.munhwa.prj.artist.web;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import org.apache.ibatis.annotations.Param;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
 import com.munhwa.prj.artist.service.ArtistService;
@@ -41,8 +21,23 @@ import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
 import com.munhwa.prj.wishlist.service.WishlistService;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
-
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /*
  * 작성자:차주연
@@ -86,7 +81,7 @@ public class ArtistController {
 		Criteria musicCri = new Criteria(musicPageNum, musicAmount);
 
 		// 곡 목록의 데이터를 담아서 페이징 처리
-		List<ArtDetailVO> list = artistDao.findMusic(musicCri, artist.getId());
+		List<ArtDetailVO> list = artistService.findMusic(musicCri, artist.getId());
 
 		model.addAttribute("musicList", list);
 		// 곡 전체 개수 구하기
@@ -98,27 +93,25 @@ public class ArtistController {
 		Criteria albumCri = new Criteria(albumPageNum, albumAmount); // 어마운트는 보여질 게시물 수
 		// 앨범 목록의 데이터를 담아서 페이징 처리
 		List<ArtDetailVO2> album = artistDao.albumInfo(albumCri, artist.getId());
-
 		albumCri.setAmount(3); // 앨범 게시물 수 3개 호출
 		model.addAttribute("album", album);
 
 		// 앨범 전체 개수 구하기
-		int total2 = artistDao.getTotal2(albumCri, artist.getId());
+		int total2 = artistService.getTotal2(albumCri, artist.getId());
 		PageDTO pagemaker2 = new PageDTO(albumCri, total2);
 		model.addAttribute("pageMaker2", pagemaker2);
 
 //========================================================================================
-
 		// 사용자의 위시리스트를 리스트로 불러와서 모델에 담는다
 		List<WishlistVO> list1 = wishlistDao.wishlistList(user.getId());
 		model.addAttribute("wishLists", list1);
 
 		// 곡 개수
-		int musicCnt = artistDao.musicCnt(artist.getId());
+		int musicCnt = artistService.musicCnt(artist.getId());
 		model.addAttribute("musicCnt", musicCnt);
 
 		// 앨범 개수
-		int albumCnt = artistDao.albumCnt(artist.getId());
+		int albumCnt = artistService.albumCnt(artist.getId());
 		model.addAttribute("albumCnt", albumCnt);
 
 		return "artist/artistDetail";
@@ -187,6 +180,7 @@ public class ArtistController {
 											// 호출하고 값은 dto에 저장된 수정 정보 return하기)
 		UploadFile file = fileUtils.storeFile(dto.getImage()); // dto의 이미지 호출
 		MemberVO member = new MemberVO();
+
 		if (file != null) {// 파일을 선택안하고, 변경을 안하고 수정버튼을 눌렀을때 file != null파일에 값이 있다
 			artist.setImage(file.getStoredFileName()); // 파일수정안하면 오류 // getStoredFileName하는 이유 : 기존 파일이 없을 경우 오류가 나므로
 														// 임으로 파일 이름담아서 artist변수에 담음 // storedFileName: 서버 로컬에 저장될 파일명
@@ -333,7 +327,6 @@ class SmsController {
 //	}
 
 	private String createRandomNumber() {
-
 		Random random = new Random(); // 랜덤 함수 선언
 		int createNum = 0; // 1자리 난수
 		String ranNum = ""; // 1자리 난수 형변환 변수

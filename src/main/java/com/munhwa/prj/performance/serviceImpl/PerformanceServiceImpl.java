@@ -1,18 +1,18 @@
 package com.munhwa.prj.performance.serviceImpl;
 
+import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.likeArtist.mapper.LikeArtistMapper;
 import com.munhwa.prj.news.mapper.NewsMapper;
 import com.munhwa.prj.news.vo.NewsVO;
 import com.munhwa.prj.performance.mapper.PerformanceMapper;
 import com.munhwa.prj.performance.service.PerformanceService;
-import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.performance.vo.PerformanceVO;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository("performanceDao")
+@Service
 public class PerformanceServiceImpl implements PerformanceService {
 
     private final PerformanceMapper performanceMapper;

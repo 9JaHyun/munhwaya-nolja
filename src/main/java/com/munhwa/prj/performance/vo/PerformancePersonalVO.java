@@ -1,8 +1,9 @@
 package com.munhwa.prj.performance.vo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter @Setter
 public class PerformancePersonalVO {
 	private int id;
 	private int personal;

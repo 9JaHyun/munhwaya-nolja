@@ -18,9 +18,6 @@
 					<li><i class="icon-comment-alt"></i> <a href="chargeForm.do">마일리지
 							충전</a>
 						<div class="topic-time">마일리지를 충전 합니다.</div></li>
-					<li><i class="icon-comment-alt"></i> <a href="withdrawForm.do">마일리지
-							출금</a>
-						<div class="topic-time">마일리지를 출금 합니다.</div></li>
 				</c:when>
 				<c:otherwise>
 					<li><i class="icon-comment-alt"></i> <a
@@ -35,9 +32,6 @@
 					<li><i class="icon-comment-alt"></i> <a href="chargeForm.do">마일리지
 							충전</a>
 						<div class="topic-time">마일리지를 충전 합니다.</div></li>
-					<li><i class="icon-comment-alt"></i> <a href="withdrawForm.do">마일리지
-							출금</a>
-						<div class="topic-time">마일리지를 출금 합니다.</div></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>

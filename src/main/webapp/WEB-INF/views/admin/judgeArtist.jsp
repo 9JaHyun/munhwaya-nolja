@@ -79,7 +79,7 @@
 					</div>
 					<!-- gridfull -->
 					<div class="pagination-tt clearfix"
-						style="margin-left: auto; margin-top: 30px; width: 520px;">
+						style="display:flex; justify-content: center;">
 						<ul>
 							<!-- 이전페이지 버튼 -->
 							<c:if test="${pageMake.prev}">
@@ -185,6 +185,11 @@
     $(".search_area button").on("click", function(e){
         e.preventDefault();
         let val = $("input[name='keyword']").val();
+		let let keyword = $(".search_area input[name='keyword']").val();
+        if(!keyword){
+            alert("키워드를 입력하세요.");
+            return false;
+        }      
         moveForm.keyword.value = val;
         moveForm.pageNum.value = 1;
         moveForm.submit();

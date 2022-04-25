@@ -8,15 +8,20 @@ import com.munhwa.prj.artist.web.PromotionRequestDTO;
 import com.munhwa.prj.common.paging.entity.Criteria;
 
 public interface PromotionRequestService {
-	
-	List<PromotionRequestVO> promotionRequestSelectList(Criteria cri);
-	PromotionRequestVO promotionRequestSelect(String memberId); // 승급신청
-	int promotionRequestInsert(PromotionRequestVO vo);
-	int promotionRequestDelete(PromotionRequestVO vo);
-	int promotionRequestUpdate(Map<String,Object> vo);
-	/* 승급신청 리스트 총 갯수 */
+    List<PromotionRequestVO> promotionRequestSelectList(Criteria cri);
+
+    PromotionRequestVO promotionRequestSelect(String memberId);
+
+    int promotionRequestInsert(PromotionRequestVO vo);
+
+    int promotionRequestDelete(PromotionRequestVO vo);
+
+    int promotionRequestUpdate(Map<String, Object> vo);
+
+    /* 승급신청 리스트 총 갯수 */
     int getTotal(Criteria cri);
     
     String getStatus(String memberId);
-	String artStatusUpdate(PromotionRequestDTO dto);
+  
+	  String artStatusUpdate(PromotionRequestDTO dto);
 }

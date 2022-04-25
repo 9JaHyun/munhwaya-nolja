@@ -252,9 +252,10 @@
 	            	 alert(data);
 	            },
 	            error: function(xhr, status, error){
-	            	alert("통신실패"); 	            }
+	            	alert("곡을 선택해주세요"); 	            
+	            	}
  	         }) 
- 	         
+ 	        $('.all').prop('checked',false);
  	      } else {
  	         alert("취소")
  	      }

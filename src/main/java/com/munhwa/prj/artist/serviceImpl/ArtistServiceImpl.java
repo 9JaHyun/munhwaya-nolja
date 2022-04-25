@@ -1,24 +1,20 @@
 package com.munhwa.prj.artist.serviceImpl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.munhwa.prj.artist.mapper.ArtistMapper;
 import com.munhwa.prj.artist.service.ArtistService;
 import com.munhwa.prj.artist.vo.ArtDetailVO;
 import com.munhwa.prj.artist.vo.ArtDetailVO2;
 import com.munhwa.prj.artist.vo.ArtistVO;
-import com.munhwa.prj.artist.vo.PromotionRequestVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
-import com.munhwa.prj.music.vo.AlbumVO;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Repository("artistDao")
+@Service
 public class ArtistServiceImpl implements ArtistService {
 
-@Autowired
-private ArtistMapper map;
+  @Autowired
+  private ArtistMapper map;
 	
 	@Override
 	public int getTotal(Criteria cri, int id) {
@@ -100,6 +96,4 @@ private ArtistMapper map;
 		// TODO Auto-generated method stub
 		return map.artIdByAlbId(albumId);
 	}
-
-	
 }

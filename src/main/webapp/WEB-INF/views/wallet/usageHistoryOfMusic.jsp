@@ -74,9 +74,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 			<a href="usageHistoryOfPerformance.do" class="tbutton small"><span>공연
 					티켓 구매 내역</span></a>
 		</div>
-		<div style="float: left; margin-right: 30px;">
-			<a href="walletInfo.do" class="tbutton small"><span>출금 내역</span></a>
-		</div>
 		<select id="cntPerPage" name="sel" onchange="selChange()">
 			<option value="10"
 				<c:if test="${pageMaker.cri.amount == 10}">selected</c:if>>10줄
@@ -126,31 +123,24 @@ if (request.getProtocol().equals("HTTP/1.1"))
 		</tbody>
 	</table>
 </div>
-<div class="pageInfo_wrap" style="float:left; width:80%; text-align:center;">
-	<div class="pageInfo_area"
-		style="margin-left: auto; margin-top: 30px; width: 660px;">
-		<ul id="pageInfo" class="pageInfo">
-			<!-- 이전페이지 버튼 -->
-			<c:if test="${pageMaker.prev}">
-				<li class="pageInfo_btn previous"><a href="#"
-					onclick="paging(${pageMaker.startPage-1})"
-					style="border: 1px solid white; padding: 5px 5px;">Previous</a></li>
-			</c:if>
-			<!-- 각 번호 페이지 버튼 -->
-			<c:forEach var="num" begin="${pageMaker.startPage}"
-				end="${pageMaker.endPage}">
-				<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":""}"><a
-					href="#" onclick="paging(${num})"
-					style="border: 1px solid white; padding: 5px 5px;">${num}</a></li>
-			</c:forEach>
-			<!-- 다음페이지 버튼 -->
-			<c:if test="${pageMaker.next}">
-				<li class="pageInfo_btn next"><a href="#"
-					onclick="paging(${pageMaker.endPage + 1})"
-					style="border: 1px solid white; padding: 5px 5px;">Next</a></li>
-			</c:if>
-		</ul>
-	</div>
+<div class="pagination-tt clearfix"
+	style="display: flex; justify-content: center;">
+	<ul>
+		<!-- 이전페이지 버튼 -->
+		<c:if test="${pageMaker.prev}">
+			<li><a href="${pageMaker.startPage-1}">Previous</a></li>
+		</c:if>
+		<!-- 각 번호 페이지 버튼 -->
+		<c:forEach var="num" begin="${pageMaker.startPage}"
+			end="${pageMaker.endPage}">
+			<li style="border: 1px solid white; margin-left: 5px;"><a
+				href="#" onclick="paging(${num})" class="deactive">${num}</a></li>
+		</c:forEach>
+		<!-- 다음페이지 버튼 -->
+		<c:if test="${pageMaker.next}">
+			<li><a href="${pageMaker.endPage + 1 }">Next</a></li>
+		</c:if>
+	</ul>
 </div>
 
 <form id="moveForm" method="get" action="usageHistoryOfMusic.do">
