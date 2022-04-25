@@ -1,5 +1,24 @@
 package com.munhwa.prj.artist.web;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.munhwa.prj.admin.web.ArtistChangeRequestDto;
 import com.munhwa.prj.artist.service.ArtistService;
@@ -19,25 +38,13 @@ import com.munhwa.prj.config.auth.LoginUser;
 import com.munhwa.prj.config.auth.entity.SessionUser;
 import com.munhwa.prj.member.service.MemberService;
 import com.munhwa.prj.member.vo.MemberVO;
+import com.munhwa.prj.music.service.AlbumService;
+import com.munhwa.prj.music.vo.AlbumVO;
+import com.munhwa.prj.music.vo.MusicVO;
 import com.munhwa.prj.wishlist.service.WishlistService;
 import com.munhwa.prj.wishlist.vo.WishlistVO;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Random;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 /*
  * 작성자:차주연
@@ -53,7 +60,9 @@ public class ArtistController {
 	private final FileUtils fileUtils;
 	private final UploadFileService uploadService;
 	private final PromotionRequestService promotionRequestDao;
+
 	private final MemberService memberService;
+	private final AlbumService albumService;
 
 	// 아티스트 상세정보
 
@@ -254,49 +263,41 @@ public class ArtistController {
 // 			}
 		return "artStatus-artist";
 	}
-// 		@ResponseBody
-// 	    @PostMapping("/changeArtistProfile")
-// 	    public String changeArtistProfile(@LoginUser SessionUser user, ArtistChangeRequestDto dto) throws IOException { //AtistChangeRequestDto : AtistChangeRequestDto를 호출해서 
-// 	    	ArtistVO artist = dto.toEntity(); // ArtistVO의 내용을 호출하여 AtistChangeRequestDto안의 ArtistVO메소드를 return한다.(=기존 정보 호출하고 값은 dto에 저장된 수정 정보 return하기)
-// 	    	UploadFile file = fileUtils.storeFile(dto.getImage()); // dto의 이미지 호출 
-// 			MemberVO member = new MemberVO();
-// 	    	if(file != null) {//파일을 선택안하고, 변경을 안하고 수정버튼을 눌렀을때 file != null파일에 값이 있다
-// 	    		artist.setImage(file.getStoredFileName());	//파일수정안하면 오류 // getStoredFileName하는 이유 : 기존 파일이 없을 경우 오류가 나므로 임으로 파일 이름담아서 artist변수에 담음 // storedFileName: 서버 로컬에 저장될 파일명
-// 	    		user.setSname(artist.getImage());
-// 	    	}
-// 	    	artist.setMemberId(user.getId());
-// 	    	int result = artistDao.updateArtist(artist);
-// 	    	if(result != 0) { // artist에 값이 있으면
-	//
-// 	    		member.setId(artist.getMemberId());
-// 	    		member.setNickname(artist.getName());
-// 	    		member.setSname(artist.getImage());
-// 	    		memberService.updateProfile(member);
-// 	    		user.setNickname(artist.getName());
-	//
-// 	    	}
-// 	    	
-// 	    	return "mypage.do";
-// 	    }
 
-// 		String userId = user.getId();
-// 		String memId = vo.getMemberId();
-// 		
-// 		if(userId == memId) {
-// 		    PromotionRequestVO pro = artistDao.getStatus("status", status);
-// 			model.addAttribute(pro);
-// 		}else {
-// 			System.out.println("연결실패");
-// 			
-// 		}
-	// vo.setMemberId(user.getId());
-	// String id2 = memberId.getParameter(memberId);
-	// PromotionRequestVO pro = artistDao.getStatus(memberId, status);
-	// int pro = artistDao.getStatus(user.getId(), status);
-
-	// String pro = artistDao.getStatus(user.getId(), status); // user 세션에 있는 승인 상태를
-	// artStatus에 뿌리기.
-}
+  	// 아티스트 앨범 등록 폼 호출
+	@RequestMapping("/insertAlbumForm.do")
+	public String insertAlbumForm(@LoginUser SessionUser user, Model model) {		
+		return "insertAlbumForm-artist";
+	}
+	
+	// 아티스트 앨범 등록 
+	@RequestMapping("/insertAlbum.do")
+	public String insertAlbum(@LoginUser SessionUser user, Model model, AlbumVO vo) {
+		String memberId = user.getId();
+		vo.setArtistId(Integer.parseInt(String.valueOf(artistService.artistOfId(memberId))));
+		vo.setArtName(artistService.artistOfName(memberId));
+		albumService.albumInsert(vo);
+		return "insertAlbumForm-artist";
+	}
+	
+	// 아티스트 곡 등록 폼 호출
+	@RequestMapping("/insertMusicForm.do")
+	public String insertMusicForm(@LoginUser SessionUser user, Model model) {
+		String memberId = user.getId();
+		model.addAttribute("albumIds", albumService.albumSelectListByMemberId(memberId));
+		return "insertMusicForm-artist";
+	}
+	
+	@RequestMapping("/insertMusic.do")
+	public String insertMusic(@LoginUser SessionUser user, MusicVO vo, MultipartFile file) throws IOException {
+		String memberId = user.getId();
+		UploadFile uploadfile = fileUtils.storeFile(file);
+//		vo.setFileId(uploadfile.getStoredFileName());
+		vo.setArtName(artistService.artistOfName(memberId));
+		vo.setPicture(albumService.albumPicture(memberId, vo.getAlbumId()));
+		
+		return "insertMusicForm-artist";
+	}
 
 // 아티스트 승급페이지 본인인증
 @RestController

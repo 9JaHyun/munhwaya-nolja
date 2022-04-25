@@ -95,5 +95,14 @@ public class ArtistServiceImpl implements ArtistService {
 	public int artIdByAlbId(int albumId) {
 		// TODO Auto-generated method stub
 		return map.artIdByAlbId(albumId);
+    
+	@Override
+	public String artistOfName(String memberId) {
+		return map.artistOfName(memberId);
+	}
+
+	@Override
+	public int artistOfId(String memberId) {
+		return map.artistOfId(memberId);
 	}
 }

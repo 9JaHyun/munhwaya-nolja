@@ -91,6 +91,12 @@
                         <li><a href="${rootPath}/likeArtist.do"><i class="icon-caret-right"> </i>좋아요
                             한 아티스트</a>
                         </li>
+                         <li><a href="${rootPath}/insertAlbumForm.do"><i class="icon-caret-right"></i> 앨범 등록
+                            </a>
+                        </li>
+                        <li><a href="${rootPath}/insertMusicForm.do"><i class="icon-caret-right"></i> 곡 등록
+                            </a>
+                        </li>
                         <li><a href="${rootPath}/wishlist.do"><i class="icon-caret-right"> </i>위시리스트</a>
                         </li>
                         <li><a href="${rootPath}/walletInfo.do"><i class="icon-caret-right"> </i>지갑

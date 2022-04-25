@@ -163,4 +163,22 @@
 		]]>
 	</update>
 	
+	<insert id="musicInsert" parameterType="com.munhwa.prj.music.vo.MusicVO">
+		INSERT INTO MUSIC(ID, ART_NAME, GENRE, LYRIC, DOWNLOAD_CNT, FILE_ID, TITLE, PRICE, ALBUM_ID, TIME, WRITER, COMPOSING, ARRANGEMENT, PICTURE)
+		VALUES(music_seq.nextval,
+		#{artName},
+		#{genre},
+		#{lyric},
+		0,
+		#{fileId},
+		#{title},
+		800,
+		#{albumId},
+		#{time},
+		#{writer},
+		#{composing},
+		#{arrangement},
+		#{picture})
+	</insert>
+	
 </mapper>

@@ -27,4 +27,6 @@ public interface ArtistMapper {
 	int getTotal2(@Param("cri") Criteria cri, @Param("artistId") int artistId);
 	int artIdByAlbId(int albumId);
    // int chkName(String name);
+	String artistOfName(String memberId);
+	int artistOfId(String memberId);
 }

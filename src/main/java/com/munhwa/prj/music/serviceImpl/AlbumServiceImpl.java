@@ -75,5 +75,17 @@ public class AlbumServiceImpl implements AlbumService{
 		return map.getCountByList4(title);
 	}
 
+	@Override
+	public List<AlbumVO> albumSelectListByMemberId(String memberId) {
+		return map.albumSelectListByMemberId(memberId);
+	}
+
+	@Override
+	public String albumPicture(String memberId, int id) {
+		return map.albumPicture(memberId, id);
+	}
+
+	
+
 
 }
