@@ -25,7 +25,7 @@ public interface UsageService {
 	int refundOfMusic(Map<String, Object> vo);
 	int refundOfPerformance(Map<String, Object> vo);
 		
-	List<UsageVO> selectById(int id,String place);
+	List<UsageVO> selectById(int id, String place);
 	
 	List<UsageVO> selectByMusicOfId(List<Integer> pks, String memberId);
 }

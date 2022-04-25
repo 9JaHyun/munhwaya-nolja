@@ -35,17 +35,8 @@
 		]]>
 	</select>
 	
-	<select id="getTotal" resultType="int">
-		SELECT COUNT(*) FROM PROMOTION_REQUEST
-		<where>
-		<if test="keyword != null">
-        	AND MEMBER_ID LIKE '%'||#{keyword}||'%'
-        </if>
-		</where>
-	</select>
-	
-	<select id="promotionRequestSelect" resultMap="requestMap" parameterType="string">
-		SELECT * FROM PROMOTION_REQUEST WHERE member_id = #{memberId}
+	<select id="promotionRequestSelect" resultMap="requestMap" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
+		SELECT * FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
 	</select>
 	
 	<insert id="promotionRequestInsert" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
@@ -54,7 +45,7 @@
 	</insert>
 	
 	<delete id="promotionRequestDelete"  parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
-		DELETE FROM PROMOTION_REQUEST WHERE ID = #{memeber_id}
+		DELETE FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memeberId}
 	</delete>
 	
 	<!-- 아티스트 신청 리스트 승인/거절 업데이트 -->
@@ -67,4 +58,6 @@
       )}
     ]]>
 	</update>
+	
+	
 </mapper>

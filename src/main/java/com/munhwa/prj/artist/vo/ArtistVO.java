@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 public class ArtistVO {
 	private int id;
-	private String image;
+	private String image; //파일 자체가아니라 파일이름
 	private String gender;
 	private String genre;
 	private String content;	
@@ -20,7 +20,7 @@ public class ArtistVO {
 	private MusicVO musicvo;
 	private ArtDetailVO artDetailvo;
 	
-	public ArtistVO() {}
+	public ArtistVO() {} //ArtistVO vo = new ArtistVO();
 	
 	public ArtistVO(String gender, String genre, String content, String type, String memberId,
 			String name) {

@@ -13,4 +13,6 @@ public class PurchaseVO2 {
 	private Date createdAt;
 	private int fileId;
 	private int price;
+	private int albId;
+	private int artId;
 }

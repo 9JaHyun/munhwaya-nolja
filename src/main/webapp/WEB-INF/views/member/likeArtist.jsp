@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <style>
     .js-load {
@@ -10,6 +12,10 @@
     .js-load.active {
         display: revert;
     }
+    
+	.toast-success {
+	  background-color: #D42C7A;
+	}    
 </style>
 
 <div align="right" style="margin-bottom: 50px;">
@@ -39,8 +45,9 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td style="text-align: center; padding: 22px 110px 0px 0px;">
-                        <a>${likeArtist.name}</a></td>
+                    <td style="text-align: center; padding: 22px 110px 0px 0px;" id="artistName">
+                    	<a href="artistDetail?artId=${likeArtist.id}">${likeArtist.name}</a>
+                    </td>
                     <!-- 좋아요 한 아티스트 삭제 버튼 -->
                     <td style="padding: 20px 15px 0px 0px;"><a><i
                             class="icon-remove" id="${likeArtist.id}"
@@ -58,7 +65,11 @@
 
 <script>
     function delArtistFn(id) {
-        $.ajax({
+
+    	var td = $("#" + id).parent().parent().parent().children();
+		var name = td.eq(1).text();
+    	
+         $.ajax({
             url: "deleteLikeArtist.do",
             data: JSON.stringify({artistId: id}),
             type: "POST",
@@ -67,6 +78,26 @@
 
         .done(() => {
             document.getElementById(id).parentNode.parentNode.parentNode.remove();
+            load('#js-load', '1');
+        	
+            Command: toastr["success"]("[" + name + "] 좋아요가 해제되었습니다.")
+            toastr.options = {
+              "closeButton": false,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": false,
+              "positionClass": "toast-bottom-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "30000",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "5000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
         })
         ;
     }
