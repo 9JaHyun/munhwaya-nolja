@@ -45,7 +45,7 @@ public class FileClient {
     @ResponseBody
     @GetMapping("/api/music/{filename:.+}")
     public Resource sendMusicPath(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileUtils.getFullPath(filename));
+        return new UrlResource("file:" + fileUtils.getMusicFullPath(filename));
     }
 
 

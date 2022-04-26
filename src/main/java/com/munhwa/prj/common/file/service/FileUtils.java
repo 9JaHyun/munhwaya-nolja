@@ -49,6 +49,10 @@ public class FileUtils {
     }
 
     public String getFullPath(String fileName) {
+        return fileDir + fileName;
+    }
+
+    public String getMusicFullPath(String fileName) {
         return fileDir + "/music" + fileName;
     }
 
