@@ -3,7 +3,8 @@
 <mapper namespace="com.munhwa.prj.artist.mapper.PromotionRequestMapper">
 	
 	<resultMap type="com.munhwa.prj.artist.vo.PromotionRequestVO" id="requestMap">
-		<id property="memberId" column="member_id"/>
+	    <id property="id" column="id"/>
+		<result property="memberId" column="member_id"/>
 		<result property="identify" column="identify"/>
 		<result property="artwork" column="artwork"/>
 		<result property="status" column="status"/>
@@ -35,26 +36,21 @@
 		]]>
 	</select>
 	
-	<select id="getTotal" resultType="int">
-		SELECT COUNT(*) FROM PROMOTION_REQUEST
-		<where>
-		<if test="keyword != null">
-        	AND MEMBER_ID LIKE '%'||#{keyword}||'%'
-        </if>
-		</where>
-	</select>
-	
-	<select id="promotionRequestSelect" resultMap="requestMap" parameterType="string">
-		SELECT * FROM PROMOTION_REQUEST WHERE member_id = #{memberId}
+	<select id="promotionRequestSelect" resultMap="requestMap" parameterType="String">
+		SELECT * FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
 	</select>
 	
 	<insert id="promotionRequestInsert" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
-		INSERT INTO PROMOTION_REQUEST(MEMBER_ID, IDENTIFY, ARTWORK, STATUS, FILE_GROUP_ID, created_at)
-		VALUES(#{memberId}, #{identify}, #{artwork}, #{status},#{fileGroupId}, #{createdAt})
+		INSERT INTO PROMOTION_REQUEST(ID, MEMBER_ID, IDENTIFY, ARTWORK, STATUS, FILE_GROUP_ID, created_at)
+		VALUES(PROMOTION_REQUEST_SEQ.NEXTVAL ,#{memberId}, #{identify}, #{artwork}, #{status},#{fileGroupId}, #{createdAt}) 
+	<selectKey keyProperty="id" resultType="Integer" order="AFTER">
+	      SELECT PROMOTION_REQUEST_SEQ.currval
+	      FROM dual
+    </selectKey>
 	</insert>
 	
 	<delete id="promotionRequestDelete"  parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
-		DELETE FROM PROMOTION_REQUEST WHERE ID = #{memeber_id}
+		DELETE FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memeberId}
 	</delete>
 	
 	<!-- 아티스트 신청 리스트 승인/거절 업데이트 -->
@@ -66,5 +62,25 @@
       #{v_updated_at, mode=IN, jdbcType=DATE, javaType=date}
       )}
     ]]>
+	</update>
+	
+	<update id="updateGroupId" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
+		update PROMOTION_REQUEST
+		set FILE_GROUP_ID = #{fileGroupId}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
+	<!-- 아티스트 신청 진행상태 프로그래스바 -->
+	<select id="getStatus" resultType="String">
+		SELECT STATUS FROM PROMOTION_REQUEST WHERE MEMBER_ID = #{memberId}
+	</select>
+  
+	<update id="artStatusUpdate" parameterType="com.munhwa.prj.artist.vo.PromotionRequestVO">
+		UPDATE PROMOTION_REQUEST
+		<set>
+			<if test="artwork != null">ARTWORK = #{artwork},</if>
+			<if test="status != null">STATUS = #{status}</if>
+		</set>
+		WHERE MEMBER_ID = #{memberId}  
 	</update>
 </mapper>

@@ -21,7 +21,7 @@ function pushList(result) {
 		composing: '${musicSelect.composing}',
 		arrangement: '${musicSelect.arrangement}',
 		musicId: '${musicSelect.id}',
-		mp3 : "${pageContext.request.contextPath}/api/file/"+fileName,
+		mp3 : "${pageContext.request.contextPath}/api/music/"+fileName,
 		title : '${musicSelect.title}',
 		artist : '${musicSelect.artName}',
 		rating: 5,
@@ -186,16 +186,16 @@ function addWishList(e) {
         <h4 style="border:none;" class="modal-title" id="myModalLabel">위시리스트 선택</h4>
       </div>
       <div id="activeAdd" class="modal-body def-block">
-        <c:forEach items="${wishlists}" var="wishlist">
+        <c:forEach items="${wishlists}" var="album">
 		<div class="mbf clearfix">
 			<ul>
 				<li>
 					<!-- 위시리스트 이름 -->
 					<div class="toggle-head" style="padding-bottom:20px;">
 						<h5 style="margin:0px;">
-							${wishlist.name}
+							${album.name}
 							<button onclick="addWishList()" class="tbutton small" style="float:right;">
-								<span data-wishid="${wishlist.id}">선택</span>
+								<span data-wishid="${album.id}">선택</span>
 							</button>
 						</h5>
 					</div>

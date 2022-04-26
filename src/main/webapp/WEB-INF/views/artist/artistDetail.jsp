@@ -4,19 +4,19 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <style>
-table {
-	border: 1px, solid black;
-	width: 1000px;
-}
+/* table { */
+/* 	border: 1px, solid black; */
+/* 	width: 1000px; */
+/* } */
 
 .p {
 	width: 10%;
 }
 
-table {
-	border-collapse: separate;
-	border-spacing: 30px 10px;
-}
+/* table { */
+/* 	border-collapse: separate; */
+/* 	border-spacing: 30px 10px; */
+/* } */
 
 .artist-info {
 	width: 700px;
@@ -38,6 +38,30 @@ size {
 	width: 100%;
 }
 
+
+.pageInfo {
+	   list-style: none;
+	   display: inline-block;
+		}
+	
+.pageInfo li {
+	   float: left;
+	   font-size: 1px;
+	   padding: 7px;
+	   font-weight: 500;
+	}
+
+	
+	a:hover {
+	   color: white;
+	   text-decoration: underline;
+	}
+	
+	.focus {
+	   background-color: #cdd5ec;
+	}
+
+
 .artist-album {
 	width: 30%;
 	hight: 200px;
@@ -49,6 +73,10 @@ size {
 	float: center;
 	align-content: space-between;
 }
+td{
+	color: white;
+}
+
 </style>
 
 <div class="under_header">
@@ -141,22 +169,22 @@ size {
 				<tbody>
 				<!--  c:forEach -->
 				 
-        			 <c:forEach items="${musicList}" var="music" varStatus="status" >   <!--  items = "${result.music}"-->
+        			 <c:forEach items="${musicList}" var="music" varStatus="status" >  
            				<tr style="text-align: center;">
              				<td style="text-align:center">${status.count}</td>
                				<td><a href="streaming?id=${music.musicId}"><i class="icon-angle-right" style="font-size: large; margin-left: 7px;"></a></i></td>
-               				<td><button data-musicid="${music.musicId}" onclick="buy()">구매</button></td> <!-- 구매버튼만 만들어 연결 -->
-               				<td>${music.musicTitle}</td>
-               				<td>${music.artName}</td>
-              				<td>${music.albName}</td>
-             				 <td><button data-toggle="modal" data-target="#myModal" data-musicid="${music.musicId}" data-dismiss="modal" aria-label="Close">담기</button></td>
+               				<td><button data-musicid="${music.musicId}" onclick="buy()">구매</button></td> 
+               				<td><a href="streaming?id=${music.musicId}">${music.musicTitle}</a></td>
+               					<td>${music.artName}</td>
+              					<td><a href="albumInfo?id=${music.albId }">${music.albName}</a></td>
+             				<td><button data-toggle="modal" data-target="#myModal" data-musicid="${music.musicId}" data-dismiss="modal" aria-label="Close" class="wishBtn">담기</button></td>
            				 </tr>
        				  </c:forEach>
-				<!-- span8 posts -->
 				</tbody>
 			</table>
 			<br><br><br>
 			
+			<!-- 곡 페이징처리 -->
 			 <div class="pageInfo_wrap">
       			<div class="pageInfo_area" style="text-align: center;">
        				<ul id="pageInfo" class="pageInfo">
@@ -168,7 +196,7 @@ size {
             <!-- 각 번호 페이지 버튼 -->
             			<c:forEach var="num" begin="${pageMaker.startPage}"
                			end="${pageMaker.endPage}">
-               				<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "focus":""}">
+               				<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "focus":""}" style="display:inline;">
                				<a href="#" onclick="paging(${num})">${num}</a></li>
          				</c:forEach>
             <!-- 다음페이지 버튼 -->
@@ -181,8 +209,10 @@ size {
 			  </div>
 	
 	<form id="moveForm" method="get" action="artistDetail">
-      <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-      <input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+      <input type="hidden" name="albumPageNum" value="${pageMaker2.cri.pageNum }">
+      <input type="hidden" name="albumAmount" value="${pageMaker2.cri.amount }">
+      <input type="hidden" name="musicPageNum" value="${pageMaker.cri.pageNum }">
+      <input type="hidden" name="musicAmount" value="${pageMaker.cri.amount }">
       <%--       <input type="hidden" name="keyword" value="${pageMaker.cri.keyword }"> --%>
       <%--       <input type="hidden" name="type" value="${pageMaker.cri.type }"> --%>
    </form>
@@ -212,25 +242,53 @@ size {
 			<ul class="tabs-content">
 				<li id="Latest" class="active">
 					<div class="video-grid">
-						<a href="albumInfo" class="grid_3"
-							style="margin: 0em 0.5em 0em 0.5em; width: 32%;"> <img
-							src="resources/images/bg/musicBg3.jpg" alt="#"> <span><strong>앨범명</strong>아티스트명
-								/ 앨범날짜</span>
-						</a> <a href="video_single_wide.html" class="grid_3"
-							style="margin: 0em 0.5em 0em 0.5em; width: 32%;"> <img
-							src="resources/images/bg/musicBg3.jpg" alt="#"> <span><strong>앨범명</strong>아티스트명
-								/ 앨범날짜</span>
-						</a> <a href="video_single_wide.html" class="grid_3"
-							style="margin: 0em 0.5em 0em 0.5em; width: 32%;"> <img
-							src="resources/images/bg/musicBg3.jpg" alt="#"> <span><strong>앨범명</strong>아티스트명
-								/ 앨범날짜</span>
+					  <c:forEach items="${album}" var="album">
+						<a href="albumInfo?id=${album.id }" class="grid_3"
+							style="margin: 0em 0.5em 0em 0.5em; width: 32%;">
+							 <img src="api/picture/PICHONG.png" alt="#"> 
+							 <span><strong>앨범명${album.albName}</strong>아티스트명${album.artName} / 앨범날짜${album.releaseAt}</span>
 						</a>
+						</c:forEach> 
 
 					</div> <!-- video grid -->
 				</li>
 				<!-- tab content -->
 			</ul>
 			<!-- end tabs -->
+			<br><br><br>
+			
+			<!-- 앨범 페이징처리 -->
+			 <div class="pageInfo_wrap">
+      			<div class="pageInfo_area" style="text-align: center;">
+       				<ul id="pageInfo" class="pageInfo">
+            <!-- 이전페이지 버튼 -->
+            			<c:if test="${pageMaker2.prev}">
+              				 <li class="pageInfo_btn previous">
+               				<a href="#" onclick="paging2(${pageMaker2.startPage-1})">Previous</a></li>
+            			</c:if>
+            <!-- 각 번호 페이지 버튼 -->
+            			<c:forEach var="num" begin="${pageMaker2.startPage}"
+               			end="${pageMaker2.endPage}">
+               				<li class="pageInfo_btn ${pageMaker2.cri.pageNum == num ? "focus":""}" style="display:inline;">
+               				<a href="#" onclick="paging2(${num})">${num}</a></li>
+         				</c:forEach>
+            <!-- 다음페이지 버튼 -->
+         				<c:if test="${pageMaker2.next}">
+        					<li class="pageInfo_btn next">
+          			    	<a href="#" onclick="paging2(${pageMaker2.endPage + 1})">Next</a></li>
+       				    </c:if>
+     				 </ul>
+      			</div>
+			  </div>
+	
+	<form id="moveForm2" method="get" action="artistDetail">
+      <input type="hidden" name="albumPageNum" value="${pageMaker2.cri.pageNum }">
+      <input type="hidden" name="albumAmount" value="${pageMaker2.cri.amount }">
+      <input type="hidden" name="musicPageNum" value="${pageMaker.cri.pageNum }">
+      <input type="hidden" name="musicAmount" value="${pageMaker.cri.amount }">
+      <%--       <input type="hidden" name="keyword" value="${pageMaker2.cri.keyword }"> --%>
+      <%--       <input type="hidden" name="type" value="${pageMaker2.cri.type }"> --%>
+   </form>
 		</div>
 		<!-- def block -->
 	</div>
@@ -248,16 +306,16 @@ size {
         <h4 style="border:none;" class="modal-title" id="myModalLabel">위시리스트 선택</h4>
       </div>
       <div id="activeAdd" class="modal-body def-block">
-        <c:forEach items="${wishList}" var="wishlist">
+        <c:forEach items="${wishLists}" var="album">
 		<div class="mbf clearfix">
 			<ul>
 				<li>
 					<!-- 위시리스트 이름 -->
 					<div class="toggle-head" style="padding-bottom:20px;">
 						<h5 style="margin:0px;">
-							${wishlist.name}
+							${album.name}
 							<button onclick="addWishList()" class="tbutton small" style="float:right;">
-								<span data-wishid="${wishlist.id}">선택</span>
+								<span data-wishid="${album.id}">선택</span>
 							</button>
 						</h5>
 					</div>
@@ -302,7 +360,7 @@ size {
 				.getElementsByTagName('BODY')[0]).appendChild(s);
 	}());
 	/* ]]> */
-	
+
 	$(document).ready(function() {     
         $('#myModal').on('show.bs.modal', function(event) {   
         	
@@ -347,58 +405,43 @@ size {
 		  
 	}
 	
-	 
-	
 	function paging(num) {
-	        moveForm.pageNum.value = num;
+	        moveForm.musicPageNum.value = num;
 	        moveForm.submit();
 	     };
 	     
+	 function paging2(num) {
+	        moveForm2.albumPageNum.value = num;
+	        moveForm2.submit();
+	     };    
 	     
+//위시리스트
+	//뮤직아이디 가져오기
+	var id;
+	$(document).ready(function() {     //페이지를 틀면 바로 실행
+        $('.wishBtn').on('click', function(event) {   //담기버튼을 클릭하면 담기버튼안의 musicid가 var id;에 들어간다 그리고 저장되고 밑에 addwish()메소드에서 사용할거다
+        	//인풋폼
+        	id = $(this).data("musicid");
+        });
+    });
+	//위시리스트 추가
 	function addWishList() {
-		
 		let wishId = $(event.target).data('wishid')
-		alert(musicid) //musicId를 가져올수가 없음
-		
-// 		$.ajax({
-// 			type: "POST", //요청 메소드 방식
-// 			url:"addWishList",
-// 			contentType:'application/json;charset=utf-8',
-// 			data: JSON.stringify({"musicId": musicId, "wishId": wishId}),
-// 			dataType:"text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
-// 			error : function(){
-// 				alert("이미 추가한 곡입니다.");
-// 			},
-// 			success: function(result) {
-// 				alert("추가되었습니다");
-// 			}
-// 		})
-		
-		
-	}
-	
-	function wishlist() {
-	
-// 		$("[name='selNo']:checked").each(function(i, checkbox){
-// 			var tr = $(checkbox).parent().parent();
-// 			var td = $(tr).children();
-// 			var obj = {};
-// 		}
-		
-//		 var wishlist = td.eq(7).find("button").val();
-
-//		obj["wishlist"] = wishlist;
-
-		var wish = $(event.target).data('musicId');
 		
 		$.ajax({
-			url : "wishlist", //(프로젝트명, 컨트롤러에 호출할 경로)
-			type : "post",
-			contentType : "application/json",
-			data : JSON.stringify(wishlist),
-			data
-
+			type: "POST", //요청 메소드 방식
+			url:"addWishList",
+			contentType:'application/json;charset=utf-8',
+			data: JSON.stringify({"musicId": id, "wishId": wishId}),
+			dataType:"text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+			error : function(){
+				alert("이미 추가한 곡입니다.");
+			},
+			success: function(result) {
+				alert("추가되었습니다");
+			}
 		})
 	}
+	
 </script>
 </html>

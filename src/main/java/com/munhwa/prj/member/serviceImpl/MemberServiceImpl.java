@@ -11,7 +11,7 @@ import org.apache.commons.mail.HtmlEmail;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service("memberDao")
+@Service
 public class MemberServiceImpl implements MemberService {
 
     private final PasswordEncoder passwordEncoder;
@@ -104,10 +104,10 @@ public class MemberServiceImpl implements MemberService {
         String msg = "";
 
         if (div.equals("findpw")) {
-            subject = "임시 비밀번호 입니다.";
+            subject = "임시 비밀번호입니다.";
             msg += "<div align='center' style='border:1px solid black; font-family:verdana; padding: 200px 100px 200px 100px;'>";
             msg += "<h3 style='color: blue;'>";
-            msg += vo.getId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+            msg += vo.getId() + "님의 임시 비밀번호입니다. 비밀번호를 변경하여 사용하세요.</h3>";
             msg += "<p>임시 비밀번호 : ";
             msg += pw + "</p></div>";
         }
@@ -130,7 +130,7 @@ public class MemberServiceImpl implements MemberService {
             email.setHtmlMsg(msg);
             email.send();
         } catch (Exception e) {
-            System.out.println("메일발송 실패 : " + e);
+            e.printStackTrace();
         }
     }
 

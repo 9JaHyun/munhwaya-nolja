@@ -12,11 +12,11 @@ import com.munhwa.prj.news.vo.NewsVO;
 public class NewsController {
 	
 	@Autowired
-	private NewsService newsDao;
+	private NewsService newsService;
 	
     @PostMapping("/deleteNews.do")
     public String deleteNews(@RequestBody NewsVO vo) {
-    	newsDao.deleteById(vo);
+    	newsService.deleteById(vo);
     	return "redirect:mypage.do";
     }
 }

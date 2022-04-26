@@ -33,27 +33,9 @@ public enum CustomCommonOAuth2Provider {
             builder.scope("profile", "email");
             builder.authorizationUri("https://nid.naver.com/oauth2.0/authorize");
             builder.tokenUri("https://nid.naver.com/oauth2.0/token");
-//            builder.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs");
-//            builder.issuerUri("https://accounts.google.com");
             builder.userInfoUri("https://openapi.naver.com/v1/nid/me");
             builder.userNameAttributeName("response");
             builder.clientName("Naver");
-            return builder;
-        }
-
-    },
-
-    KAKAO {
-        @Override
-        public Builder getBuilder(String registrationId) {
-            ClientRegistration.Builder builder = getBuilder(registrationId,
-                  ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_REDIRECT_URL);
-            builder.scope("profile_nickname", "profile_image", "account_email");
-            builder.authorizationUri("https://kauth.kakao.com/oauth/authorize");
-            builder.tokenUri("https://kauth.kakao.com/oauth/token");
-            builder.userInfoUri("https://kapi.kakao.com/v2/user/me");
-            builder.userNameAttributeName("id");
-            builder.clientName("kakao");
             return builder;
         }
 

@@ -22,19 +22,19 @@ import com.munhwa.prj.wishlist.vo.WishlistVO;
 public class WishlistController {
 
     @Autowired
-    private WishlistService wishlistDao;
+    private WishlistService wishlistService;
 
     // 위시리스트 리스트
     @GetMapping("/wishlist.do")
     public String wishlistList(@LoginUser SessionUser user, Model model) {
-        model.addAttribute("wishlists", wishlistDao.wishlistList(user.getId()));
+        model.addAttribute("wishlists", wishlistService.wishlistList(user.getId()));
         return "wishlist-member";
     }
 
     // 위시리스트 삭제
     @PostMapping("/deleteWishlist.do")
     public String deleteWishlist(@RequestBody WishlistVO vo) {
-        wishlistDao.deleteWishlist(vo);
+        wishlistService.deleteWishlist(vo);
         return "redirect:wishlist.do";
     }
 
@@ -45,7 +45,7 @@ public class WishlistController {
         String wishlistId = Integer.toString(id);
         model.addAttribute("wishlistName", name);
         model.addAttribute("wishMusic",
-              wishlistDao.wishlistMusicList(user.getId(), wishlistId));
+              wishlistService.wishlistMusicList(user.getId(), wishlistId));
         model.addAttribute("wishlistId", id);
         return "wishlistMusic-member";
     }
@@ -55,7 +55,7 @@ public class WishlistController {
     public @ResponseBody
     String deleteWishlistMusic(@RequestParam int musicId, @RequestParam int wishId,
           @RequestParam String name) {
-        wishlistDao.deleteWishlistMusic(musicId, wishId);
+        wishlistService.deleteWishlistMusic(musicId, wishId);
         return "redirect:wishlistMusic.do?id=" + wishId + "&name=" + name;
     }
 
@@ -65,7 +65,7 @@ public class WishlistController {
     public void addWishList(@RequestBody Map<String, Integer> param) {
         int musicId = param.get("musicId");
         int wishId = param.get("wishId");
-        wishlistDao.insertWishlist(musicId, wishId);
+        wishlistService.insertWishlist(musicId, wishId);
     }
 
     @ResponseBody
@@ -76,7 +76,7 @@ public class WishlistController {
         for (int musicId : musicIdList) {
             paramMap.put("v_wishlist_id", wishId);
             paramMap.put("v_music_id", musicId);
-            wishlistDao.insertWishlist2(paramMap);
+            wishlistService.insertWishlist2(paramMap);
         }
     }
 
@@ -87,7 +87,7 @@ public class WishlistController {
         paramMap.put("v_name", vo.getName());
         paramMap.put("v_member_id", user.getId());
         paramMap.put("p_id", 0);
-        wishlistDao.createWishList(paramMap);
+        wishlistService.createWishList(paramMap);
 
         int id = (int) paramMap.get("p_id");
         vo.setId(id);
@@ -99,21 +99,20 @@ public class WishlistController {
     public String addWishlist(@LoginUser SessionUser sessionUser, WishlistVO vo) {
         String memberId = sessionUser.getId();
         vo.setMemberId(memberId);
-        wishlistDao.addWishlist(vo);
+        wishlistService.addWishlist(vo);
         return "redirect:wishlist.do";
     }
-    
+
     // 위시리스트 곡 순서변경
     @PostMapping("changeOrders.do")
     @ResponseBody
     public String changeOrders(@RequestParam int id, int from, int to) {
-    	System.out.println(id + "," + from + "," + to);
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("v_wishlist_id", id);
         paramMap.put("v_to", to);
         paramMap.put("v_from", from);
-    	wishlistDao.updateMusicOrders(paramMap);
+        wishlistService.updateMusicOrders(paramMap);
         return "ok";
-    }    
-    
+    }
+
 }

@@ -212,7 +212,7 @@
           <fmt:formatDate pattern = "HH시 mm분" value = "${ticket.performancevo.edate }" /></span>
         </p>
         <p>
-          <span class="u-upper ticket__small-label">입장관객수</span>
+          <span class="u-upper ticket__small-label">입장관객수</span><br>
           <span class="ticket__detail">${ticket.person }명</span>
         </p>
       </div><br>

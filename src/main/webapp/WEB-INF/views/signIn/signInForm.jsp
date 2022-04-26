@@ -125,10 +125,6 @@ button {
 			style="padding-top: 10px; float: right; width: 48%; background-color: #19CE60; cursor:pointer;">
 			<p>Naver</p>
 		</div>
-		<div onclick="location.href='${rootPath}/oauth2/authorization/kakao'"
-			 style="padding-top: 10px; float: right; width: 48%; background-color: #E9BB2C; cursor:pointer;">
-			<p>Kakao</p>
-		</div>
 	</div>
 </form>
 <div align="center" style="margin-bottom: 130px;">

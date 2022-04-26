@@ -1,34 +1,5 @@
 package com.munhwa.prj.ticketList.web;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
@@ -45,33 +16,48 @@ import com.munhwa.prj.ticketList.vo.TicketListVO;
 import com.munhwa.prj.wallet.service.ProfitService;
 import com.munhwa.prj.wallet.service.UsageService;
 import com.munhwa.prj.wallet.vo.UsageVO;
-
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 public class TicketListController {
 
-	@Autowired
-	private TicketListService ticketListDao;
-
-	@Autowired
-	private UsageService usageDao;
-
-	@Autowired
-	private MemberService memberDao;
-
-	@Autowired
-	private ProfitService profitDao;
-	
-	@Autowired
-	private PerformanceService performanceDao;
+	private final TicketListService ticketListService;
+	private final UsageService usageService;
+	private final MemberService memberService;
+	private final ProfitService profitService;
+	private final PerformanceService performanceService;
 
 	// 마이페이지 링크(회원 구매 목록)
 	@RequestMapping("/ticketList.do")
 	public String ticketList(Model model, @LoginUser SessionUser user) {
 		String memberId = user.getId();
-		List<TicketListVO> list = ticketListDao.ticketListSelectList(memberId);
+		List<TicketListVO> list = ticketListService.ticketListSelectList(memberId);
 		model.addAttribute("ticketLists", list);
 		return "ticketList-memberTicket";
 	}
@@ -79,7 +65,7 @@ public class TicketListController {
 	@RequestMapping("/ticketListSelect.do")
 	public String ticketListSelect(@LoginUser SessionUser user, Model model, TicketListVO vo) {
 		String nickname = user.getNickname();
-		vo = ticketListDao.ticketListSelect(vo);
+		vo = ticketListService.ticketListSelect(vo);
 		model.addAttribute("nickname", nickname);
 		model.addAttribute("ticket", vo);
 		return "ticketListSelect-memberTicket";
@@ -97,7 +83,7 @@ public class TicketListController {
 		paramMap.put("v_time", useDate);
 
 		
-		int ticketId = ticketListDao.ticketListInsert(paramMap);
+		int ticketId = ticketListService.ticketListInsert(paramMap);
 		log.info("ticketId={}", ticketId);
 		String qr = makeQR(req, ticketId);
 
@@ -106,10 +92,10 @@ public class TicketListController {
 		vo.setQrcode(qr);
 		PerformanceVO performance = new PerformanceVO();
 		performance.setId(id);
-		performance = performanceDao.performanceSelect(performance);
+		performance = performanceService.performanceSelect(performance);
 		
 		vo.setPerformancevo(performance);
-		ticketListDao.qrcodeUpdate(vo);
+		ticketListService.qrcodeUpdate(vo);
 
 
 
@@ -134,10 +120,10 @@ public class TicketListController {
 		param.put("v_name", vo.getPerformancevo().getName());
 		
 		// 사용 내역 남기기
-		usageDao.insertUsage(resultUsageList);
+		usageService.insertUsage(resultUsageList);
 
 //		// 공연 구매한 회원 마일리지 차감, 아티스트 수익 추가 프로시저
-		memberDao.updateMileagePerformance(param);
+		memberService.updateMileagePerformance(param);
 
 		user.setMileage(user.getMileage() - vo.getPerformancevo().getPrice() * person);
 
@@ -150,8 +136,8 @@ public class TicketListController {
 		String path = req.getSession().getServletContext().getRealPath("resources");
 		try (DatagramSocket r = new DatagramSocket()) {
 			r.connect(InetAddress.getByName("8.8.8.8"), 10002);
-			String t = req.getRequestURI();
-			qrURI = r.getLocalAddress().getHostAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
+			qrURI = r.getLocalAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
+			log.info("qrURI = {}", qrURI);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (SocketException e1) {
@@ -163,8 +149,7 @@ public class TicketListController {
 	}
 
 	public String makeQRDetail(String path, String qrURI, String fileName) throws WriterException, IOException {
-
-		String savePath = "C:\\DEV\\filetest" + "\\qrCodes\\"; // 파일 경로
+		String savePath = "/home/ubuntu/dev/qrCodes/"; // 파일 경로
 
 		// 파일 경로가 없으면 생성하기
 		File file = new File(savePath);
@@ -206,7 +191,7 @@ public class TicketListController {
 	public String qrLink(@PathVariable int ticketId, Model model) {
 		TicketListVO vo = new TicketListVO();
 		vo.setId(ticketId);
-		vo = ticketListDao.ticketListSelect(vo);
+		vo = ticketListService.ticketListSelect(vo);
 		model.addAttribute("ticket", vo);
 		Date now = new Date();
 		Date edate = vo.getPerformancevo().getEdate();
@@ -218,7 +203,7 @@ public class TicketListController {
 			paramMapt.put("v_pro_pks", ticketId);
 			paramMapt.put("v_tic_attendance", vo.getAttendance());
 			paramMapt.put("v_pro_buyer", vo.getMemberId());
-			ticketListDao.qrcodeAttendance(paramMapt);
+			ticketListService.qrcodeAttendance(paramMapt);
 			return "qrcodeDetail-qrcode";
 		}
 	}

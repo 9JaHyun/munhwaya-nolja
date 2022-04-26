@@ -6,9 +6,9 @@ import com.munhwa.prj.wishlist.vo.WishlistVO;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository("wishlistDao")
+@Service
 public class WishlistServiceImpl implements WishlistService {
 
     @Autowired
