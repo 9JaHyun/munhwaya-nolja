@@ -45,6 +45,28 @@
     FROM performance
   </select>
 
+  <select id="selectPerformanceByArtistId" resultMap="performanceResultMap">
+    SELECT p.id
+         , p.name
+         , p.location
+         , p.sdate
+         , p.edate
+         , p.content
+         , p.image
+         , p.artist_id
+         , p.price
+         , p.person
+         , cc.name AS status
+    FROM performance p,
+         artist a,
+         member m,
+         common_code cc
+    WHERE a.member_id = m.id
+      AND p.status = cc.id
+      AND p.artist_id = a.id
+      AND m.id = #{memberId}
+  </select>
+
 
   <select id="performanceSelectList"
     resultMap="performanceResultMap">
@@ -203,7 +225,25 @@
       AND p.artist_id = a.id
   </select>
 
-	<insert id="performanceInsert"
+  <select id="detailPerformance" resultMap="performanceResultMap">
+    SELECT p.id
+         , p.name
+         , p.content
+         , p.image
+         , a.name AS artist_name
+    FROM performance p,
+         artist a
+    WHERE p.id = #{id}
+      AND p.artist_id = a.id
+  </select>
+
+  <update id="updatePerformance" parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
+    UPDATE performance
+    SET content=#{content}
+    WHERE id = #{id}
+  </update>
+
+  <insert id="performanceInsert"
     parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
     INSERT INTO performance(id, name, location, sdate,
                             edate, content, image, price, artist_id)

@@ -41,6 +41,14 @@ public class FileClient {
         return new UrlResource("file:" + fileUtils.getFullPath(filename));
     }
 
+    // 경로 넘기기
+    @ResponseBody
+    @GetMapping("/api/music/{filename:.+}")
+    public Resource sendMusicPath(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileUtils.getMusicFullPath(filename));
+    }
+
+
     // 로컬의 사진 파일을 웹에 렌더링 할 때 사용
     @ResponseBody
     @GetMapping("/api/picture/qrCodes/{filename:.+}")

@@ -19,6 +19,12 @@ public interface PerformanceService {
 	
 	PerformanceVO performanceSelect(PerformanceVO vo);
 	
+	List<PerformanceVO> selectPerformanceByArtistId(String memberId);
+	
+	PerformanceVO detailPerformance(int id);
+	
+	int updatePerformance(PerformanceVO vo);
+	
 	/* 게시판 총 갯수 */
 	int admingetTotal(Criteria cri);
     

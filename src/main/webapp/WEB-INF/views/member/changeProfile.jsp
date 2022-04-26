@@ -97,8 +97,8 @@
     var imageName = $("#imageName").val();
 	if (imageName == '') {
 		$("#delBtn").hide();
-		} 
-	
+		}
+
     function setThumbnail(event) {
         var reader = new FileReader();
         reader.onload = function (event) {
@@ -112,14 +112,14 @@
         beforeName.val(afterName);
         // 삭제 버튼 보이기
         $("#delBtn").show();
-         
+
     }
 
     function send() {
         var nickname = $("#nickname").val();
         var originalNick = $('#originalNick').val();
         var regExp = /\s/g;
-  
+
         if (nickname.length > 0 && !nickname.match(regExp)) {
             $.ajax({
                 url: "chkNick",
@@ -142,7 +142,7 @@
             alert('적절하지 않은 닉네임 양식입니다.');
         }
     }
-    
+
     function basicImgFn() {
     	var basicImg = "resources/images/basic_profile.png";
      	$("#image_container").attr("src", basicImg);
