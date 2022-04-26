@@ -19,6 +19,10 @@ import com.munhwa.prj.wallet.vo.UsageVO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -130,16 +134,15 @@ public class TicketListController {
 	private String makeQR(HttpServletRequest req, int ticketId) throws WriterException, IOException {
 		String qrURI = null;
 		String path = req.getSession().getServletContext().getRealPath("resources");
-		qrURI = "http://3.35.142.126:8080/" + req.getContextPath() + "/ticketCheck/" + ticketId;
-//		try (DatagramSocket r = new DatagramSocket()) {
-//			r.connect(InetAddress.getByName("8.8.8.8"), 10002);
-//			String t = req.getRequestURI();
-//			qrURI = r.getLocalAddress().getHostAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
-//		} catch (UnknownHostException e) {
-//			e.printStackTrace();
-//		} catch (SocketException e1) {
-//			e1.printStackTrace();
-//		}
+		try (DatagramSocket r = new DatagramSocket()) {
+			r.connect(InetAddress.getByName("8.8.8.8"), 10002);
+			qrURI = r.getLocalAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
+			log.info("qrURI = {}", qrURI);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (SocketException e1) {
+			e1.printStackTrace();
+		}
 		String id = UUID.randomUUID().toString();
 
 		return makeQRDetail(path, qrURI, id);
