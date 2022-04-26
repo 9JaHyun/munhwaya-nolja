@@ -9,6 +9,12 @@
 /* 	width: 1000px; */
 /* } */
 
+table{
+	width:100%;
+	border-collapse: separate;
+    border-spacing: 1em;
+}
+
 .p {
 	width: 10%;
 }
@@ -21,9 +27,19 @@
 .artist-info {
 	width: 700px;
 	padding-bottom: 20px;
+	margin-top: 5em;
 	float: right;
+	float: left; 
+	width: 50%;
+	
 }
 
+.tbutton.small {
+	padding: 0.1em 0.5em 0.1em 0.5em;
+}
+
+	
+}
 .img {
 	width: 600px;
 }
@@ -91,9 +107,9 @@ td{
 				<li><a href="index.html" class="toptip" title="Homepage"> <i
 						class="icon-home"></i>
 				</a></li>
-				<li><a href="mp3s.html"> MP3s </a></li>
-				<li><a href="mp3s.html"> Alexander Doe </a></li>
-				<li>Album Missing You</li>
+				<li><a href="#"> music </a></li>
+				<li><a href="#"> 아티스트 </a></li>
+				<li> 아티스트 정보 상세 </li>
 			</ul>
 		</div>
 		<!-- breadcrumb -->
@@ -109,11 +125,11 @@ td{
 							<div class="video-grid">
 								<a href="albumInfo" class="grid_3"
 									style="margin: 0em 0.5em 0em 0.5em; width: 32%; float:left;"> 
-									<img src="api/picture/PICHONG.png" alt="#" style=" min-width:200px; max-width:200px;
-										  min-height:230px; max-height:230px;">
+									<img src="api/picture/${artist.image}" alt="#" style=" min-width:240px; max-width:240px;
+										  min-height:270px; max-height:270px; margin-left: 3em; margin-top: 4em;">
 								</a>
 							</div>
-							<div class="artist-info" style="float: left; width: 50%; padding-left: 50px;">
+							<div class="artist-info">
 								<div class="act">
 									<a>활동명</a>&emsp;<a>${artist.name}</a><br>
 								</div>
@@ -154,17 +170,19 @@ td{
 			<h4>곡(${musicCnt})</h4>
 			<i class="icon-angle-right"
 				style="font-size: large; margin-left: 7px;"></i> <span class="liner"></span>
+			<div style="text-align:center; width:100%;">
 			<table>
 				<thead>
-					<tr style="text-align: center;">
-						<th width="3%">NO</td>
-						<th width="10%">듣기</td>
-						<th width="10%">구매</td>
-						<th width="25%">곡명</td>
-						<th width="15%">아티스트명</td>
-						<th width="10%">앨범</td>
-						<th width="10%">위시리스트</td>
-					</tr>
+						<tr style="text-align: center;">
+						<th width="3%">NO</th>
+						<th width="5%">&ensp;듣기</th>
+						<th width="10%">구매</th>
+						<th width="18%">곡명</th>
+						<th width="20%">아티스트명</th>
+						<th width="18%">앨범</th>
+						<th width="10%">위시리스트</th>
+						</tr>
+					</div>
 				</thead>
 				<tbody>
 				<!--  c:forEach -->
@@ -180,6 +198,7 @@ td{
              				<td><button class="tbutton small" data-toggle="modal" data-target="#myModal" data-musicid="${music.musicId}" data-dismiss="modal" aria-label="Close" class="wishBtn">담기</button></td>
            				 </tr>
        				  </c:forEach>
+       				  <br>
 				</tbody>
 			</table>
 			<br><br><br>
@@ -239,7 +258,7 @@ td{
 			<h4>앨범(${albumCnt})</h4>
 			<i class="icon-angle-right"
 				style="font-size: large; margin-left: 7px;"></i> <span class="liner"></span>
-			<ul class="tabs-content">
+			<ul class="tabs-content" style="margin-left: 5.2em; margin-top: 5em;">
 				<li id="Latest" class="active">
 					<div class="video-grid">
 					  <c:forEach items="${album}" var="album">
