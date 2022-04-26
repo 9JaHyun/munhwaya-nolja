@@ -168,7 +168,7 @@ public class MusicController {
         List<AlbumVO> list = albumService.albumSelectListByRelease(cri);
         model.addAttribute("releaseSoonAlbumList", list);
 
-        int total = 20;
+        int total = 8;
         PageDTO pageMake = new PageDTO(cri, total);
         model.addAttribute("pageMaker", pageMake);
         return "music/releaseSoon";

@@ -87,7 +87,7 @@
 						<ul class="tabs-content">
 							<li id="Latest" class="active">
 								<div class="video-grid">
-								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="11">
+								<c:forEach var="album" items="${releaseSoonAlbumList}" begin="0" end="7">
 									<a href="albumInfo?id=${album.id }" class="grid_3">
 										<img src="api/picture/${album.picture }" alt="#" style="max-width:200px; min-width:200px; max-height :200px; min-height:200px;">
 										<span style="margin:0px; font-weight: bold; color:white;">앨범명: ${album.albName }</span>
