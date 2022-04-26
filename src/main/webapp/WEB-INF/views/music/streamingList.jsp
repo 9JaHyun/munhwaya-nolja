@@ -125,7 +125,7 @@ let fileId = 0;
 										composing: '${music.composing}',
 										arrangement: '${music.arrangement}',
 										musicId: '${music.id}',
-										mp3 : "/prj/api/file/"+fileName,
+										mp3 : "api/file/"+fileName,
 										title : '${music.title}',
 										artist : '${music.artName}',
 										rating: 5,
@@ -157,8 +157,7 @@ let fileId = 0;
 		}
 	})
 })
-<!-- ================================================================ -->
-<!-- 위시리스트 추가 -->
+
 function addWishList() {
 	let wishId = $(event.target).data('wishid')
 	
