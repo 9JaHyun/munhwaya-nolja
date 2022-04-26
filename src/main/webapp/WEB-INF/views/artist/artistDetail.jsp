@@ -172,7 +172,7 @@ td{
         			 <c:forEach items="${musicList}" var="music" varStatus="status" >  
            				<tr style="text-align: center;">
              				<td style="text-align:center">${status.count}</td>
-               				<td><a href="streaming?id=${music.musicId}"><i class="icon-angle-right" style="font-size: large; margin-left: 7px;"></a></i></td>
+               				<td><a href="streaming?id=${music.musicId}"><i class="icon-play-circle" style="font-size: large; margin-left: 7px;"></a></i></td>
                				<td><button class="tbutton small" data-musicid="${music.musicId}" onclick="buy()">구매</button></td> 
                				<td><a href="streaming?id=${music.musicId}">${music.musicTitle}</a></td>
                					<td>${music.artName}</td>
