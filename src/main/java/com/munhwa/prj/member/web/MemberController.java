@@ -14,6 +14,7 @@ import com.munhwa.prj.member.vo.MemberVO;
 import com.munhwa.prj.news.service.NewsService;
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@Slf4j
 @Controller
 public class MemberController {
 
@@ -173,7 +175,7 @@ public class MemberController {
         int n = memberService.updatePassword(vo);
         if (n != 0) {
         	SecurityContextHolder.clearContext();
-            return "redirect:main.do";
+            return "redirect:home.do";
         } else {
             return "error/404";
         }
@@ -190,6 +192,7 @@ public class MemberController {
     public String deleteMember(RedirectAttributes attr, MemberVO vo, @LoginUser SessionUser user) {
         int n = 0;
         if (passwordEncoder.matches(vo.getPassword(), user.getPassword())) {
+            vo.setId(user.getId());
             n = memberService.deleteMember(vo);
             SecurityContextHolder.clearContext();
         }

@@ -6,6 +6,7 @@
     <div class="grid_12 tt" style="margin-top: 70px;">
         <ul class="forum-items" style="text-align: left;">
             <li><i class="icon-ok"></i><a>회원 탈퇴를 위해 정보를 입력해주세요.</a></li>
+            회원정보를 포함한 활동내역은 탈퇴 즉시 소멸되며, 다시 복구할 수 없습니다.
         </ul>
     </div>
 </div>
@@ -21,7 +22,7 @@
         <a>비밀번호 : </a> <input type="password" id="password" name="password">
     </div>
     <div align="right" style="margin-bottom: 10px">
-    	<button type="button" class="tbutton small" style="margin-right: 2px;" onclick="location.href='memberChangeInfo.do'"><span>뒤로가기</span></button>
+        <button type="button" class="tbutton small" style="margin-right: 2px;" onclick="location.href='memberChangeInfo.do'"><span>뒤로가기</span></button>
         <button type="submit" class="tbutton small"><span>탈퇴</span></button>
     </div>
 </form>

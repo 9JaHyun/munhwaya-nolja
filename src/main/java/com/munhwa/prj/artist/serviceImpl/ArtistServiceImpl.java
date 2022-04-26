@@ -40,12 +40,6 @@ public class ArtistServiceImpl implements ArtistService {
         return map.updateArtist(vo);
     }
 
-//	@Override
-//	public int chkNick(String name) {
-//		// TODO Auto-generated method stub
-//		return map.chkName(name);
-//	}
-
     @Override
     public List<ArtDetailVO> findMusic(Criteria cri, int id) {
         // TODO Auto-generated method stub
@@ -82,11 +76,6 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public String getStatus(String memberId) {
-        return map.getStatus(memberId);
-    }
-
-    @Override
     public ArtistVO findByArtistId(int artId) {
         return map.findByArtistId(artId);
     }
@@ -100,15 +89,5 @@ public class ArtistServiceImpl implements ArtistService {
     public int artIdByAlbId(int albumId) {
         // TODO Auto-generated method stub
         return map.artIdByAlbId(albumId);
-    }
-
-    @Override
-    public String artistOfName(String memberId){
-        return map.artistOfName(memberId);
-    }
-
-    @Override
-    public int artistOfId (String memberId){
-        return map.artistOfId(memberId);
     }
 }

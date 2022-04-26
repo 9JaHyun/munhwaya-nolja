@@ -30,60 +30,64 @@
     }
 </style>
 <div align="right" style="margin-bottom: 50px;">
-    <h4>¾ÆÆ¼½ºÆ® ½Â±Ş½ÅÃ»</h4>
+    <h4>ì•„í‹°ìŠ¤íŠ¸ ìŠ¹ê¸‰ì‹ ì²­</h4>
     <div class="grid_12 tt" style="margin-top: 70px;">
 			<ul class="forum-items" style="text-align: left;">
-				<li><i class="icon-comment-alt"><a>  ½Â±Ş½ÅÃ»</a></i>
-					<div class="topic-time" style="margin:5px">¾ÆÆ¼½ºÆ® ½Â±Ş¿¡ ÇÊ¿äÇÑ Á¤º¸¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.</div>
+				<li><i class="icon-comment-alt"><a>  ìŠ¹ê¸‰ì‹ ì²­</a></i>
+					<div class="topic-time" style="margin:5px">ì•„í‹°ìŠ¤íŠ¸ ìŠ¹ê¸‰ì— í•„ìš”í•œ ì •ë³´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.</div>
 			</ul>
 		</div>
 </div>
-<!-- ¾ÆÆ¼½ºÆ® ½Â±Ş ½ÅÃ»¿¡ ÇÊ¿äÇÑ ÀÎÁõ -->
+<!-- ì•„í‹°ìŠ¤íŠ¸ ìŠ¹ê¸‰ ì‹ ì²­ì— í•„ìš”í•œ ì¸ì¦ -->
 <div style="padding-top: 5%;">
     <div style="margin: 100px 0px 10px 0px; border: none;">
         <br>
         <form id="info" name="info" method="post" action="artistRequest" enctype="multipart/form-data" onsubmit="return chk_request()">
-           <div align="center">
+           <div align="center"">
             <label id="request-label">
-                <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1.5em; margin-left: 1em;">ÀÛ¾÷¹° ¼³¸í¶õ</div>
-                <textarea id="artwork" name="artwork" placeholder="³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä."></textarea>
+                 <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1.5em; margin-left: 1em;">ì‘ì—…ë¬¼ ì„¤ëª…ë€</div>
+                <textarea id="artwork" name="artwork" placeholder="ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”."></textarea>
             </label><br> <label>
-            <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 5px;">ÀÛ¾÷¹° ÀÎÁõ</div>
+            <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 5px;">ì‘ì—…ë¬¼ ì¸ì¦</div>
             <input type="file" id="files" name="files" multiple="multiple" accept="image/*"></label><br>
-
-            <div class="sort"  style="font-size: 14px; color: white; padding-right: 1em; margin-top:1.5em"><º»ÀÎÀÎÁõ></div>
+			<div class="sort"  style="font-size: 15px; color: white; padding-right: 1em; margin-top:1.5em">&emsp;<ë³¸ì¸ì¸ì¦></div>
             <div class="filebox" style="margin-left: 2.5em;">
             <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;     margin-right: 2em;">
-               <span><a>Æù¹øÈ£ ÀÔ·Â</a>
-              </div> 
-               <input type="text" id="phone"  name="phone"  placeholder="¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.(-»©°í ÀÔ·Â)"></span> &emsp;<p id='phoneChk' class="doubleChk tbutton" style="padding: 3px 6px 1px 5px;">ÀÎÁõ¹øÈ£ ¹Ş±â</p>
+               <span><a>í°ë²ˆí˜¸ ì…ë ¥</a>
+            </div> 
             </div>
-            <span class="point successPhoneChk" style="color: #FFFFE0;"> Æù ¹øÈ£ ÀÔ·Â ÈÄ ÀÎÁõ¹øÈ£ ¹Ş±â ¹öÆ°À» Å¬¸¯ ÇÏ¼¼¿ä.</span>
-             <br>
-             <br>
-           
-            <div class="filebox">
-            	<div>
-               		<span><a  style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 1em;">ÀÎÁõ¹øÈ£ ÀÔ·Â</a>
-               </div>
-               <input type="text" id="phone2" name="phone2" placeholder="ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä." disabled required/></span>
-                &emsp;
-                <p id="phoneChk2" class="doubleChk tbutton" style="padding: 4px 15px 1px 15px;">È®ÀÎ</p>
+               <input type="text" id="phone"  name="phone"  placeholder="ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.(-ë¹¼ê³  ì…ë ¥)"></span> &emsp;<p id='phoneChk' class="doubleChk tbutton" style="padding: 3px 6px 1px 5px;">ì¸ì¦ë²ˆí˜¸ ë°›ê¸°</p>
+            </div>
+            	<span class="point successPhoneChk" style="color: #FFFFE0; margin-left:13em;"> í° ë²ˆí˜¸ ì…ë ¥ í›„ ì¸ì¦ë²ˆí˜¸ ë°›ê¸° ë²„íŠ¼ì„ í´ë¦­ í•˜ì„¸ìš”.</span>
                 <br>
-            </div>
-            <p><input type="hidden" id="phoneDoubleChk"/></p>
+                <br>
+     </div>
+            
+        <div class="filebox" style="margin-left: 13em;">
+     	   <div>
+          	  <span><a  style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 13em; margin-left: 8.5em;">ì¸ì¦ë²ˆí˜¸ ì…ë ¥</a>
            </div>
-            <!-- ½ÅÃ», Ãë¼Ò ¹öÆ° -->
-            <div align="right">
+           <div style="margin-top: 0.5em;">
+              <input type="text" id="phone2" name="phone2" placeholder="ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”." disabled required/></span>
+                &emsp;
+                <p id="phoneChk2" class="doubleChk tbutton" style="padding: 4px 15px 1px 15px;">í™•ì¸</p>
+           </div>
+                <br>
+        </div>
+          <p><input type="hidden" id="phoneDoubleChk"/></p>
+ </div>
+      
+      
+          <!-- ì‹ ì²­, ì·¨ì†Œ ë²„íŠ¼ -->
+             <div align="right">
                 <input type='submit'  style="padding:0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em; position: relative;"
-                       value="½ÅÃ»" class="tbutton small">
-                <button style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypag.do'" class="tbutton small">Ãë¼Ò</button>
-                <!-- Å¬¸¯½Ã µÚ·Î°¡±â-->
+                       value="ì‹ ì²­" class="tbutton small">
+               <button style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypag.do'" class="tbutton small">ì·¨ì†Œ</button>
             </div>
             
        <!--   <div align="right" style="margin-top:-5em;">
-			<input type="button" style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" class="tbutton small" value="¼öÁ¤" onclick="send()">
-			<button style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='home.do'" class="tbutton small">Ãë¼Ò</button>
+			<input type="button" style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" class="tbutton small" value="ìˆ˜ì •" onclick="send()">
+			<button style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='home.do'" class="tbutton small">ì·¨ì†Œ</button>
 		</div>-->
         </form>
     </div>
@@ -93,24 +97,24 @@
 <script>
     $(document).ready(function () {
         if ('${pro}' != '') {
-            alert('ÀÌ¹Ì ½ÅÃ»À» ¿Ï·áÇß½À´Ï´Ù. ½ÅÃ»ÇöÈ² ÆäÀÌÁö·Î ÀÌµ¿ÇÕ´Ï´Ù.');
+            alert('ì´ë¯¸ ì‹ ì²­ì„ ì™„ë£Œí–ˆìŠµë‹ˆë‹¤. ì‹ ì²­í˜„í™© í˜ì´ì§€ë¡œ ì´ë™í•©ë‹ˆë‹¤.');
             location.href = 'artStatus';
         }
     })
    
     function chk_request() {
         if (!document.info.artwork.value) {
-            alert("ÀÛ¾÷¹° ³»¿ëÀ» ÀÔ·ÂÇÏ½Ê½Ã¿À.");
+            alert("ì‘ì—…ë¬¼ ë‚´ìš©ì„ ì…ë ¥í•˜ì‹­ì‹œì˜¤.");
 
             return false;
         }
         if (!document.info.files.value) {
-            alert("ÀÛ¾÷¹° ÀÎÁõ ÆÄÀÏÀ» Ã·ºÎÇÏ½Ê½Ã¿À.");
+            alert("ì‘ì—…ë¬¼ ì¸ì¦ íŒŒì¼ì„ ì²¨ë¶€í•˜ì‹­ì‹œì˜¤.");
 
             return false;
         }
         if (phoneDoubleChk.value == false) {
-            alert("º»ÀÎÀÎÁõÀ» ÁøÇàÇÏ½Ê½Ã¿À.");
+            alert("ë³¸ì¸ì¸ì¦ì„ ì§„í–‰í•˜ì‹­ì‹œì˜¤.");
 
             return false;
         } else {
@@ -120,18 +124,18 @@
 
     var sheduleList = [];
 
-    //ÈŞ´ëÆù ¹øÈ£ ÀÎÁõ
+    //íœ´ëŒ€í° ë²ˆí˜¸ ì¸ì¦
     function countdown(elementName, minutes, seconds) {
         var elementName, endTime, hours, mins, msLefg, time;
 
         function twoDigits(n) {
-            return (n <= 9 ? "0" + n : n); // ÃÊ
+            return (n <= 9 ? "0" + n : n); // ì´ˆ
         }
 
         function updateTimer() {
             msLeft = endTime - (+new Date);
-            if (msLeft < 1000) { // 1000ms(¹Ğ¸®¼¼ÄÁµå) = 1s(ÃÊ)
-                alert("ÀÎÁõ¹øÈ£ ÀÔ·Â½Ã°£ÀÌ ÃÊ°úµÇ¾ú½À´Ï´Ù.\nÀÎÁõ¹øÈ£¸¦ ´Ù½Ã ¹ŞÀ¸½Ã¿À.", undefined, undefined, "waring");
+            if (msLeft < 1000) { // 1000ms(ë°€ë¦¬ì„¸ì»¨ë“œ) = 1s(ì´ˆ)
+                alert("ì¸ì¦ë²ˆí˜¸ ì…ë ¥ì‹œê°„ì´ ì´ˆê³¼ë˜ì—ˆìŠµë‹ˆë‹¤.\nì¸ì¦ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ ë°›ìœ¼ì‹œì˜¤.", undefined, undefined, "waring");
                 $("" + elementName).remove();
                 $("#phone2").attr("disabled", true);
                 $("#phoneChk2").css("display", "none");
@@ -144,9 +148,9 @@
                     (hours ? hours + ':' + twoDigits(mins)
                         : twoDigits(mins))
                     + ':' + twoDigits(time.getUTCSeconds()));
-                var goal = setTimeout(updateTimer, time.getUTCMilliseconds() + 500);// setTimeout() : ÀÏÁ¤ ½Ã°£ÀÌ Áö³­ÈÄ Æ¯Á¤ ÄÚµå¸¦ µü ÇÑ¹ø ½ÇÇà, µÎ¹øÂ° ÀÎÀÚÀÇ ½Ã°£(Milliseconds)ÀÌ °æ°úÇÏ¸é 1¹øÂ° ÀÎÀÚÀÇ ÇÔ¼ö¸¦ ½ÇÇàÇÕ´Ï´Ù.
+                var goal = setTimeout(updateTimer, time.getUTCMilliseconds() + 500);// setTimeout() : ì¼ì • ì‹œê°„ì´ ì§€ë‚œí›„ íŠ¹ì • ì½”ë“œë¥¼ ë”± í•œë²ˆ ì‹¤í–‰, ë‘ë²ˆì§¸ ì¸ìì˜ ì‹œê°„(Milliseconds)ì´ ê²½ê³¼í•˜ë©´ 1ë²ˆì§¸ ì¸ìì˜ í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
 
-                sheduleList.push(goal); // push»ç¿ëÇÏ¿©
+                sheduleList.push(goal); // pushì‚¬ìš©í•˜ì—¬
                 return goal;
             }
         }
@@ -157,7 +161,7 @@
 
     var timeOutId;
 
-    // Ä«¿îÆ® ´Ù¿î Á¾·á
+    // ì¹´ìš´íŠ¸ ë‹¤ìš´ ì¢…ë£Œ
     function resetCountDown() {
         for (shedule of sheduleList) {
             clearTimeout(shedule);
@@ -169,7 +173,7 @@
     $("#phoneChk").on('click',
         function () {
             var phone = $("#phone").val();
-            var regPhone = /^01([0|1|6|7|8|9])?([0-9]{3,4})?([0-9]{4})$/; // ÈŞ´ëÆù ¹øÈ£°¡ ¸Â´ÂÁö °ËÁõ
+            var regPhone = /^01([0|1|6|7|8|9])?([0-9]{3,4})?([0-9]{4})$/; // íœ´ëŒ€í° ë²ˆí˜¸ê°€ ë§ëŠ”ì§€ ê²€ì¦
             if (regPhone.test(phone) === true) {
 
                 $.ajax({
@@ -181,16 +185,16 @@
                     cache: false,
                     success: function (data) {
                         if (data == "error") {
-                            alert("ÈŞ´ëÆù ¹øÈ£°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.")
-                            $(".successPhoneChk").text("À¯È¿ÇÑ ¹øÈ£¸¦ ÀÔ·ÂÇÏ½Ê½Ã¿À.");
+                            alert("íœ´ëŒ€í° ë²ˆí˜¸ê°€ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤.")
+                            $(".successPhoneChk").text("ìœ íš¨í•œ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì‹­ì‹œì˜¤.");
                             $(".successPhoneChk").css("color", "red");
-                            $("#phone").attr("autofocus", true); // autofocus : ¼Ó¼ºÀ» ¸í½ÃÇÏÁö ¾ÊÀ¸¸é ¼Ó¼º°ªÀÌ ÀÚµ¿À¸·Î false °ªÀ» °¡Áö°í, ¸í½ÃÇÏ¸é ÀÚµ¿À¸·Î true °ªÀ» °¡Áö°Ô µÊ.
-                        } else { // data°¡ err°¡ ¾Æ´Ï¸é ½ÇÇà
-                            alert("ÀÎÁõ¹øÈ£ ¹ß¼ÛÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\nÈŞ´ëÆù¿¡¼­ ÀÎÁõ¹øÈ£ È®ÀÎÀ» ÇÏ½Ê½Ã¿À.");
-                            $("#phone2").attr("disabled", false); // disabled : true¸é ºñÈ°¼ºÈ­, false¸é È°¼ºÈ­
-                            $("#phoneChk2").css("visibility", "visible"); // ÀÎÁõÈ®ÀÎ¹öÆ° È°¼ºÈ­
+                            $("#phone").attr("autofocus", true); // autofocus : ì†ì„±ì„ ëª…ì‹œí•˜ì§€ ì•Šìœ¼ë©´ ì†ì„±ê°’ì´ ìë™ìœ¼ë¡œ false ê°’ì„ ê°€ì§€ê³ , ëª…ì‹œí•˜ë©´ ìë™ìœ¼ë¡œ true ê°’ì„ ê°€ì§€ê²Œ ë¨.
+                        } else { // dataê°€ errê°€ ì•„ë‹ˆë©´ ì‹¤í–‰
+                            alert("ì¸ì¦ë²ˆí˜¸ ë°œì†¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\níœ´ëŒ€í°ì—ì„œ ì¸ì¦ë²ˆí˜¸ í™•ì¸ì„ í•˜ì‹­ì‹œì˜¤.");
+                            $("#phone2").attr("disabled", false); // disabled : trueë©´ ë¹„í™œì„±í™”, falseë©´ í™œì„±í™”
+                            $("#phoneChk2").css("visibility", "visible"); // ì¸ì¦í™•ì¸ë²„íŠ¼ í™œì„±í™”
                             //$("#phoneChk2").css("display", "inline-block");
-                            $(".successPhoneChk").text("ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÑ µÚ È®ÀÎ ¹öÆ°À» Å¬¸¯ÇÏ½Ê½Ã¿À.");
+                            $(".successPhoneChk").text("ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•œ ë’¤ í™•ì¸ ë²„íŠ¼ì„ í´ë¦­í•˜ì‹­ì‹œì˜¤.");
                             $(".successPhoneChk").css("color", "green");
                             code2 = data.content;
                             if (timeOutId == null) {
@@ -203,19 +207,19 @@
                     }
                 });
             } else {
-                alert("ÈŞ´ëÆù ¹øÈ£¸¦ ÀÔ·ÂÇÏ½Ê½Ã¿À.");
+                alert("íœ´ëŒ€í° ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì‹­ì‹œì˜¤.");
             }
-        });// º»ÀÎÀÎÁõ ´©¸£°í ¼º°ø½Ã ÃÊ·Ï»öÀ¸·Î º¯°æ, ÀüÈ­¹øÈ£ ÀÔ·ÂÀº readonly»óÅÂ·Î data°¡ code2·Î ³Ñ¾î°¨
+        });// ë³¸ì¸ì¸ì¦ ëˆ„ë¥´ê³  ì„±ê³µì‹œ ì´ˆë¡ìƒ‰ìœ¼ë¡œ ë³€ê²½, ì „í™”ë²ˆí˜¸ ì…ë ¥ì€ readonlyìƒíƒœë¡œ dataê°€ code2ë¡œ ë„˜ì–´ê°
 
-    //ÈŞ´ëÆù ÀÎÁõ¹øÈ£ ´ëÁ¶
+    //íœ´ëŒ€í° ì¸ì¦ë²ˆí˜¸ ëŒ€ì¡°
     $("#phoneChk2").click(function () {
-        if ($("#phone2").val() == code2) { // ÀÎÁõ¹øÈ£ ÀÏÄ¡
-            $(".successPhoneChk").text("ÀÎÁõ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù."); // ÃÖÃÊÀÇ Ã¹ ¹®±¸°¡ º¯°æ
-            $(".successPhoneChk").css("color", "green"); // ÀÏÄ¡½Ã ±ÛÀÚ»ö ÃÊ·Ï»öÀ¸·Î º¯°æ
-            $("#phoneDoubleChk").val("true"); // È®ÀÎ¹öÆ° inputÅÂ±×¿¡ true°ªÀÌ µÊ
-            $("#phone2").attr("disabled", true); // true°¡µÇ¸é ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä ¹®±¸¸¦ ¼û±è
+        if ($("#phone2").val() == code2) { // ì¸ì¦ë²ˆí˜¸ ì¼ì¹˜
+            $(".successPhoneChk").text("ì¸ì¦ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤."); // ìµœì´ˆì˜ ì²« ë¬¸êµ¬ê°€ ë³€ê²½
+            $(".successPhoneChk").css("color", "green"); // ì¼ì¹˜ì‹œ ê¸€ììƒ‰ ì´ˆë¡ìƒ‰ìœ¼ë¡œ ë³€ê²½
+            $("#phoneDoubleChk").val("true"); // í™•ì¸ë²„íŠ¼ inputíƒœê·¸ì— trueê°’ì´ ë¨
+            $("#phone2").attr("disabled", true); // trueê°€ë˜ë©´ ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš” ë¬¸êµ¬ë¥¼ ìˆ¨ê¹€
         } else {
-            $(".successPhoneChk").text("ÀÎÁõ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê°Å³ª ÀÔ·ÂÇÏÁö ¾Ê¾Ò½À´Ï´Ù. ÀÎÁõ¹øÈ£¸¦ È®ÀÎÇÏ½Ê½Ã¿À.");
+            $(".successPhoneChk").text("ì¸ì¦ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•Šê±°ë‚˜ ì…ë ¥í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. ì¸ì¦ë²ˆí˜¸ë¥¼ í™•ì¸í•˜ì‹­ì‹œì˜¤.");
             $(".successPhoneChk").css("color", "red");
             $("#phoneDoubleChk").val("false");
             $(this).attr("autofocus", true);

@@ -18,7 +18,7 @@
 
 <div class="grid_12 tt" style="border: none; padding-top: 50px; padding-bottom: 30px;">
     <div id="js-load">
-        <c:if test="${empty likeArtists}">
+        <c:if test="${empty ticketLists}">
             <div style="margin: 250px 0px 200px 0px;">
                 <h5>구매한 공연이 존재하지 않습니다.</h5>
                 <a onclick="location.href='performance'" style="cursor: pointer">

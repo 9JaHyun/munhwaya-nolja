@@ -12,7 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileUtils {
 
-    private String fileDir = "C:\\dev\\fileTest\\";
+//    private String fileDir = "C:\\dev\\fileTest\\";
+    private String fileDir = "/home/ubuntu/dev/";
 
     // 단일 파일 저장
     public UploadFile storeFile(MultipartFile multipartFile) throws IOException {
@@ -49,6 +50,10 @@ public class FileUtils {
 
     public String getFullPath(String fileName) {
         return fileDir + fileName;
+    }
+
+    public String getMusicFullPath(String fileName) {
+        return fileDir + "/music/" + fileName;
     }
 
     private String createStoredFileName(String fileName) {

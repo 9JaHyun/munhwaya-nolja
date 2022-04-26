@@ -1,106 +1,127 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+         pageEncoding="EUC-KR" %>
 
 <style>
-	textarea {
-	padding-left:1em;
-    width: 55%;
-    height: 7em;
-    border: none;
-    resize: none;
+    textarea {
+        padding-left: 1em;
+        width: 55%;
+        height: 7em;
+        border: none;
+        resize: none;
     }
-    request-label{
-    float: left;
-    font-size:0.5em;
-    width:70%;
-    
+
+    request-label {
+        float: left;
+        font-size: 0.5em;
+        width: 70%;
+
     }
+
     .sort {
-    width: 100px;
-    margin: 0px;
+        width: 100px;
+        margin: 0px;
     }
- 
- label{
- 	display: block;
-	 }
+
+    label {
+        display: block;
+    }
 
 </style>
 
-<!-- ÀÌ¹ÌÁö ÁÖ¼® -->
-  <!-- <img src="resources/images/artistFile/click.png" alt="image"
-                             style="border-radius: 70%; overflow: hidden; height: 150px; width: 150px;"> -->
-                             
 <div align="right" style="margin-bottom: 50px;">
-	<h4>¾ÆÆ¼½ºÆ® Á¤º¸ ÀÔ·Â</h4>
-		<div class="grid_12 tt" style="margin-top: 70px;">
-			<ul class="forum-items" style="text-align: left;">
-				<li><i class="icon-comment-alt"><a>  Á¤º¸ µî·Ï</a></i>
-					<div class="topic-time" style="margin:5px">¾ÆÆ¼½ºÆ® Á¤º¸¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.</div>
-			</ul>
-		</div>
+    <h4>ì•„í‹°ìŠ¤íŠ¸ ì •ë³´ ì…ë ¥</h4>
+    <div class="grid_12 tt" style="margin-top: 70px;">
+        <ul class="forum-items" style="text-align: left;">
+            <li><i class="icon-comment-alt"><a> ì •ë³´ ë“±ë¡</a></i>
+                <div class="topic-time" style="margin:5px">ì•„í‹°ìŠ¤íŠ¸ ì •ë³´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.</div>
+        </ul>
+    </div>
 </div>
 <div style="padding-top:5%;">
-	<div style="margin: 100px 0px 10px 0px; border: none;"><br> 
-		<form action="artistProfile" id="frm" name="frm" onsubmit="return chk_profile()"> <!--  method="post" -->
-			<div align="center" style="margin: 20px 0px 100px 0px;">
-				<label><div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">È°µ¿¸í&emsp;</div><input type="text" id="name" name="name" placeholder=" È°µ¿¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä."></label><br>
-				<label><div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">È°µ¿»çÁø&emsp;</div><input type="file" id="image" name="image" accept="image/png, image/jpeg"></label><br>
-			
-			
-			<ul>
-				<label style="font-size: 15px; color: white; padding: 0.5em; margin-top:2em;">È°µ¿Á¤º¸ ¼±ÅÃ</label><!-- ¾ÆÆ¼½ºÆ® »ó¼¼¿¡ ÇÑ¹ø¿¡ µÎ°³ÀÇ ³»¿ëÀÌ µé¾î°¡¹Ç·Î ¸ñ·Ï ¹­À½ Ã³¸® -->
-					<label style="font-size: 14px; color: white; padding: 0.5em; margin-top:2em;">¼ºº°<br><select id="gender" name="gender" ></label> <!-- select box ¼öÁ÷ Á¤·Ä -->
-											<option>¼±ÅÃ</option>
-											<option value="S01">³²ÀÚ</option>
-											<option value="S02">¿©ÀÚ</option>
-											<option value="S03">È¥¼º</option>
-								  </select><br>	
-					<label style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">È°µ¿À¯Çü<br><select id="type" name="type"></label><br>
-											<option>¼±ÅÃ</option>
-											<option value="T01">¼Ö·Î</option>
-											<option value="T02">±×·ì</option>
-								      </select>
-			</ul><br>						
-	
-				<label style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">ÁÖ¿äÈ°µ¿ Àå¸£<br><select id="genre" name="genre"></label>
-											<option>¼±ÅÃ</option>
-											<option value="G01">¹ß¶óµå</option>
-											<option value="G02">´í½º</option>
-											<option value="G03">·¦/ÈüÇÕ</option>
-											<option value="G04">R&B/Soul</option>
-									   </select><br><br>
-				<label style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">¼Ò°³±Û<br><textarea id="content" name="content" placeholder="³»¿ëÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä."></textarea></label>
-		</div>
-	</div>
+    <div style="margin: 100px 0px 10px 0px; border: none;"><br>
+        <form action="artistProfile" id="frm" name="frm" enctype="multipart/form-data">
+            <!--  method="post" -->
+            <div align="center" style="margin: 20px 0px 100px 0px;">
+                <div class="sort"
+                     style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">í™œë™ëª…&emsp;
+                </div>
+                <input type="text" id="name" name="name" placeholder=" í™œë™ëª…ì„ ì…ë ¥í•˜ì„¸ìš”."><br>
+                <div class="sort"
+                     style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">í™œë™ì‚¬ì§„&emsp;
+                </div>
+                <input type="file" id="image" name="image"
+                       accept="image/png, image/jpeg"><br>
+                <ul>
+                    <div style="font-size: 15px; color: white; padding: 0.5em; margin-top:2em;">
+                        í™œë™ì •ë³´ ì„ íƒ
+                    </div><!-- ì•„í‹°ìŠ¤íŠ¸ ìƒì„¸ì— í•œë²ˆì— ë‘ê°œì˜ ë‚´ìš©ì´ ë“¤ì–´ê°€ë¯€ë¡œ ëª©ë¡ ë¬¶ìŒ ì²˜ë¦¬ -->
+                    <div style="font-size: 14px; color: white; padding: 0.5em; margin-top:0.5em;">
+                        ì„±ë³„<br></div>
+                    <select id="gender" name="gender">
+                        <option>ì„ íƒ</option>
+                        <option value="S01">ë‚¨ì</option>
+                        <option value="S02">ì—¬ì</option>
+                        <option value="S03">í˜¼ì„±</option>
+                    </select><br>
+                    <div style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">í™œë™ìœ í˜•<br></div>
+                    <select id="type" name="type">
+                        <br>
+                        <option>ì„ íƒ</option>
+                        <option value="T01">ì†”ë¡œ</option>
+                        <option value="T02">ê·¸ë£¹</option>
+                    </select>
+                </ul>
+                <br>
+
+                <div style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">ì£¼ìš”í™œë™
+                    ì¥ë¥´<br></div>
+                <select id="genre" name="genre">
+                    <option>ì„ íƒ</option>
+                    <option value="G01">ë°œë¼ë“œ</option>
+                    <option value="G02">ëŒ„ìŠ¤</option>
+                    <option value="G03">ë©/í™í•©</option>
+                    <option value="G04">R&B/Soul</option>
+                </select><br><br>
+                <label style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">ì†Œê°œê¸€<br><textarea
+                        id="content" name="content" placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”."></textarea></label>
+            </div>
+            <br>
+        </form>
+        <div align="right" style="margin-top:-6em">
+            <button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0 0.3em;"
+                    class="tbutton small" onclick="submitNew()">ë“±ë¡
+            </button>
+            <button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0 0.3em;"
+                    onclick="location.href='mypage.do'" class="tbutton small">ì·¨ì†Œ
+            </button>
+        </div>
+    </div>
 </div>
-<br>
-		<div align="right" style="margin-top:-6em; margin-bottom:1em";>
-			<input type="submit" style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" value="µî·Ï" class="tbutton small" onclick=""/>
-			<button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypage.do'" class="tbutton small" >Ãë¼Ò</button>
-		</div>
-	</form>
 <script>
-<!-- À¯È¿¼º °Ë»ç-->
-function chk_profile(){
+    <!-- ìœ íš¨ì„± ê²€ì‚¬-->
+    function chk_profile() {
+        if (document.frm.name.value == '') {
+            alert("í™œë™í•  ì•„í‹°ìŠ¤íŠ¸ëª…ì„ ì…ë ¥í•˜ì„¸ìš”.");
+            return false;
+        }
+        if (document.frm.gender.value == 'ì„ íƒ') {
+            alert("ì•„í‹°ìŠ¤íŠ¸ì˜ ì„±ë³„ì„ ì„ íƒí•˜ì„¸ìš”.");
+            return false;
+        }
+        if (document.frm.type.value == 'ì„ íƒ') {
+            alert("í™œë™ìœ í˜•ì„ ì„ íƒí•˜ì„¸ìš”.");
+            return false;
+        }
+        if (document.frm.genre.value == 'ì„ íƒ') {
+            alert("ì£¼ìš”í™œë™ ì¥ë¥´ë¥¼ ì„ íƒí•˜ì„¸ìš”.");
+            return false;
+        }
+        return true;
+    }
 
-	if(document.frm.name.value == ''){
-		alert("È°µ¿ÇÒ ¾ÆÆ¼½ºÆ®¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
-		return false;
-	}	
-	if(document.frm.gender.value == '¼±ÅÃ'){
-		alert("¾ÆÆ¼½ºÆ®ÀÇ ¼ºº°À» ¼±ÅÃÇÏ¼¼¿ä.");
-		return false;
-	}
-	if(document.frm.type.value == '¼±ÅÃ'){
-		alert("È°µ¿À¯ÇüÀ» ¼±ÅÃÇÏ¼¼¿ä.");
-		return false;
-	}
-	if(document.frm.genre.value == '¼±ÅÃ'){
-		alert("ÁÖ¿äÈ°µ¿ Àå¸£¸¦ ¼±ÅÃÇÏ¼¼¿ä.");
-		return false;
-	
-	}
-}
-
-
+    function submitNew() {
+        if (chk_profile()) {
+            frm.submit();
+        }
+    }
 </script>

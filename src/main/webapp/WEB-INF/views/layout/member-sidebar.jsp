@@ -68,8 +68,8 @@
             <ul class="list">
                 <c:choose>
                     <c:when test="${member.role == 'R01'}">
-                        <li><a href="${rootPath}/memberChangeInfo.do"><i
-                                class="icon-caret-right"> </i>회원정보
+                        <li><a href="${rootPath}/memberChangeInfo.do">
+                            <i class="icon-caret-right"> </i>회원정보
                             변경</a></li>
                         <li><a href="${rootPath}/likeArtist.do"><i class="icon-caret-right"> </i>좋아요
                             한 아티스트</a>
@@ -82,27 +82,30 @@
                         <li><a href="${rootPath}/ticketList.do"><i class="icon-caret-right"> </i>구매한
                             공연</a>
                         </li>
-                        <li><a href="${rootPath}/artistRequestForm"><i class="icon-caret-right"></i>아티스트 신청</a>
+                        <li><a href="${rootPath}/artistRequestForm"><i class="icon-caret-right"> </i>아티스트 신청</a>
                     </c:when>
                     <c:when test="${member.role == 'R02'}">
-                        <li><a href="${rootPath}/memberChangeInfo.do"><i
-                                class="icon-caret-right"> </i>회원정보
+                        <li><a href="${rootPath}/memberChangeInfo.do">
+                            <i class="icon-caret-right"> </i>회원정보
                             변경</a></li>
-                        <li><a href="${rootPath}/likeArtist.do"><i class="icon-caret-right"> </i>좋아요
-                            한 아티스트</a>
+                        <li><a href="${rootPath}/likeArtist.do">
+                            <i class="icon-caret-right"> </i>좋아요 한 아티스트</a>
                         </li>
-                        <li><a href="${rootPath}/wishlist.do"><i class="icon-caret-right"> </i>위시리스트</a>
+                        <li><a href="${rootPath}/wishlist.do">
+                            <i class="icon-caret-right"> </i>위시리스트</a>
                         </li>
-                        <li><a href="${rootPath}/walletInfo.do"><i class="icon-caret-right"> </i>지갑
-                            정보</a>
+                        <li><a href="${rootPath}/walletInfo.do">
+                            <i class="icon-caret-right"> </i>
+                            지갑 정보</a>
                         </li>
-                        <li><a href="${rootPath}/ticketList.do"><i class="icon-caret-right"> </i>구매한
-                            공연</a>
+                        <li><a href="${rootPath}/ticketList.do">
+                            <i class="icon-caret-right"> </i>
+                            구매한 공연</a>
                         </li>
-                        <li><a href="${rootPath}/performanceByArtistId"><i class="icon-caret-right"> </i>신청한 공연</a>
-                        </li>
-                        <li><a href="${rootPath}/artistManagement"><i
-                                class="icon-caret-right"> </i>아티스트 관리 페이지</a>
+                        <li><a href="${rootPath}/performanceInsertForm.do">
+                            <i class="icon-caret-right"> </i>공연 신청</a></li>
+                        <li><a href="${rootPath}/performanceByArtistId">
+                            <i class="icon-caret-right"> </i>신청한 공연</a>
                         </li>
                     </c:when>
                     <c:when test="${member.role == 'R03' }">
