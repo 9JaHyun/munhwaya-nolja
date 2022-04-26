@@ -5,11 +5,8 @@ import lombok.Data;
 @Data
 public class LikeArtistVO {
 
-	private String name;
-	private int artistId;
-	private int id;
 	private String memberId;
+	private int artistId;
+	private String name;
 	private String image;
-	
-
 }
