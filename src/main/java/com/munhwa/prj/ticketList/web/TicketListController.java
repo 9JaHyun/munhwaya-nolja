@@ -134,15 +134,16 @@ public class TicketListController {
 	private String makeQR(HttpServletRequest req, int ticketId) throws WriterException, IOException {
 		String qrURI = null;
 		String path = req.getSession().getServletContext().getRealPath("resources");
-		try (DatagramSocket r = new DatagramSocket()) {
-			r.connect(InetAddress.getByName("8.8.8.8"), 10002);
-			String t = req.getRequestURI();
-			qrURI = r.getLocalAddress().getHostAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (SocketException e1) {
-			e1.printStackTrace();
-		}
+		qrURI = req.getContextPath() + "/ticketCheck/" + ticketId;
+//		try (DatagramSocket r = new DatagramSocket()) {
+//			r.connect(InetAddress.getByName("8.8.8.8"), 10002);
+//			String t = req.getRequestURI();
+//			qrURI = r.getLocalAddress().getHostAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		} catch (SocketException e1) {
+//			e1.printStackTrace();
+//		}
 		String id = UUID.randomUUID().toString();
 
 		return makeQRDetail(path, qrURI, id);
