@@ -2,6 +2,8 @@ package com.munhwa.prj.admin.web;
 
 import com.munhwa.prj.artist.service.PromotionRequestService;
 import com.munhwa.prj.artist.vo.PromotionRequestVO;
+import com.munhwa.prj.common.file.entity.UploadFileVO;
+import com.munhwa.prj.common.file.service.UploadFileService;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import com.munhwa.prj.common.paging.entity.PageDTO;
 import com.munhwa.prj.performance.service.PerformanceService;
@@ -12,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,7 @@ public class AdminController {
 
     private final PerformanceService performanceService;
     private final PromotionRequestService promotionRequestService;
+    private final UploadFileService uploadFileService;
 
     // 공연 신청 목록
     @GetMapping("performanceList")
@@ -75,9 +79,17 @@ public class AdminController {
     // 아티스트 단건 조회
     @PostMapping("/judgeArtistOfMemberId")
     @ResponseBody
-    public PromotionRequestVO judgeArtistOfMemberId(Model model,
+    public PromotionRequestDto judgeArtistOfMemberId(Model model,
           @RequestParam("memberId") String memberId) {
-        return promotionRequestService.promotionRequestSelect(memberId);
+        PromotionRequestVO promotionRequestVO = promotionRequestService.promotionRequestSelect(
+              memberId);
+        List<String> imageFiles = uploadFileService.findByGroupId(promotionRequestVO.getFileGroupId())
+              .stream()
+              .map(UploadFileVO::getSname)
+              .collect(Collectors.toList());
+        PromotionRequestDto promotionRequestDto = new PromotionRequestDto(promotionRequestVO);
+        promotionRequestDto.setFiles(imageFiles);
+        return promotionRequestDto;
     }
 
     // 아티스트 승인

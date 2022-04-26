@@ -98,15 +98,10 @@
 						</ul>
 					</div>
 				</div>
-				<!-- def block -->
 			</div>
-			<!-- span8 posts -->
 		</div>
-		<!-- row clearfix -->
 	</div>
-	<!-- end page content -->
 </div>
-<!-- end layout -->
 
 <div>
 	<form id="moveForm" method="get" action="judgeArtist">
@@ -117,7 +112,7 @@
 </div>
 
 <!-- 승인 거절 모달 -->
-<div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
+<div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog ">
     <div class="modal-content ">
       <div class="modal-header" id="modalHeader">
@@ -125,9 +120,9 @@
         <h4 class="modal-title" id="myModalLabel">서류, 작업물 확인</h4>
       </div>
       <h5>제출 서류</h5>
-      <div><img id="uploadImage"></div>
+      <div id="uploadImage"></div>
       <h5>작업물</h5>
-      <div id="artworkRead"style="color:white;"></div>
+      <div id="artworkRead" style="color:white;"></div>
       <div class="modal-footer def-block">
         <button class="tbutton small permit" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>승인</span></button>
         <button class="tbutton small refuse" data-toggle="modal" data-target="#myModal" data-dismiss="modal" aria-label="Close"><span>거절</span></button>
@@ -162,11 +157,14 @@
 			data: {"memberId" : id},
 			dataType: "text",
 			success: function(res){
+				$('#uploadImage').empty();
 				var obj = JSON.parse(res);
-				artworkRead.innerHTML = obj.artwork;
-				var img = obj.fileGroupId;
+				$('#artworkRead').html(obj.artwork);
+				var files = obj.files;
 				var mid = obj.memberId;
-				$('#uploadImage').attr('src', 'api/picture/'+img);
+				files.forEach(image => {
+					$('#uploadImage').append($('<img>').attr('src', 'api/picture/' + image));
+				})
 				$('.permit').data('mid', obj.memberId);
 				$('.refuse').data('mid', obj.memberId);
     	    },
@@ -185,7 +183,7 @@
     $(".search_area button").on("click", function(e){
         e.preventDefault();
         let val = $("input[name='keyword']").val();
-		let let keyword = $(".search_area input[name='keyword']").val();
+		let keyword = $(".search_area input[name='keyword']").val();
         if(!keyword){
             alert("키워드를 입력하세요.");
             return false;
