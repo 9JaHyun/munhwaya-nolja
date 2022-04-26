@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileUtils {
 
-//    private String fileDir = "C:\\dev\\fileTest\\";
-    private String fileDir = "/home/ubuntu/dev/";
+    private String fileDir = "C:\\Users\\rnwkg\\dev\\fileTest\\";
+//    private String fileDir = "/home/ubuntu/dev/";
 
     // 단일 파일 저장
     public UploadFile storeFile(MultipartFile multipartFile) throws IOException {

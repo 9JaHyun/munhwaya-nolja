@@ -21,9 +21,11 @@ public class PostVO {
 
     public PostVO() { }
 
-    public PostVO updatePost(String title, String content) {
+    public PostVO updatePost(int id, String title, String content, String fileGroupId) {
+        this.id = id;
         this.title = title;
         this.content = content;
+        this.fileGroupId = fileGroupId;
         return this;
     }
     public PostVO(String title, String content, Date createdAt, int hit, int likeIt) {

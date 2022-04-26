@@ -7,11 +7,14 @@
     }
 </style>
 <div class="row row-fluid clearfix mbf" style="padding-bottom:100px;">
-    <div class="span7 posts">
+    <div class="posts">
         <div class="def-block" style="width: 100%;">
             <h4 style="border-bottom: none;">일반 게시판</h4>
             <div class="search_wrap" style="float: right;">
                 <div class="search_area">
+                    <button class="tbutton small" style="height: 32px; width: 60px; font-size: 10pt;" onclick="location.href='posting'">
+                        글쓰기
+                    </button>
                     <select style="width: 70px;">
                         <option value="제목">제목
                     </select> <input type="text" name="keyword"
@@ -43,12 +46,14 @@
                                 <c:choose>
                                     <c:when test="${now > post.createdAt}}">
                                         <td style="color:white;">
-                                            <fmt:formatDate pattern="MM-dd" value="${post.createdAt}"/>
+                                            <fmt:formatDate pattern="MM-dd"
+                                                            value="${post.createdAt}"/>
                                         </td>
                                     </c:when>
                                     <c:otherwise>
                                         <td style="color:white;">
-                                            <fmt:formatDate pattern="HH:mm" value="${post.createdAt}"/>
+                                            <fmt:formatDate pattern="HH:mm"
+                                                            value="${post.createdAt}"/>
                                         </td>
                                     </c:otherwise>
                                 </c:choose>
@@ -59,9 +64,6 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <button onclick="location.href='posting'">
-                        글쓰기
-                    </button>
                 </div>
             </div>
             <div class="pagination-tt clearfix"
@@ -82,36 +84,6 @@
                         <li><a href="${pageMake.endPage + 1 }">Next</a></li>
                     </c:if>
                 </ul>
-            </div>
-        </div>
-        <!-- def block -->
-    </div>
-
-    <div class="span5 sidebar">
-        <div class="def-block widget">
-            <h4>상세정보</h4><span class="liner"></span>
-            <div class="widget-content">
-                <table class="total_w_table" cellspacing="0">
-                    <tbody>
-                    <tr>
-                        <th><strong>내용</strong></th>
-                        <td><strong><span class="amount"></span></strong></td>
-                    </tr>
-                    <tr>
-                        <th><strong>첨부파일</strong></th>
-                        <td><strong>&nbsp;&nbsp;&nbsp;<span id="itemTotalPrice"></span>
-                        </strong></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div style="text-align: center; width: 100%">
-                    <button type="button" class="btn btn-success" id="approveBtn"
-                            name="update_cart" onclick="payCart()">승인
-                    </button>
-                    <button type="button" class="btn btn-danger" id="rejectBtn"
-                            name="update_cart" onclick="payCart()">거절
-                    </button>
-                </div>
             </div>
         </div>
     </div>

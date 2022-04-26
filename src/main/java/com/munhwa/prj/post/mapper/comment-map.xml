@@ -30,7 +30,7 @@
     VALUES (comments_seq.nextval, #{content}, #{createdAt}, #{postId}, #{memberId}
     <choose>
       <when test="groupId != 0">
-        ,#{groupId}, (select NVL2(max(group_order), 1, max(group_order) + 1)
+        ,#{groupId}, (select NVL2(max(group_order), max(group_order) + 1, 1)
         from comments
         where post_id = #{postId}
         and group_id = #{groupId}))

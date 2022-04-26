@@ -131,6 +131,7 @@ td{
 							<div class="artist-info">
 								<div class="act">
 									<a>활동명</a>&emsp;<a>${artist.name}</a><br>
+									<button class="tbutton medium" onclick="followArtist()">팔로우</button>
 								</div>
 								<div class="act">
 									<c:choose>

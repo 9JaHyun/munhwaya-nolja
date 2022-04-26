@@ -5,21 +5,20 @@ import com.munhwa.prj.artist.vo.ArtDetailVO2;
 import com.munhwa.prj.artist.vo.ArtistVO;
 import com.munhwa.prj.common.paging.entity.Criteria;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface ArtistService {
 
     List<ArtistVO> selectArtistList();
 
-    List<ArtDetailVO> findMusic(@Param("cri") Criteria cri, @Param("id") int artistId);
+    List<ArtDetailVO> findMusic(Criteria cri, int artistId);
 
     ArtistVO findByMemberId(String id);
 
     ArtistVO findByArtistId(int artId);
 
-    List<ArtDetailVO2> albumInfo(@Param("cri") Criteria cri, @Param("artistId") int artistId);
+    List<ArtDetailVO2> albumInfo(Criteria cri, int artistId);
 
-    int checkBuy(@Param("id") String id, @Param("musicId") int musicId);
+    int checkBuy(String id, int musicId);
 
     int insertArtist(ArtistVO vo);
 
@@ -29,9 +28,9 @@ public interface ArtistService {
 
     int albumCnt(int vo);
 
-	int getTotal(@Param("cri") Criteria cri, @Param("artistId") int id);
+	int getTotal(Criteria cri, int id);
 	
-	int getTotal2(@Param("cri") Criteria cri, @Param("artistId") int artistId);
+	int getTotal2(Criteria cri, int artistId);
 	
 	int artIdByAlbId(int albumId);
 }

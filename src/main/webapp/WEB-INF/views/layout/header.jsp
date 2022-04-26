@@ -69,6 +69,8 @@
                             </sec:authorize>
                         </ul>
                     </li>
+                    <li><a href="${rootPath}/posts">게시판<span class="sub">lets communicate</span></a>
+                    </li>
                 </ul>
             </nav>
         </div>

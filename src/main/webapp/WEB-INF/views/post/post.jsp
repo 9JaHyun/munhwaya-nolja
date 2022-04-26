@@ -5,7 +5,7 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 <fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate"/>
 <style>
-    #commentList  {
+    #commentList {
         font-size: 13pt;
         color: white;
     }
@@ -24,19 +24,22 @@
             <span style="color: white; font-size: 15px;">글쓴이: ${post.writer} </span>
             <span style="color: white; font-size: 15px; width: 50%; text-align: right">조회수: ${post.hit},    추천수: ${post.likeIt}</span>
         </ul>
+        <c:if test="${member.id == post.memberId}">
+            <div style="text-align: right">
+                <a class="tbutton updPostBtn" onclick="location.href='updatePost?postId=${post.id}'" style="font-size: 18px; width: 50px"> 수정</a>
+                <a class="tbutton delPostBtn" style="font-size: 18px; width: 50px"> 삭제</a>
+            </div>
+        </c:if>
 
         <span class="liner" style="margin-top: 5px;"></span>
         <div class="grid_12" style="width: 100%;">
             <div class="mbf clearfix" style="color: white; font-size: 15px">
                 ${post.content}
+                <c:forEach var="picture" items="${pictures}">
+                    <img src="api/picture/${picture}">
+                </c:forEach>
             </div>
         </div>
-        <c:if test="${userId == post.memberId}">
-            <div>
-                <button class="tbutton" style="font-size: 18px; width: 50px"> 수정</button>
-                <button class="tbutton" style="font-size: 18px; width: 50px"> 삭제</button>
-            </div>
-        </c:if>
         <div id="comments" class="user-comments mbs">
             <h4> 댓글 </h4><span class="liner"></span>
             <form id="commentform">
@@ -59,30 +62,35 @@
     })
 
     $('#postingComment').on('click', function () {
-        $.ajax({
-            url: "comment",
-            type: "post",
-            data: {
-                "postId": commentform.postId.value,
-                "content": commentform.content.value,
-                "groupId": commentform.groupId.value
-            },
-            dataType: "text",
-            success: function () {
-                loadComments(${post.id})
-            },
-            error: function () {
-                alert('입력실패');
-            }
-        })
+        if(commentform.content.value.length == 0){
+            alert('댓글 내용을 작성해 주세요')
+        } else {
+            $.ajax({
+                url: "comment",
+                type: "post",
+                data: {
+                    "postId": commentform.postId.value,
+                    "content": commentform.content.value,
+                    "groupId": commentform.groupId.value
+                },
+                dataType: "text",
+                success: function () {
+                    loadComments(${post.id})
+                    commentform.content.value = ''
+                },
+                error: function () {
+                    alert('입력실패');
+                }
+            })
+        }
     })
 
-    function loadComments(id) {
+    function loadComments(postId) {
         $.ajax({
                 url: 'comment',
                 type: 'get',
                 data: {
-                    id: id
+                    id: postId
                 },
                 success: function (data) {
                     let listHtml = "";
@@ -99,27 +107,45 @@
                         let groupOrder = data[i].groupOrder;
 
                         if (groupOrder == 1) {
-                            listHtml += "<li id='" + id + "' data-groupId = '" + groupId + "' class='clearfix'>";
+                            listHtml += "<li id='" + id + "' data-groupId = '" + groupId
+                                + "' class='clearfix'>";
+                            listHtml += "<div class='thumb'>";
+                            listHtml += showProfile(writerProfile);
+                            if (!content == "" || !content == null) {
+                                listHtml += "<div class='reply' value='N'><i class='icon-reply first-i'></i>답글달기</div>"
+                            }
                         } else {
                             listHtml += "<li id='" + id + "' class='child clearfix'>";
+                            listHtml += "<div class='thumb'>";
+                            listHtml += showProfile(writerProfile);
                         }
 
-                        listHtml += "<div class='thumb'>";
-                        listHtml += showProfile(writerProfile);
-                        listHtml += "<div class='reply' value='N'><i class='icon-reply first-i'></i>Reply</div>"
                         listHtml += "</div>";
-
-                        listHtml += "<h5 class='entry-title'>" + writer;
-                        listHtml += "<span class='date'>" + createdAt + "</span></h5>";
+                        listHtml += "<h5 class='entry-title'>" + writer + isWriter(memberId);
+                        listHtml += "<span class='date'>" + createdAt + "</span>"
                         if (content == "" || content == null) {
-                            listHtml += "<p>(삭제된 댓글입니다.)</p>"
+                            listHtml += "</h5> <p>(삭제된 댓글입니다.)</p>"
                         } else {
-                            listHtml += "<p>" + content + "</p>"
+                            if (memberId == '${member.id}') {
+                                listHtml += "<a class='date delCommentBtn'>&nbsp&nbsp&nbsp&nbsp 삭제하기</a></h5>";
+                            }
+                            listHtml += "</h5> <p class='comment-content'>" + content + "</p>"
                         }
                         listHtml + "</li>";
 
                         $("#commentList").html(listHtml);
                     }
+                    $('.delCommentBtn').on('click', function () {
+                        $.ajax({
+                            url: "deleteComment",
+                            type: "POST",
+                            dataType: "JSON",
+                            data: {"commentId": this.parentNode.parentNode.id},
+                            success: function () {
+                                loadComments(postId)
+                            }
+                        })
+                    })
 
                     $('.reply').on('click', function () {
                         let li = $(this).parent().parent();
@@ -130,13 +156,12 @@
                         var newForm = $('<form></form>');
                         //set attribute (form)
                         newForm.attr("name", "replyForm");
-                        newForm.attr("method", "post");
-                        newForm.attr("action", "comment");
                         newForm.attr("target", "_blank"); // create element & set attribute (input)
                         newForm.append(
                             $('<input/>', {type: 'hidden', name: 'postId', value: ${post.id}}));
                         newForm.append(
-                            $('<input/>', {type: 'hidden', name: 'groupId', value: li.data('groupid')}));
+                            $('<input/>',
+                                {type: 'hidden', name: 'groupId', value: li.data('groupid')}));
                         newForm.append(
                             $('<textarea/>', {
                                 name: 'content',
@@ -144,38 +169,42 @@
                                 style: 'width: 70%; margin-right: 10px'
                             }));
                         newForm.append(
-                            $("<a class='send-message tbutton postingReply' style='height: 100%'>댓글 쓰기</a>"));
+                            $("<a class='send-message tbutton postingReply' style='height: 100%'>답글 달기</a>"));
                         newForm.append($("<a class='closeBtn'> X</a>"));
                         li.append(replyDiv.append(newForm));
 
+                        $('.postingReply').on('click', function () {
+                            if(replyForm.content.value.length == 0) {
+                                alert('답글 내용을 작성해 주세요')
+                            } else {
+                                $.ajax({
+                                    url: "comment",
+                                    type: "post",
+                                    dataType: "text",
+                                    data: {
+                                        "content": replyForm.content.value,
+                                        "postId": replyForm.postId.value,
+                                        "groupId": replyForm.groupId.value
+                                    },
+                                    success: function () {
+                                        replyDiv.remove();
+                                        loadComments(postId)
+                                    }
+                                })
+                            }
+                        })
+
                         $('.closeBtn').on('click', function () {
-                            $(this).parent().remove()
+                            console.log($(this).parentNode.parentNode.children[3].innerHTML);
                         });
                     });
                 },
-                //
-                // // 삭제버튼을 클릭했을 때
-                // $('.reply_delete').on('click', function ()
-                //     // 모댓글 삭제일때
-                //     if ($(this).attr('grpl') == 0) {
-                //         DeleteReply($(this).attr('no'), $(this).attr('bno'));
-                //
-                //         // 답글 삭제일때
-                //     } else {
-                //         DeleteReReply($(this).attr('no'), $(this).attr('bno'), $(this).attr('grp'));
-                //     }
-                //
-                // })
-                error: function () {
-                    alert('서버 에러');
-                }
             }
         )
-        ;
     }
 
-    function isWriter(memberId) {
-        return ('${post.memberId}' == memberId) ? "<i>작성자</i>" : "<i></i>";
+    function isWriter(id) {
+        return ('${post.memberId}' == id) ? "<i>[작성자]</i>" : "<i></i>";
     }
 
     function showProfile(profile) {
@@ -191,4 +220,15 @@
         }
         return result;
     }
+
+    $('.delPostBtn').on('click', function () {
+        console.log('delete')
+        var delForm = $('<form></form>');
+        delForm.attr("name", "deleteForm");
+        delForm.attr("action", "delPost");
+        delForm.attr("method", "post");
+        delForm.append($('<input/>', {type: 'hidden', name: 'postId', value: ${post.id}}));
+        delForm.append($('<input/>', {type: 'hidden', name: 'groupId', value: '${post.fileGroupId}'}));
+        delForm.submit();
+    })
 </script>

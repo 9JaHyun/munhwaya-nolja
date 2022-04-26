@@ -15,8 +15,8 @@
   </resultMap>
 
   <insert id="insertPost">
-    INSERT INTO post(id, title, content, created_at, hit, member_id, writer, like_it)
-    VALUES (post_seq.nextval, #{title}, #{content}, sysdate, 0, #{memberId}, #{writer}, 0)
+    INSERT INTO post(id, title, content, hit, member_id, writer, like_it)
+    VALUES (post_seq.nextval, #{title}, #{content}, 0, #{memberId}, #{writer}, 0)
     <selectKey keyProperty="id" resultType="Integer" order="AFTER">
       SELECT post_seq.currval
       FROM dual
@@ -26,8 +26,9 @@
   <update id="updatePost">
     update post
     <set>
-      <if test="title != null">title = #{title}</if>
-      <if test="content != null">content = #{content}</if>
+      <if test="title != null">title = #{title},</if>
+      <if test="content != null">content = #{content},</if>
+      <if test="fileGroupId != null">file_group_id = #{fileGroupId},</if>
     </set>
     where id = #{id}
   </update>

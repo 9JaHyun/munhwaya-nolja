@@ -3,19 +3,24 @@ package com.munhwa.prj.common.file.serviceImpl;
 import com.munhwa.prj.common.file.entity.UploadFile;
 import com.munhwa.prj.common.file.entity.UploadFileVO;
 import com.munhwa.prj.common.file.mapper.UploadFileMapper;
+import com.munhwa.prj.common.file.service.FileUtils;
 import com.munhwa.prj.common.file.service.UploadFileService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UploadFileServiceImpl implements UploadFileService {
 
     private final UploadFileMapper mapper;
+    private final FileUtils fileUtils;
 
-    public UploadFileServiceImpl(UploadFileMapper mapper) {
+    public UploadFileServiceImpl(UploadFileMapper mapper,
+          FileUtils fileUtils) {
         this.mapper = mapper;
+        this.fileUtils = fileUtils;
     }
 
     @Override
@@ -41,10 +46,18 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public int deleteByGroupId(String groupId) {
-        return mapper.deleteUploadFileByGroupId(groupId);
+        List<String> names = findByGroupId(groupId)
+              .stream().map(UploadFileVO::getSname)
+              .collect(Collectors.toList());
+
+        int result = mapper.deleteUploadFileByGroupId(groupId);
+        if (result != 0) {
+            for (String name : names) {
+                fileUtils.deleteFile(name);
+            }
+        }
+        return result;
     }
-    
-    
 
     @Override
     public List<UploadFileVO> findByGroupId(String groupId) {

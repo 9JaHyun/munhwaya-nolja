@@ -51,7 +51,7 @@ public class CommentController {
     public ResponseEntity<String> deletePost(int commentId) {
         int result = commentService.deleteById(commentId);
 
-        if (result != 0) {
+        if (result == 0) {
             return ResponseEntity.badRequest().body("잘못된 요청입니다.");
         }
         return ResponseEntity.ok().body("삭제 성공");
