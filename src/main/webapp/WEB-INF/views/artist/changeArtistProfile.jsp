@@ -117,7 +117,7 @@
 				<option value="G04" selected>R&B/Soul</option>
 			</c:if>
 			</select><br> <br> <label style="font-size: 14px; color: white; padding: 0.7em;">소개글<br> <textarea
-					id="content" name="content" placeholder="내용을 입력해 주세요.">${artist.content }</textarea>
+					id="content" name="content" placeholder="내용을 입력해 주세요." style="width:55%; height:100px;">${artist.content }</textarea>
 			</label>
 		</div>
 

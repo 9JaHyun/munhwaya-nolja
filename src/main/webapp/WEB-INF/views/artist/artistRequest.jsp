@@ -8,7 +8,7 @@
 <style>
     textarea {
         padding-left: 1em;
-        width: 70%;
+        width: 55%;
         height: 7em;
         border: none;
         resize: none;
@@ -43,48 +43,46 @@
     <div style="margin: 100px 0px 10px 0px; border: none;">
         <br>
         <form id="info" name="info" method="post" action="artistRequest" enctype="multipart/form-data" onsubmit="return chk_request()">
-           <div align="center" style="margin: 20px 0px 100px 0px;">
+           <div align="center"">
             <label id="request-label">
-                <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">작업물 설명란</div>
-                <textarea
-                        id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
+                 <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1.5em; margin-left: 1em;">작업물 설명란</div>
+                <textarea id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
             </label><br> <label>
-            <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">작업물 인증</div>
-            <input
-                    type="file" id="files" name="files" multiple="multiple" accept="image/*"></label><br>
-
-            <div class="sort"  style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">본인인증</div>
-            <div class="filebox">
-            <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">
+            <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 5px;">작업물 인증</div>
+            <input type="file" id="files" name="files" multiple="multiple" accept="image/*"></label><br>
+			<div class="sort"  style="font-size: 15px; color: white; padding-right: 1em; margin-top:1.5em">&emsp;<본인인증></div>
+            <div class="filebox" style="margin-left: 2.5em;">
+            <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;     margin-right: 2em;">
                <span><a>폰번호 입력</a>
-              </div> 
-               <input type="text" id="phone"  name="phone"  placeholder="번호를 입력하세요.(-빼고 입력)"></span> &emsp;
-                <p id='phoneChk' class="doubleChk tbutton">인증번호 받기</p>
-                <br>
+            </div> 
             </div>
-            <span class="point successPhoneChk" style="color: #FFFFE0;"> 폰 번호 입력 후 인증번호 받기 버튼을 클릭 하세요.</span>
-             <br>
-             <br>
-            <div>
-            <div class="filebox">
-               <span><a  style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">인증번호 입력</a>
-               </div>
-               <input type="text" id="phone2" name="phone2" placeholder="인증번호를 입력하세요." disabled required/></span>
+               <input type="text" id="phone"  name="phone"  placeholder="번호를 입력하세요.(-빼고 입력)"></span> &emsp;<p id='phoneChk' class="doubleChk tbutton" style="padding: 3px 6px 1px 5px;">인증번호 받기</p>
+            </div>
+            	<span class="point successPhoneChk" style="color: #FFFFE0; margin-left:13em;"> 폰 번호 입력 후 인증번호 받기 버튼을 클릭 하세요.</span>
+                <br>
+                <br>
+     </div>
+            
+        <div class="filebox" style="margin-left: 13em;">
+     	   <div>
+          	  <span><a  style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 13em; margin-left: 8.5em;">인증번호 입력</a>
+           </div>
+           <div style="margin-top: 0.5em;">
+              <input type="text" id="phone2" name="phone2" placeholder="인증번호를 입력하세요." disabled required/></span>
                 &emsp;
-                <p id="phoneChk2" class="doubleChk tbutton" style="visibility: hidden;">확인</p>
+                <p id="phoneChk2" class="doubleChk tbutton" style="padding: 4px 15px 1px 15px;">확인</p>
+           </div>
                 <br>
-            </div>
-            <p>
-                <input type="hidden" id="phoneDoubleChk"/>
-            </p>
-	</div>
-            <!-- 신청, 취소 버튼 -->
-            <div align="right" style="margin: 1em 0em 0em 0em;">
-                <input type='submit'  style="padding: 0.2em 1.1em 0.08em 1em; position: relative; bottom: 8px; margin: 0em 1em 1.1em 0em;"
+        </div>
+          <p><input type="hidden" id="phoneDoubleChk"/></p>
+ </div>
+      
+      
+          <!-- 신청, 취소 버튼 -->
+             <div align="right">
+                <input type='submit'  style="padding:0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em; position: relative;"
                        value="신청" class="tbutton small">
-                <a href="javascript:window.history.back();"
-                   class="tbutton small"><span>취소</span></a>
-                <!-- 클릭시 뒤로가기-->
+               <button style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypag.do'" class="tbutton small">취소</button>
             </div>
         </form>
     </div>

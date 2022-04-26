@@ -4,7 +4,7 @@
 <style>
 	textarea {
 	padding-left:1em;
-    width: 70%;
+    width: 55%;
     height: 7em;
     border: none;
     resize: none;
