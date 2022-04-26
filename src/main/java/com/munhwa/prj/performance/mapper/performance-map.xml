@@ -27,8 +27,6 @@
     <id property="id" column="id"/>
     <result property="personal" column="personal"/>
   </resultMap>
-  
-  
 
 
   <select id="performanceSelectAll"
@@ -46,24 +44,27 @@
          , status
     FROM performance
   </select>
-  
+
   <select id="selectPerformanceByArtistId" resultMap="performanceResultMap">
-  	    SELECT	P.ID
-         , P.NAME
-         , P.LOCATION
-         , P.SDATE
-         , P.EDATE
-         , P.CONTENT
-         , P.IMAGE
-         , P.ARTIST_ID
-         , P.PRICE
-         , P.PERSON
-         , CC.NAME as STATUS
-    FROM PERFORMANCE P, ARTIST A, MEMBER M, COMMON_CODE CC
-    WHERE A.MEMBER_ID = M.ID
-    AND	P.STATUS = CC.ID
-    AND P.ARTIST_ID = A.ID
-    AND M.ID = #{memberId}
+    SELECT p.id
+         , p.name
+         , p.location
+         , p.sdate
+         , p.edate
+         , p.content
+         , p.image
+         , p.artist_id
+         , p.price
+         , p.person
+         , cc.name AS status
+    FROM performance p,
+         artist a,
+         member m,
+         common_code cc
+    WHERE a.member_id = m.id
+      AND p.status = cc.id
+      AND p.artist_id = a.id
+      AND m.id = #{memberId}
   </select>
 
 
@@ -223,24 +224,26 @@
       AND p.id = pp.id
       AND p.artist_id = a.id
   </select>
-  
-    <select id="detailPerformance" resultMap="performanceResultMap">
+
+  <select id="detailPerformance" resultMap="performanceResultMap">
     SELECT p.id
          , p.name
          , p.content
          , p.image
-         , a.name                 AS artist_name
+         , a.name AS artist_name
     FROM performance p,
          artist a
     WHERE p.id = #{id}
       AND p.artist_id = a.id
   </select>
-  
+
   <update id="updatePerformance" parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
-  	 update performance set content=#{content} where id=#{id}
+    UPDATE performance
+    SET content=#{content}
+    WHERE id = #{id}
   </update>
 
-	<insert id="performanceInsert"
+  <insert id="performanceInsert"
     parameterType="com.munhwa.prj.performance.vo.PerformanceVO">
     INSERT INTO performance(id, name, location, sdate,
                             edate, content, image, price, artist_id)

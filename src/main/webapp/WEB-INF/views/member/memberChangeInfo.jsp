@@ -28,14 +28,14 @@
                             <li>
                                 <i class="icon-comment-alt"></i>
                                 <a href="artistProfileForm">프로필 등록</a>
-                                <div class="topic-time">프로필 이미지와 닉네임을 변경합니다.</div>
+                                <div class="topic-time">프로필을 등록합니다</div>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li>
                                 <i class="icon-comment-alt"></i>
                                 <a href="changeArtistProfileForm">프로필 수정</a>
-                                <div class="topic-time">프로필 이미지와 닉네임을 변경합니다.</div>
+                                <div class="topic-time">프로필을 수정합니다.</div>
                             </li>
                         </c:otherwise>
                     </c:choose>
