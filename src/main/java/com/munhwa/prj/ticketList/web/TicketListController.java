@@ -149,8 +149,7 @@ public class TicketListController {
 	}
 
 	public String makeQRDetail(String path, String qrURI, String fileName) throws WriterException, IOException {
-
-		String savePath = "C:\\DEV\\filetest" + "\\qrCodes\\"; // 파일 경로
+		String savePath = "/home/ubuntu/dev/qrcode/"; // 파일 경로
 
 		// 파일 경로가 없으면 생성하기
 		File file = new File(savePath);
