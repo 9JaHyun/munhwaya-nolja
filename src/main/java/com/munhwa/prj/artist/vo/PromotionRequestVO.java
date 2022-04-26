@@ -30,6 +30,4 @@ public class PromotionRequestVO {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
-	
-	
 }

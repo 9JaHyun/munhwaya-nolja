@@ -16,6 +16,11 @@ public class LikeArtistServiceImpl implements LikeArtistService {
     }
 
     @Override
+    public int follow(LikeArtistVO vo) {
+        return map.insertLikeArtist(vo);
+    }
+
+    @Override
     public List<LikeArtistVO> likeArtistList(String memberId) {
         return map.likeArtistList(memberId);
     }

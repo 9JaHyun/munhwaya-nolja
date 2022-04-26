@@ -40,18 +40,18 @@
                                      style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
                             </c:when>
                             <c:otherwise>
-                                <img src="${likeArtist.image}" alt="image"
+                                <img src="/api/file/${likeArtist.image}" alt="image"
                                      style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
                             </c:otherwise>
                         </c:choose>
                     </td>
                     <td style="text-align: center; padding: 22px 110px 0px 0px;" id="artistName">
-                    	<a href="artistDetail?artId=${likeArtist.id}">${likeArtist.name}</a>
+                    	<a href="artistDetail?artId=${likeArtist.artistId}">${likeArtist.name}</a>
                     </td>
                     <!-- 좋아요 한 아티스트 삭제 버튼 -->
                     <td style="padding: 20px 15px 0px 0px;"><a><i
-                            class="icon-remove" id="${likeArtist.id}"
-                            onclick="delArtistFn(${likeArtist.id})"></i></a></td>
+                            class="icon-remove" id="${likeArtist.artistId}"
+                            onclick="delArtistFn(${likeArtist.artistId})"></i></a></td>
                 </tr>
             </c:forEach>
             </tbody>
