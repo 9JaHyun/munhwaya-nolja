@@ -272,8 +272,7 @@ public class ArtistController {
 
     // 아티스트 승급 진행상황, 재신청
     @RequestMapping("/artStatus")
-    public String artStatus(@LoginUser SessionUser user, Model model, PromotionRequestDTO dto,
-          MultipartFile file)
+    public String artStatus(@LoginUser SessionUser user, Model model)
           throws IOException {
         model.addAttribute("status", promotionRequestDao.getStatus(user.getId()));
 
@@ -285,64 +284,8 @@ public class ArtistController {
         List<UploadFileVO> list = uploadService.findByGroupId(vo.getFileGroupId());
         model.addAttribute("files", list);
 
-//		if (file != null && file.getSize() != 0) {
-//			UploadFile uploadFile = fileUtils.storeFile(file); // common.entity패키지 확인하면 있음
-//			pro.setFileGroupId(uploadFile.getStoredFileName()); // getStoredFileName : 사진 저장 경로
-//		}
-//		pro.setMemberId(user.getId());
-//		pro.setIdentify(null);
-//		pro.setStatus("A03");
-
-// 		int statusUpdate = promotionRequestDao.artStatusUpdate(pro);
-// 			if(statusUpdate == 1) {	
-// 				model.addAttribute("message", "아티스트 승급 재신청을 요청했습니다.\r\n운영자로부터의 응답시까지 수일이 소요될 수 있으니 대기바랍니다.");
-// 			}else {	
-// 				model.addAttribute("message", "재신청이 실패되었습니다.");
-// 			}
         return "artStatus-artist";
     }
-// 		@ResponseBody
-// 	    @PostMapping("/changeArtistProfile")
-// 	    public String changeArtistProfile(@LoginUser SessionUser user, ArtistChangeRequestDto dto) throws IOException { //AtistChangeRequestDto : AtistChangeRequestDto를 호출해서 
-// 	    	ArtistVO artist = dto.toEntity(); // ArtistVO의 내용을 호출하여 AtistChangeRequestDto안의 ArtistVO메소드를 return한다.(=기존 정보 호출하고 값은 dto에 저장된 수정 정보 return하기)
-// 	    	UploadFile file = fileUtils.storeFile(dto.getImage()); // dto의 이미지 호출 
-// 			MemberVO member = new MemberVO();
-// 	    	if(file != null) {//파일을 선택안하고, 변경을 안하고 수정버튼을 눌렀을때 file != null파일에 값이 있다
-// 	    		artist.setImage(file.getStoredFileName());	//파일수정안하면 오류 // getStoredFileName하는 이유 : 기존 파일이 없을 경우 오류가 나므로 임으로 파일 이름담아서 artist변수에 담음 // storedFileName: 서버 로컬에 저장될 파일명
-// 	    		user.setSname(artist.getImage());
-// 	    	}
-// 	    	artist.setMemberId(user.getId());
-// 	    	int result = artistService.updateArtist(artist);
-// 	    	if(result != 0) { // artist에 값이 있으면
-    //
-// 	    		member.setId(artist.getMemberId());
-// 	    		member.setNickname(artist.getName());
-// 	    		member.setSname(artist.getImage());
-// 	    		memberService.updateProfile(member);
-// 	    		user.setNickname(artist.getName());
-    //
-// 	    	}
-// 	    	
-// 	    	return "mypage.do";
-// 	    }
-
-// 		String userId = user.getId();
-// 		String memId = vo.getMemberId();
-// 		
-// 		if(userId == memId) {
-// 		    PromotionRequestVO pro = artistService.getStatus("status", status);
-// 			model.addAttribute(pro);
-// 		}else {
-// 			System.out.println("연결실패");
-// 			
-// 		}
-    // vo.setMemberId(user.getId());
-    // String id2 = memberId.getParameter(memberId);
-    // PromotionRequestVO pro = artistService.getStatus(memberId, status);
-    // int pro = artistService.getStatus(user.getId(), status);
-
-    // String pro = artistService.getStatus(user.getId(), status); // user 세션에 있는 승인 상태를
-    // artStatus에 뿌리기.
 }
 
 
@@ -368,14 +311,6 @@ class SmsController {
 
         return ResponseEntity.ok().body(data);
     }
-
-//	@PostMapping("/user/mocksms")  // 훼이크 문자용 
-//	public ResponseEntity<String> timertest(String phoneNumber) throws NoSuchAlgorithmException, URISyntaxException,
-//			UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
-//			String data = "1";
-//		
-//			return ResponseEntity.ok().body(data);
-//	}
 
     private String createRandomNumber() {
         Random random = new Random(); // 랜덤 함수 선언
