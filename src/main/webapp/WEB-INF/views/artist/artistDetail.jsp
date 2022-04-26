@@ -4,80 +4,94 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <style>
-    /* table { */
-    /* 	border: 1px, solid black; */
-    /* 	width: 1000px; */
-    /* } */
+/* table { */
+/* 	border: 1px, solid black; */
+/* 	width: 1000px; */
+/* } */
 
-    .p {
-        width: 10%;
-    }
+table{
+	width:100%;
+	border-collapse: separate;
+    border-spacing: 1em;
+}
 
-    /* table { */
-    /* 	border-collapse: separate; */
-    /* 	border-spacing: 30px 10px; */
-    /* } */
+.p {
+	width: 10%;
+}
 
-    .artist-info {
-        width: 700px;
-        padding-bottom: 20px;
-        float: right;
-    }
+/* table { */
+/* 	border-collapse: separate; */
+/* 	border-spacing: 30px 10px; */
+/* } */
 
-    .img {
-        width: 600px;
-    }
+.artist-info {
+	width: 700px;
+	padding-bottom: 20px;
+	margin-top: 5em;
+	float: right;
+	float: left; 
+	width: 50%;
+	
+}
 
-    .act {
-        width: 700px;
-        padding-bottom: 10px;
-        font-size: initial;
-    }
+.tbutton.small {
+	padding: 0.1em 0.5em 0.1em 0.5em;
+}
 
-    size {
-        width: 100%;
-    }
+	
+}
+.img {
+	width: 600px;
+}
 
+.act {
+	width: 700px;
+	padding-bottom: 10px;
+	font-size: initial;
+}
 
-    .pageInfo {
-        list-style: none;
-        display: inline-block;
-    }
-
-    .pageInfo li {
-        float: left;
-        font-size: 1px;
-        padding: 7px;
-        font-weight: 500;
-    }
-
-
-    a:hover {
-        color: white;
-        text-decoration: underline;
-    }
-
-    .focus {
-        background-color: #cdd5ec;
-    }
+size {
+	width: 100%;
+}
 
 
-    .artist-album {
-        width: 30%;
-        hight: 200px;
-    }
+.pageInfo {
+	   list-style: none;
+	   display: inline-block;
+		}
+	
+.pageInfo li {
+	   float: left;
+	   font-size: 1px;
+	   padding: 7px;
+	   font-weight: 500;
+	}
 
-    .album {
-        width: 33%;
-        padding: 10px;
-        float: center;
-        align-content: space-between;
-    }
+	
+	a:hover {
+	   color: white;
+	   text-decoration: underline;
+	}
+	
+	.focus {
+	   background-color: #cdd5ec;
+	}
 
-    td {
-        color: white;
-    }
 
+.artist-album {
+	width: 30%;
+	hight: 200px;
+}
+
+.album {
+	width: 33%;
+	padding: 10px;
+	float: center;
+	align-content: space-between;
+}
+td{
+	color: white;
+}
 </style>
 
 <div class="under_header">
@@ -86,165 +100,145 @@
 <!-- under header -->
 
 <div class="page-content back_to_up">
-    <div class="row clearfix mb">
-        <div class="breadcrumbIn">
-            <ul>
-                <li><a href="index.html" class="toptip" title="Homepage"> <i
-                        class="icon-home"></i>
-                </a></li>
-                <li><a href="mp3s.html"> MP3s </a></li>
-                <li><a href="mp3s.html"> Alexander Doe </a></li>
-                <li>Album Missing You</li>
-            </ul>
-        </div>
-        <!-- breadcrumb -->
-    </div>
-    <!-- row -->
+	<div class="row clearfix mb">
+		<div class="breadcrumbIn">
+			<ul>
+				<li><a href="index.html" class="toptip" title="Homepage"> <i
+						class="icon-home"></i>
+				</a></li>
+				<li><a href="#"> music </a></li>
+				<li><a href="#"> 아티스트 </a></li>
+				<li> 아티스트 정보 상세 </li>
+			</ul>
+		</div>
+		<!-- breadcrumb -->
+	</div>
+	<!-- row -->
 
-    <!-- 아티스트 정보 -->
-    <div class="row row-fluid clearfix mbf"> <!-- 아티스트 정보 마진 -->
-        <div class="posts">
-            <div class="def-block">
-                <div class="post row-fluid clearfix">
-                    <div class="music-player-lis t wide-mp3 mbf clearfix">
-                        <div class="video-grid">
-                            <a href="albumInfo" class="grid_3"
-                               style="margin: 0em 0.5em 0em 0.5em; width: 32%; float:left;">
-                                <img src="api/picture/PICHONG.png" alt="#" style=" min-width:200px; max-width:200px;
-										  min-height:230px; max-height:230px;">
-                            </a>
-                        </div>
-                        <div class="artist-info"
-                             style="float: left; width: 50%; padding-left: 50px;">
-                            <div class="act">
-                                <a>활동명</a>&emsp;<a>${artist.name}</a><br>
-                            </div>
-                            <div class="act">
-                                <c:choose>
-                                    <c:when test="${artist.type == 'T01'}">
-                                        <a>활동유형</a>&emsp;솔로</c:when>
-                                    <c:otherwise>
-                                        <a>활동유형</a>&emsp;그룹</c:otherwise>
-                                </c:choose>
-                            </div>
-                            <div class="act">
-                                <c:choose>
-                                    <c:when test="${artist.genre == 'G01'}">
-                                        <a>주요활동 장르</a>&emsp;발라드</c:when>
-                                    <c:when test="${artist.genre == 'G02'}">
-                                        <a>주요활동 장르</a>&emsp;댄스</c:when>
-                                    <c:when test="${artist.genre == 'G03'}">
-                                        <a>주요활동 장르</a>&emsp;랩/힙합</c:when>
-                                    <c:otherwise>
-                                        <a>활동유형</a>&emsp;R&B/Soul</c:otherwise>
-                                </c:choose>
-                            </div>
-                            <div class="act">
-                                <a> 소개글</a>&emsp;<a>${artist.content}</a>
-                                <button class="tbutton medium" onclick="followArtist()">팔로우</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>    <!-- page-content back_to_up 닫기 -->
+<!-- 아티스트 정보 -->
+	<div class="row row-fluid clearfix mbf"> <!-- 아티스트 정보 마진 -->
+		<div class="posts">
+			<div class="def-block">
+				<div class="post row-fluid clearfix">
+					<div class="music-player-lis t wide-mp3 mbf clearfix">
+							<div class="video-grid">
+								<a href="albumInfo" class="grid_3"
+									style="margin: 0em 0.5em 0em 0.5em; width: 32%; float:left;"> 
+									<img src="api/picture/${artist.image}" alt="#" style=" min-width:240px; max-width:240px;
+										  min-height:270px; max-height:270px; margin-left: 3em; margin-top: 4em;">
+								</a>
+							</div>
+							<div class="artist-info">
+								<div class="act">
+									<a>활동명</a>&emsp;<a>${artist.name}</a><br>
+								</div>
+								<div class="act">
+									<c:choose>
+										<c:when test="${artist.type == 'T01'}">
+											<a>활동유형</a>&emsp;솔로</c:when>
+										<c:otherwise>
+											<a>활동유형</a>&emsp;그룹</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="act">
+									<c:choose>
+										<c:when test="${artist.genre == 'G01'}">
+											<a>주요활동 장르</a>&emsp;발라드</c:when>
+										<c:when test="${artist.genre == 'G02'}">
+											<a>주요활동 장르</a>&emsp;댄스</c:when>
+										<c:when test="${artist.genre == 'G03'}">
+											<a>주요활동 장르</a>&emsp;랩/힙합</c:when>
+										<c:otherwise>
+											<a>활동유형</a>&emsp;R&B/Soul</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="act">
+									<a> 소개글</a>&emsp;<a>${artist.content}</a>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	<!-- page-content back_to_up 닫기 -->
 
-    <!-- 곡 -->
-    <div class="row row-fluid clearfix mbf"> <!-- 곡 마진 -->
-        <div class="posts">
-            <div class="def-block">
-                <h4>곡(${musicCnt})</h4>
-                <i class="icon-angle-right"
-                   style="font-size: large; margin-left: 7px;"></i> <span class="liner"></span>
-                <table>
-                    <thead>
-                    <tr style="text-align: center;">
-                        <th width="3%">NO
-                        </td>
-                        <th width="10%">듣기
-                        </td>
-                        <th width="10%">구매
-                        </td>
-                        <th width="25%">곡명
-                        </td>
-                        <th width="15%">아티스트명
-                        </td>
-                        <th width="10%">앨범
-                        </td>
-                        <th width="10%">위시리스트
-                        </td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!--  c:forEach -->
-
-                    <c:forEach items="${musicList}" var="music" varStatus="status">
-                        <tr style="text-align: center;">
-                            <td style="text-align:center">${status.count}</td>
-                            <td><a href="streaming?id=${music.musicId}"><i class="icon-play-circle"
-                                                                           style="font-size: large; margin-left: 7px;"></a></i>
-                            </td>
-                            <td>
-                                <button class="tbutton small" data-musicid="${music.musicId}"
-                                        onclick="buy()">구매
-                                </button>
-                            </td>
-                            <td><a href="streaming?id=${music.musicId}">${music.musicTitle}</a></td>
-                            <td>${music.artName}</td>
-                            <td><a href="albumInfo?id=${music.albId }">${music.albName}</a></td>
-                            <td>
-                                <button class="tbutton small" data-toggle="modal"
-                                        data-target="#myModal" data-musicid="${music.musicId}"
-                                        data-dismiss="modal" aria-label="Close" class="wishBtn">담기
-                                </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-                <br><br><br>
-
-                <!-- 곡 페이징처리 -->
-                <div class="pageInfo_wrap">
-                    <div class="pageInfo_area" style="text-align: center;">
-                        <ul id="pageInfo" class="pageInfo">
-                            <!-- 이전페이지 버튼 -->
-                            <c:if test="${pageMaker.prev}">
-                                <li class="pageInfo_btn previous">
-                                    <a href="#"
-                                       onclick="paging(${pageMaker.startPage-1})">Previous</a></li>
-                            </c:if>
-                            <!-- 각 번호 페이지 버튼 -->
-                            <c:forEach var="num" begin="${pageMaker.startPage}"
-                                       end="${pageMaker.endPage}">
-                                <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "focus":""}"
-                                    style="display:inline;">
-                                    <a href="#" onclick="paging(${num})">${num}</a></li>
-                            </c:forEach>
-                            <!-- 다음페이지 버튼 -->
-                            <c:if test="${pageMaker.next}">
-                                <li class="pageInfo_btn next">
-                                    <a href="#" onclick="paging(${pageMaker.endPage + 1})">Next</a>
-                                </li>
-                            </c:if>
-                        </ul>
-                    </div>
-                </div>
-
-                <form id="moveForm" method="get" action="artistDetail">
-                    <input type="hidden" name="albumPageNum" value="${pageMaker2.cri.pageNum }">
-                    <input type="hidden" name="albumAmount" value="${pageMaker2.cri.amount }">
-                    <input type="hidden" name="musicPageNum" value="${pageMaker.cri.pageNum }">
-                    <input type="hidden" name="musicAmount" value="${pageMaker.cri.amount }">
-                    <%--       <input type="hidden" name="keyword" value="${pageMaker.cri.keyword }"> --%>
-                    <%--       <input type="hidden" name="type" value="${pageMaker.cri.type }"> --%>
-                </form>
-
-
-            </div> <!-- def block -->
-        </div>
-    </div>
+	<!-- 곡 -->
+<div class="row row-fluid clearfix mbf"> <!-- 곡 마진 -->
+	<div class="posts">
+		<div class="def-block">
+			<h4>곡(${musicCnt})</h4>
+			<i class="icon-angle-right"
+				style="font-size: large; margin-left: 7px;"></i> <span class="liner"></span>
+			<div style="text-align:center; width:100%;">
+			<table>
+				<thead>
+						<tr style="text-align: center;">
+						<th width="3%">NO</th>
+						<th width="5%">&ensp;듣기</th>
+						<th width="10%">구매</th>
+						<th width="18%">곡명</th>
+						<th width="20%">아티스트명</th>
+						<th width="18%">앨범</th>
+						<th width="10%">위시리스트</th>
+						</tr>
+					</div>
+				</thead>
+				<tbody>
+				<!--  c:forEach -->
+				 
+        			 <c:forEach items="${musicList}" var="music" varStatus="status" >  
+           				<tr style="text-align: center;">
+             				<td style="text-align:center">${status.count}</td>
+               				<td><a href="streaming?id=${music.musicId}"><i class="icon-play-circle" style="font-size: large; margin-left: 7px;"></a></i></td>
+               				<td><button class="tbutton small" data-musicid="${music.musicId}" onclick="buy()">구매</button></td> 
+               				<td><a href="streaming?id=${music.musicId}">${music.musicTitle}</a></td>
+               					<td>${music.artName}</td>
+              					<td><a href="albumInfo?id=${music.albId }">${music.albName}</a></td>
+             				<td><button class="tbutton small" data-toggle="modal" data-target="#myModal" data-musicid="${music.musicId}" data-dismiss="modal" aria-label="Close" class="wishBtn">담기</button></td>
+           				 </tr>
+       				  </c:forEach>
+       				  <br>
+				</tbody>
+			</table>
+			<br><br><br>
+			
+			<!-- 곡 페이징처리 -->
+			 <div class="pageInfo_wrap">
+      			<div class="pageInfo_area" style="text-align: center;">
+       				<ul id="pageInfo" class="pageInfo">
+            <!-- 이전페이지 버튼 -->
+            			<c:if test="${pageMaker.prev}">
+              				 <li class="pageInfo_btn previous">
+               				<a href="#" onclick="paging(${pageMaker.startPage-1})">Previous</a></li>
+            			</c:if>
+            <!-- 각 번호 페이지 버튼 -->
+            			<c:forEach var="num" begin="${pageMaker.startPage}"
+               			end="${pageMaker.endPage}">
+               				<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "focus":""}" style="display:inline;">
+               				<a href="#" onclick="paging(${num})">${num}</a></li>
+         				</c:forEach>
+            <!-- 다음페이지 버튼 -->
+         				<c:if test="${pageMaker.next}">
+        					<li class="pageInfo_btn next">
+          			    	<a href="#" onclick="paging(${pageMaker.endPage + 1})">Next</a></li>
+       				    </c:if>
+     				 </ul>
+      			</div>
+			  </div>
+	
+	<form id="moveForm" method="get" action="artistDetail">
+      <input type="hidden" name="albumPageNum" value="${pageMaker2.cri.pageNum }">
+      <input type="hidden" name="albumAmount" value="${pageMaker2.cri.amount }">
+      <input type="hidden" name="musicPageNum" value="${pageMaker.cri.pageNum }">
+      <input type="hidden" name="musicAmount" value="${pageMaker.cri.amount }">
+      <%--       <input type="hidden" name="keyword" value="${pageMaker.cri.keyword }"> --%>
+      <%--       <input type="hidden" name="type" value="${pageMaker.cri.type }"> --%>
+   </form>
+   
+   
+		</div> <!-- def block -->
+	</div>
+</div>
 </div>
 
 <!-- post -->
@@ -258,69 +252,66 @@
 
 <!-- 앨범 -->
 <div class="row row-fluid clearfix mbf"> <!-- 앨범 마진 -->
-    <div class="posts">
-        <div class="def-block">
-            <h4>앨범(${albumCnt})</h4>
-            <i class="icon-angle-right"
-               style="font-size: large; margin-left: 7px;"></i> <span class="liner"></span>
-            <ul class="tabs-content">
-                <li id="Latest" class="active">
-                    <div class="video-grid">
-                        <c:forEach items="${album}" var="album">
-                            <a href="albumInfo?id=${album.id }" class="grid_3"
-                               style="margin: 0em 0.5em 0em 0.5em; width: 32%;">
-                                <img src="api/picture/PICHONG.png" alt="#">
-                                <span><strong>앨범명${album.albName}</strong>아티스트명${album.artName} / 앨범날짜${album.releaseAt}</span>
-                            </a>
-                        </c:forEach>
+	<div class="posts">
+		<div class="def-block">
+			<h4>앨범(${albumCnt})</h4>
+			<i class="icon-angle-right"
+				style="font-size: large; margin-left: 7px;"></i> <span class="liner"></span>
+			<ul class="tabs-content" style="margin-left: 5.2em; margin-top: 5em;">
+				<li id="Latest" class="active">
+					<div class="video-grid">
+					  <c:forEach items="${album}" var="album">
+						<a href="albumInfo?id=${album.id }" class="grid_3"
+							style="margin: 0em 0.5em 0em 0.5em; width: 32%;">
+							 <img src="api/picture/PICHONG.png" alt="#"> 
+							 <span><strong>앨범명${album.albName}</strong>아티스트명${album.artName} / 앨범날짜${album.releaseAt}</span>
+						</a>
+						</c:forEach> 
 
-                    </div> <!-- video grid -->
-                </li>
-                <!-- tab content -->
-            </ul>
-            <!-- end tabs -->
-            <br><br><br>
-
-            <!-- 앨범 페이징처리 -->
-            <div class="pageInfo_wrap">
-                <div class="pageInfo_area" style="text-align: center;">
-                    <ul id="pageInfo" class="pageInfo">
-                        <!-- 이전페이지 버튼 -->
-                        <c:if test="${pageMaker2.prev}">
-                            <li class="pageInfo_btn previous">
-                                <a href="#"
-                                   onclick="paging2(${pageMaker2.startPage-1})">Previous</a></li>
-                        </c:if>
-                        <!-- 각 번호 페이지 버튼 -->
-                        <c:forEach var="num" begin="${pageMaker2.startPage}"
-                                   end="${pageMaker2.endPage}">
-                            <li class="pageInfo_btn ${pageMaker2.cri.pageNum == num ? "focus":""}"
-                                style="display:inline;">
-                                <a href="#" onclick="paging2(${num})">${num}</a></li>
-                        </c:forEach>
-                        <!-- 다음페이지 버튼 -->
-                        <c:if test="${pageMaker2.next}">
-                            <li class="pageInfo_btn next">
-                                <a href="#" onclick="paging2(${pageMaker2.endPage + 1})">Next</a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </div>
-            </div>
-
-            <form id="moveForm2" method="get" action="artistDetail">
-                <input type="hidden" name="albumPageNum" value="${pageMaker2.cri.pageNum }">
-                <input type="hidden" name="albumAmount" value="${pageMaker2.cri.amount }">
-                <input type="hidden" name="musicPageNum" value="${pageMaker.cri.pageNum }">
-                <input type="hidden" name="musicAmount" value="${pageMaker.cri.amount }">
-                <%--       <input type="hidden" name="keyword" value="${pageMaker2.cri.keyword }"> --%>
-                <%--       <input type="hidden" name="type" value="${pageMaker2.cri.type }"> --%>
-            </form>
-        </div>
-        <!-- def block -->
-    </div>
-    <!-- posts -->
-    <!-- 왼쪽하단 메인 끝-->
+					</div> <!-- video grid -->
+				</li>
+				<!-- tab content -->
+			</ul>
+			<!-- end tabs -->
+			<br><br><br>
+			
+			<!-- 앨범 페이징처리 -->
+			 <div class="pageInfo_wrap">
+      			<div class="pageInfo_area" style="text-align: center;">
+       				<ul id="pageInfo" class="pageInfo">
+            <!-- 이전페이지 버튼 -->
+            			<c:if test="${pageMaker2.prev}">
+              				 <li class="pageInfo_btn previous">
+               				<a href="#" onclick="paging2(${pageMaker2.startPage-1})">Previous</a></li>
+            			</c:if>
+            <!-- 각 번호 페이지 버튼 -->
+            			<c:forEach var="num" begin="${pageMaker2.startPage}"
+               			end="${pageMaker2.endPage}">
+               				<li class="pageInfo_btn ${pageMaker2.cri.pageNum == num ? "focus":""}" style="display:inline;">
+               				<a href="#" onclick="paging2(${num})">${num}</a></li>
+         				</c:forEach>
+            <!-- 다음페이지 버튼 -->
+         				<c:if test="${pageMaker2.next}">
+        					<li class="pageInfo_btn next">
+          			    	<a href="#" onclick="paging2(${pageMaker2.endPage + 1})">Next</a></li>
+       				    </c:if>
+     				 </ul>
+      			</div>
+			  </div>
+	
+	<form id="moveForm2" method="get" action="artistDetail">
+      <input type="hidden" name="albumPageNum" value="${pageMaker2.cri.pageNum }">
+      <input type="hidden" name="albumAmount" value="${pageMaker2.cri.amount }">
+      <input type="hidden" name="musicPageNum" value="${pageMaker.cri.pageNum }">
+      <input type="hidden" name="musicAmount" value="${pageMaker.cri.amount }">
+      <%--       <input type="hidden" name="keyword" value="${pageMaker2.cri.keyword }"> --%>
+      <%--       <input type="hidden" name="type" value="${pageMaker2.cri.type }"> --%>
+   </form>
+		</div>
+		<!-- def block -->
+	</div>
+	<!-- posts -->
+	<!-- 왼쪽하단 메인 끝-->
 </div>
 <!-- content끝 -->
 
@@ -491,6 +482,4 @@
             }
         })
     }
-
 </script>
-</html>
