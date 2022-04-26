@@ -99,15 +99,15 @@ public class MemberServiceImpl implements MemberService {
 
         // 보내는 사람 EMail, 제목, 내용
         String fromEmail = email;
-        String fromName = "문화야놀자";
+        String fromName = "CCC";
         String subject = "";
         String msg = "";
 
         if (div.equals("findpw")) {
-            subject = "임시 비밀번호 입니다.";
+            subject = "임시 비밀번호입니다.";
             msg += "<div align='center' style='border:1px solid black; font-family:verdana; padding: 200px 100px 200px 100px;'>";
             msg += "<h3 style='color: blue;'>";
-            msg += vo.getId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+            msg += vo.getId() + "님의 임시 비밀번호입니다. 비밀번호를 변경하여 사용하세요.</h3>";
             msg += "<p>임시 비밀번호 : ";
             msg += pw + "</p></div>";
         }

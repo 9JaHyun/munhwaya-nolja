@@ -53,7 +53,7 @@ public class FileUtils {
     }
 
     public String getMusicFullPath(String fileName) {
-        return fileDir + "/music" + fileName;
+        return fileDir + "/music/" + fileName;
     }
 
     private String createStoredFileName(String fileName) {
