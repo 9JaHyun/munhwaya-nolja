@@ -123,16 +123,16 @@ textarea {
 	      </div>
  </div>
  
-<h5 style="margin-top:30px; margin-left:20px; width:100%;" id="text1"></h5>
+<h5 style="margin-top:30px; margin-left: 2.4em; width:100%; line-height: 2;" id="text1"></h5>
  <!-- 아티스트 승급 재신청 -->
  	<br>
  	<div>
-			<div style="margin-top:30px;">
+		<div style="margin-top: 2em; margin-bottom: 5em;">
 				<br> 
 				<label>
 					<c:choose>
 						<c:when test="${status eq 'A01' }"> <!-- 승인 -->
-							<a class="tbutton medium" href="mypage.do">마이페이지로</a>
+							<a class="tbutton medium" href="mypage.do" style="margin-left: 4em; padding: 5px; margin-top: 2em;">마이페이지로</a>
 						</c:when>
 						
 						<c:when test="${status eq 'A02' }"> <!-- 거절(재신청) -->
@@ -140,17 +140,17 @@ textarea {
 									
 									
 									<label id="request-label">
-										<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; ">작업물 설명란</div> 
+										<div class="sort" style="font-size: 14px; color: white; padding: 0.5em;margin-left: 4em; ">작업물 설명란</div> 
 										<textarea id="artwork" name="artwork" placeholder="내용을 재입력하세요."></textarea>
 									</label>
 									
 									
-									<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;">작업물 재인증</div> 
-										<input type="file" id="files" name="files" multiple="multiple" accept="image/*">
+									<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 4em;">작업물 재인증</div> 
+										<input type="file" id="files" name="files" multiple="multiple" accept="image/*" style="margin-left: 10em">
 									
 									
 									<div id="submitBtn" align="right" style="margin-top:2em">
-										<input type="submit" style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" value="재신청" class="tbutton small" onclick=""/>
+										<input type="submit" style="padding: 0.3em 0.5em 0.3em 0.5em; margin: 1em 0.3em 0em 0.3em;" value="재신청" class="tbutton small" onclick=""/>
 										<button style="padding: 0.3em  1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypage.do'" class="tbutton small" >취소</button>
 									</div>
 								</form>
@@ -164,8 +164,8 @@ textarea {
 									<div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:3em; margin-left:3em; ">작업물 인증</div> 
 									<c:forEach begin="0" items="${files }" var="file">
 										<span style="margin-left: 1em;">${file.oname }</span>
-										<button type="button" onclick="location.href='api/attach/${file.id}'" class="tbutton medium" style="font-size:10px">
-											<span>다운로드</span>
+										<button type="button" onclick="location.href='api/attach/${file.id}'" class="tbutton medium" style="font-size:10px;">
+											<span style="padding: 0 7px;">다운로드</span>
 										</button>
 									</c:forEach>
 						</c:when>
@@ -198,12 +198,12 @@ $(window).load(function(){
 		$("#step1").addClass("current");
 		$("#step2").addClass("current");
 		$("#step3").addClass("current");
-		$("#text1").html("승인 거절되었습니다.");
+		$("#text1").html("승인 거절되었습니다. 작성내용 확인 후 재신청바랍니다.");
 	} else if($("#wait").val() == "A01") {
 		$("#step1").addClass("current");
 		$("#step2").addClass("current");
 		$("#step3").addClass("current");
-		$("#text1").html("승인 완료되었습니다. 카테고리에서 회원클릭에서 정보를 등록하세요.")
+		$("#text1").html("승인 완료되었습니다. <br>마이페이지 목록에서 카테고리 -> 회원정보변경 -> 프로필 등록을 진행하세요.")
 	}
 	
 	if('${status}' == 'A03') {

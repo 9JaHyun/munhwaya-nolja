@@ -47,7 +47,7 @@
                         <div class="js-load">
                             <div class="notification-box notification-box-success">
                                 <p>
-                                    <i class="icon-ok"></i><a onclick="location.href='artStatus'">${news.artistName}님이
+                                    <i class="icon-ok"></i><a onclick="delNewsFnc(${news.id});">${news.artistName}님이
                                     <c:if test="${news.code eq 'N01-1'}">아티스트</c:if>승급 승인되셨습니다.&nbsp;&nbsp;
                                     <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
                                 </p>
@@ -61,7 +61,7 @@
                         <div class="js-load">
                             <div class="notification-box notification-box-success">
                                 <p>
-                                    <i class="icon-ok"></i><a onclick="location.href='artStatus'">${news.artistName}님이
+                                    <i class="icon-ok"></i><a onclick="delNewsFnc(${news.id});">${news.artistName}님이
                                     <c:if test="${news.code eq 'N01-2'}">아티스트</c:if>승급 거절되셨습니다.&nbsp;&nbsp;
                                     <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
                                 </p>
@@ -100,6 +100,20 @@
                             </div>
                         </div>
                     </c:when>
+                    <c:otherwise>
+                        <div class="js-load">
+                            <div class="notification-box notification-box-warning">
+                                <p>
+                                    <i class="icon-ok"></i><a onclick="delNewsFnc(${news.id});">${news.artistName}님이
+                                    <c:if test="${news.code eq 'N04'}">게시글</c:if>을 등록하셨습니다.&nbsp;&nbsp;
+                                    <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${news.createdAt}" /> </a>
+                                </p>
+                                <a class="notification-close notification-close-warning">
+                                    <i class="icon-remove"
+                                       onclick="delNewsFnc(${news.id})"></i></a>
+                            </div>
+                        </div>
+                    </c:otherwise>
                 </c:choose>
             </c:forEach>
             <!-- 더보기 버튼 -->
