@@ -19,10 +19,6 @@ import com.munhwa.prj.wallet.vo.UsageVO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -134,7 +130,7 @@ public class TicketListController {
 	private String makeQR(HttpServletRequest req, int ticketId) throws WriterException, IOException {
 		String qrURI = null;
 		String path = req.getSession().getServletContext().getRealPath("resources");
-		qrURI = req.getContextPath() + "/ticketCheck/" + ticketId;
+		qrURI = "http://3.35.142.126:8080/" + req.getContextPath() + "/ticketCheck/" + ticketId;
 //		try (DatagramSocket r = new DatagramSocket()) {
 //			r.connect(InetAddress.getByName("8.8.8.8"), 10002);
 //			String t = req.getRequestURI();
