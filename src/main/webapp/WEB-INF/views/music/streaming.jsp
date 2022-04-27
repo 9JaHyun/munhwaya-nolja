@@ -124,7 +124,7 @@
             <div class="def-block">
                 <h4> 가사 </h4><span class="liner"></span>
                 <xmp>
-                    ${musicSelect.lyric }
+${musicSelect.lyric }
                 </xmp>
             </div><!-- def block -->
         </div><!-- span8 posts -->

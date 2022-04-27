@@ -48,7 +48,7 @@
         var tel = $('#tel').val();
         var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
         if (!tel.match(regPhone)) {
-            alert("적절하지 않은 휴대폰번호 양식입니다.");
+            alert("적절하지 않은 전화번호 양식입니다.");
             return false;
         } else {
             alert("수정 완료되었습니다.");
