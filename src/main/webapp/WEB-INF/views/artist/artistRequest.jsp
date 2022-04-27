@@ -31,60 +31,79 @@
 <div align="right" style="margin-bottom: 50px;">
     <h4>아티스트 승급신청</h4>
     <div class="grid_12 tt" style="margin-top: 70px;">
-			<ul class="forum-items" style="text-align: left;">
-				<li><i class="icon-comment-alt"><a>  승급신청</a></i>
-					<div class="topic-time" style="margin:5px">아티스트 승급에 필요한 정보를 입력해주세요.</div>
-			</ul>
-		</div>
+        <ul class="forum-items" style="text-align: left;">
+            <li><i class="icon-comment-alt"><a> 승급신청</a></i>
+                <div class="topic-time" style="margin:5px">아티스트 승급에 필요한 정보를 입력해주세요.</div>
+        </ul>
+    </div>
 </div>
 <!-- 아티스트 승급 신청에 필요한 인증 -->
 <div style="padding-top: 5%;">
     <div style="margin: 100px 0px 10px 0px; border: none;">
         <br>
-        <form id="info" name="info" method="post" action="artistRequest" enctype="multipart/form-data" onsubmit="return chk_request()">
-           <div align="center"">
-            <label id="request-label">
-                 <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1.5em; margin-left: 1em;">작업물 설명란</div>
-                <textarea id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
-            </label><br> <label>
-            <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 5px;">작업물 인증</div>
-            <input type="file" id="files" name="files" multiple="multiple" accept="image/*"></label><br>
-			<div class="sort"  style="font-size: 15px; color: white; padding-right: 1em; margin-top:1.5em">&emsp;<본인인증></div>
-            <div class="filebox" style="margin-left: 2.5em;">
-            <div class="sort" style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em;     margin-right: 2em;">
-               <span><a>폰번호 입력</a>
-            </div> 
+        <form id="info" name="info" method="post" action="artistRequest"
+              enctype="multipart/form-data" onsubmit="return chk_request()">
+            <div align="center">
+                <label id="request-label">
+                    <div class="sort"
+                         style="font-size: 14px; color: white; padding: 0.5em; margin-top:1.5em; margin-left: 1em;">
+                        작업물 설명란
+                    </div>
+                    <textarea id="artwork" name="artwork" placeholder="내용을 입력하세요."></textarea>
+                </label><br> <label>
+                <div class="sort"
+                     style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 5px;">
+                    작업물 인증
+                </div>
+                <input type="file" id="files" name="files" multiple="multiple"
+                       accept="image/*"></label><br>
+                <div class="sort"
+                     style="font-size: 15px; color: white; padding-right: 1em; margin-top:1.5em">
+                    &emsp;<본인인증>
+                </div>
+                <div class="filebox" style="margin-left: 2.5em;">
+                    <div class="sort"
+                         style="font-size: 14px; color: white; margin:1em 0; width: 100%;">
+                        <span>[가입시 입력한 번호를 입력해야 합니다.]</span>
+                    </div>
+                </div>
+                <input type="text" id="phone" name="phone" placeholder="'-'를 제외하고 입력하세요"> &emsp;<p
+                    id='phoneChk' class="doubleChk tbutton" style="padding: 3px 6px 1px 5px;">인증번호
+                받기</p>
             </div>
-               <input type="text" id="phone"  name="phone"  placeholder="번호를 입력하세요.(-빼고 입력)"></span> &emsp;<p id='phoneChk' class="doubleChk tbutton" style="padding: 3px 6px 1px 5px;">인증번호 받기</p>
-            </div>
-            	<span class="point successPhoneChk" style="color: #FFFFE0; margin-left:13em;"> 폰 번호 입력 후 인증번호 받기 버튼을 클릭 하세요.</span>
-                <br>
-                <br>
-     </div>
-            
-        <div class="filebox" style="margin-left: 13em;">
-     	   <div>
-          	  <span><a  style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 13em; margin-left: 8.5em;">인증번호 입력</a>
-           </div>
-           <div style="margin-top: 0.5em;">
-              <input type="text" id="phone2" name="phone2" placeholder="인증번호를 입력하세요." disabled required/></span>
-                &emsp;
-                <p id="phoneChk2" class="doubleChk tbutton" style="padding: 4px 15px 1px 15px;">확인</p>
-           </div>
-                <br>
-        </div>
-          <p><input type="hidden" id="phoneDoubleChk"/></p>
- </div>
-      
-      
-          <!-- 신청, 취소 버튼 -->
-             <div align="right">
-                <input type='submit'  style="padding:0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em; position: relative;"
-                       value="신청" class="tbutton small">
-               <button style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;" onclick="location.href='mypag.do'" class="tbutton small">취소</button>
-            </div>
-        </form>
+            <span class="point successPhoneChk" style="color: #FFFFE0; margin-left:13em;"> 폰 번호 입력 후 인증번호 받기 버튼을 클릭 하세요.</span>
+            <br>
+            <br>
     </div>
+
+    <div class="filebox" style="margin-left: 13em;">
+        <div>
+          	  <span><a
+                      style="font-size: 14px; color: white; padding: 0.5em; margin-top:1em; margin-left: 13em; margin-left: 8.5em;">인증번호 입력</a>
+        </div>
+        <div style="margin-top: 0.5em;">
+            <input type="text" id="phone2" name="phone2" placeholder="인증번호를 입력하세요." disabled
+                   required/></span>
+            &emsp;
+            <p id="phoneChk2" class="doubleChk tbutton" style="padding: 4px 15px 1px 15px;">확인</p>
+        </div>
+        <br>
+    </div>
+    <p><input type="hidden" id="phoneDoubleChk"/></p>
+</div>
+
+
+<!-- 신청, 취소 버튼 -->
+<div align="right">
+    <input type='submit'
+           style="padding:0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em; position: relative;"
+           value="신청" class="tbutton small">
+    <button style="padding: 0.3em 1em 0.3em 1em; margin: 1em 0.3em 0em 0.3em;"
+            onclick="location.href='mypag.do'" class="tbutton small">취소
+    </button>
+</div>
+</form>
+</div>
 </div>
 <br>
 
@@ -95,7 +114,7 @@
             location.href = 'artStatus';
         }
     })
-   
+
     function chk_request() {
         if (!document.info.artwork.value) {
             alert("작업물 내용을 입력하십시오.");
@@ -177,26 +196,30 @@
                         phoneNumber: phone
                     },
                     cache: false,
-                    success: function (data) {
-                        if (data == "error") {
-                            alert("휴대폰 번호가 올바르지 않습니다.")
-                            $(".successPhoneChk").text("유효한 번호를 입력하십시오.");
-                            $(".successPhoneChk").css("color", "red");
-                            $("#phone").attr("autofocus", true); // autofocus : 속성을 명시하지 않으면 속성값이 자동으로 false 값을 가지고, 명시하면 자동으로 true 값을 가지게 됨.
-                        } else { // data가 err가 아니면 실행
-                            alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 하십시오.");
-                            $("#phone2").attr("disabled", false); // disabled : true면 비활성화, false면 활성화
-                            $("#phoneChk2").css("visibility", "visible"); // 인증확인버튼 활성화
-                            //$("#phoneChk2").css("display", "inline-block");
-                            $(".successPhoneChk").text("인증번호를 입력한 뒤 확인 버튼을 클릭하십시오.");
-                            $(".successPhoneChk").css("color", "green");
-                            code2 = data.content;
-                            if (timeOutId == null) {
-                                $("<div class='timeout'></div>").insertAfter($("#phone"));
-                            } else {
-                                resetCountDown();
+                    complete: function (data) {
+                        if (data.status == 400) {
+                            alert('가입시 입력한 번호를 입력해야 합니다.');
+                        } else {
+                            if (data == "error") {
+                                alert("휴대폰 번호가 올바르지 않습니다.")
+                                $(".successPhoneChk").text("유효한 번호를 입력하십시오.");
+                                $(".successPhoneChk").css("color", "red");
+                                $("#phone").attr("autofocus", true); // autofocus : 속성을 명시하지 않으면 속성값이 자동으로 false 값을 가지고, 명시하면 자동으로 true 값을 가지게 됨.
+                            } else { // data가 err가 아니면 실행
+                                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 하십시오.");
+                                $("#phone2").attr("disabled", false); // disabled : true면 비활성화, false면 활성화
+                                $("#phoneChk2").css("visibility", "visible"); // 인증확인버튼 활성화
+                                //$("#phoneChk2").css("display", "inline-block");
+                                $(".successPhoneChk").text("인증번호를 입력한 뒤 확인 버튼을 클릭하십시오.");
+                                $(".successPhoneChk").css("color", "green");
+                                code2 = data.responseJSON['content']
+                                if (timeOutId == null) {
+                                    $("<div class='timeout'></div>").insertAfter($("#phone"));
+                                } else {
+                                    resetCountDown();
+                                }
+                                timeOutId = countdown(".timeout", 3, 0);
                             }
-                            timeOutId = countdown(".timeout", 3, 0);
                         }
                     }
                 });

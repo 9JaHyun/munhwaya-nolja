@@ -2,20 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.munhwa.prj.common.file.mapper.UploadFileMapper">
-  <insert id="" parameterType="com.munhwa.prj.common.file.entity.UploadFileVO">
-    INSERT INTO uploaded_files (id, oname, sname, file_group_id, extension)
-    VALUES (uploaded_file_seq.nextval, #{oname}, #{sname}, #{fileGroupId}, #{extension})
-  </insert>
-  	<insert id="insertUploadFile" statementType = "CALLABLE" parameterType="map">
+  <resultMap type="com.munhwa.prj.common.file.entity.UploadFileVO" id="fileMap">
+    <id property="id" column="id"/>
+    <result property="oname" column="oname"/>
+    <result property="sname" column="sname"/>
+    <result property="fileGroupId" column="file_Group_Id"/>
+    <result property="extension" column="extension"/>
+  </resultMap>
+
+  <insert id="insertUploadFile" statementType="CALLABLE" parameterType="map">
 		<![CDATA[
-			{ call SAVE_FILE_PROC (
-				#{v_oname, mode=IN, jdbcType=VARCHAR, javaType=string},
-				#{v_sname, mode=IN, jdbcType=VARCHAR, javaType=string},
-				#{v_id, mode=IN, jdbcType=INTEGER, javaType=int},
-				#{v_proc_type, mode=IN, jdbcType=VARCHAR, javaType=string},
-				#{v_group_id, mode=OUT, jdbcType=VARCHAR, javaType=string}
-			)}
-		]]>
+    { call SAVE_FILE_PROC(
+      #{v_oname, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_sname, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_id, mode=IN, jdbcType=INTEGER, javaType=int},
+      #{v_proc_type, mode=IN, jdbcType=VARCHAR, javaType=string},
+      #{v_group_id, mode=OUT, jdbcType=VARCHAR, javaType=string}
+      )}
+    ]]>
 	</insert>
   <update id="updateUploadFile" parameterType="com.munhwa.prj.common.file.entity.UploadFileVO">
     update uploaded_files

@@ -290,33 +290,41 @@ public class ArtistController {
 
 
 // 아티스트 승급페이지 본인인증
-@RestController
 @RequiredArgsConstructor
+@RestController
 class SmsController {
 
     private final SmsServiceImpl smsServiceImpl;
+    private final MemberService memberService;
 
     @PostMapping("/user/sms")
-    public ResponseEntity<SmsResponse> test(String phoneNumber)
+    public ResponseEntity<SmsResponse> sendMessage(@LoginUser SessionUser user, String phoneNumber)
           throws NoSuchAlgorithmException, URISyntaxException,
           UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
 
-        ServerRequest request = new ServerRequest();
-        request.setRecipientPhoneNumber(phoneNumber);
-        String randomNumber = createRandomNumber();
-        request.setContent("본인확인 인증번호는 " + randomNumber + " 입니다.");
-        SmsResponse data = smsServiceImpl.sendSms(request.getRecipientPhoneNumber(),
-              request.getContent());
-        data.setContent(randomNumber);
+        if (checkPhoneNumber(user.getTel(), phoneNumber)) {
+            ServerRequest request = new ServerRequest();
+            request.setRecipientPhoneNumber(phoneNumber);
+            String randomNumber = createRandomNumber();
+            request.setContent("본인확인 인증번호는 " + randomNumber + " 입니다.");
+            SmsResponse data = smsServiceImpl.sendSms(request.getRecipientPhoneNumber(),
+                  request.getContent());
+            data.setContent(randomNumber);
 
-        return ResponseEntity.ok().body(data);
+            return ResponseEntity.ok().body(data);
+        } else {
+            SmsResponse smsResponse = new SmsResponse();
+            smsResponse.setContent("잘못된 휴대폰 번호입니다.");
+            return ResponseEntity.badRequest().body(smsResponse);
+        }
+
     }
 
     private String createRandomNumber() {
         Random random = new Random(); // 랜덤 함수 선언
         int createNum = 0; // 1자리 난수
         String ranNum = ""; // 1자리 난수 형변환 변수
-        int letter = 4; // 난수 자릿수:6
+        int letter = 4; // 난수 자릿수:4
         String resultNum = ""; // 결과 난수
 
         for (int i = 0; i < letter; i++) {
@@ -324,6 +332,11 @@ class SmsController {
             ranNum = Integer.toString(createNum); // 1자리 난수를 String으로 형변환
             resultNum += ranNum; // 생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
         }
+        System.out.println("resultNum = " +  resultNum);
         return resultNum;
+    }
+
+    private boolean checkPhoneNumber(String tel, String phoneNumber) {
+        return tel.equals(phoneNumber);
     }
 }
