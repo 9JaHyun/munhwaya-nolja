@@ -157,7 +157,7 @@ public class ArtistController {
             user.setSname(vo.getImage());
             user.setNickname(vo.getName());
 
-            model.addAttribute("message", "아티스트 정보 등록이 완료되었습니다.");
+            model.addAttribute("message", "아티스트 프로필 등록이 완료되었습니다.");
         } else {
             model.addAttribute("message", "입력 실패하셨습니다.");
         }
