@@ -9,27 +9,27 @@
 		text-align: center;
 		line-height: 10px;
 	}
-	
+
 	.single_variation_wrap > i{
 		 color: white;
 	}
-	
+
 	.single_variation_wrap > i:hover{
 		 color: #FF0078;
 	}
-	
+
 	.highlight{
-		max-width:180px; 
-		min-width:180px; 
-		max-height :180px; 
+		max-width:180px;
+		min-width:180px;
+		max-height :180px;
 		min-height:180px;
 	}
 </style>
 	<!--(배경이미지) -->
 	<div class="under_header" style="height:70px">
-		<img src="resources/images/bg/musicBg.jpg" alt="#" style="height: 2000px;">
+		<img src="resources/images/bg/musicBB.jpg" alt="#" style="height: 2000px;">
 	</div>
-	
+
 <!-- content -->
 	<div class="page-content back_to_up">
 		<!-- 최상단메인칸 -->
@@ -61,7 +61,7 @@
 				</div><!-- def block -->
 			</div><!-- span8 posts -->
 		</div><!-- row clearfix -->
-		
+
 		<!-- 가사 -->
 		<div class="row row-fluid clearfix mbf">
 				<div class="posts">
@@ -74,7 +74,7 @@ ${musicList[0].lyric}
 				</div><!-- span8 posts -->
 			</div><!-- row clearfix -->
 		<!-- 가사 끝 -->
-		
+
 		<!-- 수록앨범 -->
 		<div class="row row-fluid clearfix mbf">
 			<div class="posts">
@@ -94,7 +94,7 @@ ${musicList[0].lyric}
 						</ul><!-- end tabs -->
 					</div><!-- def block -->
 				</div><!-- posts -->
-			<!-- 왼쪽하단 메인 끝-->	
+			<!-- 왼쪽하단 메인 끝-->
 		</div>
 		<!-- 수록앨범 끝 -->
 	</div>
@@ -110,10 +110,10 @@ let fileId = 0;
 	fileId = '${music.fileId}'
 	console.log(fileId)
 		$.ajax({
-			type: "GET", 
+			type: "GET",
 			async: false,
 			url:"getFiles/"+fileId,
-			dataType:"json", 
+			dataType:"json",
 			error : function(a, b, c){
 				alert("통신실패");
 			},
@@ -160,14 +160,14 @@ let fileId = 0;
 
 function addWishList() {
 	let wishId = $(event.target).data('wishid')
-	
+
 	//뮤직아이디를 제목과 가수이름으로 가져오기
 	var title=$('#title1').html()
     var artName=$('#artName1').html()
   		$.ajax ({
         	url : "musicSelectByArtName",
         	type : "get",
-        	data : {"title" : title, "artName" : artName},                   
+        	data : {"title" : title, "artName" : artName},
         	dataType : "json",
         	success : function(result) {
         		let id = result.id
@@ -189,7 +189,7 @@ function addWishList() {
         		alert("통신실패1");
         	}
 		})
-} 
+}
 </script>
 <!-- 위시리스트모달 -->
 <div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
@@ -254,14 +254,14 @@ function addWishList() {
 </div>
 	<!-- 위시리스트 추가모달 끝-->
 <script>
-//위시리스트 생성 버튼 
+//위시리스트 생성 버튼
 function createWishList() {
 	//onclick시 인풋밸류 보내고 위시리스트 DB에 넣고, alert띄우고, input밸류지우기
 	let name = $('#name').val()
 	$.ajax({
 		url : "createWishList",
         type : "post",
-        data : JSON.stringify({"name" : name}),                   
+        data : JSON.stringify({"name" : name}),
         dataType : "json",
         contentType: 'application/json; charset=utf-8',
         success : result,
@@ -286,7 +286,7 @@ function result(data) {
 											'</div>'+
 										'</li>'+
 								  '</ul>'+
-							'</div>')	
+							'</div>')
 }
 
 function change() {
@@ -294,17 +294,17 @@ function change() {
 	let musicId = 0;
 	if(event.target.className == 'track') {
 		musicId = $(event.target).children().data("musicid")
-	} 
+	}
 	if(event.target.className == 'title') {
 		musicId = $(event.target).data("musicid")
-	} 
+	}
 	if(event.target.className == 'duration') {
 		musicId = $(event.target).prev().data("musicid")
-	} 
+	}
 	if(event.target.className == 'buy') {
 		return;
 	}
-	
+
 	//뮤직아이디 받아왔으니 아작스로 해당하는 뮤직아이디의 정보를 가져와야함
 	$.ajax({
 		type: "GET", //요청 메소드 방식
@@ -322,7 +322,7 @@ function change() {
 		$('#arrangement').html('편곡: '+data.arrangement)
 		$('#lyric').html(data.lyric)
 		//음악 사진 작업
-		
+
 		$.ajax({
 		type: "GET", //요청 메소드 방식
 		url:"albumSelectBymusicId/"+data.id,
@@ -337,7 +337,7 @@ function change() {
 			$('#albName').html(result.albName)
 			$('#artName').html(result.artName)
 			//앨범사진작업
-			
+
 		}
 	}
 }
@@ -345,7 +345,7 @@ jQuery(document).ready(function(){
 	$('#writer').html('작사: ${musicList[0].writer}');
 	$('#composing').html('작곡: ${musicList[0].composing}');
 	$('#arrangement').html('편곡: ${musicList[0].arrangement}');
-	
+
 })
 <!-- 구매1 -->
 function addCart() {
@@ -354,13 +354,13 @@ function addCart() {
    	$.ajax ({
 	        url : "musicSelectByArtName",
 	        type : "get",
-	        data : {"title" : title, "artName" : artName},                   
-	        dataType : "json", 
+	        data : {"title" : title, "artName" : artName},
+	        dataType : "json",
 	        success : result1,
 	        error: function(xhr, status, error){
 	        	alert("통신실패");
 	        }
-     }) 
+     })
 }
 function result1(result) {
 	  if(result.purchased == 1) {
@@ -368,12 +368,12 @@ function result1(result) {
 	  } else {
 		  	var confirm1 = confirm('장바구니에 담으시겠습니까?')
 	  		var id = result.id
-	  
+
 	   		if(confirm1) {
    				$.ajax ({
 				        url : "cart/add",
 				        type : "post",
-				        data : {"id" : id},                   
+				        data : {"id" : id},
 				        dataType : "text",
 				        success : function(data) {
 				        alert("장바구니에 담았습니다.");
@@ -381,11 +381,10 @@ function result1(result) {
 				        error: function(xhr, status, error){
 				        	alert("이미 장바구니에 담겨있습니다.");
 				        }
-			     }) 
+			     })
 		    } else {
 		          alert("구매취소")
 		     }
 	  }
 }
-
 </script>

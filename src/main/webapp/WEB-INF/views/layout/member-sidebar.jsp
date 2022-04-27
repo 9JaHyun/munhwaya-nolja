@@ -122,7 +122,10 @@
 </div>
 
 <script>
-    var sidebarMileage = document.getElementById('sidebarMileage').innerHTML;
-    var sidebarMileage2 = sidebarMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    document.getElementById('sidebarMileage').innerHTML = sidebarMileage2 + '원';
+    var mileage = document.getElementById('sidebarMileage');
+    if(mileage != null){
+        var sidebarMileage = mileage.innerHTML;
+        var sidebarMileage2 = sidebarMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById('sidebarMileage').innerHTML = sidebarMileage2 + '원';
+    }
 </script>

@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
+
 <style>
 /* table { */
 /* 	border: 1px, solid black; */
@@ -28,9 +29,19 @@ table{
 .artist-info {
 	width: 700px;
 	padding-bottom: 20px;
+	margin-top: 5em;
 	float: right;
+	float: left; 
+	width: 50%;
+	
 }
 
+.tbutton.small {
+	padding: 0.1em 0.5em 0.1em 0.5em;
+}
+
+	
+}
 .img {
 	width: 600px;
 }
@@ -83,7 +94,6 @@ size {
 td{
 	color: white;
 }
-
 </style>
 
 
@@ -162,6 +172,7 @@ td{
 			<h4>곡(${musicCnt})</h4>
 			<i class="icon-angle-right"
 				style="font-size: large; margin-left: 7px;"></i> <span class="liner"></span>
+			<div style="text-align:center; width:100%;">
 			<table>
 				<thead>
 					<tr style="text-align: center;">
@@ -188,6 +199,7 @@ td{
              				<td><button class="tbutton small" style="padding: 0.2em 0.5em 0.2em 0.5em;" data-toggle="modal" data-target="#myModal" data-musicid="${music.musicId}" data-dismiss="modal" aria-label="Close" class="wishBtn">담기</button></td>
            				 </tr>
        				  </c:forEach>
+       				  <br>
 				</tbody>
 			</table>
 			<br><br><br>
@@ -234,10 +246,10 @@ td{
 <!-- post -->
 
 <!-- tags -->
-<!--  <span> Tags: </span>
-								<a href="#" class="#"> Alexander doe </a>,
-								<a href="#" class="#"> Remix </a>
-							</p>-->
+<!-- <span> Tags: </span>
+<a href="#" class="#"> Alexander doe </a>,
+<a href="#" class="#"> Remix </a>
+</p>-->
 
 
 <!-- 앨범 -->
@@ -306,39 +318,43 @@ td{
 <!-- content끝 -->
 
 <!-- 위시리스트모달 -->
-<div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
-  <div class="modal-dialog ">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white" aria-hidden="true">&times;</span></button>
-        <h4 style="border:none;" class="modal-title" id="myModalLabel">위시리스트 선택</h4>
-      </div>
-      <div id="activeAdd" class="modal-body def-block">
-        <c:forEach items="${wishLists}" var="album">
-		<div class="mbf clearfix">
-			<ul>
-				<li>
-					<!-- 위시리스트 이름 -->
-					<div class="toggle-head" style="padding-bottom:20px;">
-						<h5 style="margin:0px;">
-							${album.name}
-							<button onclick="addWishList()" class="tbutton small" style="float:right;">
-								<span data-wishid="${album.id}">선택</span>
-							</button>
-						</h5>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</c:forEach>
-      </div>
-      <div class="modal-footer def-block">
-        <button class="tbutton small" data-dismiss="modal" aria-label="Close"><span>확인</span></button>
-      </div>
+<div class="modal fade def-block" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" style="top:30%; display:none;">
+    <div class="modal-dialog ">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        style="color:white" aria-hidden="true">&times;</span></button>
+                <h4 style="border:none;" class="modal-title" id="myModalLabel">위시리스트 선택</h4>
+            </div>
+            <div id="activeAdd" class="modal-body def-block">
+                <c:forEach items="${wishLists}" var="album">
+                    <div class="mbf clearfix">
+                        <ul>
+                            <li>
+                                <!-- 위시리스트 이름 -->
+                                <div class="toggle-head" style="padding-bottom:20px;">
+                                    <h5 style="margin:0px;">
+                                            ${album.name}
+                                        <button onclick="addWishList()" class="tbutton small"
+                                                style="float:right;">
+                                            <span data-wishid="${album.id}">선택</span>
+                                        </button>
+                                    </h5>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </c:forEach>
+            </div>
+            <div class="modal-footer def-block">
+                <button class="tbutton small" data-dismiss="modal" aria-label="Close">
+                    <span>확인</span></button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-	<!-- 위시리스트모달 끝-->
+<!-- 위시리스트모달 끝-->
 
 <!-- end layout -->
 <!-- Scripts -->
@@ -355,101 +371,117 @@ td{
 <script type="text/javascript" src="js/custom.js"></script>
 
 <script type="text/javascript">
-	var musicid;
-	/* <![CDATA[ */
-	// Disqus
-	var disqus_shortname = 'remixtemplate';
-	(function() {
-		var s = document.createElement('script');
-		s.async = true;
-		s.type = 'text/javascript';
-		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-		(document.getElementsByTagName('HEAD')[0] || document
-				.getElementsByTagName('BODY')[0]).appendChild(s);
-	}());
-	/* ]]> */
+    var musicid;
+    /* <![CDATA[ */
+    // Disqus
+    var disqus_shortname = 'remixtemplate';
+    (function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document
+        .getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    /* ]]> */
 
-	$(document).ready(function() {     
-        $('#myModal').on('show.bs.modal', function(event) {   
-        	
-        	musicid = $(event.relatedTarget).data('musicid');
+    $(document).ready(function () {
+        $('#myModal').on('show.bs.modal', function (event) {
+
+            musicid = $(event.relatedTarget).data('musicid');
         });
     });
 
-	function buy() {
-		 var id = $(event.target).data('musicid');
-	  $.ajax ({
-		        url : "checkBuy",
-		        type : "get",
-		        data : {"id" : id},                   
-		        dataType : "text",
-		        success : function resultBuy(result) {
-		    		if(result==0){
-		    			var confirm1 = confirm("장바구니에 담으시겠습니까?")
-		    			if(confirm1) {
-		    	      	$.ajax ({
-		    		        url : "cart/add",
-		    		        type : "post",
-		    		        data : {"id" : id},                   
-		    		        dataType : "text",
-		    		        success : function(data) {
-		    		        	alert("장바구니에 담았습니다.");
-		    		        },
-		    		        error: function(xhr, status, error){
-		    		       		alert("이미 장바구니에 담겨있습니다.");
-		    		        }
-		    	        }) 
-		    	       } else {
-		    	             alert("삭제취소")
-		    	        }
-		    		} else {
-		    			alert("이미 구매하셨습니다.")
-		    		}
-		        },
-		        error: function(xhr, status, error){
-		        	alert("연결실패");
-		        }
-	        });
-		  
-	}
-	
-	function paging(num) {
-	        moveForm.musicPageNum.value = num;
-	        moveForm.submit();
-	     };
-	     
-	 function paging2(num) {
-	        moveForm2.albumPageNum.value = num;
-	        moveForm2.submit();
-	     };    
-	     
-//위시리스트
-	//뮤직아이디 가져오기
-	var id;
-	$(document).ready(function() {     //페이지를 틀면 바로 실행
-        $('.wishBtn').on('click', function(event) {   //담기버튼을 클릭하면 담기버튼안의 musicid가 var id;에 들어간다 그리고 저장되고 밑에 addwish()메소드에서 사용할거다
-        	//인풋폼
-        	id = $(this).data("musicid");
+    function buy() {
+        var id = $(event.target).data('musicid');
+        $.ajax({
+            url: "checkBuy",
+            type: "get",
+            data: {"id": id},
+            dataType: "text",
+            success: function resultBuy(result) {
+                if (result == 0) {
+                    var confirm1 = confirm("장바구니에 담으시겠습니까?")
+                    if (confirm1) {
+                        $.ajax({
+                            url: "cart/add",
+                            type: "post",
+                            data: {"id": id},
+                            dataType: "text",
+                            success: function (data) {
+                                alert("장바구니에 담았습니다.");
+                            },
+                            error: function (xhr, status, error) {
+                                alert("이미 장바구니에 담겨있습니다.");
+                            }
+                        })
+                    } else {
+                        alert("삭제취소")
+                    }
+                } else {
+                    alert("이미 구매하셨습니다.")
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("연결실패");
+            }
+        });
+
+    }
+
+    function paging(num) {
+        moveForm.musicPageNum.value = num;
+        moveForm.submit();
+    };
+
+    function paging2(num) {
+        moveForm2.albumPageNum.value = num;
+        moveForm2.submit();
+    };
+
+    //위시리스트
+    //뮤직아이디 가져오기
+    var id;
+    $(document).ready(function () {     //페이지를 틀면 바로 실행
+        $('.wishBtn').on('click', function (event) {   //담기버튼을 클릭하면 담기버튼안의 musicid가 var id;에 들어간다 그리고 저장되고 밑에 addwish()메소드에서 사용할거다
+            //인풋폼
+            id = $(this).data("musicid");
         });
     });
-	//위시리스트 추가
-	function addWishList() {
-		let wishId = $(event.target).data('wishid')
-		
-		$.ajax({
-			type: "POST", //요청 메소드 방식
-			url:"addWishList",
-			contentType:'application/json;charset=utf-8',
-			data: JSON.stringify({"musicId": id, "wishId": wishId}),
-			dataType:"text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
-			error : function(){
-				alert("이미 추가한 곡입니다.");
-			},
-			success: function(result) {
-				alert("추가되었습니다");
-			}
-		})
-	}
-	
+
+    //위시리스트 추가
+    function addWishList() {
+        let wishId = $(event.target).data('wishid')
+
+        $.ajax({
+            type: "POST", //요청 메소드 방식
+            url: "addWishList",
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify({"musicId": id, "wishId": wishId}),
+            dataType: "text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+            error: function () {
+                alert("이미 추가한 곡입니다.");
+            },
+            success: function (result) {
+                alert("추가되었습니다");
+            }
+        })
+    }
+
+    function followArtist() {
+        $.ajax({
+            url: "follow",
+            type: "post",
+            contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+            traditional: true,
+            data: {"artistId": ${artist.id}},
+            dataType: "text",
+            success: function (data) {
+                alert("성공!");
+            },
+            error: function (data) {
+                alert("실패!");
+            }
+        })
+    }
 </script>
-</html>
