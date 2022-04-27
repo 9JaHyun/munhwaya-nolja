@@ -40,7 +40,7 @@
                                      style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
                             </c:when>
                             <c:otherwise>
-                                <img src="/api/file/${likeArtist.image}" alt="image"
+                                <img src="api/file/${likeArtist.image}" alt="image"
                                      style="border-radius: 70%; overflow: hidden; height: 40px; width: 40px;">
                             </c:otherwise>
                         </c:choose>
