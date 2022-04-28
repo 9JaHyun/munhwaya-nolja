@@ -136,7 +136,8 @@ public class TicketListController {
 		String path = req.getSession().getServletContext().getRealPath("resources");
 		try (DatagramSocket r = new DatagramSocket()) {
 			r.connect(InetAddress.getByName("8.8.8.8"), 10002);
-			qrURI = r.getLocalAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
+//			qrURI = r.getLocalAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
+			qrURI = r.getLocalAddress().getHostAddress() + req.getContextPath() + "/ticketCheck/" + ticketId;
 			log.info("qrURI = {}", qrURI);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -149,7 +150,7 @@ public class TicketListController {
 	}
 
 	public String makeQRDetail(String path, String qrURI, String fileName) throws WriterException, IOException {
-		String savePath = "/home/ubuntu/dev/qrCodes/"; // 파일 경로
+		String savePath = "C:\\dev\\filetest\\qrCodes\\";
 
 		// 파일 경로가 없으면 생성하기
 		File file = new File(savePath);
